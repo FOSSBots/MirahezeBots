@@ -5,6 +5,10 @@ import requests
 import sopel.tools
 from sopel.module import rule, priority, thread, commands
 
+"""Miraheze about command
+
+This command will tell you about Miraheze and where to learn more 
+"""
 
 @commands('miraheze')
 def miraheze(bot, trigger):
