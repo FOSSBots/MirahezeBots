@@ -217,4 +217,4 @@ def create_reminder(bot, trigger, duration, message, tz):
 
         bot.reply('Okay, I\'ll will remind at %s' % timef)
     else:
-bot.reply('Okay, I\'ll will remind in %s secs' % duration)
+	bot.reply('Okay, I\'ll will remind in %s secs' % duration)
