@@ -8,7 +8,7 @@ from sopel.module import rule, priority, thread, commands
 
 @commands('miraheze')
 def miraheze(bot, trigger):
-if trigger.sender == miraheze:
+if trigger.sender == '#miraheze':
     bot.say(trigger.nick + ', Miraheze is a non-profit wikifarm running MediaWiki. If you would like more information please see, https://meta.miraheze.org/ or ask in this channel.')
 else:
 	bot.say(trigger.nick + ', Miraheze is a non-profit wikifarm running MediaWiki. If you would like more information please see, https://meta.miraheze.org/ or #miraheze.)
