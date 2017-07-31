@@ -3,11 +3,12 @@ import sopel
 import sopel.module
 import requests
 import sopel.tools
-from sopel.module import rule, priority, thread, commands
+from sopel.module import rule, priority, thread, commands, example
 
 
-@example('.miraheze')
+
 @commands('miraheze')
+@example('.miraheze')
 def miraheze(bot, trigger):
 	"""
 Miraheze about command
