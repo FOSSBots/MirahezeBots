@@ -6,7 +6,7 @@ import sopel.tools
 from sopel.module import rule, priority, thread, commands
 
 
-@example(.miraheze)
+@example('.miraheze')
 @commands('miraheze')
 def miraheze(bot, trigger):
 """Miraheze about command
