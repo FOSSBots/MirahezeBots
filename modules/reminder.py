@@ -115,7 +115,7 @@ periods = '|'.join(scaling.keys())
 
 
 @commands('in')
-@example('&in 3h45m Go to class')
+@example('.in 3h45m Go to class')
 def remind(bot, trigger):
     """Gives you a reminder in the given amount of time."""
     if not trigger.group(2):
@@ -151,7 +151,7 @@ def remind(bot, trigger):
 
 
 @commands('at')
-@example('&at 13:47 Do your homework!')
+@example('.at 13:47 Do your homework!')
 def at(bot, trigger):
     """
     Gives you a reminder at the given time. Takes hh:mm:ssTimezone
