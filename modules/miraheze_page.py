@@ -19,7 +19,7 @@ REDIRECT = re.compile(r'^REDIRECT (.*)')
 
 
 class MirahezeSection(StaticSection):
-    default_lang = ValidatedAttribute('default_lang', default='en')
+    default_lang = ValidatedAttribute('default_lang', default='meta')
     """The default language to find articles from."""
     lang_per_channel = ValidatedAttribute('lang_per_channel')
 
@@ -36,7 +36,7 @@ def setup(bot):
 def configure(config):
     config.define_section('miraheze', MirahezeSection)
     config.wikipedia.configure_setting(
-        'default_lang',
+        'meta',
         "Enter the default language to find articles from."
     )
 
