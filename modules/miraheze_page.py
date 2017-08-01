@@ -113,13 +113,7 @@ def wikipedia(bot, trigger):
     if trigger.group(2) is None:
         bot.reply("What do you want me to look up?")
         return NOLIMIT
-
-    query = trigger.group(2)
-    args = re.search(r'^-([a-z]{2,12})\s(.*)', query)
-    if args is not None:
-        lang = args.group(1)
-        query = args.group(2)
-
+    
     query = trigger.group(2)
     args = re.search(r'^-([a-z]{2,12})\s(.*)', query)
     if args is not None:
