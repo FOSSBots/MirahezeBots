@@ -122,5 +122,5 @@ def wikipedia(bot, trigger):
         return NOLIMIT
     else:
         query = query[0]
-    say_snippet(bot, server, query)
+    say_snippet(bot, server, unquote(query))
 
