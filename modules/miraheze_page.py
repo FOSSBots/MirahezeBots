@@ -27,7 +27,7 @@ class MirahezeSection(StaticSection):
 def setup(bot):
     bot.config.define_section('miraheze_page', MirahezeSection)
 
-    regex = re.compile('([a-z]+).(meta.miraheze.org/wiki/)([^ ]+)')
+    regex = re.compile('([a-z]+).(miraheze.org/wiki/)([^ ]+)')
     if not bot.memory.contains('url_callbacks'):
         bot.memory['url_callbacks'] = tools.SopelMemory()
     bot.memory['url_callbacks'][regex] = mw_info
