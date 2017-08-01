@@ -35,7 +35,7 @@ def setup(bot):
 
 def configure(config):
     config.define_section('miraheze_page', MirahezeSection)
-    config.miraheze.configure_setting(
+    config.wikipedia.configure_setting(
         'meta',
         "Enter the default language to find articles from."
     )
@@ -99,14 +99,14 @@ def mw_info(bot, trigger, found_match=None):
 
 @commands('mh', 'miraheze_page', 'mhw')
 @example('.mh Miraheze')
-def miraheze(bot, trigger):
-    lang = bot.config.miraheze.default_lang
+def wikipedia(bot, trigger):
+    lang = bot.config.wikipedia.default_lang
 
     #change lang if channel has custom language set
     if (trigger.sender and not trigger.sender.is_nick() and
-            bot.config.miraheze.lang_per_channel):
+            bot.config.wikipedia.lang_per_channel):
         customlang = re.search('(' + trigger.sender + '):(\mh+)',
-                               bot.config.miraheze.lang_per_channel)
+                               bot.config.wikipedia.lang_per_channel)
         if customlang is not None:
             lang = customlang.group(2)
 
