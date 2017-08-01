@@ -7,4 +7,11 @@ from sopel.module import rule, priority, thread, commands
 
 @commands('botadmins','admins')
 def adminlist(bot, trigger):
-  bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and Zppix.')
+  if trigger.nick == 'Reception123:
+    bot.say(trigger.nick + ', the bot\'s admins are: You, SwisterTwister and Zppix.')
+  elif trigger.nick == 'Zppix':
+    bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and you.')
+  elif trigger.nick == 'SwisterTwister':
+    bot.say(trigger.nick + ', the bot\'s admins are: Reception123, You and Zppix.')
+  else:
+    bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and Zppix.')
