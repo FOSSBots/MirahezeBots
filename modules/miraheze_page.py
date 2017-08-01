@@ -34,7 +34,7 @@ def setup(bot):
 
 
 def configure(config):
-    config.define_section('miraheze', MirahezeSection)
+    config.define_section('miraheze_page', MirahezeSection)
     config.wikipedia.configure_setting(
         'meta',
         "Enter the default language to find articles from."
