@@ -120,9 +120,21 @@ def wikipedia(bot, trigger):
         lang = args.group(1)
         query = args.group(2)
 
+    query = trigger.group(2)
+    args = re.search(r'^-([a-z]{2,12})\s(.*)', query)
+    if args is not None:
+        lang = args.group(1)
+        query = args.group(2)
+
+    if not query:
+        bot.reply('What do you want me to look up?')
+        return NOLIMIT
+    server = lang + '.miraheze.org'
+    query = mw_search(server, query, 1)
     if not query:
         bot.reply("I can't find any results for that.")
         return NOLIMIT
     else:
         query = query[0]
     say_snippet(bot, server, query)
+
