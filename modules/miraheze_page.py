@@ -100,15 +100,7 @@ def mw_info(bot, trigger, found_match=None):
 @commands('mh', 'miraheze_page', 'mhw')
 @example('.mh Miraheze')
 def wikipedia(bot, trigger):
-    lang = bot.config.wikipedia.default_lang
-
-    #change lang if channel has custom language set
-    if (trigger.sender and not trigger.sender.is_nick() and
-            bot.config.wikipedia.lang_per_channel):
-        customlang = re.search('(' + trigger.sender + '):(\mh+)',
-                               bot.config.wikipedia.lang_per_channel)
-        if customlang is not None:
-            lang = customlang.group(2)
+    lang = 'meta'
 
     if trigger.group(2) is None:
         bot.reply("What do you want me to look up?")
@@ -130,5 +122,5 @@ def wikipedia(bot, trigger):
         return NOLIMIT
     else:
         query = query[0]
-    say_snippet(bot, server, query)
+    say_snippet(bot, server, unquote(query))
 
