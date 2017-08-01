@@ -22,4 +22,4 @@ This command will tell you about Miraheze and where to learn more
 @commands('gethelp')
 @example('.gethelp I cannot access https://www.meta.miraheze.org')
 def mirahezegehelp(bot, trigger):
-	bot.say(trigger.nick + ', needs help with: ' + $1 + ' Pinging Reception123, Zppix, PuppyKun, Voidwalker.')
+	bot.say(trigger.nick + ', needs help. Pinging Reception123, Zppix, PuppyKun, Voidwalker.')
