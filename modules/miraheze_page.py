@@ -98,7 +98,7 @@ def mw_info(bot, trigger, found_match=None):
 
 
 @commands('mh', 'miraheze_page', 'mhw')
-@example('.mh San Francisco')
+@example('.mh Miraheze')
 def wikipedia(bot, trigger):
     lang = bot.config.wikipedia.default_lang
 
