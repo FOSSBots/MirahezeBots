@@ -17,7 +17,7 @@ def adminlist(bot, trigger):
     bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and Zppix.')
 @commands('accesslevel')
 def accesslevel(bot,trigger):
-  if trigger.nick  == 'Reception123':
+  if trigger.nick  == 'Reception123' or trigger.nick == 'Reception|away':
     bot.say('The access level for ' + trigger.nick + ', is Admin.')
   elif trigger.nick == 'Zppix':
       bot.say('The access level for ' + trigger.nick + ', is Owner.')
