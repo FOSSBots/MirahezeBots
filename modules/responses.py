@@ -16,6 +16,3 @@ def ping_converse3(bot, trigger):
 def ping_converse3(bot, trigger):
         if trigger.sender == '#miraheze':
                 bot.say("Good job %s! Keep on doing what you do.")
-                
-                
-                
