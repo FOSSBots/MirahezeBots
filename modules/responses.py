@@ -7,8 +7,15 @@ def ping_converse(bot, trigger):
 @rule('my wiki is down')
 def ping_converse2(bot, trigger):
         if trigger.sender == '#miraheze':
-                bot.say("Oh no! That sounds bad. A sysadmin should be here shortly to investigate. If you haven't already, please file a Phabricator ticket to facilitate the process!")                
+                bot.say("That sounds bad. A sysadmin should be here shortly to investigate. If you haven't already, please file a Phabricator ticket to facilitate the process!")                
 @rule('Miraheze is down')
 def ping_converse3(bot, trigger):
         if trigger.sender == '#miraheze':
                 bot.say("That sounds bad! A sysadmin should be here shortly to investigate. If you haven't already, please file a Phabricator ticket to facilitate the process!")
+@rule('The upgrade was successful')
+def ping_converse3(bot, trigger):
+        if trigger.sender == '#miraheze':
+                bot.say("Good job %s! Keep on doing what you do.")
+                
+                
+                
