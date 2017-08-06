@@ -8,7 +8,7 @@ def ping_converse(bot, trigger):
         bot.say("I get it, Reception123, talking to real people is too overrated.")
     elif trigger.nick == 'PuppyKun':
         bot.say("Hit the tab button too soon again, PuppyKun? Tsk tsk tsk.")
-    elif trigger.nick == 'wm-bot':
+    elif trigger.nick == 'wm-bot' or trigger.nick == 'Source-Zppixbot':
       return null  
     elif trigger.nick == 'Zppix':
         bot.say("Talking to your own AI bot again, are you Zppix?")
