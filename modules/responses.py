@@ -20,5 +20,3 @@ def ping_converse4(bot, trigger):
 def ping_converse5(bot, trigger):
         if trigger.sender == '#miraheze':
                 bot.tell("12h PuppyKun: Please don't forget to merge a DNS PR started by Reception123.")
-                
-               
