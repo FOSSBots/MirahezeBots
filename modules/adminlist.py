@@ -8,9 +8,9 @@ from sopel.module import rule, priority, thread, commands, example
 @commands('botadmins','admins')
 @example('.admins')
  def adminlist(bot, trigger):
-  ```
+   """
   Lists the current bot admins
-  ```
+   """
   if trigger.nick == 'Reception123' or trigger.nick == 'Reception|away':
     bot.say(trigger.nick + ', the bot\'s admins are: You, SwisterTwister and Zppix.')
   elif trigger.nick == 'Zppix':
@@ -22,9 +22,9 @@ from sopel.module import rule, priority, thread, commands, example
 @commands('accesslevel')
 @example('.accesslevel')
 def accesslevel(bot,trigger):
-    ```
+     """
     Finds the accesslevel of the user executing the command
-    ```
+     """
   if trigger.nick  == 'Reception123' or trigger.nick == 'Reception|away':
     bot.say('The access level for ' + trigger.nick + ', is Admin.')
   elif trigger.nick == 'Zppix':
