@@ -1,0 +1,8 @@
+== ZppixBot v2 ==
+
+=== Changes since v1 ===
+* Added an admin list command (.adminlist)
+* Added .accesslevel command
+* Added .gethelp command (pings helpful users in channels)
+* Added a converse module
+* Added a new reminder system
