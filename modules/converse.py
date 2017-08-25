@@ -13,4 +13,4 @@ def ping_converse(bot, trigger):
     elif trigger.nick == 'Zppix':
         bot.say("Talking to your own AI bot again, are you Zppix?")
     else:
-        bot.say("Hey, %s, I'm an AI which is to dumb to carry on a converstation perhaps, you meant to ping Zppix instead?" % trigger.nick)
+        bot.say("Hey, %s, I'm an AI which is too dumb to carry on a converstation perhaps, you meant to ping Zppix instead?" % trigger.nick)
