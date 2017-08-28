@@ -17,6 +17,7 @@ elif trigger.nick == 'SwisterTwister' or trigger.nick == 'StormyWaves':
     bot.say(trigger.nick + ', the bot\'s admins are: Reception123, You and 
 else:
     bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and Zppix.')
+
 @commands('accesslevel')
 @example('.accesslevel')
 def accesslevel(bot,trigger):
