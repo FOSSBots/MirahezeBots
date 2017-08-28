@@ -4,10 +4,8 @@ import sopel.module
 import requests
 import sopel.tools
 from sopel.module import rule, priority, thread, commands, example
-
 @commands('botadmins','admins')
-@example('.admins')
-  def adminlist(bot, trigger):
+def adminlist(bot, trigger):
    """
   Lists the current bot admins
    """
