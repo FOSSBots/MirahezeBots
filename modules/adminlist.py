@@ -9,13 +9,13 @@ def adminlist(bot, trigger):
    """
   Lists the current bot admins
    """
-  if trigger.nick == 'Reception123' or trigger.nick == 'Reception|away':
+   if trigger.nick == 'Reception123' or trigger.nick == 'Reception|away':
     bot.say(trigger.nick + ', the bot\'s admins are: You, SwisterTwister and Zppix.')
-  elif trigger.nick == 'Zppix':
+   elif trigger.nick == 'Zppix':
     bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and you.')
-  elif trigger.nick == 'SwisterTwister' or trigger.nick == 'StormyWaves':
+   elif trigger.nick == 'SwisterTwister' or trigger.nick == 'StormyWaves':
     bot.say(trigger.nick + ', the bot\'s admins are: Reception123, You and Zppix.')
-  else:
+   else:
     bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and Zppix.')
 @commands('accesslevel')
 @example('.accesslevel')
