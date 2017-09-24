@@ -24,11 +24,11 @@ def accesslevel(bot,trigger):
      """
     Finds the accesslevel of the user executing the command
      """
-            if trigger.nick  == 'Reception123' or trigger.nick == 'Reception|away':
-            bot.say('The access level for ' + trigger.nick + ', is Admin.')
-            elif trigger.nick == 'Zppix':
-            bot.say('The access level for ' + trigger.nick + ', is Owner.')
-            elif trigger.nick == 'SwisterTwister' or trigger.nick == 'StormyWaves':
-            bot.say('The access level for ' + trigger.nick + ', is Admin.')
-            else:
-            bot.say('The access level for ' + trigger.nick + ', is User.')
+if trigger.nick  == 'Reception123' or trigger.nick == 'Reception|away':
+      bot.say('The access level for ' + trigger.nick + ', is Admin.')
+   elif trigger.nick == 'Zppix':
+      bot.say('The access level for ' + trigger.nick + ', is Owner.')
+   elif trigger.nick == 'SwisterTwister' or trigger.nick == 'StormyWaves':
+      bot.say('The access level for ' + trigger.nick + ', is Admin.')
+   else:
+      bot.say('The access level for ' + trigger.nick + ', is User.')
