@@ -14,7 +14,7 @@ if trigger.nick == 'Reception123' or trigger.nick == 'Reception|away':
 elif trigger.nick == 'Zppix':
     bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and you.')
 elif trigger.nick == 'SwisterTwister' or trigger.nick == 'StormyWaves':
-    bot.say(trigger.nick + ', the bot\'s admins are: Reception123, You and 
+    bot.say(trigger.nick + ', the bot\'s admins are: Reception123, You and Zppix')
 else:
     bot.say(trigger.nick + ', the bot\'s admins are: Reception123, SwisterTwister and Zppix.')
 
