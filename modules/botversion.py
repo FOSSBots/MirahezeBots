@@ -5,8 +5,8 @@ import requests
 import sopel.tools
 from sopel.module import rule, priority, thread, commands, example
 
-@commands('version','v')
-@example('.version')
+@commands('botversion','bv')
+@example('.botversion')
  def adminlist(bot, trigger):
    """
   Lists the current version of the bot
