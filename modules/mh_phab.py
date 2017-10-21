@@ -7,4 +7,4 @@ from sopel.module import rule, priority, thread, commands
 
 @commands('task')
 def phabtask(bot, trigger):
-    bot.say('https://www.phabricator.miraheze.org/T'+ trigger.group(2))
+    bot.say('https://phabricator.miraheze.org/T'+ trigger.group(2))
