@@ -216,7 +216,7 @@ def create_reminder(bot, trigger, duration, message, tz):
     else:
         bot.reply('Okay, I will send the reminder in %s secs' % duration)
         
-        @commands('cancelreminder')
-        @example('.cancelreminder (insert reminder message here)')
-        def cancel(bot, trigger):
-            bot.reply('Pinging Reception123, or Zppix to cancel,' + trigger.nick + '\'s reminder.')
+@commands('cancelreminder')
+@example('.cancelreminder (insert reminder message here)')
+def cancel(bot, trigger):
+    bot.reply('Pinging Reception123, or Zppix to cancel,' + trigger.nick + '\'s reminder.')
