@@ -16,3 +16,7 @@ def ping_converse3(bot, trigger):
 def ping_converse4(bot, trigger):
         if trigger.sender == '#miraheze':
                 bot.say("Good job %s! Keep on doing what you do.")
+@rule('PROBLEM - MySQL on \b[db2|db3]\b is CRITICAL')
+def ping_converse5(bot, trigger):
+        if trigger.sender == '#miraheze':
+                bot.say("Database errors again? This looks very bad. If this doesn't fix itself soon (~5 minutes), a Phabricator task should be filed and an Operations member alerted ASAP.")
