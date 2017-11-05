@@ -7,8 +7,6 @@ from sopel.module import rule, priority, thread, commands, example
 
 @commands('task')
 @example('.task 1')
-'''
-Get a Miraheze phabricator link to a the task number you provide.
-'''
+"""Get a Miraheze phabricator link to a the task number you provide."""
 def phabtask(bot, trigger):
     bot.say('https://phabricator.miraheze.org/T'+ trigger.group(2))
