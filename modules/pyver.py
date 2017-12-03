@@ -7,5 +7,6 @@ from sopel.module import rule, priority, thread, commands, example
 import sys
 import platform
 
+@commands('python', 'pyver')
 def pythonversion(bot,trigger):
 bot.say("I am running Python " + platform.python_version() + ".")
