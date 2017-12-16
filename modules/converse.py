@@ -17,7 +17,7 @@ def ping_converse(bot, trigger):
 
 @rule('how', 'request', 'wiki')
 def ping_miraheze(bot, trigger):
-   if trigger.sender == '#miraheze'        
+   if trigger.sender == '#miraheze':    
         bot.reply("To request a wiki, please see https://meta.miraheze.org/wiki/Special:RequestWiki")
    else:
     return
