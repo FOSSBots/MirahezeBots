@@ -14,3 +14,10 @@ def ping_converse(bot, trigger):
         bot.say("Talking to your own AI bot again, are you Zppix?")
     else:
         bot.say("Hey, %s, I'm an AI which is too dumb to carry on a converstation perhaps, you meant to ping Zppix instead?" % trigger.nick)
+
+@rule('how', 'request', 'wiki')
+def ping_miraheze(bot, trigger):
+   if trigger.sender == '#miraheze'        
+        bot.reply("To request a wiki, please see https://meta.miraheze.org/wiki/Special:RequestWiki")
+   else:
+    return
