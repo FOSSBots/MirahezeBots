@@ -21,10 +21,3 @@ def ping_converse(bot, trigger):
         bot.reply("To request a wiki, please see https://meta.miraheze.org/wiki/Special:RequestWiki")
    else:
     return
-
-@rule('(?=.*how)(?=.*create)(?=.*wiki)')
-def ping_converse(bot, trigger):
-   if trigger.sender == '#miraheze':
-        bot.reply("You need to request a wiki, please see https://meta.miraheze.org/wiki/Special:RequestWiki")
-   else:
-    return
