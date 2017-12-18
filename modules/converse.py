@@ -17,7 +17,7 @@ def ping_converse(bot, trigger):
 
 @rule('(?=.*request)(?=.*wiki)')
 def ping_miraheze (bot, trigger):
-   if trigger.sender == '#miraheze':
-        bot.reply("To request a wiki, please see https://meta.miraheze.org/wiki/Special:RequestWiki")
-   elif trigger.nick == 'Not-e084':
+   if trigger.nick == 'Not-e084':
     return
+   elif trigger.sender == '#miraheze':
+    bot.reply("To request a wiki, please see https://meta.miraheze.org/wiki/Special:RequestWiki")
