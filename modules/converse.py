@@ -19,5 +19,5 @@ def ping_converse(bot, trigger):
 def ping_miraheze (bot, trigger):
    if trigger.sender == '#miraheze':
         bot.reply("To request a wiki, please see https://meta.miraheze.org/wiki/Special:RequestWiki")
-   elif trigger.hostmask == '~notifico@ec2-52-3-50-241.compute-1.amazonaws.com':
+   elif trigger.host == 'ec2-52-3-50-241.compute-1.amazonaws.com':
     return
