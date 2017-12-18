@@ -16,8 +16,8 @@ def ping_converse(bot, trigger):
         bot.say("Hey, %s, I'm an AI which is too dumb to carry on a converstation perhaps, you meant to ping Zppix instead?" % trigger.nick)
 
 @rule('(?=.*request)(?=.*wiki)')
-def ping_converse(bot, trigger):
+def ping_miraheze (bot, trigger):
    if trigger.sender == '#miraheze':
         bot.reply("To request a wiki, please see https://meta.miraheze.org/wiki/Special:RequestWiki")
-   else:
+   elif trigger.hostmask == '~notifico@ec2-52-3-50-241.compute-1.amazonaws.com':
     return
