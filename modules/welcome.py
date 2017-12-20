@@ -2,7 +2,9 @@ from __future__ import unicode_literals, absolute_import, print_function, divisi
 
 import os
 import codecs
-from sopel.module import rule, event
+from sopel.module import rule, event, commands, example
+
+ADMIN_LIST = ['Reception123', 'Zppix', 'SwisterTwister', 'paladox']
 
 def get_filename(bot):
     name = '{}-{}.known_users.db'.format(bot.nick, bot.config.core.host)
@@ -46,3 +48,21 @@ def welcome_user(bot, trigger):
         bot.say(message)
         bot.known_users_list.append(trigger.nick)
         save_known_users_list(get_filename(bot), bot.known_users_list)
+
+
+@commands('add_known')
+@example('.add_known Zppix')
+def add_known_user(bot, trigger):
+    if trigger.nick not in ADMIN_LIST:
+        bot.say('Only admins can add known users')
+        return
+
+    username = trigger.group(2)
+
+    if username in bot.known_users_list:
+        bot.say('{} is already added to known users list'.format(username))
+        return
+
+    bot.known_users_list.append(username)
+    save_known_users_list(get_filename(bot), bot.known_users_list)
+    bot.say('Okay, {} is now added to known users list'.format(username))
