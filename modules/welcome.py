@@ -38,6 +38,11 @@ def welcome_user(bot, trigger):
         return
 
     if trigger.nick not in bot.known_users_list:
-        bot.say('Hello {}!'.format(trigger.nick))
+        if trigger.sender == '#miraheze':
+            message = 'Hello {}! If you have any questions feel free to ask and someone should answer soon.'.format(trigger.nick)
+        else:
+            message = 'Hello {}!'.format(trigger.nick)
+
+        bot.say(message)
         bot.known_users_list.append(trigger.nick)
         save_known_users_list(get_filename(bot), bot.known_users_list)
