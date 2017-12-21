@@ -50,11 +50,11 @@ def welcome_user(bot, trigger):
         save_known_users_list(get_filename(bot), bot.known_users_list)
 
 
-@commands('add_known')
-@example('.add_known Zppix')
+@commands('add_known', 'adduser')
+@example('.add_known Zppix or .adduser Zppix')
 def add_known_user(bot, trigger):
     if trigger.nick not in ADMIN_LIST:
-        bot.say('Only admins can add known users')
+        bot.reply('Only bot admins can add people to the known users list.')
         return
 
     username = trigger.group(2)
