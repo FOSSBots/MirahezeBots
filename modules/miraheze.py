@@ -20,6 +20,9 @@ This command will tell you about Miraheze and where to learn more
 	else:
 		bot.say(trigger.nick + ', Miraheze is a non-profit wikifarm running MediaWiki. If you would like more information please see, https://meta.miraheze.org/ or #miraheze.')
 @commands('gethelp')
-@example('.gethelp I cannot access https://www.meta.miraheze.org')
+@example('.gethelp I cannot access https://meta.miraheze.org')
 def mirahezegehelp(bot, trigger):
-	bot.say(trigger.nick + ', needs help. Pinging Reception123, Zppix, PuppyKun, Voidwalker.')
+	if trigger.sender == '#miraheze':
+		bot.say(trigger.nick + ', needs help. Pinging Reception123, Zppix, PuppyKun, Voidwalker.')
+	else:
+		return
