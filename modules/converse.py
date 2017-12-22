@@ -9,7 +9,7 @@ def ping_converse(bot, trigger):
     else:
         return
 
-@rule('(?=.*request)(?=.*wiki)')
+@rule('.*request.*wiki.*')
 def ping_miraheze (bot, trigger):
    if trigger.nick == 'Not-e084':
     return
