@@ -8,7 +8,7 @@ from sopel.module import rule, event, commands, example
 ADMIN_LIST = ['Reception123', 'Zppix', 'SwisterTwister', 'paladox']
 DEFAULT_CHANNEL = '#miraheze'
 USERNAME_RE = re.compile('[A-Za-z0-9\[\]\{\}\-_|`]+$')
-CHANNEL_RE = re.compile('#[A-Za-z0-9]+$')
+CHANNEL_RE = re.compile('#[A-Za-z0-9#]+$')
 
 def get_filename(bot):
     name = '{}-{}.known_users.db'.format(bot.nick, bot.config.core.host)
