@@ -2,11 +2,3 @@ default.cfg
 ZppixBot-irc.freenode.net.tell.db
 logs/
 default.db
-GeoLiteCity.dat
-GeoIPASNum.dat
-malwaredomains.txt
-
-__pycache__
-*.py
-.idea
-
