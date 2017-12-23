@@ -11,4 +11,4 @@ from sopel.module import rule, priority, thread, commands, example
    """
   Lists the current version of the bot
    """
-   bot.say('The current version of this bot is 2.0 (v2)')
+   bot.say('The current version of this bot is 3.0 (v3)')
