@@ -7,7 +7,7 @@ from sopel.module import rule, priority, thread, commands, example
 
 @commands('botversion','bv')
 @example('.botversion')
- def botversion(bot, trigger):
+def botversion(bot, trigger):
    """
   Lists the current version of the bot
    """
