@@ -1,4 +1,9 @@
-from sopel.module import rule
+from sopel.module import rule, commands, example
+
+@commands('addchannel')
+@example('.addchannel (insert which)')
+def cancel(bot, trigger):
+    bot.reply('Hey MacFan4000, Reception123 or Zppix,' + trigger.nick + ' would like to have me in their channel')
 
 @rule('update.php')
 def ping_converse(bot, trigger):
