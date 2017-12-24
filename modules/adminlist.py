@@ -1,33 +1,25 @@
 from __future__ import unicode_literals, absolute_import, print_function, division
-import sopel
-import sopel.module
-import requests
-import sopel.tools
-from sopel.module import rule, priority, thread, commands
+from sopel.module import commands
+
 
 @commands('botadmins','admins')
-def adminlist(bot, trigger):
-  if trigger.nick == 'Reception123':
-    bot.say(trigger.nick + ', the bot\'s admins are: paladox, You, MacFan4000, SwisterTwister and Zppix.')
-  elif trigger.nick == 'Zppix':
-    bot.say(trigger.nick + ', the bot\'s admins are: paladox, Reception123, SwisterTwister and you.')
-  elif trigger.nick == 'SwisterTwister':
-    bot.say(trigger.nick + ', the bot\'s admins are: paladox, Reception123, MacFan4000, You and Zppix.')
-  elif trigger.nick == 'paladox':
-    bot.say(trigger.nick + ', the bot\'s admins are: You, Reception123, SwisterTwister, MacFan4000 and Zppix.')
-  elif trigger.nick == 'MacFan4000':
-    bot.say(trigger.nick + ', the bot\'s admins are: paladox, Reception123, SwisterTwister, You, and Zppix.')
-  else:
-    bot.say(trigger.nick + ', the bot\'s admins are: paladox, Reception123, SwisterTwister, MacFan4000 and Zppix.')
+def admin_list(bot, trigger):
+    admin_accounts = bot.config.core.admin_accounts
+    if len(admin_accounts) == 0:
+        bot.reply('There are no bot admins')
+        return
+
+    admin_accounts = ['You' if admin == trigger.nick else admin for admin in admin_accounts]
+    bot.reply('The bot\'s admins are: ' + ', '.join(admin_accounts[:-1]) + ' and ' + admin_accounts[-1])
+
+
 @commands('accesslevel')
-def accesslevel(bot,trigger):
-  if trigger.nick  == 'Reception123':
-    bot.say('The access level for ' + trigger.nick + ', is Admin.')
-  elif trigger.nick == 'Zppix':
-      bot.say('The access level for ' + trigger.nick + ', is Owner.')
-  elif trigger.nick == 'SwisterTwister':
-        bot.say('The access level for ' + trigger.nick + ', is Admin.')
-  elif trigger.nick == 'paladox' or trigger.nick == 'MacFan4000':
-        bot.say('The access level for ' + trigger.nick + ', is Admin.')
-  else:
-          bot.say('The access level for ' + trigger.nick + ', is User.')
+def access_level(bot, trigger):
+    if trigger.nick == bot.config.core.owner:
+        level = 'Owner'
+    elif trigger.nick in bot.config.core.admin_accounts:
+        level = 'Admin'
+    else:
+        level = 'User'
+
+    bot.say('The access level for {} is {}.'.format(trigger.nick, level))
