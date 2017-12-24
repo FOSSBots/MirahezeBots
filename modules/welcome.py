@@ -5,7 +5,6 @@ import re
 import codecs
 from sopel.module import rule, event, commands, example
 
-ADMIN_LIST = ['Reception123', 'MacFan4000', 'Zppix', 'SwisterTwister', 'paladox']
 DEFAULT_CHANNEL = '#miraheze'
 USERNAME_RE = re.compile('[A-Za-z0-9\[\]\{\}\-_|`]+$')
 CHANNEL_RE = re.compile('#[A-Za-z0-9#\-]+$')
@@ -71,7 +70,7 @@ def welcome_user(bot, trigger):
 @commands('add_known', 'adduser')
 @example('.add_known Zppix #miraheze or .adduser Zppix #miraheze')
 def add_known_user(bot, trigger):
-    if trigger.nick not in ADMIN_LIST:
+    if trigger.nick not in bot.config.core.admin_accounts:
         bot.reply('Only bot admins can add people to the known users list.')
         return
 
