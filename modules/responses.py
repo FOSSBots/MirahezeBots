@@ -1,23 +1,36 @@
 from sopel.module import rule, commands, example
 
+
 @commands('addchannel')
 @example('.addchannel (insert which)')
 def cancel(bot, trigger):
+    """Reply to channel request message."""
     bot.reply('Hey MacFan4000, Reception123 or Zppix,' + trigger.nick + ' would like to have me in their channel')
+
 
 @rule('update.php')
 def ping_converse(bot, trigger):
+        """Reply to message specified in rule."""
         if trigger.sender == '#miraheze':
                 bot.say("Oh no, update.php! If you're not upgrading MediaWiki, you should really not be using that!")
+
+
 @rule('my wiki is down')
 def ping_converse2(bot, trigger):
+        """Reply to message specified in rule."""
         if trigger.sender == '#miraheze':
-                bot.say("That sounds bad. A sysadmin should be here shortly to investigate. If you haven't already, please file a Phabricator ticket to facilitate the process!")                
+                bot.say("That sounds bad. A sysadmin should be here shortly to investigate. If you haven't already, please file a Phabricator ticket to facilitate the process!")
+
+
 @rule('Miraheze is down')
 def ping_converse3(bot, trigger):
+        """Reply to message specified in rule."""
         if trigger.sender == '#miraheze':
                 bot.say("That sounds bad! A sysadmin should be here shortly to investigate. If you haven't already, please file a Phabricator ticket to facilitate the process!")
+
+
 @rule('The upgrade was successful')
 def ping_converse4(bot, trigger):
+        """Reply to message specified in rule."""
         if trigger.sender == '#miraheze':
                 bot.say("Good job %s! Keep on doing what you do.")

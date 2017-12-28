@@ -9,17 +9,21 @@ DEFAULT_CHANNEL = '#miraheze'
 USERNAME_RE = re.compile('[A-Za-z0-9\[\]\{\}\-_|`]+$')
 CHANNEL_RE = re.compile('#[A-Za-z0-9#\-]+$')
 
+
 def get_filename(bot):
+    """Get name of file used to store known users list."""
     name = '{}-{}.known_users.db'.format(bot.nick, bot.config.core.host)
     return os.path.join(bot.config.core.homedir, name)
 
 
 def setup(bot):
+    """Do required setup for this module."""
     bot.known_users_filename = get_filename(bot)
     bot.known_users_list = load_known_users_list(bot.known_users_filename)
 
 
 def load_known_users_list(filename):
+    """Load list of known users from database file."""
     known_users = {}
     if os.path.isfile(filename):
         f = codecs.open(filename, 'r', encoding='utf-8')
@@ -39,6 +43,7 @@ def load_known_users_list(filename):
 
 
 def save_known_users_list(filename, known_users_list):
+    """Save list of known users to database file."""
     f = codecs.open(filename, 'w', encoding='utf-8')
     for channel in known_users_list:
         for user in known_users_list[channel]:
@@ -49,7 +54,7 @@ def save_known_users_list(filename, known_users_list):
 @event('JOIN')
 @rule('.*')
 def welcome_user(bot, trigger):
-    """Welcome users upon joining the channel"""
+    """Welcome users upon joining the channel."""
     if trigger.nick == bot.nick:
         return
 
@@ -70,6 +75,7 @@ def welcome_user(bot, trigger):
 @commands('add_known', 'adduser')
 @example('.add_known Zppix #miraheze or .adduser Zppix #miraheze')
 def add_known_user(bot, trigger):
+    """Add user to known users list."""
     if trigger.nick not in bot.config.core.admin_accounts:
         bot.reply('Only bot admins can add people to the known users list.')
         return
