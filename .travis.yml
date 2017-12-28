@@ -1,0 +1,20 @@
+sudo: required
+language: generic
+
+services:
+    - docker
+
+before_install:
+    - docker pull debian
+    - docker run -t -d --name=testenv debian
+
+install:
+    - docker exec testenv apt update
+    - docker exec testenv apt install -y python-pip
+    - docker exec testenv pip install flake8
+
+before_script:
+    - docker cp ./ testenv:/ZppixBot
+
+script:
+    - docker exec testenv flake8 ZppixBot/modules --ignore D100,E501
