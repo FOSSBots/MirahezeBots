@@ -13,16 +13,18 @@ from sopel.tools.time import get_timezone, format_time
 
 try:
     import pytz
-except:
+except ImportError:
     pytz = None
 
 
 def filename(self):
+    """Format filename of reminders database file."""
     name = self.nick + '-' + self.config.core.host + '.reminders.db'
     return os.path.join(self.config.core.homedir, name)
 
 
 def load_database(name):
+    """Load reminders from database file."""
     data = {}
     if os.path.isfile(name):
         f = codecs.open(name, 'r', encoding='utf-8')
@@ -40,6 +42,7 @@ def load_database(name):
 
 
 def dump_database(name, data):
+    """Save reminders to database file."""
     f = codecs.open(name, 'w', encoding='utf-8')
     for unixtime, reminders in sopel.tools.iteritems(data):
         for channel, nick, message in reminders:
@@ -48,6 +51,7 @@ def dump_database(name, data):
 
 
 def setup(bot):
+    """Setup bot: start monitoring and sending reminders."""
     bot.rfn = filename(bot)
     bot.rdb = load_database(bot.rfn)
 
@@ -71,6 +75,7 @@ def setup(bot):
     targs = (bot,)
     t = threading.Thread(target=monitor, args=targs)
     t.start()
+
 
 scaling = collections.OrderedDict([
     ('years', 365.25 * 24 * 3600),
@@ -117,7 +122,7 @@ periods = '|'.join(scaling.keys())
 @commands('in')
 @example('.in 3h45m Release a new version of ZppixBot')
 def remind(bot, trigger):
-    """Gives you a reminder in the given amount of time."""
+    """Give user a reminder in the given amount of time."""
     if not trigger.group(2):
         bot.say("Missing arguments for reminder command.")
         return NOLIMIT
@@ -154,7 +159,10 @@ def remind(bot, trigger):
 @example('.at 13:47 Update the servers!')
 def at(bot, trigger):
     """
-    Gives you a reminder at the given time. Time format: hh:mm:ss. To see what timezone is used, type .getchanneltz (if setting a reminder in a IRC channel) or .gettz (elsewhere)
+    Give user a reminder at the given time.
+
+    Time format: hh:mm:ss.
+    To see what timezone is used, type .getchanneltz (if setting a reminder in a IRC channel) or .gettz (elsewhere)
     """
     if not trigger.group(2):
         bot.say("No arguments given for reminder command.")
@@ -198,6 +206,7 @@ def at(bot, trigger):
 
 
 def create_reminder(bot, trigger, duration, message, tz):
+    """Create reminder within specified period of time and message."""
     t = int(time.time()) + duration
     reminder = (trigger.sender, trigger.nick, message)
     try:
@@ -215,8 +224,10 @@ def create_reminder(bot, trigger, duration, message, tz):
         bot.reply('Okay, I will set the reminder for: %s' % timef)
     else:
         bot.reply('Okay, I will send the reminder in %s secs' % duration)
-        
+
+
 @commands('cancelreminder')
 @example('.cancelreminder (insert reminder message here)')
 def cancel(bot, trigger):
+    """Cancel reminder."""
     bot.reply('Pinging Reception123, or Zppix to cancel,' + trigger.nick + '\'s reminder.')

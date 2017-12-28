@@ -30,6 +30,7 @@ unstable_message = (
 @sopel.module.event(sopel.tools.events.RPL_LUSERCLIENT)
 @sopel.module.rule('.*')
 def startup_version_check(bot, trigger):
+    """Check sopel version on startup."""
     global startup_check_run
     if not startup_check_run:
         startup_check_run = True
@@ -38,6 +39,7 @@ def startup_version_check(bot, trigger):
 
 @sopel.module.interval(wait_time)
 def check_version(bot):
+    """Check latest sopel version and notify bot owner if update is available."""
     version = sopel.version_info
 
     info = requests.get(version_url).json()
