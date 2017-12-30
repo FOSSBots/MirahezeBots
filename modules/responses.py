@@ -1,3 +1,5 @@
+"""This module contains responses to frequently posted messages at #miraheze."""
+
 from sopel.module import rule, commands, example
 
 

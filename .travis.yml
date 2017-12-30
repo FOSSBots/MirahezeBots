@@ -17,4 +17,4 @@ before_script:
     - docker cp ./ testenv:/ZppixBot
 
 script:
-    - docker exec testenv flake8 ZppixBot/modules --ignore D100,E501
+    - docker exec testenv flake8 ZppixBot/modules --ignore E501

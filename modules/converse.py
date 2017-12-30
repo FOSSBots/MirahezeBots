@@ -1,3 +1,5 @@
+"""This module replies to some messages specified by regular expressions."""
+
 from sopel.module import rule
 
 

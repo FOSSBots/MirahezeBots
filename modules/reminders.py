@@ -1,3 +1,5 @@
+"""This module allows to set and manage reminders."""
+
 from __future__ import unicode_literals, absolute_import, print_function, division
 
 import os
