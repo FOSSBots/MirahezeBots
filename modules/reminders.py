@@ -242,8 +242,5 @@ def create_reminder(bot, trigger, duration, message, tz):
 @example('.cancelreminder (insert reminder message here)')
 def cancel(bot, trigger):
     """Cancel reminder."""
-    bot.reply(
-        'Pinging MacFan4000, Reception123, or Zppix to cancel {}\'s reminder.'.format(
-            trigger.nick
-        )
-    )
+    bot.reply(('Pinging MacFan4000, Reception123, or Zppix to cancel '
+               '{}\'s reminder.').format(trigger.nick))
