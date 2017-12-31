@@ -7,7 +7,12 @@ Sopel website.
 """
 # Copyright 2014, Elsie Powell, embolalia.com
 # Licensed under the Eiffel Forum License 2.
-from __future__ import unicode_literals, absolute_import, print_function, division
+from __future__ import (
+    unicode_literals,
+    absolute_import,
+    print_function,
+    division
+)
 
 import sopel
 import sopel.module
@@ -39,7 +44,7 @@ def startup_version_check(bot, trigger):
 
 @sopel.module.interval(wait_time)
 def check_version(bot):
-    """Check latest sopel version and notify bot owner if update is available."""
+    """Check latest sopel version. Notify bot owner if there is an update."""
     version = sopel.version_info
 
     info = requests.get(version_url).json()

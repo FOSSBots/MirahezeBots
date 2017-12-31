@@ -1,6 +1,11 @@
 """This module allows to set and manage reminders."""
 
-from __future__ import unicode_literals, absolute_import, print_function, division
+from __future__ import (
+    unicode_literals,
+    absolute_import,
+    print_function,
+    division
+)
 
 import os
 import re
@@ -129,11 +134,14 @@ def remind(bot, trigger):
         bot.say("Missing arguments for reminder command.")
         return NOLIMIT
     if trigger.group(3) and not trigger.group(4):
-        bot.say("No message was given for the reminder. Perhaps you should try again?")
+        bot.say("No message was given for the reminder. Perhaps you should "
+                "try again?")
         return NOLIMIT
     duration = 0
-    message = filter(None, re.split('(\d+(?:\.\d+)? ?(?:(?i)' + periods + ')) ?',
-                                    trigger.group(2))[1:])
+    message = filter(None, re.split(
+                            '(\d+(?:\.\d+)? ?(?:(?i)' + periods + ')) ?',
+                            trigger.group(2)
+                        )[1:])
     reminder = ''
     stop = False
     for piece in message:
@@ -164,13 +172,15 @@ def at(bot, trigger):
     Give user a reminder at the given time.
 
     Time format: hh:mm:ss.
-    To see what timezone is used, type .getchanneltz (if setting a reminder in a IRC channel) or .gettz (elsewhere)
+    To see what timezone is used, type .getchanneltz (if setting a reminder
+    in an IRC channel) or .gettz (elsewhere)
     """
     if not trigger.group(2):
         bot.say("No arguments given for reminder command.")
         return NOLIMIT
     if trigger.group(3) and not trigger.group(4):
-        bot.say("No message was given for the reminder. Perhaps you should try again?")
+        bot.say("No message was given for the reminder. Perhaps you should "
+                "try again?")
         return NOLIMIT
     regex = re.compile(r'(\d+):(\d+)(?::(\d+))?([^\s\d]+)? (.*)')
     match = regex.match(trigger.group(2))
@@ -232,4 +242,8 @@ def create_reminder(bot, trigger, duration, message, tz):
 @example('.cancelreminder (insert reminder message here)')
 def cancel(bot, trigger):
     """Cancel reminder."""
-    bot.reply('Pinging Reception123, or Zppix to cancel,' + trigger.nick + '\'s reminder.')
+    bot.reply(
+        'Pinging Reception123, or Zppix to cancel {}\'s reminder.'.format(
+            trigger.nick
+        )
+    )

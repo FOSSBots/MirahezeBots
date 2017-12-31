@@ -1,6 +1,12 @@
 """This module provides information about bot version."""
 
-from __future__ import unicode_literals, absolute_import, print_function, division
+from __future__ import (
+    unicode_literals,
+    absolute_import,
+    print_function,
+    division
+)
+
 from sopel.module import commands, example
 
 
