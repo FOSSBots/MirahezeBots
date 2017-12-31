@@ -12,6 +12,6 @@ from sopel.module import commands, example
 
 @commands('botversion', 'bv')
 @example('.botversion')
-def botversion(bot):
+def botversion(bot, trigger):
     """List the current version of the bot."""
     bot.say('The current version of this bot is 3.0 (v3)')
