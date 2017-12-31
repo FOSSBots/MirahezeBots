@@ -18,3 +18,9 @@ before_script:
 
 script:
     - docker exec testenv flake8 ZppixBot/modules
+notifications:
+  irc:
+    channels:
+      - "chat.freenode.net#ZppixBot"
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit}: %{author}) %{message} - %{build_url}"
