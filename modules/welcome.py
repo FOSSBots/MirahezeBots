@@ -84,7 +84,7 @@ def welcome_user(bot, trigger):
 @example('.add_known Zppix #miraheze or .adduser Zppix #miraheze')
 def add_known_user(bot, trigger):
     """Add user to known users list."""
-    if trigger.nick not in bot.config.core.admin_accounts:
+    if trigger.nick not in bot.config.core.admins:
         bot.reply('Only bot admins can add people to the known users list.')
         return
 
