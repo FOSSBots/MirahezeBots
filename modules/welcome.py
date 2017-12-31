@@ -1,4 +1,11 @@
-from __future__ import unicode_literals, absolute_import, print_function, division
+"""This module welcomes users upon joining the channel."""
+
+from __future__ import (
+    unicode_literals,
+    absolute_import,
+    print_function,
+    division
+)
 
 import os
 import re
@@ -63,7 +70,8 @@ def welcome_user(bot, trigger):
 
     if trigger.nick not in bot.known_users_list[trigger.sender]:
         if trigger.sender == '#miraheze':
-            message = 'Hello {}! If you have any questions feel free to ask and someone should answer soon.'.format(trigger.nick)
+            message = ("Hello {}! If you have any questions feel free to ask "
+                       "and someone should answer soon.").format(trigger.nick)
         else:
             message = 'Hello {}!'.format(trigger.nick)
 
@@ -100,9 +108,13 @@ def add_known_user(bot, trigger):
         bot.known_users_list[channel] = []
 
     if username in bot.known_users_list[channel]:
-        bot.say('{} is already added to known users list of channel {}'.format(username, channel))
+        bot.say('{} is already added to known users list of channel {}'.format(
+                    username, channel
+                ))
         return
 
     bot.known_users_list[channel].append(username)
     save_known_users_list(get_filename(bot), bot.known_users_list)
-    bot.say('Okay, {} is now added to known users list of channel {}'.format(username, channel))
+    bot.say('Okay, {} is now added to known users list of channel {}'.format(
+                username, channel
+            ))

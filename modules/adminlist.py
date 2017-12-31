@@ -1,17 +1,26 @@
-from __future__ import unicode_literals, absolute_import, print_function, division
+"""This module provides admin list and access level information."""
+
+from __future__ import (
+    unicode_literals,
+    absolute_import,
+    print_function,
+    division
+)
+
 from sopel.module import commands
 
 
 @commands('botadmins', 'admins')
 def admin_list(bot, trigger):
     """Provide the list of bot admins."""
-    admin_accounts = bot.config.core.admin_accounts
-    if len(admin_accounts) == 0:
+    admins = bot.config.core.admin_accounts
+    if len(admins) == 0:
         bot.reply('There are no bot admins')
         return
 
-    admin_accounts = ['You' if admin == trigger.nick else admin for admin in admin_accounts]
-    bot.reply('The bot\'s admins are: ' + ', '.join(admin_accounts[:-1]) + ' and ' + admin_accounts[-1])
+    admins = ['You' if admin == trigger.nick else admin for admin in admins]
+    admins_str = ', '.join(admins[:-1]) + ' and ' + admins[-1]
+    bot.reply('The bot\'s admins are: ' + admins_str)
 
 
 @commands('accesslevel')
