@@ -47,4 +47,4 @@ def ping_converse4(bot, trigger):
 def ping_converse4(bot, trigger):
         """Reply to message specified in rule."""
         if trigger.sender == '#miraheze':
-                bot.say("You're welcome %s!")
+                bot.say("You're welcome' + trigger.nick")
