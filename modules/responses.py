@@ -45,7 +45,7 @@ def ping_converse4(bot, trigger):
 
 
 @rule('Thanks ZppixBot')
-def ping_converse4(bot, trigger):
+def ping_converse5(bot, trigger):
         """Reply to message specified in rule."""
         if trigger.sender == '#miraheze':
                 bot.say('You\'re welcome ' + trigger.nick)
