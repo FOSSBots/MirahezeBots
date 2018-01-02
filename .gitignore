@@ -7,6 +7,6 @@ GeoIPASNum.dat
 malwaredomains.txt
 
 __pycache__
+.cache
 *.pyc
 .idea
-

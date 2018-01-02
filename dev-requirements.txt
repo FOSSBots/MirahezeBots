@@ -1,0 +1,2 @@
+# Development requirements
+vcrpy==1.11.0
