@@ -11,13 +11,17 @@ before_install:
 install:
     - docker exec testenv apt update
     - docker exec testenv apt install -y python-pip
-    - docker exec testenv pip install flake8
+    - docker exec testenv pip install flake8 pytest
 
 before_script:
-    - docker cp ./ testenv:/ZppixBot
+    - docker cp ./ testenv:/
+    - docker exec testenv pip install -r requirements.txt
+    - docker exec testenv pip install -r dev-requirements.txt
 
 script:
-    - docker exec testenv flake8 ZppixBot/modules
+    - docker exec testenv flake8 modules
+    - docker exec testenv pytest tests
+
 notifications:
   irc:
     channels:

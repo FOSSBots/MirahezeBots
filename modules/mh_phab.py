@@ -7,11 +7,47 @@ from __future__ import (
     division
 )
 
+import re
+
 from sopel.module import commands, example
+
+from utils.phabricator import PhabricatorClient
+
+
+def setup(bot):
+    """Setup phabricator client."""
+    if hasattr(bot.config, 'phabricator'):
+        bot.phabricator = PhabricatorClient(
+            bot.config.phabricator.host,
+            bot.config.phabricator.api_token
+        )
 
 
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
-    bot.say('https://phabricator.miraheze.org/T' + trigger.group(2))
+    task_id = int(re.sub("[^0-9]", "", trigger.group(2)))
+
+    if not hasattr(bot, 'phabricator'):
+        # Fallback for case if phabricator is not set up
+        bot.say('https://phabricator.miraheze.org/T{}'.format(task_id))
+        return
+
+    task = bot.phabricator.get_task(task_id)
+
+    if task is None:
+        bot.reply('I can\'t find task with id {}'.format(task_id))
+        return
+
+    message = '{} - {} [{}] authored by {}'.format(
+        task.link,
+        task.title,
+        task.status,
+        task.author.username
+    )
+    if task.owner is not None:
+        message += ', assigned to {}'.format(task.owner.username)
+    else:
+        message += ', assigned to None'
+    bot.say(message)
