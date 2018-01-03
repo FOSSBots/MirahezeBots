@@ -7,10 +7,14 @@ from __future__ import (
     division
 )
 
+import sys
+import os
 import re
 
 from sopel.module import commands, example
 
+# sopel modules import problem workaround
+sys.path.insert(0, os.path.abspath(__file__ + "/.."))
 from utils.phabricator import PhabricatorClient
 
 

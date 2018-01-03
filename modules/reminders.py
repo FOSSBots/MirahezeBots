@@ -139,9 +139,9 @@ def remind(bot, trigger):
         return NOLIMIT
     duration = 0
     message = filter(None, re.split(
-                            '(\d+(?:\.\d+)? ?(?:(?i)' + periods + ')) ?',
-                            trigger.group(2)
-                        )[1:])
+        '(\d+(?:\.\d+)? ?(?:(?i)' + periods + ')) ?',
+        trigger.group(2)
+    )[1:])
     reminder = ''
     stop = False
     for piece in message:

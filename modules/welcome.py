@@ -109,12 +109,12 @@ def add_known_user(bot, trigger):
 
     if username in bot.known_users_list[channel]:
         bot.say('{} is already added to known users list of channel {}'.format(
-                    username, channel
+                username, channel
                 ))
         return
 
     bot.known_users_list[channel].append(username)
     save_known_users_list(get_filename(bot), bot.known_users_list)
     bot.say('Okay, {} is now added to known users list of channel {}'.format(
-                username, channel
+            username, channel
             ))

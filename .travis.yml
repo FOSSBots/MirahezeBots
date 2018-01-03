@@ -19,7 +19,8 @@ before_script:
     - docker exec testenv pip install -r dev-requirements.txt
 
 script:
-    - docker exec testenv flake8 modules
+    # we ignore E402 because of workarounds we use for modules loading
+    - docker exec testenv flake8 modules --ignore E402
     - docker exec testenv pytest tests
 
 notifications:
