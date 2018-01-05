@@ -23,7 +23,7 @@ def admin_list(bot, trigger):
     bot.reply('The bot\'s admins are: ' + admins_str)
 
 
-@commands('accesslevel')
+@commands('accesslevel', 'access')
 def access_level(bot, trigger):
     """Tell user what is his access level for this bot."""
     if trigger.nick == bot.config.core.owner:
