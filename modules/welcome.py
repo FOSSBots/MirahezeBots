@@ -72,6 +72,10 @@ def welcome_user(bot, trigger):
         if trigger.sender == '#miraheze':
             message = ("Hello {}! If you have any questions feel free to ask "
                        "and someone should answer soon.").format(trigger.nick)
+        elif trigger.sender == '#wiki-dev-africa':
+            message = ("Welcome to Africa Wikimedia Developers' channel, {}!"
+                       " If you have any questions feel free to ask"
+                       " Zppix or D3r1ck or anyone who is around!").format(trigger.nick)
         else:
             message = 'Hello {}!'.format(trigger.nick)
 
