@@ -6,6 +6,10 @@ import requests
 class PhabricatorClient:
     """Simple Phabricator client."""
 
+    PRIORITY_HIGH = 75
+
+    STATUS_OPEN = 'open'
+
     def __init__(self, host, api_token):
         """Create client for specified host and api token."""
         self.host = host
@@ -47,6 +51,29 @@ class PhabricatorClient:
         user.username = result['fields']['username']
         return user
 
+    def find_tasks(self, priorities=[], statuses=[]):
+        """Find tasks."""
+        params = {}
+
+        for i in range(0, len(priorities)):
+            params['constraints[priorities]['+str(i)+']'] = priorities
+        for i in range(0, len(statuses)):
+            params['constraints[statuses]['+str(i)+']'] = statuses
+
+        result = self.api_request('maniphest.search', params)['data']
+        tasks = []
+        for entry in result:
+            task = PhabricatorTask(self)
+            print(entry)
+            task.id = entry['id']
+            task.title = entry['fields']['name']
+            task.ownerPHID = entry['fields']['ownerPHID']
+            task.authorPHID = entry['fields']['authorPHID']
+            task.priority = entry['fields']['priority']['name']
+            task.status = entry['fields']['status']['name']
+            task.dateModified = entry['fields']['dateModified']
+            tasks.append(task)
+        return tasks
 
 class PhabricatorTask:
     """Class representing Phabricator task."""
