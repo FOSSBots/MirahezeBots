@@ -77,8 +77,6 @@ def welcome_user(bot, trigger):
                        " If you have any questions feel free to ask"
                        " Zppix or D3r1ck or anyone who is"
                        " around!").format(trigger.nick)
-        else:
-            message = 'Hello {}!'.format(trigger.nick)
 
         bot.say(message)
         bot.known_users_list[trigger.sender].append(trigger.nick)
