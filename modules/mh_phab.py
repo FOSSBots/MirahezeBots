@@ -11,7 +11,7 @@ import sys
 import os
 import re
 
-from time import time
+from time import time, sleep
 
 from sopel.tools import events
 from sopel.module import commands, example, interval, rule, event
@@ -22,6 +22,7 @@ from utils.phabricator import PhabricatorClient
 
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
+MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
 startup_tasks_notifications = False
 priotasks_notify = []
 
@@ -47,6 +48,7 @@ def mass_message(bot, targets, message):
     """Send the same message to multiple targets."""
     for target in targets:
         bot.say(message, target)
+        sleep(MESSAGES_INTERVAL)
 
 
 @commands('task')
@@ -108,7 +110,7 @@ def high_priority_tasks_no_updates(bot, trigger):
     page_overflow_tasks = 0
 
     for task in tasks:
-        time_diff = round((time() - task.dateModified) / (24 * 60 * 60))
+        time_diff = int(round((time() - task.dateModified) / (24 * 60 * 60)))
         if time_diff < 3:
             continue
         if page_offset > 0:
@@ -129,6 +131,7 @@ def high_priority_tasks_no_updates(bot, trigger):
         else:
             message += ', assigned to None'
         bot.say(message)
+        sleep(MESSAGES_INTERVAL)
 
         tasks_waiting += 1
 
@@ -171,7 +174,7 @@ def high_priority_tasks_notification(bot):
     page_overflow_tasks = 0
 
     for task in tasks:
-        time_diff = round((time() - task.dateModified) / (24 * 60 * 60))
+        time_diff = int(round((time() - task.dateModified) / (24 * 60 * 60)))
         if time_diff < 3:
             continue
         if tasks_waiting >= HIGHPRIO_NOTIF_TASKS_PER_PAGE:
