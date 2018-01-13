@@ -10,4 +10,5 @@ def reply_to_logo_change__request(bot, trigger):
         return
     elif trigger.sender == '#miraheze':
         bot.reply("To change the logo for your wiki, please request "
-                  "at the following link: https://phabricator.miraheze.org/maniphest/task/edit/form/7/")
+                  "at the following link:"
+                  " https://phabricator.miraheze.org/maniphest/task/edit/form/7/")
