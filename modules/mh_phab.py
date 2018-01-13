@@ -35,7 +35,8 @@ def setup(bot):
             bot.config.phabricator.api_token
         )
 
-        if hasattr(bot.config.phabricator, 'priotasks_notifys'):
+        if (hasattr(bot.config.phabricator, 'priotasks_notify') and
+                bot.config.phabricator is not None):
             priotasks_notify = list(map(
                 lambda f: f.strip(),
                 bot.config.phabricator.priotasks_notify.split(',')
