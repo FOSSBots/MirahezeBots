@@ -33,13 +33,7 @@ class PhabricatorClient:
         else:
             return None
 
-        task = PhabricatorTask(self)
-        task.id = result['id']
-        task.title = result['fields']['name']
-        task.ownerPHID = result['fields']['ownerPHID']
-        task.authorPHID = result['fields']['authorPHID']
-        task.status = result['fields']['status']['name']
-        return task
+        return PhabricatorTask.fromApiResult(self, result)
 
     def get_user(self, user_phid):
         """Get user by phid."""
@@ -56,24 +50,16 @@ class PhabricatorClient:
         params = {}
 
         for i in range(0, len(priorities)):
-            params['constraints[priorities]['+str(i)+']'] = priorities
+            params['constraints[priorities][' + str(i) + ']'] = priorities
         for i in range(0, len(statuses)):
-            params['constraints[statuses]['+str(i)+']'] = statuses
+            params['constraints[statuses][' + str(i) + ']'] = statuses
 
         result = self.api_request('maniphest.search', params)['data']
         tasks = []
         for entry in result:
-            task = PhabricatorTask(self)
-            print(entry)
-            task.id = entry['id']
-            task.title = entry['fields']['name']
-            task.ownerPHID = entry['fields']['ownerPHID']
-            task.authorPHID = entry['fields']['authorPHID']
-            task.priority = entry['fields']['priority']['name']
-            task.status = entry['fields']['status']['name']
-            task.dateModified = entry['fields']['dateModified']
-            tasks.append(task)
+            tasks.append(PhabricatorTask.fromApiResult(self, entry))
         return tasks
+
 
 class PhabricatorTask:
     """Class representing Phabricator task."""
@@ -81,6 +67,20 @@ class PhabricatorTask:
     def __init__(self, client):
         """Create instance for client."""
         self.client = client
+
+    @staticmethod
+    def fromApiResult(client, entry):
+        """Create instance and fill it with data from api request result."""
+        task = PhabricatorTask(client)
+        task.id = entry.get('id')
+        fields = entry.get('fields', {})
+        task.title = fields.get('name')
+        task.ownerPHID = fields.get('ownerPHID')
+        task.authorPHID = fields.get('authorPHID')
+        task.priority = fields.get('priority', {}).get('name')
+        task.status = fields.get('status', {}).get('name')
+        task.dateModified = fields.get('dateModified')
+        return task
 
     @property
     def author(self):
