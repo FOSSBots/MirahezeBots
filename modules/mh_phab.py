@@ -110,7 +110,7 @@ def high_priority_tasks_no_updates(bot, trigger):
     page_overflow_tasks = 0
 
     for task in tasks:
-        time_diff = round((time() - task.dateModified) / (24 * 60 * 60))
+        time_diff = int(round((time() - task.dateModified) / (24 * 60 * 60)))
         if time_diff < 3:
             continue
         if page_offset > 0:
@@ -174,7 +174,7 @@ def high_priority_tasks_notification(bot):
     page_overflow_tasks = 0
 
     for task in tasks:
-        time_diff = round((time() - task.dateModified) / (24 * 60 * 60))
+        time_diff = int(round((time() - task.dateModified) / (24 * 60 * 60)))
         if time_diff < 3:
             continue
         if tasks_waiting >= HIGHPRIO_NOTIF_TASKS_PER_PAGE:
