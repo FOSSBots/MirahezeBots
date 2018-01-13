@@ -36,7 +36,7 @@ def setup(bot):
         )
 
         if (hasattr(bot.config.phabricator, 'priotasks_notify') and
-                bot.config.phabricator is not None):
+                bot.config.phabricator.priotasks_notify is not None):
             priotasks_notify = list(map(
                 lambda f: f.strip(),
                 bot.config.phabricator.priotasks_notify.split(',')
