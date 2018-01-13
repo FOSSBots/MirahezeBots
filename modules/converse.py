@@ -3,11 +3,11 @@
 from sopel.module import rule
 
 
-@rule('.*request.*wiki.*')
-def reply_to_wiki_request(bot, trigger):
-    """Reply to wiki request messages in #miraheze."""
+@rule('.*change.*logo.*')
+def reply_to_logo_change__request(bot, trigger):
+    """Reply to logo change messages in #miraheze."""
     if trigger.nick == 'Not-144f':
         return
     elif trigger.sender == '#miraheze':
-        bot.reply("To request a wiki, please see "
-                  "https://meta.miraheze.org/wiki/Special:RequestWiki")
+        bot.reply("To change the logo for your wiki, please request "
+                  "at the following link: https://phabricator.miraheze.org/maniphest/task/edit/form/7/")
