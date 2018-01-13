@@ -6,6 +6,10 @@ import requests
 class PhabricatorClient:
     """Simple Phabricator client."""
 
+    PRIORITY_HIGH = 75
+
+    STATUS_OPEN = 'open'
+
     def __init__(self, host, api_token):
         """Create client for specified host and api token."""
         self.host = host
@@ -29,13 +33,7 @@ class PhabricatorClient:
         else:
             return None
 
-        task = PhabricatorTask(self)
-        task.id = result['id']
-        task.title = result['fields']['name']
-        task.ownerPHID = result['fields']['ownerPHID']
-        task.authorPHID = result['fields']['authorPHID']
-        task.status = result['fields']['status']['name']
-        return task
+        return PhabricatorTask.fromApiResult(self, result)
 
     def get_user(self, user_phid):
         """Get user by phid."""
@@ -47,6 +45,21 @@ class PhabricatorClient:
         user.username = result['fields']['username']
         return user
 
+    def find_tasks(self, priorities=[], statuses=[]):
+        """Find tasks."""
+        params = {}
+
+        for i in range(0, len(priorities)):
+            params['constraints[priorities][' + str(i) + ']'] = priorities
+        for i in range(0, len(statuses)):
+            params['constraints[statuses][' + str(i) + ']'] = statuses
+
+        result = self.api_request('maniphest.search', params)['data']
+        tasks = []
+        for entry in result:
+            tasks.append(PhabricatorTask.fromApiResult(self, entry))
+        return tasks
+
 
 class PhabricatorTask:
     """Class representing Phabricator task."""
@@ -54,6 +67,20 @@ class PhabricatorTask:
     def __init__(self, client):
         """Create instance for client."""
         self.client = client
+
+    @staticmethod
+    def fromApiResult(client, entry):
+        """Create instance and fill it with data from api request result."""
+        task = PhabricatorTask(client)
+        task.id = entry.get('id')
+        fields = entry.get('fields', {})
+        task.title = fields.get('name')
+        task.ownerPHID = fields.get('ownerPHID')
+        task.authorPHID = fields.get('authorPHID')
+        task.priority = fields.get('priority', {}).get('name')
+        task.status = fields.get('status', {}).get('name')
+        task.dateModified = fields.get('dateModified')
+        return task
 
     @property
     def author(self):
