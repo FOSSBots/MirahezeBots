@@ -13,8 +13,7 @@ import re
 
 from time import time, sleep
 
-from sopel.tools import events
-from sopel.module import commands, example, interval, rule, event
+from sopel.module import commands, example, interval
 
 # sopel modules import problem workaround
 sys.path.insert(0, os.path.abspath(__file__ + "/.."))
@@ -145,7 +144,6 @@ def high_priority_tasks_no_updates(bot, trigger):
             page_overflow_tasks,
             page_number + 1
         ))
-
         
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
