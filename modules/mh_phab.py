@@ -144,7 +144,8 @@ def high_priority_tasks_no_updates(bot, trigger):
             page_overflow_tasks,
             page_number + 1
         ))
-        
+
+
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
     """Send high priority tasks notifications."""
