@@ -146,17 +146,7 @@ def high_priority_tasks_no_updates(bot, trigger):
             page_number + 1
         ))
 
-
-@event(events.RPL_LUSERCLIENT)
-@rule('.*')
-def startup_notification_sender(bot, trigger):
-    """Send high priority tasks notifications on startup."""
-    global startup_tasks_notifications
-    if not startup_tasks_notifications:
-        startup_tasks_notifications = True
-        high_priority_tasks_notification(bot)
-
-
+        
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
     """Send high priority tasks notifications."""
