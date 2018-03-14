@@ -37,15 +37,21 @@ def ping_converse3(bot, trigger):
                         "Phabricator ticket to facilitate the process!")
 
 
-@rule('The upgrade was successful')
+@rule('503')
 def ping_converse4(bot, trigger):
+        """Reply to message specified in rule."""
+        if trigger.sender == '#miraheze' and trigger.sender != 'icinga-miraheze':
+                bot.reply("The servers should return back to normal shortly.")
+
+@rule('The upgrade was successful')
+def ping_converse5(bot, trigger):
         """Reply to message specified in rule."""
         if trigger.sender == '#miraheze':
                 bot.say("Good job %s! Keep on doing what you do.")
 
 
 @rule('Thanks ZppixBot')
-def ping_converse5(bot, trigger):
+def ping_converse6(bot, trigger):
         """Reply to message specified in rule."""
         if trigger.sender == '#miraheze':
                 bot.say('You\'re welcome ' + trigger.nick)
