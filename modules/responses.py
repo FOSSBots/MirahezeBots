@@ -40,7 +40,7 @@ def ping_converse3(bot, trigger):
 @rule('503')
 def ping_converse4(bot, trigger):
         """Reply to message specified in rule."""
-        if trigger.sender == '#miraheze' and trigger.sender != 'icinga-miraheze':
+        if trigger.sender == '#miraheze' and trigger.nick != 'icinga-miraheze':
                 bot.reply("The servers should return back to normal shortly.")
 
 @rule('The upgrade was successful')
