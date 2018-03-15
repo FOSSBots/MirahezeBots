@@ -16,7 +16,7 @@ before_script:
     - docker cp ./ testenv:/
     - docker exec testenv pip install -r requirements.txt
     - docker exec testenv pip install -r dev-requirements.txt
-    - python -v
+    - docker exec testenv python -v
 
 script:
     # we ignore E402 because of workarounds we use for modules loading
