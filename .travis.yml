@@ -20,7 +20,7 @@ before_script:
 
 script:
     # we ignore E402 because of workarounds we use for modules loading
-    - docker exec testenv flake8 modules --ignore E402
+    - docker exec testenv flake8 modules --ignore E402, E501
     - docker exec testenv pytest tests
 
 notifications:
