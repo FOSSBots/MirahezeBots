@@ -75,7 +75,7 @@ def welcome_user(bot, trigger):
         elif trigger.sender == '#miraheze-cvt':
             message = ("Welcome {}. If you need to report spam or abuse,"
                        "please feel free to notify"
-                       "any of the voiced (+v) users,"
+                       " any of the voiced (+v) users,"
                        "if it contains personal information you can pm them,"
                        "or email us"
                        "at cvt [at] miraheze.org").format(trigger.nick)
