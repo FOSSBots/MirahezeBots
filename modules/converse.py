@@ -6,7 +6,7 @@ from sopel.module import rule
 @rule('.*change.*logo.*')
 def reply_to_logo_change__request(bot, trigger):
     """Reply to logo change messages in #miraheze."""
-    if trigger.nick == 'Not-7882':
+    if trigger.nick == 'Not-9cb8':
         return
     elif trigger.sender == '#miraheze':
         bot.reply("To change the logo for your wiki, please request "
