@@ -5,7 +5,8 @@
 # Copyright 2013      Lior Ramati (firerogue517@gmail.com)
 # Copyright © 2014 Elad Alfassa <elad@fedoraproject.org>
 # Licensed under the Eiffel Forum License 2.
-from __future__ import unicode_literals, absolute_import, print_function, division
+from __future__ import print_function, division
+from __future__ import unicode_literals, absolute_import
 
 import re
 from sopel import web, tools, __version__
@@ -140,7 +141,8 @@ def process_urls(bot, trigger, urls):
     """
     For each URL in the list, ensure that it isn't handled by another module.
     If not, find where it redirects to, if anywhere. If that redirected URL
-    should be handled by another module, dispatch the callback for it.
+    should be handled by another module, 
+    dispatch the callback for it.
     Return a list of (title, hostname) tuples for each URL which is not handled by
     another module.
     """
