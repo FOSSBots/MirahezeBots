@@ -131,8 +131,8 @@ def title_auto(bot, trigger):
         message = 'Title: [ %s ] - %s' % (title, domain)
         # Guard against responding to other instances of this bot.
         if trigger.nick == 'MirahezeLogBot':
-        return
-        if message != trigger:
+            return
+        elif message != trigger:
             bot.say(message)
 
 
