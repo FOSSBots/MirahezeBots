@@ -41,7 +41,9 @@ def ping_converse3(bot, trigger):
 def ping_converse4(bot, trigger):
         """Reply to message specified in rule."""
         if trigger.sender == '#miraheze' and trigger.nick != 'icinga-miraheze':
-                bot.reply("The servers should return back to normal shortly. If that is not the case, please file a task on Phabricator immediately")
+                bot.reply("The servers should return back to normal shortly."
+                          "If that is not the case, please file a task on 
+                          "Phabricator immediately")
 
 
 @rule('The upgrade was successful')
