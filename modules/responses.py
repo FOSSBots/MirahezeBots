@@ -63,5 +63,5 @@ def ping_converse6(bot, trigger):
 @rule('Hi ZppixBot')
 def ping_converse7(bot, trigger):
         """Reply to message specified in rule."""
-                bot.say('Hi ' + trigger.nick + '. Do you need '
-                        'anything from me?')
+        bot.say('Hi ' + trigger.nick + ', Do you need '
+                'anything from me?')
