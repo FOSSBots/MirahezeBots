@@ -1,12 +1,11 @@
-# coding=utf-8
-"""
-remind.py - Sopel Reminder Module
-Copyright 2011, Sean B. Palmer, inamidst.com
-Licensed under the Eiffel Forum License 2.
+"""This module allows to set and manage reminders."""
 
-https://sopel.chat
-"""
-from __future__ import unicode_literals, absolute_import, print_function, division
+from __future__ import (
+    unicode_literals,
+    absolute_import,
+    print_function,
+    division
+)
 
 import os
 import re
@@ -26,18 +25,20 @@ except ImportError:
 
 
 def filename(self):
+    """Format filename of reminders database file."""
     name = self.nick + '-' + self.config.core.host + '.reminders.db'
     return os.path.join(self.config.core.homedir, name)
 
 
 def load_database(name):
+    """Load reminders from database file."""
     data = {}
     if os.path.isfile(name):
         f = codecs.open(name, 'r', encoding='utf-8')
         for line in f:
             unixtime, channel, nick, message = line.split('\t')
             message = message.rstrip('\n')
-            t = int(float(unixtime))  # WTFs going on here?
+            t = int(float(unixtime))
             reminder = (channel, nick, message)
             try:
                 data[t].append(reminder)
@@ -48,6 +49,7 @@ def load_database(name):
 
 
 def dump_database(name, data):
+    """Save reminders to database file."""
     f = codecs.open(name, 'w', encoding='utf-8')
     for unixtime, reminders in sopel.tools.iteritems(data):
         for channel, nick, message in reminders:
@@ -56,6 +58,7 @@ def dump_database(name, data):
 
 
 def setup(bot):
+    """Setup bot: start monitoring and sending reminders."""
     bot.rfn = filename(bot)
     bot.rdb = load_database(bot.rfn)
 
@@ -124,18 +127,21 @@ periods = '|'.join(scaling.keys())
 
 
 @commands('in')
-@example('.in 3h45m tell Reception to stop breaking everything')
+@example('.in 3h45m Release a new version of ZppixBot')
 def remind(bot, trigger):
-    """Gives you a reminder in the given amount of time."""
+    """Give user a reminder in the given amount of time."""
     if not trigger.group(2):
         bot.say("Missing arguments for reminder command.")
         return NOLIMIT
     if trigger.group(3) and not trigger.group(4):
-        bot.say("No message given for reminder.")
+        bot.say("No message was given for the reminder. Perhaps you should "
+                "try again?")
         return NOLIMIT
     duration = 0
-    message = filter(None, re.split('(\d+(?:\.\d+)? ?(?:(?i)' + periods + ')) ?',
-                                    trigger.group(2))[1:])
+    message = filter(None, re.split(
+        '(\d+(?:\.\d+)? ?(?:(?i)' + periods + ')) ?',
+        trigger.group(2)
+    )[1:])
     reminder = ''
     stop = False
     for piece in message:
@@ -148,7 +154,7 @@ def remind(bot, trigger):
             reminder = reminder + piece
             stop = True
     if duration == 0:
-        return bot.reply("Sorry, didn't understand the input.")
+        return bot.reply("Sorry, didn't understand. Please try again.")
 
     if duration % 1:
         duration = int(duration) + 1
@@ -160,24 +166,26 @@ def remind(bot, trigger):
 
 
 @commands('at')
-@example('.at 13:47 Tell Zpp!x to break ZppixBot again.')
+@example('.at 13:47 Update the servers!')
 def at(bot, trigger):
     """
-    Gives you a reminder at the given time. Takes hh:mm:ssTimezone
-    message. Timezone is any timezone Sopel takes elsewhere; the best choices
-    are those from the tzdb; a list of valid options is available at
-    https://sopel.chat/tz . The seconds and timezone are optional.
+    Give user a reminder at the given time.
+
+    Time format: hh:mm:ss.
+    To see what timezone is used, type .getchanneltz (if setting a reminder
+    in an IRC channel) or .gettz (elsewhere)
     """
     if not trigger.group(2):
         bot.say("No arguments given for reminder command.")
         return NOLIMIT
     if trigger.group(3) and not trigger.group(4):
-        bot.say("No message given for reminder.")
+        bot.say("No message was given for the reminder. Perhaps you should "
+                "try again?")
         return NOLIMIT
     regex = re.compile(r'(\d+):(\d+)(?::(\d+))?([^\s\d]+)? (.*)')
     match = regex.match(trigger.group(2))
     if not match:
-        bot.reply("Sorry, but I didn't understand your input.")
+        bot.reply("Sorry, but I didn't understand, please try again.")
         return NOLIMIT
     hour, minute, second, tz, message = match.groups()
     if not second:
@@ -206,10 +214,11 @@ def at(bot, trigger):
 
     if duration < 0:
         duration += 86400
-    create_reminder(bot, trigger, duration, message, timezone)
+    create_reminder(bot, trigger, duration, message, 'UTC')
 
 
 def create_reminder(bot, trigger, duration, message, tz):
+    """Create reminder within specified period of time and message."""
     t = int(time.time()) + duration
     reminder = (trigger.sender, trigger.nick, message)
     try:
@@ -224,6 +233,14 @@ def create_reminder(bot, trigger, duration, message, tz):
         timef = format_time(bot.db, bot.config, tz, trigger.nick,
                             trigger.sender, remind_at)
 
-        bot.reply('Okay, will remind at %s' % timef)
+        bot.reply('Okay, I will set the reminder for: %s' % timef)
     else:
-        bot.reply('Okay, will remind in %s secs' % duration)
+        bot.reply('Okay, I will send the reminder in %s secs' % duration)
+
+
+@commands('cancelreminder')
+@example('.cancelreminder (insert reminder message here)')
+def cancel(bot, trigger):
+    """Cancel reminder."""
+    bot.reply(('Pinging MacFan4000, Reception123, or Zppix to cancel '
+               '{}\'s reminder.').format(trigger.nick))
