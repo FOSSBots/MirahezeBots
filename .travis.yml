@@ -19,8 +19,8 @@ before_script:
     - docker exec testenv python --version
 
 script:
-    # we ignore E402 and E501 because of workarounds we use for modules loading
-    - docker exec testenv flake8 modules --ignore=E402, E501
+    # we ignore E402 because of workarounds we use for modules loading
+    - docker exec testenv flake8 modules --ignore E402 --max-line-length 150
     - docker exec testenv pytest tests
 
 notifications:
