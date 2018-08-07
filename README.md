@@ -10,6 +10,9 @@ ZppixBot uses [Sopel](https://sopel.chat).
 To use this bot, copy `modules` folder to your Sopel installation
 (and don't forget to setup yours `default.cfg` if needed)
 
+[Source Github](http://github.com/sopel-irc/sopel)
+
 [More info](https://tools.wmflabs.org/zppixbot/)
 
 [Documentation](https://tools.wmflabs.org/zppixbot/documentation.html)
+
