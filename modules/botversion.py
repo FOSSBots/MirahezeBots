@@ -15,7 +15,8 @@ from sopel.module import commands, example
 def botversion(bot, trigger):
     """List the current version of the bot."""
     bot.say('The current version of this bot is 3.0 (v3)')
-    
+
+
 @commands('source', 'botsource')
 @example('.source')
 def githubsource(bot,trigger):
