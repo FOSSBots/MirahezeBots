@@ -19,6 +19,6 @@ def botversion(bot, trigger):
 
 @commands('source', 'botsource')
 @example('.source')
-def githubsource(bot,trigger):
+def githubsource(bot, trigger):
     """Give the link to ZppixBot's Github."""
     bot.reply('My code can be found here: https://github.com/Pix1234/ZppixBot-Source')
