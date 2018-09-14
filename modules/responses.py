@@ -10,6 +10,11 @@ def cancel(bot, trigger):
     bot.reply(("Hey MacFan4000, Reception123 or Zppix, {} would like to have "
                "me in their channel").format(trigger.nick))
 
+@commands('m')
+@example('.m (nick)')
+def cancel2(bot, trigger):
+    """tell the user that they are doing good work."""
+    bot.reply(("You're doing good work, {}!").format(trigger.group(2)))
 
 @rule('update.php')
 def ping_converse(bot, trigger):
