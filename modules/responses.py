@@ -10,7 +10,7 @@ def cancel(bot, trigger):
     bot.reply(("Hey MacFan4000, Reception123 or Zppix, {} would like to have "
                "me in their channel").format(trigger.nick))
 
-    
+
 @commands('m')
 @example('.m (nick)')
 def cancel2(bot, trigger):
