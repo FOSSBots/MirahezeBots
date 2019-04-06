@@ -13,8 +13,8 @@ import codecs
 from sopel.module import rule, event, commands, example
 
 DEFAULT_CHANNEL = '#miraheze'
-USERNAME_RE = re.compile('[A-Za-z0-9\[\]\{\}\-_|`]+$')
-CHANNEL_RE = re.compile('#[A-Za-z0-9#\-]+$')
+USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
+CHANNEL_RE = re.compile(r'#[A-Za-z0-9#\-]+$')
 
 
 def get_filename(bot):
