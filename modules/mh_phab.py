@@ -62,7 +62,6 @@ def phabtask(bot, trigger):
         return
 
     task = bot.phabricator.get_task(task_id)
-
     if task is None:
         bot.reply('I can\'t find task with id {}'.format(task_id))
         return
