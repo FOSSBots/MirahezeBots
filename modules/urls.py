@@ -129,7 +129,7 @@ def title_auto(bot, trigger):
     bot.memory['last_seen_url'][trigger.sender] = urls[-1]
 
     for title, domain in results[:4]:
-        message = 'Title: [ %s ] - %s' % (title, domain)
+        message = '[ %s ] - %s' % (title, domain)
         # Guard against responding to other instances of this bot.
         if trigger.nick == 'MirahezeLogBot' or trigger.nick == 'travis-ci' or trigger.nick == 'wikibugs':
             return
