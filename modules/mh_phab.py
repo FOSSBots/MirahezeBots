@@ -13,7 +13,7 @@ import re
 
 from time import time, sleep
 
-from sopel.module import commands, example, interval
+from sopel.module import commands, example, interval, rule
 
 # sopel modules import problem workaround
 sys.path.insert(0, os.path.abspath(__file__ + "/.."))
@@ -197,8 +197,9 @@ def high_priority_tasks_notification(bot):
                          page_overflow_tasks
                      ))
 
+
 @rule('T[1-9][0-9]*')
-def phabtask(bot, trigger):
+def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = int(re.sub("[^0-9]", "", trigger))
 
