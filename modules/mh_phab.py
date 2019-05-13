@@ -196,3 +196,30 @@ def high_priority_tasks_notification(bot):
                      'and {} more (see next pages...)'.format(
                          page_overflow_tasks
                      ))
+
+@rule('T[1-9][0-9]*')
+def phabtask(bot, trigger):
+    """Get a Miraheze phabricator link to a the task number you provide."""
+    task_id = int(re.sub("[^0-9]", "", trigger))
+
+    if not hasattr(bot, 'phabricator'):
+        # Fallback for case if phabricator is not set up
+        bot.say('https://phabricator.miraheze.org/T{}'.format(task_id))
+        return
+
+    task = bot.phabricator.get_task(task_id)
+    if task is None:
+        bot.reply('I can\'t find task with id {}'.format(task_id))
+        return
+
+    message = '{} - {} [{}] authored by {}'.format(
+        task.link,
+        task.title,
+        task.status,
+        task.author.username
+    )
+    if task.owner is not None:
+        message += ', assigned to {}'.format(task.owner.username)
+    else:
+        message += ', assigned to None'
+    bot.say(message)
