@@ -70,7 +70,7 @@ def welcome_user(bot, trigger):
 
     if trigger.nick not in bot.known_users_list[trigger.sender]:
         if trigger.sender == '#miraheze':
-            message = ("Hello {}! If you have any questions feel free to ask "
+            message = ("Hello {}! If you have any questions, feel free to ask "
                        "and someone should answer soon.").format(trigger.nick)
         elif trigger.sender == '#miraheze-cvt':
             message = ("Welcome {}. If you need to report spam or abuse,"
