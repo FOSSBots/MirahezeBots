@@ -238,6 +238,7 @@ def get_hostname(url):
 
 @commands('url')
 @example('.url ban http://google.com')
+@require_admin
 def url_command(bot, trigger):
     """Allow a bot admin to modify the url blacklist. Accepts `ban`, `allow` and `match` as parameters."""
     MESSAGE = {
