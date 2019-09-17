@@ -256,7 +256,7 @@ def url_command(bot, trigger):
     if len(text) == 3 and text[1] == 'match':
         for entry in blacklist:
             r_entry = re.compile(entry)
-            if text[2] in entry or r_entry.match(text[2]):
+            if text[2] in entry or r_entry.search(text[2]):
                 bot.reply(MESSAGE['results'] % (text[2], entry))
                 return
         bot.reply(MESSAGE['no_exist'] % text[2])
