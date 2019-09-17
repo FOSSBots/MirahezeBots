@@ -47,4 +47,3 @@ def miraheze_gethelp(bot, trigger):
 def miraheze_discord(bot, trigger):
     """Displays discord information for Miraheze."""
     bot.reply('You can join discord by going to, https://discord.is/miraheze!')
-    
