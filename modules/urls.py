@@ -10,7 +10,7 @@ from __future__ import unicode_literals, absolute_import
 
 import re
 from sopel import web, tools, __version__
-from sopel.module import commands, rule, example
+from sopel.module import commands, rule, example, require_admin
 from sopel.config.types import ValidatedAttribute, ListAttribute, StaticSection
 
 import requests
