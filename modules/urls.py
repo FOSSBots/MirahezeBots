@@ -236,6 +236,55 @@ def get_hostname(url):
     return hostname
 
 
+@commands('url')
+@example('.url ban http://google.com')
+def url_command(bot, trigger):
+    """Allow a bot admin to modify the url blacklist. Accepts `ban`, `allow` and `match` as parameters."""
+    MESSAGE = {
+        'success_ban': "Successfully added ban: %s",
+        'success_allow': "Successfully removed ban on: %s",
+        'invalid_ban': "Invalid ban format, %s must be valid regex",
+        'no_exist': "Could not find %s",
+        'results': "Found %s: %s",
+        'nope': "I don't know how to do what you're asking!",
+    }
+
+    blacklist = set(s for s in bot.config.url.exclude if s != '')
+    text = trigger.group().split()
+
+    if len(text) == 3 and text[1] == 'match':
+        for entry in blacklist:
+            r_entry = re.compile(entry)
+            if text[2] in entry or r_entry.matches(text[2]):
+                bot.reply(MESSAGE['results'] % (text[2], entry))
+                return
+        bot.reply(MESSAGE['no_exist'] % text[2])
+
+    elif len(text) == 3 and text[1] == 'ban':
+        try:
+            re.compile(text[2])
+            blacklist.add(text[2])
+            bot.config.url.exclude = blacklist
+            bot.config.save()
+            bot.memory['url_exclude'] = [re.compile(s) for s in blacklist]
+            bot.reply(MESSAGE['success_ban'] % text[2])
+        except Exception:
+            bot.reply(MESSAGE['invalid_ban'] % text[2])
+
+    elif len(text) == 3 and text[1] == 'allow':
+        if text[2] not in blacklist:
+            bot.reply(MESSAGE['no_exist'] % text[2])
+            return
+        blacklist.remove(text[2])
+        bot.config.url.exclude = blacklist
+        bot.config.save()
+        bot.memory['url_exclude'] = [re.compile(s) for s in blacklist]
+        bot.reply(MESSAGE['success_allow'] % text[2])
+
+    else:
+        bot.reply(MESSAGE['nope'])
+
+
 if __name__ == "__main__":
     from sopel.test_tools import run_example_tests
     run_example_tests(__file__)
