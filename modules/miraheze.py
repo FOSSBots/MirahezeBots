@@ -41,7 +41,7 @@ def miraheze_gethelp(bot, trigger):
     """Reply to help requests."""
     if trigger.sender == '#miraheze':
         bot.say(trigger.nick + ', needs help. Pinging Reception123, Zppix, '
-                'PuppyKun, Voidwalker.')
+                'PuppyKun, Voidwalker, RhinosF1.')
 
 @commands('discord')
 def miraheze_discord(bot, trigger):
