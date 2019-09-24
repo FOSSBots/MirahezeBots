@@ -108,7 +108,7 @@ def devoice(bot, trigger):
 def kick(bot, trigger):
     """Kick a user from the channel."""
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
-    bot.say('Please wait...')
+        bot.say('Please wait...')
         bot.say('op' + trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
@@ -190,7 +190,7 @@ def unban(bot, trigger):
     The bot must be a channel operator for this command to work.
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
-    bot.say('Please wait...')
+        bot.say('Please wait...')
         bot.say('op' + trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
@@ -279,7 +279,7 @@ def kickban(bot, trigger):
     The bot must be a channel operator for this command to work.
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
-    bot.say('Please wait...')
+        bot.say('Please wait...')
         bot.say('op' + trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
