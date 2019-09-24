@@ -9,8 +9,7 @@ before_install:
     - docker run -t -d --name=testenv debian
 
 install:
-    - docker exec testenv apt install -y python3
-    - docker exec testenv apt install -y python3-pip
+    - docker exec testenv apt install -y python-pip
     - docker exec testenv apt upgrade -y
     - docker exec testenv pip install flake8 pytest
 before_script:
