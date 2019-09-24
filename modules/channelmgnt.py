@@ -46,12 +46,6 @@ def op(bot, trigger):
     if not nick:
         nick = trigger.nick
     bot.write(['MODE', channel, "+o", nick])
-    else:
-    nick = trigger.group(2)
-    channel = trigger.sender
-    if not nick:
-        nick = trigger.nick
-    bot.write(['MODE', channel, "+o", nick])
 
 
 @require_chanmsg
@@ -65,13 +59,6 @@ def deop(bot, trigger):
         bot.say('Please wait...')
         bot.say('op' + trigger.sender, 'ChanServ')
         time.sleep(1)
-    nick = trigger.group(2)
-    channel = trigger.sender
-    if not nick:
-        nick = trigger.nick
-
-    bot.write(['MODE', channel, "-o", nick])
-    else:
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
@@ -95,12 +82,6 @@ def voice(bot, trigger):
     if not nick:
         nick = trigger.nick
     bot.write(['MODE', channel, "+v", nick])
-    else:
-    nick = trigger.group(2)
-    channel = trigger.sender
-    if not nick:
-        nick = trigger.nick
-    bot.write(['MODE', channel, "+v", nick])
 
 
 @require_chanmsg
@@ -119,12 +100,7 @@ def devoice(bot, trigger):
     if not nick:
         nick = trigger.nick
     bot.write(['MODE', channel, "-v", nick])
-else:
-    nick = trigger.group(2)
-    channel = trigger.sender
-    if not nick:
-        nick = trigger.nick
-    bot.write(['MODE', channel, "-v", nick])
+
 
 @require_chanmsg
 @commands('kick')
