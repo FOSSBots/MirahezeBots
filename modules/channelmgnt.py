@@ -55,7 +55,7 @@ def deop(bot, trigger):
     Command to deop users in a room. If no nick is given,
     Sopel will deop the nick who sent the command
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops::
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
         bot.say('op' + trigger.sender, 'ChanServ')
         time.sleep(1)
