@@ -28,7 +28,7 @@ def default_mask(trigger):
     arg = formatting.color('{}', formatting.colors.GREEN)
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
-chanops = [Zppix, RhinosF1, Voidwalker, Reception123, PuppyKun, paladox, JohnLewis]
+chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
 
 @require_chanmsg
 @commands('op')
