@@ -303,7 +303,7 @@ def kickban(bot, trigger):
     if mask == '':
         return
     bot.write(['MODE', channel, '+b', mask])
-    bot.write('KICK', channel, nick, reason)
+    bot.write(['KICK', channel, nick, reason])
 
 
 @require_chanmsg
