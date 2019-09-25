@@ -40,7 +40,6 @@ def op(bot, trigger):
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op '+ trigger.sender, 'ChanServ')
-        bot.say('op '+ trigger.sender, 'RhinosF1')
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
@@ -128,7 +127,7 @@ def kick(bot, trigger):
         reasonidx = 3
     reason = ' '.join(text[reasonidx:])
     if nick != bot.config.core.nick:
-        bot.kick(nick, channel, reason)
+        bot.write(['KICK', channel, nick, reason])
 
 
 def configureHostMask(mask):
