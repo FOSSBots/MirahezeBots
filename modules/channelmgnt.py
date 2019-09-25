@@ -37,7 +37,7 @@ def op(bot, trigger):
     Command to op users in a room. If no nick is given,
     Sopel will op the nick who sent the command
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op '+ trigger.sender, 'ChanServ')
         bot.say('op '+ trigger.sender, 'RhinosF1')
@@ -56,7 +56,7 @@ def deop(bot, trigger):
     Command to deop users in a room. If no nick is given,
     Sopel will deop the nick who sent the command
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -74,7 +74,7 @@ def voice(bot, trigger):
     Command to voice users in a room. If no nick is given,
     Sopel will voice the nick who sent the command
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -92,7 +92,7 @@ def devoice(bot, trigger):
     Command to devoice users in a room. If no nick is given,
     Sopel will devoice the nick who sent the command
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -108,7 +108,7 @@ def devoice(bot, trigger):
 @priority('high')
 def kick(bot, trigger):
     """Kick a user from the channel."""
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -161,7 +161,7 @@ def ban(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -190,7 +190,7 @@ def unban(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op '+ trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -219,7 +219,7 @@ def quiet(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -248,7 +248,7 @@ def unquiet(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -279,7 +279,7 @@ def kickban(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
@@ -314,7 +314,7 @@ def topic(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
