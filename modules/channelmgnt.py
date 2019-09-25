@@ -38,7 +38,7 @@ def op(bot, trigger):
     Sopel will op the nick who sent the command
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
-        bot.say('Please wait...')
+        #bot.say('Please wait...')
         bot.say('op '+ trigger.sender, 'ChanServ')
         bot.say('op '+ trigger.sender, 'RhinosF1')
         time.sleep(1)
@@ -80,7 +80,7 @@ def voice(bot, trigger):
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
-    if not nick:
+    if not nick: I
         nick = trigger.nick
     bot.write(['MODE', channel, "+v", nick])
 
