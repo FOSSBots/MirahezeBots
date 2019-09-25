@@ -39,7 +39,7 @@ def op(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op '+ trigger.sender, 'ChanServ')
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
@@ -57,7 +57,7 @@ def deop(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
@@ -75,7 +75,7 @@ def voice(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
@@ -93,7 +93,7 @@ def devoice(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
@@ -109,7 +109,7 @@ def kick(bot, trigger):
     """Kick a user from the channel."""
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
     argc = len(text)
@@ -162,7 +162,7 @@ def ban(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
     argc = len(text)
@@ -191,7 +191,7 @@ def unban(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op '+ trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
     argc = len(text)
@@ -220,7 +220,7 @@ def quiet(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
     argc = len(text)
@@ -249,7 +249,7 @@ def unquiet(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
     argc = len(text)
@@ -280,7 +280,7 @@ def kickban(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
     argc = len(text)
@@ -315,7 +315,7 @@ def topic(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick == chanops:
         bot.say('Please wait...')
-        bot.say('op' + trigger.sender, 'ChanServ')
+        bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
     if not trigger.group(2):
         return
