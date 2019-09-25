@@ -301,7 +301,7 @@ def kickban(bot, trigger):
     reason = ' '.join(text[reasonidx:])
     mask = configureHostMask(mask)
     if mask == '':
-        mask = nick + '@*'
+        mask = nick + '!*@*'
     bot.write(['MODE', channel, '+b', mask])
     bot.write(['KICK', channel, nick, reason])
 
