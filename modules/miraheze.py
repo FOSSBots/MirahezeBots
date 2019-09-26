@@ -43,6 +43,7 @@ def miraheze_gethelp(bot, trigger):
         bot.say(trigger.nick + ', needs help. Pinging Reception123, Zppix, '
                 'PuppyKun, Voidwalker, RhinosF1.')
 
+
 @commands('discord')
 def miraheze_discord(bot, trigger):
     """Displays discord information for Miraheze."""

@@ -4,7 +4,6 @@ from __future__ import unicode_literals, absolute_import, print_function, divisi
 import os
 import sopel
 import sopel.module
-import sopel.tools
 
 from sopel.module import commands, require_admin
 
