@@ -7,6 +7,7 @@ import sopel.module
 
 from sopel.module import commands, require_admin
 
+
 @commands('testing')
 @require_admin
 def tests(bot, trigger):
