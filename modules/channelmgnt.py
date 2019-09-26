@@ -15,7 +15,7 @@ import time
 
 from sopel import formatting
 from sopel.module import (
-    commands, example, priority, OP, require_privilege, require_chanmsg
+    commands, example, priority, OP, HALFOP, require_privilege, require_chanmsg
 )
 from sopel.tools import Identifier
 
@@ -28,9 +28,7 @@ def default_mask(trigger):
     arg = formatting.color('{}', formatting.colors.GREEN)
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
-
 chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
-
 
 @require_chanmsg
 @commands('op')
@@ -41,7 +39,7 @@ def op(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
-        bot.say('op ' + trigger.sender, 'ChanServ')
+        bot.say('op '+ trigger.sender, 'ChanServ')
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
@@ -193,7 +191,7 @@ def unban(bot, trigger):
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
-        bot.say('op ' + trigger.sender, 'ChanServ')
+        bot.say('op '+ trigger.sender, 'ChanServ')
         time.sleep(1)
     text = trigger.group().split()
     argc = len(text)
@@ -303,11 +301,7 @@ def kickban(bot, trigger):
     reason = ' '.join(text[reasonidx:])
     mask = configureHostMask(mask)
     if mask == '':
-<<<<<<< HEAD
-        return
-=======
         mask = nick + '!*@*'
->>>>>>> 031f3a719614b5dda71a19403987597ec1d31b29
     bot.write(['MODE', channel, '+b', mask])
     bot.write(['KICK', channel, nick, reason])
 
