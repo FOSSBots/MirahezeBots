@@ -369,3 +369,5 @@ def show_mask(bot, trigger):
     mask = bot.db.get_channel_value(trigger.sender, 'topic_mask')
     mask = mask or default_mask(trigger)
     bot.say(mask)
+
+    get_chanops()
