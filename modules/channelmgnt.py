@@ -8,7 +8,6 @@ Licensed under the Eiffel Forum License 2.
 
 https://sopel.chat
 """
-chanops = ''
 from __future__ import unicode_literals, absolute_import, print_function, division
 
 import re
@@ -19,7 +18,7 @@ from sopel.module import (
     commands, example, priority, OP, require_privilege, require_chanmsg
 )
 from sopel.tools import Identifier
-
+chanops = ''
 
 def default_mask(trigger):
     welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
