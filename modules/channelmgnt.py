@@ -30,7 +30,9 @@ def default_mask(trigger):
 def get_chanops(trigger):
     chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
     if str(trigger.sender) == '##RhinosF1':
-        chanops = ['RhinosF1', 'Reception123']
+        chanops = ['RhinosF1', 'Zppix', 'Reception123'] ##will add rest later
+    if str(trigger.sender) == '##acme':
+        chanops = ['RhinosF1', 'tex', 'B|ack0p']
     return chanops
 
 
