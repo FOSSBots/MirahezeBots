@@ -18,7 +18,6 @@ from sopel.module import (
     commands, example, priority, OP, require_privilege, require_chanmsg
 )
 from sopel.tools import Identifier
-chanops = ''
 
 def default_mask(trigger):
     welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
@@ -29,10 +28,10 @@ def default_mask(trigger):
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
 def get_chanops(trigger):
-    global chanops
     chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
     if str(trigger.sender) == '##RhinosF1':
         chanops = ['RhinosF1', 'Reception123']
+    return chanops
 
 
 @require_chanmsg
@@ -42,8 +41,7 @@ def op(bot, trigger):
     Command to op users in a room. If no nick is given,
     Sopel will op the nick who sent the command
     """
-    global chanops
-    get_chanops(trigger)
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -52,8 +50,8 @@ def op(bot, trigger):
     channel = trigger.sender
     if not nick:
         nick = trigger.nick
-    bot.say('Your nick is: ' + str(trigger.nick) + ' and the chanops are: ' + str(chanops) + ' in channel: ' + str(trigger.sender), trigger.sender)
-    if nick in chanops:
+    #bot.say('Your nick is: ' + str(trigger.nick) + ' and the chanops are: ' + str(chanops) + ' in channel: ' + str(trigger.sender), trigger.sender)
+    if trigger.nick in chanops:
         bot.write(['MODE', channel, "+o", nick])
 
 
@@ -64,7 +62,7 @@ def deop(bot, trigger):
     Command to deop users in a room. If no nick is given,
     Sopel will deop the nick who sent the command
     """
-    global chanops
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -73,7 +71,8 @@ def deop(bot, trigger):
     channel = trigger.sender
     if not nick:
         nick = trigger.nick
-    bot.write(['MODE', channel, "-o", nick])
+    if trigger.nick in chanops:
+        bot.write(['MODE', channel, "-o", nick])
 
 
 @require_chanmsg
@@ -83,7 +82,7 @@ def voice(bot, trigger):
     Command to voice users in a room. If no nick is given,
     Sopel will voice the nick who sent the command
     """
-    global chanops
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -92,7 +91,8 @@ def voice(bot, trigger):
     channel = trigger.sender
     if not nick:
         nick = trigger.nick
-    bot.write(['MODE', channel, "+v", nick])
+    if trigger.nick in chanops:
+        bot.write(['MODE', channel, "+v", nick])
 
 
 @require_chanmsg
@@ -102,7 +102,7 @@ def devoice(bot, trigger):
     Command to devoice users in a room. If no nick is given,
     Sopel will devoice the nick who sent the command
     """
-    global chanops
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -111,7 +111,8 @@ def devoice(bot, trigger):
     channel = trigger.sender
     if not nick:
         nick = trigger.nick
-    bot.write(['MODE', channel, "-v", nick])
+    if trigger.nick in chanops:
+        bot.write(['MODE', channel, "-v", nick])
 
 
 @require_chanmsg
@@ -119,7 +120,7 @@ def devoice(bot, trigger):
 @priority('high')
 def kick(bot, trigger):
     """Kick a user from the channel."""
-    global chanops
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -139,7 +140,7 @@ def kick(bot, trigger):
         channel = opt
         reasonidx = 3
     reason = ' '.join(text[reasonidx:])
-    if nick != bot.config.core.nick:
+    if nick != bot.config.core.nick and trigger.sender in chanops:
         bot.write(['KICK', channel, nick, ':' + reason])
 
 
@@ -169,7 +170,7 @@ def configureHostMask(mask):
 @commands('ban')
 @priority('high')
 def ban(bot, trigger):
-    global chanops
+    chanops = get_chanops(trigger)
     """Ban a user from the channel
 
     The bot must be a channel operator for this command to work.
@@ -193,17 +194,18 @@ def ban(bot, trigger):
     banmask = configureHostMask(banmask)
     if banmask == '':
         return
-    bot.write(['MODE', channel, '+b', banmask])
+    if trigger.nick in chanops:
+        bot.write(['MODE', channel, '+b', banmask])
 
 
 @require_chanmsg
 @commands('unban')
 def unban(bot, trigger):
-    global chanops
     """Unban a user from the channel
 
     The bot must be a channel operator for this command to work.
     """
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -223,7 +225,8 @@ def unban(bot, trigger):
     banmask = configureHostMask(banmask)
     if banmask == '':
         return
-    bot.write(['MODE', channel, '-b', banmask])
+    if trigger.nick in chanops:
+        bot.write(['MODE', channel, '-b', banmask])
 
 
 @require_chanmsg
@@ -233,7 +236,7 @@ def quiet(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    global chanops
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -253,7 +256,8 @@ def quiet(bot, trigger):
     quietmask = configureHostMask(quietmask)
     if quietmask == '':
         return
-    bot.write(['MODE', channel, '+q', quietmask])
+    if trigger.nick in chanops:
+        bot.write(['MODE', channel, '+q', quietmask])
 
 
 @require_chanmsg
@@ -263,7 +267,7 @@ def unquiet(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    global chanops
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -283,7 +287,8 @@ def unquiet(bot, trigger):
     quietmask = configureHostMask(quietmask)
     if quietmask == '':
         return
-    bot.write(['MODE', channel, '-q', quietmask])
+    if trigger.nick in chanops:
+        bot.write(['MODE', channel, '-q', quietmask])
 
 
 @require_chanmsg
@@ -291,11 +296,11 @@ def unquiet(bot, trigger):
 @example('.kickban [#chan] user1 user!*@* get out of here')
 @priority('high')
 def kickban(bot, trigger):
-    global chanops
     """Kick and ban a user from the channel
 
     The bot must be a channel operator for this command to work.
     """
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -320,8 +325,9 @@ def kickban(bot, trigger):
     mask = configureHostMask(mask)
     if mask == '':
         mask = nick + '!*@*'
-    bot.write(['MODE', channel, '+b', mask])
-    bot.write(['KICK', channel, nick, ':' + reason])
+    if trigger.nick in chanops:
+        bot.write(['MODE', channel, '+b', mask])
+        bot.write(['KICK', channel, nick, ':' + reason])
 
 
 @require_chanmsg
@@ -331,7 +337,7 @@ def topic(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
-    global chanops
+    chanops = get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -357,8 +363,8 @@ def topic(bot, trigger):
             len(args), narg)
         return bot.say(message)
     topic = mask.format(*args)
-
-    bot.write(('TOPIC', channel + ' :' + topic))
+    if trigger.nick in chanops:
+        bot.write(('TOPIC', channel + ' :' + topic))
 
 
 @require_chanmsg
@@ -371,9 +377,10 @@ def set_mask(bot, trigger):
 
     This mask is used when running the 'topic' command.
     """
-    global chanops
-    bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
-    bot.say("Gotcha, " + trigger.nick)
+    chanops = get_chanops(trigger)
+    if trigger.sender in chanops:
+        bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
+        bot.say("Gotcha, " + trigger.nick)
 
 
 @require_chanmsg
@@ -381,7 +388,8 @@ def set_mask(bot, trigger):
 @commands('showmask')
 def show_mask(bot, trigger):
     """Show the topic mask for the current channel."""
-    global chanops
-    mask = bot.db.get_channel_value(trigger.sender, 'topic_mask')
-    mask = mask or default_mask(trigger)
-    bot.say(mask)
+    chanops = get_chanops(trigger)
+    if trigger.nick in chanops:
+        mask = bot.db.get_channel_value(trigger.sender, 'topic_mask')
+        mask = mask or default_mask(trigger)
+        bot.say(mask)
