@@ -8,6 +8,7 @@ Licensed under the Eiffel Forum License 2.
 
 https://sopel.chat
 """
+chanops = ''
 from __future__ import unicode_literals, absolute_import, print_function, division
 
 import re
@@ -29,6 +30,7 @@ def default_mask(trigger):
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
 def get_chanops(trigger):
+    global chanops
     chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
     if str(trigger.sender) == '##RhinosF1':
         chanops = ['RhinosF1', 'Reception123']
@@ -41,6 +43,8 @@ def op(bot, trigger):
     Command to op users in a room. If no nick is given,
     Sopel will op the nick who sent the command
     """
+    global chanops
+    get_chanops(trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -60,6 +64,7 @@ def deop(bot, trigger):
     Command to deop users in a room. If no nick is given,
     Sopel will deop the nick who sent the command
     """
+    global chanops
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -78,6 +83,7 @@ def voice(bot, trigger):
     Command to voice users in a room. If no nick is given,
     Sopel will voice the nick who sent the command
     """
+    global chanops
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -96,6 +102,7 @@ def devoice(bot, trigger):
     Command to devoice users in a room. If no nick is given,
     Sopel will devoice the nick who sent the command
     """
+    global chanops
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -112,6 +119,7 @@ def devoice(bot, trigger):
 @priority('high')
 def kick(bot, trigger):
     """Kick a user from the channel."""
+    global chanops
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -161,6 +169,7 @@ def configureHostMask(mask):
 @commands('ban')
 @priority('high')
 def ban(bot, trigger):
+    global chanops
     """Ban a user from the channel
 
     The bot must be a channel operator for this command to work.
@@ -190,6 +199,7 @@ def ban(bot, trigger):
 @require_chanmsg
 @commands('unban')
 def unban(bot, trigger):
+    global chanops
     """Unban a user from the channel
 
     The bot must be a channel operator for this command to work.
@@ -223,6 +233,7 @@ def quiet(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
+    global chanops
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -252,6 +263,7 @@ def unquiet(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
+    global chanops
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -279,6 +291,7 @@ def unquiet(bot, trigger):
 @example('.kickban [#chan] user1 user!*@* get out of here')
 @priority('high')
 def kickban(bot, trigger):
+    global chanops
     """Kick and ban a user from the channel
 
     The bot must be a channel operator for this command to work.
@@ -318,6 +331,7 @@ def topic(bot, trigger):
 
     The bot must be a channel operator for this command to work.
     """
+    global chanops
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
@@ -357,6 +371,7 @@ def set_mask(bot, trigger):
 
     This mask is used when running the 'topic' command.
     """
+    global chanops
     bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
     bot.say("Gotcha, " + trigger.nick)
 
@@ -366,7 +381,7 @@ def set_mask(bot, trigger):
 @commands('showmask')
 def show_mask(bot, trigger):
     """Show the topic mask for the current channel."""
+    global chanops
     mask = bot.db.get_channel_value(trigger.sender, 'topic_mask')
     mask = mask or default_mask(trigger)
     bot.say(mask)
-get_chanops()
