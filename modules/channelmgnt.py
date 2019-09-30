@@ -47,6 +47,7 @@ def op(bot, trigger):
     channel = trigger.sender
     if not nick:
         nick = trigger.nick
+    bot.say('Your nick is: ' + trigger.nick + 'and the chanops are: ' + chanops, trigger.sender)
     bot.write(['MODE', channel, "+o", nick])
 
 
