@@ -27,9 +27,9 @@ def default_mask(trigger):
     topic_ = formatting.color('| ' + topic_, formatting.colors.PURPLE)
     arg = formatting.color('{}', formatting.colors.GREEN)
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
+
+
 chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
-if trigger.sender == '##RhinosF1':
-    chanops = ['RhinosF1', 'Reception123']
 
 
 @require_chanmsg
