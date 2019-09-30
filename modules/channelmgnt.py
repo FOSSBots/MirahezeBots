@@ -30,6 +30,8 @@ def default_mask(trigger):
 
 
 chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
+if trigger.sender == '##RhinosF1':
+    chanops = ['RhinosF1', 'Reception123']
 
 
 @require_chanmsg
