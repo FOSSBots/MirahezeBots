@@ -53,7 +53,8 @@ def op(bot, trigger):
     if not nick:
         nick = trigger.nick
     bot.say('Your nick is: ' + str(trigger.nick) + ' and the chanops are: ' + str(chanops) + ' in channel: ' + str(trigger.sender), trigger.sender)
-    bot.write(['MODE', channel, "+o", nick])
+    if nick in chanops:
+        bot.write(['MODE', channel, "+o", nick])
 
 
 @require_chanmsg
