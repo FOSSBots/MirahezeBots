@@ -28,7 +28,7 @@ def default_mask(trigger):
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
 def get_chanops(trigger):
-    chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
+    chanops = ''
     if str(trigger.sender) == '##RhinosF1':
         chanops = ['RhinosF1', 'Zppix', 'Reception123'] ##will add rest later
     elif str(trigger.sender) == '##acme':
