@@ -19,6 +19,7 @@ from sopel.module import (
 )
 from sopel.tools import Identifier
 
+
 def default_mask(trigger):
     welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
     chan = formatting.color(trigger.sender, formatting.colors.TEAL)
@@ -26,6 +27,7 @@ def default_mask(trigger):
     topic_ = formatting.color('| ' + topic_, formatting.colors.PURPLE)
     arg = formatting.color('{}', formatting.colors.GREEN)
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
+
 
 def get_chanops(trigger):
     chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
@@ -50,7 +52,6 @@ def op(bot, trigger):
     channel = trigger.sender
     if not nick:
         nick = trigger.nick
-    #bot.say('Your nick is: ' + str(trigger.nick) + ' and the chanops are: ' + str(chanops) + ' in channel: ' + str(trigger.sender), trigger.sender)
     if trigger.nick in chanops:
         bot.write(['MODE', channel, "+o", nick])
 
