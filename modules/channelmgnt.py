@@ -30,9 +30,11 @@ def default_mask(trigger):
 def get_chanops(trigger):
     chanops = ''
     if str(trigger.sender) == '##RhinosF1':
-        chanops = ['RhinosF1', 'Zppix', 'Reception123'] ##will add rest later
+        chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
     elif str(trigger.sender) == '##acme':
         chanops = ['RhinosF1', 'tex', 'B|ack0p']
+    elif str(trigger.sender) == '#miraheze':
+        chanops = ['Southparkfan', 'NDKilla', 'labster', 'Reception123', 'Voidwalker', 'Void|bot', 'JohnLewis', 'Paladox', 'RhinosF1']
     else:
         bot.say('Please ask in ##ZppixBot for assistance configuring the channel management module.', trigger.sender)
     return chanops
