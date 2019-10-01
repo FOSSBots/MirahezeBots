@@ -1,2 +1,2 @@
 # Development requirements
-vcrpy==1.11.0
+vcrpy==2.1.0
