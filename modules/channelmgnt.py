@@ -47,6 +47,8 @@ def get_chanops(trigger):
         chanops = ['Reception123', 'NDKilla', 'Voidwalker']
     elif str(trigger.sender) == '##CyberBogan':
         chanops = ['NeoBogan', 'Oshwah', 'enterprisey', 'Havyk', 'Athyria', 'LakesideMiners', 'foks', 'Jobe', 'MarxLenin99', 'SQLDb', 'TxHadriel', 'ShakespeareFan00', 'Zppix', 'KSFT']
+    elif str(trigger.sender) == '##Zppix-Wikipedia':
+        chanops = ['Zppix', 'tom29739', 'SwisterTwister', 'Snowycats', 'DatGuy', 'Piaget', 'suchantispam', 'mattwj2002']
     else:
         bot.say('Please ask in ##ZppixBot for assistance configuring the channel management module.', trigger.sender)
     return chanops
