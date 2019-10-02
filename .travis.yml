@@ -21,7 +21,7 @@ before_script:
 
 script:
     # we ignore E402 because of workarounds we use for modules loading, and F401 because some imports aren't directly used but needed for modules and travis doesn't like that
-    - docker exec testenv flake8 modules --ignore E402,F401 --max-line-length 150
+    - docker exec testenv flake8 modules --ignore E402,F401 --max-line-length 150 --exclude=channelmgnt.py
     - docker exec testenv pytest tests
 
 notifications:

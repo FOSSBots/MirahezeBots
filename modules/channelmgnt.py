@@ -29,11 +29,10 @@ def default_mask(trigger):
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
 
-def get_chanops(trigger. bot):
+def get_chanops(trigger, bot):
     chanops = ''
     if str(trigger.sender) == '##RhinosF1':
-        chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous',
-         'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
+        chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
     elif str(trigger.sender) == '##acme':
         chanops = ['RhinosF1', 'tex', 'B|ack0p']
     elif str(trigger.sender) == '#miraheze':
@@ -49,8 +48,7 @@ def get_chanops(trigger. bot):
     elif str(trigger.sender) == '#miraheze-testwiki':
         chanops = ['Reception123', 'NDKilla', 'Voidwalker']
     elif str(trigger.sender) == '##CyberBogan':
-        chanops = ['NeoBogan', 'Oshwah', 'enterprisey', 'Havyk', 'Athyria', 'LakesideMiners', 'foks', 'Jobe', 'MarxLenin99', 'SQLDb', 'TxHadriel',
-         'ShakespeareFan00', 'Zppix', 'KSFT']
+        chanops = ['NeoBogan', 'Oshwah', 'enterprisey', 'Havyk', 'Athyria', 'LakesideMiners', 'foks', 'Jobe', 'MarxLenin99', 'SQLDb', 'TxHadriel', 'ShakespeareFan00', 'Zppix', 'KSFT']
     elif str(trigger.sender) == '##Zppix-Wikipedia':
         chanops = ['Zppix', 'tom29739', 'SwisterTwister', 'Snowycats', 'DatGuy', 'Piaget', 'suchantispam', 'mattwj2002']
     else:
