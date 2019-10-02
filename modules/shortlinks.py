@@ -48,7 +48,7 @@ def mhwiki(bot, trigger):
     if len(options) == 1:
         page = options[0]
         bot.say("https://meta.miraheze.org/wiki/" + page)
-    elif len(options == 2:
+    elif len(options == 2):
         wiki = options[0]
         page = options[1]
         bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
