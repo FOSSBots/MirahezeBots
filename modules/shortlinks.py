@@ -36,8 +36,11 @@ def twlink(bot, trigger):
     bot.say("https://twitter.com/" + trigger.group(2))
     
 @commands('mh')
-@example('.tw user')
+@example('.mh wiki page')
 def mhwiki(bot, trigger):
-    bot.say("https://" + trigger.group(2) + ".miraheze.org/wiki/" + trigger.group(3))
+    options = trigger.group(2).split(" ")
+    wiki = options[0]
+    page = options[1]
+    bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
     
 
