@@ -16,3 +16,4 @@ def cancel(bot, trigger):
 def cancel2(bot, trigger):
     """tell the user that they are doing good work."""
     bot.say(("You're doing good work, {}!").format(trigger.group(2)))
+    
