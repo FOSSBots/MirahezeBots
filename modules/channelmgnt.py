@@ -30,9 +30,29 @@ def default_mask(trigger):
 
 
 def get_chanops(trigger):
-    chanops = ['Zppix', 'RhinosF1', 'Voidwalker', 'Reception123', 'PuppyKun', 'paladox', 'JohnLewis']
+    chanops = ''
     if str(trigger.sender) == '##RhinosF1':
-        chanops = ['RhinosF1', 'Reception123']
+        chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
+    elif str(trigger.sender) == '##acme':
+        chanops = ['RhinosF1', 'tex', 'B|ack0p']
+    elif str(trigger.sender) == '#miraheze':
+        chanops = ['Southparkfan', 'NDKilla', 'labster', 'Reception123', 'Voidwalker', 'Void|bot', 'JohnLewis', 'Paladox', 'RhinosF1']
+    elif str(trigger.sender) == '#miraheze-cvt' or str(trigger.sender) == '#miraheze-cvt-private':
+        chanops = ['NDKilla', 'Voidwalker', 'Reception123', 'Zppix', 'The_Pionner', 'JohnLewis']
+    elif str(trigger.sender) == '#ZppixBot':
+        chanops = ['Zppix', 'Reception123', 'Voidwalker']
+    elif str(trigger.sender) == '#testadminwiki':
+        chanops = ['MacFan4000', 'Voidwalker', 'AlvaroMolina']
+    elif str(trigger.sender) == '#miraheze-testwiki-es':
+        chanops = ['AlvaroMolina', 'Reception123', 'NDKilla', 'Voidwalker']
+    elif str(trigger.sender) == '#miraheze-testwiki':
+        chanops = ['Reception123', 'NDKilla', 'Voidwalker']
+    elif str(trigger.sender) == '##CyberBogan':
+        chanops = ['NeoBogan', 'Oshwah', 'enterprisey', 'Havyk', 'Athyria', 'LakesideMiners', 'foks', 'Jobe', 'MarxLenin99', 'SQLDb', 'TxHadriel', 'ShakespeareFan00', 'Zppix', 'KSFT']
+    elif str(trigger.sender) == '##Zppix-Wikipedia':
+        chanops = ['Zppix', 'tom29739', 'SwisterTwister', 'Snowycats', 'DatGuy', 'Piaget', 'suchantispam', 'mattwj2002']
+    else:
+        bot.say('Please ask in ##ZppixBot for assistance configuring the channel management module.', trigger.sender)
     return chanops
 
 
