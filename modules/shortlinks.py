@@ -1,5 +1,7 @@
 """This module expands links to various websites"""
+from __future__ import unicode_literals, absolute_import, print_function, division
 
+import re
 from sopel.module import rule, commands, example
 
 
