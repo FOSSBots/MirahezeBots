@@ -44,7 +44,10 @@ def twlink(bot, trigger):
 @commands('mh')
 @example('.mh wiki page')
 def mhwiki(bot, trigger):
-    options = trigger.group(2).split(" ")
+    try:
+        options = trigger.group(2).split(" ")
+    except AttributeError:
+        bot.say('Syntax: .mh wiki page', trigger.sender)
     if len(options) == 1:
         page = options[0]
         bot.say("https://meta.miraheze.org/wiki/" + page)
@@ -52,5 +55,3 @@ def mhwiki(bot, trigger):
         wiki = options[0]
         page = options[1]
         bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
-    else:
-        bot.say('Syntax: .mh wiki page', trigger.sender)
