@@ -74,6 +74,8 @@ def op(bot, trigger):
         nick = trigger.nick
     if trigger.nick in chanops:
         bot.write(['MODE', channel, "+o", nick])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -94,6 +96,8 @@ def deop(bot, trigger):
         nick = trigger.nick
     if trigger.nick in chanops:
         bot.write(['MODE', channel, "-o", nick])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -114,6 +118,8 @@ def voice(bot, trigger):
         nick = trigger.nick
     if trigger.nick in chanops:
         bot.write(['MODE', channel, "+v", nick])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -134,6 +140,8 @@ def devoice(bot, trigger):
         nick = trigger.nick
     if trigger.nick in chanops:
         bot.write(['MODE', channel, "-v", nick])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -163,6 +171,8 @@ def kick(bot, trigger):
     reason = ' '.join(text[reasonidx:])
     if nick != bot.config.core.nick and trigger.sender in chanops:
         bot.write(['KICK', channel, nick, ':' + reason])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 def configureHostMask(mask):
@@ -217,6 +227,8 @@ def ban(bot, trigger):
         return
     if trigger.nick in chanops:
         bot.write(['MODE', channel, '+b', banmask])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -248,6 +260,8 @@ def unban(bot, trigger):
         return
     if trigger.nick in chanops:
         bot.write(['MODE', channel, '-b', banmask])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -279,6 +293,8 @@ def quiet(bot, trigger):
         return
     if trigger.nick in chanops:
         bot.write(['MODE', channel, '+q', quietmask])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -310,6 +326,8 @@ def unquiet(bot, trigger):
         return
     if trigger.nick in chanops:
         bot.write(['MODE', channel, '-q', quietmask])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -349,6 +367,8 @@ def kickban(bot, trigger):
     if trigger.nick in chanops:
         bot.write(['MODE', channel, '+b', mask])
         bot.write(['KICK', channel, nick, ':' + reason])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
@@ -386,6 +406,8 @@ def topic(bot, trigger):
     topic = mask.format(*args)
     if trigger.nick in chanops:
         bot.write(('TOPIC', channel + ' :' + topic))
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
