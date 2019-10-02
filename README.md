@@ -8,7 +8,7 @@ It is simple and easy to customize.
 ZppixBot uses [Sopel](https://sopel.chat).
 
 To use this bot, copy `modules` folder to your Sopel installation
-(and don't forget to setup yours `default.cfg` if needed)
+(and don't forget to setup your `default.cfg` if needed)
 
 [Source Github](http://github.com/sopel-irc/sopel)
 
