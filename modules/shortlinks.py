@@ -10,37 +10,43 @@ from sopel.module import rule, commands, example
 def ghrepo(bot, trigger):
     bot.say("https://github.com/" + trigger.group(2))
 
+
 @commands('redditu')
 @example('.redditu example')
 def redditu(bot, trigger):
     bot.say("https://reddit.com/u/" + trigger.group(2))
-    
+
+
 @commands('subred')
 @example('.subred example')
 def redditr(bot, trigger):
-    bot.say("https://reddit.com/r/" + trigger.group(2)) 
-    
+    bot.say("https://reddit.com/r/" + trigger.group(2))
+
+
 @commands('wmca')
 @example('.wmca example')
 def wmca(bot, trigger):
-    bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + trigger.group(2)) 
-    
+    bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + trigger.group(2))
+
+
 @commands('mhca')
-@example('.wmca example')
+@example('.mhca example')
 def mhca(bot, trigger):
-    bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + trigger.group(2)) 
-    
+    bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + trigger.group(2))
+
+
 @commands('tw')
 @example('.tw user')
 def twlink(bot, trigger):
     bot.say("https://twitter.com/" + trigger.group(2))
-    
+
+
 @commands('mh')
 @example('.mh wiki page')
 def mhwiki(bot, trigger):
     options = trigger.group(2).split(" ")
     wiki = options[0]
     page = options[1]
+    if wiki = '':
+    	wiki = 'meta'
     bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
-    
-
