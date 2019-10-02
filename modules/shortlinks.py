@@ -18,5 +18,26 @@ def redditu(bot, trigger):
 @commands('subred')
 @example('.subred example')
 def redditr(bot, trigger):
-    bot.say("https://reddit.com/r/" + trigger.group(2))
+    bot.say("https://reddit.com/r/" + trigger.group(2)) 
+    
+@commands('wmca')
+@example('.wmca example')
+def wmca(bot, trigger):
+    bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + trigger.group(2)) 
+    
+@commands('mhca')
+@example('.wmca example')
+def mhca(bot, trigger):
+    bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + trigger.group(2)) 
+    
+@commands('tw')
+@example('.tw user')
+def twlink(bot, trigger):
+    bot.say("https://twitter.com/" + trigger.group(2))
+    
+@commands('mh')
+@example('.tw user')
+def mhwiki(bot, trigger):
+    bot.say("https://" + trigger.group(2) + ".miraheze.org/wiki/" + trigger.group(3))
+    
 
