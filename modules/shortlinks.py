@@ -47,6 +47,6 @@ def mhwiki(bot, trigger):
     options = trigger.group(2).split(" ")
     wiki = options[0]
     page = options[1]
-    if wiki = '':
+    if wiki == '':
     	wiki = 'meta'
     bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
