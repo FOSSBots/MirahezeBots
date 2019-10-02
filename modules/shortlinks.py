@@ -6,39 +6,57 @@ from sopel.module import rule, commands, example
 
 
 @commands('github')
-@example('.github repo')
+@example('.github user')
 def ghrepo(bot, trigger):
-    bot.say("https://github.com/" + trigger.group(2))
+    try:
+        bot.say("https://github.com/" + trigger.group(2))
+    except TypeError:
+        bot.say('Syntax: .github user', trigger.sender)
 
 
 @commands('redditu')
 @example('.redditu example')
 def redditu(bot, trigger):
-    bot.say("https://reddit.com/u/" + trigger.group(2))
+    try:
+        bot.say("https://reddit.com/u/" + trigger.group(2))
+    except TypeError:
+        bot.say('Syntax: .redditu example', trigger.sender)
 
 
 @commands('subred')
 @example('.subred example')
 def redditr(bot, trigger):
-    bot.say("https://reddit.com/r/" + trigger.group(2))
+    try:
+        bot.say("https://reddit.com/r/" + trigger.group(2))
+    except TypeError:
+        bot.say('Syntax: .subred example', trigger.sender)
 
 
 @commands('wmca')
 @example('.wmca example')
 def wmca(bot, trigger):
-    bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + trigger.group(2))
+    try:
+        bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + trigger.group(2))
+    except TypeError:
+        bot.say('Syntax: .wmca example', trigger.sender)
 
 
 @commands('mhca')
 @example('.mhca example')
 def mhca(bot, trigger):
-    bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + trigger.group(2))
+    try:
+        bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + trigger.group(2))
+    except TypeError:
+        bot.say('Syntax: .mhca example', trigger.sender)
 
 
 @commands('tw')
 @example('.tw user')
 def twlink(bot, trigger):
-    bot.say("https://twitter.com/" + trigger.group(2))
+    try:
+        bot.say("https://twitter.com/" + trigger.group(2))
+    except TypeError:
+        bot.say('Syntax: .tw user', trigger.sender)
 
 
 @commands('mh')
