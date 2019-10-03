@@ -7,8 +7,8 @@ from sopel.module import commands, example
 @example('.addchannel (insert which)')
 def cancel(bot, trigger):
     """Reply to channel request message."""
-    bot.say(("Hey Voidwalker, Reception123 or Zppix, {} would like to have " +
-            "me in their channel: {}").format(trigger.nick, trigger.group(2)),
+    bot.say(("Hey Voidwalker, Reception123 or Zppix, {} would like to have "
+            + "me in their channel: {}").format(trigger.nick, trigger.group(2)),
             '#ZppixBot')
 
 
