@@ -8,7 +8,7 @@ from sopel.module import commands, example
 def addchan(bot, trigger):
     """Reply to channel request message."""
     bot.say(("Hey Voidwalker, Reception123 or Zppix, {} would like to have " 
-              + "me in their channel: {}").format(trigger.nick, trigger.group(2)),
+            + "me in their channel: {}").format(trigger.nick, trigger.group(2)),
             '#ZppixBot')
     if trigger.sender != '#ZppixBot':
         bot.reply("Request sent! Action upon the request should be taken shortly. Thank you for using ZppixBot!")
