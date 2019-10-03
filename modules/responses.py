@@ -8,7 +8,7 @@ from sopel.module import rule, commands, example
 def cancel(bot, trigger):
     """Reply to channel request message."""
     bot.reply(("Hey Voidwalker, Reception123 or Zppix, {} would like to have "
-               "me in their channel: " + trigger.group(2), '#ZppixBot').format(trigger.nick))
+               "me in their channel: {}", '#ZppixBot').format(trigger.nick, trigger.group(2))
 
 
 @commands('gj', 'gw')
