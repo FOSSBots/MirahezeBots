@@ -8,7 +8,7 @@ from sopel.module import rule, commands, example
 @commands('github', 'gh')
 @example('.github user')
 def ghrepo(bot, trigger):
-	''' Will provide a link to the user provided on github '''
+''' Will provide a link to the user provided on github '''
     try:
         bot.say("https://github.com/" + trigger.group(2))
     except TypeError:
@@ -18,7 +18,7 @@ def ghrepo(bot, trigger):
 @commands('redditu')
 @example('.redditu example')
 def redditu(bot, trigger):
-	''' Will link to the reddit user provided '''
+''' Will link to the reddit user provided '''
     try:
         bot.say("https://reddit.com/u/" + trigger.group(2))
     except TypeError:
@@ -28,7 +28,7 @@ def redditu(bot, trigger):
 @commands('subred')
 @example('.subred example')
 def redditr(bot, trigger):
-	''' Will link to the provided subreddit '''
+''' Will link to the provided subreddit '''
     try:
         bot.say("https://reddit.com/r/" + trigger.group(2))
     except TypeError:
@@ -38,7 +38,7 @@ def redditr(bot, trigger):
 @commands('wmca')
 @example('.wmca example')
 def wmca(bot, trigger):
-	''' Provides link to the Central Auth for the provided Wikimedia account '''
+''' Provides link to the Central Auth for the provided Wikimedia account '''
     try:
         bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + trigger.group(2))
     except TypeError:
@@ -48,7 +48,7 @@ def wmca(bot, trigger):
 @commands('mhca')
 @example('.mhca example')
 def mhca(bot, trigger):
-	''' Provides link to the Central Auth for the provided Miraheze account '''
+''' Provides link to the Central Auth for the provided Miraheze account '''
     try:
         bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + trigger.group(2))
     except TypeError:
@@ -58,7 +58,7 @@ def mhca(bot, trigger):
 @commands('tw')
 @example('.tw user')
 def twlink(bot, trigger):
-	''' Provides a link to the provided Twitter user '''
+''' Provides a link to the provided Twitter user '''
     try:
         bot.say("https://twitter.com/" + trigger.group(2))
     except TypeError:
@@ -68,7 +68,7 @@ def twlink(bot, trigger):
 @commands('mh')
 @example('.mh wiki page')
 def mhwiki(bot, trigger):
-	''' Links to the provided wiki and/or page on Miraheze '''
+''' Links to the provided wiki and/or page on Miraheze '''
     try:
         options = trigger.group(2).split(" ")
         if len(options) == 1:
