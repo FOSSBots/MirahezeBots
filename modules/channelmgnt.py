@@ -60,8 +60,7 @@ def get_chanops(bot, trigger):
 @commands('op')
 def op(bot, trigger):
     """
-    Command to op users in a room. If no nick is given,
-    Sopel will op the nick who sent the command
+    Command to op users in a room. If no nick is given, Sopel will op the nick who sent the command
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -82,8 +81,7 @@ def op(bot, trigger):
 @commands('deop')
 def deop(bot, trigger):
     """
-    Command to deop users in a room. If no nick is given,
-    Sopel will deop the nick who sent the command
+    Command to deop users in a room. If no nick is given, Sopel will deop the nick who sent the command
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -104,8 +102,7 @@ def deop(bot, trigger):
 @commands('voice')
 def voice(bot, trigger):
     """
-    Command to voice users in a room. If no nick is given,
-    Sopel will voice the nick who sent the command
+    Command to voice users in a room. If no nick is given, Sopel will voice the nick who sent the command
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -126,8 +123,7 @@ def voice(bot, trigger):
 @commands('devoice')
 def devoice(bot, trigger):
     """
-    Command to devoice users in a room. If no nick is given,
-    Sopel will devoice the nick who sent the command
+    Command to devoice users in a room. If no nick is given, the nick who sent the command will be devoiced
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -202,8 +198,7 @@ def configureHostMask(mask):
 @priority('high')
 def ban(bot, trigger):
     chanops = get_chanops(bot, trigger)
-    """Ban a user from the channel
-    The bot must be a channel operator for this command to work.
+    """Ban a user from the channel. The bot must be a channel operator for this command to work.
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
         bot.say('Please wait...')
@@ -233,8 +228,7 @@ def ban(bot, trigger):
 @require_chanmsg
 @commands('unban')
 def unban(bot, trigger):
-    """Unban a user from the channel
-    The bot must be a channel operator for this command to work.
+    """Unban a user from the channel. The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -265,8 +259,7 @@ def unban(bot, trigger):
 @require_chanmsg
 @commands('quiet')
 def quiet(bot, trigger):
-    """Quiet a user
-    The bot must be a channel operator for this command to work.
+    """Quiet a user. The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -297,8 +290,7 @@ def quiet(bot, trigger):
 @require_chanmsg
 @commands('unquiet')
 def unquiet(bot, trigger):
-    """Unquiet a user
-    The bot must be a channel operator for this command to work.
+    """Unquiet a user. The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -331,8 +323,7 @@ def unquiet(bot, trigger):
 @example('.kickban [#chan] user1 user!*@* get out of here')
 @priority('high')
 def kickban(bot, trigger):
-    """Kick and ban a user from the channel
-    The bot must be a channel operator for this command to work.
+    """Kick and ban a user from the channel. The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -369,8 +360,7 @@ def kickban(bot, trigger):
 @require_chanmsg
 @commands('topic')
 def topic(bot, trigger):
-    """Change the channel topic
-    The bot must be a channel operator for this command to work.
+    """Change the channel topic. The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -408,9 +398,7 @@ def topic(bot, trigger):
 @require_privilege(OP, 'You are not a channel operator.')
 @commands('tmask')
 def set_mask(bot, trigger):
-    """Set the topic mask to use for the current channel
-    Within the topic mask, {} is used to allow substituting in chunks of text.
-    This mask is used when running the 'topic' command.
+    """Set the topic mask to use for the current channel. Within the topic mask, {} is used to allow substituting in chunks of text. This mask is used when running the 'topic' command.
     """
     chanops = get_chanops(bot, trigger)
     if trigger.sender in chanops:
