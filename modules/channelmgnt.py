@@ -203,7 +203,6 @@ def configureHostMask(mask):
 def ban(bot, trigger):
     chanops = get_chanops(bot, trigger)
     """Ban a user from the channel
-
     The bot must be a channel operator for this command to work.
     """
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
@@ -235,7 +234,6 @@ def ban(bot, trigger):
 @commands('unban')
 def unban(bot, trigger):
     """Unban a user from the channel
-
     The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
@@ -268,7 +266,6 @@ def unban(bot, trigger):
 @commands('quiet')
 def quiet(bot, trigger):
     """Quiet a user
-
     The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
@@ -301,7 +298,6 @@ def quiet(bot, trigger):
 @commands('unquiet')
 def unquiet(bot, trigger):
     """Unquiet a user
-
     The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
@@ -336,7 +332,6 @@ def unquiet(bot, trigger):
 @priority('high')
 def kickban(bot, trigger):
     """Kick and ban a user from the channel
-
     The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
@@ -375,7 +370,6 @@ def kickban(bot, trigger):
 @commands('topic')
 def topic(bot, trigger):
     """Change the channel topic
-
     The bot must be a channel operator for this command to work.
     """
     chanops = get_chanops(bot, trigger)
@@ -415,9 +409,7 @@ def topic(bot, trigger):
 @commands('tmask')
 def set_mask(bot, trigger):
     """Set the topic mask to use for the current channel
-
     Within the topic mask, {} is used to allow substituting in chunks of text.
-
     This mask is used when running the 'topic' command.
     """
     chanops = get_chanops(bot, trigger)
