@@ -1,6 +1,5 @@
 import configparser, json, mwclient
 from mwclient import errors
-import random
 import requests
 import re
 import time
