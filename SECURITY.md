@@ -13,7 +13,7 @@ We currently support the following versions with security releases:
 
 ## Reporting a Vulnerability
 
-To report a Security Vulnerability or issue, we ask that you please email any applicable information to: tools.zppixbot[at]wmflabs.org. 
+To report a Security Vulnerability or issue, we ask that you please email any applicable information to: tools.zppixbot[at]tools.wmflabs.org. 
 Please note that by doing this you agree to disclose your email address, and/or any information provided in the email header. 
 At a minimum, we ask that you provide, context to the finding of the vulnerability/issue, steps to recreate the vulnerability/issue, and if you have a potiental solution.
 Please do note every effort will be done to respect your privacy, however, please do note the following:
