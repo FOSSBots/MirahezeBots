@@ -36,7 +36,13 @@ def save_edit(page, content):
 
 
 def main():
-    site = mwclient.Site(('https', wiki + '.miraheze.org'), '/w/')
+    wikiurl = 'example.org'
+    file = open('config/statuswikis.csv', 'r')
+    for line in file:
+        data = line.split(',')
+        if data[1] = wiki:
+            wikiurl = data[0]
+    site = mwclient.Site(('https', wikiurl), '/w/')
     config = configparser.RawConfigParser()
     config.read('/data/project/zppixbot/credentials.txt')
     try:
