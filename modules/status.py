@@ -38,7 +38,7 @@ def save_edit(page, content):
 def main():
     site = mwclient.Site(('https', wiki + '.miraheze.org'), '/w/')
     config = configparser.RawConfigParser()
-    config.read('credentials.txt')
+    config.read('/data/project/zppixbot/credentials.txt')
     try:
         site.login(config.get('zppixbot_status', 'username'), config.get('zppixbot_status', 'password'))
     except errors.LoginError as e:
