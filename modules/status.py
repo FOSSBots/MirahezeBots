@@ -55,7 +55,7 @@ def main():
         print(e)
         raise ValueError("Login failed.")
     save_wrap(site)
-    
+
 
 @commands('status')
 @example('.status mhtest offline')
