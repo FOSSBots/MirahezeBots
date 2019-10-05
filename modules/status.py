@@ -1,10 +1,11 @@
 import configparser, json, mwclient
 from mwclient import errors
-import QuIRC
 import random
 import requests
 import re
 import time
+from __future__ import unicode_literals, absolute_import, print_function, division
+from sopel.module import rule, commands, example
 lastuser = ''
 pages = ''
 
@@ -47,8 +48,11 @@ def main():
         print(e)
         raise ValueError("Login failed.")
     save_wrap(site)
+    
 
-def on_message(bot, channel, sender, message):
+@commands('status')
+@example('.status mhtest offline')
+def on_message(bot, trigger):
     global lastuser
     global senders
     global contents
