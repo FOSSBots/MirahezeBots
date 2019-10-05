@@ -1,2 +1,5 @@
 # Required dependencies to run ZppixBot modules
 requests
+configparser
+json
+mwclient
