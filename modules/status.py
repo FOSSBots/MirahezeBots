@@ -12,7 +12,7 @@ from sopel.module import rule, commands, example
 pages = ''
 
 
-def save_wrap(site):
+def save_wrap(site, requester):
     page = site.Pages['User:' + requester + '/Status']
     content = status
     save_edit(page, content)
@@ -54,7 +54,7 @@ def main(wiki, requester, status):
     except errors.LoginError as e:
         print(e)
         raise ValueError("Login failed.")
-    save_wrap(site)
+    save_wrap(site, requester)
 
 
 @commands('status')
