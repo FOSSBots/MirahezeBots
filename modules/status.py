@@ -48,7 +48,7 @@ def main(wiki, requester, status):
             wikiurl = data[0]
     site = mwclient.Site(('https', wikiurl), '/w/')
     config = configparser.RawConfigParser()
-    config.read('/data/project/zppixbot/credentials.txt')
+    config.read('/data/project/zppixbot/.sopel/credentials.txt')
     try:
         site.login(config.get('zppixbot_status', 'username'), config.get('zppixbot_status', 'password'))
     except errors.LoginError as e:
