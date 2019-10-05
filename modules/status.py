@@ -72,8 +72,8 @@ def status(bot, trigger):
                 requester = host[1]
                 if __name__ == "__main__":
                     main()
-                 return wiki
-                 return requester
-                 return status
+                    return wiki
+                    return requester
+                    return status
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
