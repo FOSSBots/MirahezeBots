@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, absolute_import, print_function, division
 import configparser
 import json
 import mwclient
@@ -5,7 +6,6 @@ from mwclient import errors
 import requests
 import re
 import time
-from __future__ import unicode_literals, absolute_import, print_function, division
 from sopel.module import rule, commands, example
 
 
@@ -39,7 +39,7 @@ def save_edit(page, content):
         break
 
 
-def main():
+def main(wiki, requester, status):
     wikiurl = 'example.org'
     file = open('config/statuswikis.csv', 'r')
     for line in file:
@@ -62,18 +62,14 @@ def main():
 def status(bot, trigger):
     try:
         options = trigger.group(2).split(" ")
-        if len(options) == 3:
+        if len(options) == 2:
             wiki = options[0]
-            user = options[1]
-            status = options[2]
+            status = options[1]
             host = trigger.host
             host = host.split('/')
+            print(host)
             if host[0] == 'miraheze':
                 requester = host[1]
-                if __name__ == "__main__":
-                    return wiki
-                    return requester
-                    return status
-                    main()
+                main(wiki, requester, status)
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
