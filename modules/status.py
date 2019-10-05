@@ -1,16 +1,22 @@
-import configparser, json, mwclient
+import configparser
+import json
+import mwclient
 from mwclient import errors
 import requests
 import re
 import time
 from __future__ import unicode_literals, absolute_import, print_function, division
 from sopel.module import rule, commands, example
+
+
 pages = ''
+
 
 def save_wrap(site):
     page = site.Pages['User:' + requester + '/Status']
     content = status
     save_edit(page, content)
+
 
 def save_edit(page, content):
     time.sleep(5)
@@ -31,8 +37,6 @@ def save_edit(page, content):
             time.sleep(5)  # sleep for 5 seconds before trying again
             continue
         break
-
-
 
 
 def main():
@@ -73,5 +77,3 @@ def status(bot, trigger):
                  return status
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
-
-    
