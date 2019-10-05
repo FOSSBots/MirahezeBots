@@ -67,7 +67,6 @@ def status(bot, trigger):
             status = options[1]
             host = trigger.host
             host = host.split('/')
-            print(host)
             if host[0] == 'miraheze':
                 requester = host[1]
                 main(wiki, requester, status)
