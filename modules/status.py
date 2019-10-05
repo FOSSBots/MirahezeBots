@@ -44,7 +44,7 @@ def main():
     file = open('config/statuswikis.csv', 'r')
     for line in file:
         data = line.split(',')
-        if data[1] = wiki:
+        if data[1] == wiki:
             wikiurl = data[0]
     site = mwclient.Site(('https', wikiurl), '/w/')
     config = configparser.RawConfigParser()
@@ -68,7 +68,7 @@ def status(bot, trigger):
             status = options[2]
             host = trigger.host
             host = host.split('/')
-            if host[0] = 'miraheze':
+            if host[0] == 'miraheze':
                 requester = host[1]
                 if __name__ == "__main__":
                     return wiki
