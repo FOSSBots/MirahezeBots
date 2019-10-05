@@ -41,7 +41,7 @@ def save_edit(page, content):
 
 def main(wiki, requester, status):
     wikiurl = 'example.org'
-    file = open('config/statuswikis.csv', 'r')
+    file = open(' /data/project/zppixbot/.sopel/modules/config', 'r')
     for line in file:
         data = line.split(',')
         if data[1] == wiki:
