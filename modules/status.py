@@ -6,14 +6,14 @@ import re
 import time
 from __future__ import unicode_literals, absolute_import, print_function, division
 from sopel.module import rule, commands, example
-lastuser = ''
 pages = ''
 
+def save_wrap(site):
+    page = site.Pages['User:' + requester + '/Status']
+    content = status
+    save_edit(page, content)
 
-def save_edit(page, site, content):
-    import time
-    global senders
-    global pages
+def save_edit(page, content):
     time.sleep(5)
     edit_summary = """BOT: Settings status per request """
     times = 0
@@ -23,7 +23,6 @@ def save_edit(page, site, content):
         try:
             page.save(content, summary=edit_summary, bot=True, minor=True)
             print('Line 27')
-            bot.send_message('##wikimedia-statuschange', senders + ": I've updated http://en.wikipedia.org/wiki/" + pages )
         except errors.ProtectedPageError:
             print('Could not edit ' + page + ' due to protection')
             times += 1
@@ -38,10 +37,9 @@ def save_edit(page, site, content):
 
 
 def main():
-    site = mwclient.Site(('https', 'quirc.miraheze.org'), '/w/')
+    site = mwclient.Site(('https', wiki + '.miraheze.org'), '/w/')
     config = configparser.RawConfigParser()
-    config.read('credentials2.txt')
-    print('Line 45')
+    config.read('credentials.txt')
     try:
         site.login(config.get('enwiki_sandbot', 'username'), config.get('enwiki_sandbot', 'password'))
     except errors.LoginError as e:
@@ -52,18 +50,23 @@ def main():
 
 @commands('status')
 @example('.status mhtest offline')
-def on_message(bot, trigger):
-    global lastuser
-    global senders
-    global contents
-    if '!run' in message.lower():
-        senders = sender
-        print(message)
-        contents = message.split(' ')
-        print(contents)
-        contents = contents[1]
-        print(contents)
-        if __name__ == "__main__":
-                main()
+def status(bot, trigger):
+    try:
+        options = trigger.group(2).split(" ")
+        if len(options) == 3:
+            wiki = options[0]
+            user = options[1]
+            status = options[2]
+            host = trigger.host
+            host = host.split('/')
+            if host[0] = 'miraheze':
+                requester = host[1]
+                if __name__ == "__main__":
+                    main()
+                 return wiki
+                 return requester
+                 return status
+    except AttributeError:
+        bot.say('Syntax: .mh wiki page', trigger.sender)
 
     
