@@ -1,5 +1,3 @@
-# Pastebin xEWKC8sO
-#!/usr/bin/env python3.6
 import configparser, json, mwclient
 from mwclient import errors
 import QuIRC
@@ -10,29 +8,6 @@ import time
 lastuser = ''
 pages = ''
 
-bot = QuIRC.IRCConnection()
-
-def on_connect(bot):
-    bot.set_nick("RF1_Bot")
-    bot.send_user_packet("RF1_Bot")
-
-def on_welcome(bot):
-    bot.send_message('NickServ', 'identify ')
-    print('Authed to NickServ')
-    time.sleep(10)
-    bot.join_channel('##wikimedia-statuschange')
-def save_wrap(site):
-    print('line 9')
-    global pages
-    global contents
-    pagename1 = 'User:RhinosF1/Status'
-    page1 = site.Pages[pagename1]
-    content1 = contents
-    print('Line 13')
-    #print('Content: ' + content1)
-    pages = pagename1
-    save_edit(page1, site, content1)
-    print('Line 17')
 
 def save_edit(page, site, content):
     import time
@@ -84,46 +59,7 @@ def on_message(bot, channel, sender, message):
         print(contents)
         contents = contents[1]
         print(contents)
-        if 'rhinosf1' == sender.lower():
-            if __name__ == "__main__":
+        if __name__ == "__main__":
                 main()
-        else:
-            if lastuser == sender.lower():
-                bot.send_message(sender, 'You have been quited for misuse of ##wikimedia-statuschange')
-                bot.send_message('RhinosF1', (str(sender) + ':quited in ##wikimedia-statuschange, +z activated'))
-                message = str('flags ##wikimedia-statuschange ' + sender + " -e+q")
-                print(message)
-                bot.send_message('ChanServ', message)
-                message2 = 'quiet ##wikimedia-statuschange ' + sender
-                print(message2)
-                bot.send_message('ChanServ', message2)
-                bot.send_message('ChanServ', 'set mlock ##wikimedia-statuschange +z')
-            else:
-                bot.send_message(sender, 'You can not use !run')
-                bot.send_message('RhinosF1', (str(sender) + ' attempted to use !run'))
-                lastuser = sender
-    if  '!stop' == message.lower():
-        if 'rhinosf1' == sender.lower():
-            quit()
-        else:
-            if lastuser == sender.lower():
-                bot.send_message(sender, 'You have been quited for misuse of ##wikimedia-statuschange')
-                bot.send_message('RhinosF1', (str(sender) + ':quited in ##wikimedia-statuschange, +z activated'))
-                message = str('flags ##wikimedia-statuschange ' + sender + " -e+q")
-                print(message)
-                bot.send_message('ChanServ', message)
-                message2 = 'quiet ##wikimedia-statuschange ' + sender
-                print(message2)
-                bot.send_message('ChanServ', message2)
-                bot.send_message('ChanServ', 'set mlock ##wikimedia-statuschange +z')
-            else:
-                bot.send_message(sender, 'You can not use !stop')
-                bot.send_message('RhinosF1', (str(sender) + ' attempted to use !stop'))
-                lastuser = sender
 
     
-bot.on_connect.append(on_connect)
-bot.on_welcome.append(on_welcome)
-bot.on_public_message.append(on_message)
-bot.connect("chat.freenode.net")
-bot.run_loop()
