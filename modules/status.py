@@ -12,34 +12,38 @@ from sopel.module import rule, commands, example
 pages = ''
 
 
-def save_wrap(site, requester, status):
-    page = site.Pages['User:' + requester + '/Status']
+def save_wrap(site, requester, status, bot, trigger):
+    pagename = 'User:' + requester + '/Status'
+    bot.say(trigger.nick + "updating " + pagename + "!", trigger.sender)
+    page = site.Pages[pagename]
     content = status
-    save_edit(page, content)
+    save_edit(page, content, bot, trigger)
 
 
-def save_edit(page, content):
+def save_edit(page, content, bot, trigger):
     time.sleep(5)
-    edit_summary = """BOT: Settings status per request """
+    edit_summary = "BOT: Setting Status to: " + content + " per " + trigger.hostmask 
     times = 0
     while True:
         if times > 1:
             break
         try:
             page.save(content, summary=edit_summary, bot=True, minor=True)
-            print('Line 27')
+            bot.say(trigger.nick + ": Done!", trigger.sender)
         except errors.ProtectedPageError:
             print('Could not edit ' + page + ' due to protection')
+            bot.say(trigger.nick + ": Error: Page Protected", trigger.sender)
             times += 1
         except errors.EditError:
             print("Error")
+            bot.say(trigger.nick + ": An Error Occured :(", trigger.sender)
             times += 1
             time.sleep(5)  # sleep for 5 seconds before trying again
             continue
         break
 
 
-def main(wiki, requester, status):
+def main(wiki, requester, status, bot, trigger):
     wikiurl = 'example.org'
     file = open('/data/project/zppixbot/.sopel/modules/config/statuswikis.csv', 'r')
     for line in file:
@@ -54,7 +58,7 @@ def main(wiki, requester, status):
     except errors.LoginError as e:
         print(e)
         raise ValueError("Login failed.")
-    save_wrap(site, requester, status)
+    save_wrap(site, requester, status, bot, trigger)
 
 
 @commands('status')
@@ -69,6 +73,8 @@ def status(bot, trigger):
             host = host.split('/')
             if host[0] == 'miraheze':
                 requester = host[1]
-                main(wiki, requester, status)
+                main(wiki, requester, status, bot, trigger)
+            else:
+                bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze Cloak. See phabricator.wikimedia.org/T234716 for updates.")
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
