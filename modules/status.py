@@ -75,7 +75,7 @@ def status(bot, trigger):
                 requester = host[1]
                 main(wiki, requester, status, bot, trigger)
             else:
-                bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze/Wikimedia Cloaks."
+                bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. "
                 + "See phabricator.wikimedia.org/T234716 for updates.")
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
