@@ -14,7 +14,7 @@ pages = ''
 
 def save_wrap(site, requester, status, bot, trigger):
     pagename = 'User:' + requester + '/Status'
-    bot.say(trigger.nick + "updating " + pagename + "!", trigger.sender)
+    bot.say(trigger.nick + " updating " + pagename + "!", trigger.sender)
     page = site.Pages[pagename]
     content = status
     save_edit(page, content, bot, trigger)
@@ -22,7 +22,7 @@ def save_wrap(site, requester, status, bot, trigger):
 
 def save_edit(page, content, bot, trigger):
     time.sleep(5)
-    edit_summary = "BOT: Setting Status to: " + content + " per " + trigger.hostmask 
+    edit_summary = "BOT: Setting Status to: " + content + " per " + trigger.hostmask
     times = 0
     while True:
         if times > 1:
@@ -75,6 +75,6 @@ def status(bot, trigger):
                 requester = host[1]
                 main(wiki, requester, status, bot, trigger)
             else:
-                bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze Cloak. See phabricator.wikimedia.org/T234716 for updates.")
+                bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. See phabricator.wikimedia.org/T234716 for updates.")
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
