@@ -16,11 +16,10 @@ def save_wrap(site, requester, status, bot, trigger):
     pagename = 'User:' + requester + '/Status'
     bot.say(trigger.nick + " updating " + pagename + "!", trigger.sender)
     page = site.Pages[pagename]
-    content = status
-    save_edit(page, content, bot, trigger)
+    save_edit(page, status, bot, trigger)
 
 
-def save_edit(page, content, bot, trigger):
+def save_edit(page, status, bot, trigger):
     time.sleep(5)
     edit_summary = "BOT: Setting Status to: " + content + " per " + trigger.hostmask
     times = 0
@@ -28,7 +27,7 @@ def save_edit(page, content, bot, trigger):
         if times > 1:
             break
         try:
-            page.save(content, summary=edit_summary, bot=True, minor=True)
+            page.save(status, summary=edit_summary, bot=True, minor=True)
             bot.say(trigger.nick + ": Done!", trigger.sender)
         except errors.ProtectedPageError:
             print('Could not edit ' + page + ' due to protection')
@@ -40,10 +39,24 @@ def save_edit(page, content, bot, trigger):
             times += 1
             time.sleep(5)  # sleep for 5 seconds before trying again
             continue
+        except errors.UserBlocked:
+            bot.say(trigger.nick + ": StatusBot is currently unavaiable for that wiki. Our team are working on it!", trigger.sender)
+            bot.say("ERR: The bot is blocked on " + page, '#ZppixBot') 
         break
 
 
-def main(wiki, requester, status, bot, trigger):
+def main(bot, trigger, options):
+    if len(options) == 2:
+            wiki = options[0]
+            status = options[1]
+            host = trigger.host
+            host = host.split('/')
+            if host[0] == 'miraheze':
+                requester = host[1]
+                main(wiki, requester, status, bot, trigger)
+            else:
+                bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. "
+                        + "See phabricator.wikimedia.org/T234716 for updates.")
     wikiurl = 'example.org'
     file = open('/data/project/zppixbot/.sopel/modules/config/statuswikis.csv', 'r')
     for line in file:
@@ -66,16 +79,6 @@ def main(wiki, requester, status, bot, trigger):
 def status(bot, trigger):
     try:
         options = trigger.group(2).split(" ")
-        if len(options) == 2:
-            wiki = options[0]
-            status = options[1]
-            host = trigger.host
-            host = host.split('/')
-            if host[0] == 'miraheze':
-                requester = host[1]
-                main(wiki, requester, status, bot, trigger)
-            else:
-                bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. "
-                        + "See phabricator.wikimedia.org/T234716 for updates.")
+        main(bot, trigger, options)
     except AttributeError:
-        bot.say('Syntax: .mh wiki page', trigger.sender)
+        bot.say('Syntax: .mh sitecode status', trigger.sender)
