@@ -35,7 +35,7 @@ def get_chanops(bot, trigger):
         chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
     elif str(trigger.sender) == '##acme':
         chanops = ['RhinosF1', 'tex', 'B|ack0p']
-    elif str(trigger.sender) == '#miraheze':
+    elif str(trigger.sender) == '#miraheze' or str(triger.sender) == '#miraheze-offtopic':
         chanops = ['Southparkfan', 'NDKilla', 'labster', 'Reception123', 'Voidwalker', 'Void|bot', 'JohnLewis', 'Paladox', 'RhinosF1']
     elif str(trigger.sender) == '#miraheze-cvt' or str(trigger.sender) == '#miraheze-cvt-private':
         chanops = ['NDKilla', 'Voidwalker', 'Reception123', 'Zppix', 'The_Pionner', 'JohnLewis']
