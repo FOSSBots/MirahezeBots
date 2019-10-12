@@ -395,7 +395,6 @@ def topic(bot, trigger):
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
 @commands('tmask')
 def set_mask(bot, trigger):
     """Set the topic mask to use for the current channel. Within the topic mask, {} is used to allow substituting in chunks of text. This mask is used when running the 'topic' command.
@@ -404,10 +403,11 @@ def set_mask(bot, trigger):
     if trigger.sender in chanops:
         bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
         bot.say("Gotcha, " + trigger.nick)
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
 
 
 @require_chanmsg
-@require_privilege(OP, 'You are not a channel operator.')
 @commands('showmask')
 def show_mask(bot, trigger):
     """Show the topic mask for the current channel."""
@@ -416,3 +416,5 @@ def show_mask(bot, trigger):
         mask = bot.db.get_channel_value(trigger.sender, 'topic_mask')
         mask = mask or default_mask(trigger)
         bot.say(mask)
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
