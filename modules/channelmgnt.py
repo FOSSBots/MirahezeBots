@@ -43,7 +43,7 @@ def get_chanops(bot, trigger):
         chanops = ['Reception123', 'NDKilla', 'Voidwalker']
     elif str(trigger.sender) == '#miraheze-testwiki-es':
         chanops = ['AlvaroMolina', 'Reception123', 'NDKilla', 'Voidwalker']
-    elif str(trigger.sender) == '#ZppixBot':
+    elif str(trigger.sender) == '#ZppixBot' or str(trigger.sender) == '#ZppixBot-logs':
         chanops = ['Zppix', 'Reception123', 'Voidwalker']
     elif str(trigger.sender) == '#testadminwiki':
         chanops = ['MacFan4000', 'Voidwalker', 'AlvaroMolina']
