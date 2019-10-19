@@ -400,7 +400,7 @@ def set_mask(bot, trigger):
     """Set the topic mask to use for the current channel. Within the topic mask, {} is used to allow substituting in chunks of text. This mask is used when running the 'topic' command.
     """
     chanops = get_chanops(bot, trigger)
-    if trigger.sender in chanops:
+    if trigger.nick in chanops:
         bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
         bot.say("Gotcha, " + trigger.nick)
     else:
