@@ -7,12 +7,13 @@ from __future__ import (
     division
 )
 
-from sopel.module import (event, thread)
+from sopel.module import (commands, thread, require_admin)
 
 import time
 
 
-@event('JOIN')
+@require_admin()
+@commands('joinall')
 @thread(True)
 def handle_joins(bot, trigger):
     """Join some channels."""
