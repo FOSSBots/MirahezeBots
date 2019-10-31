@@ -17,7 +17,7 @@ import time
 @thread(True)
 def handle_joins(bot, trigger):
     """Join some channels."""
-    if trigger.nick == bot.nick and trigger.sender == '#ZppixBot':
+    if trigger.sender == '#ZppixBot':
         chans = ['#miraheze-cvt', '#testadminwiki', '#miraheze-testwiki-es',
                  '#miraheze', '#miraheze-testwiki', '#miraheze-cvt-private',
                  '##CyberBogan', '##RhinosF1', '##acme', '#miraheze-offtopic',
