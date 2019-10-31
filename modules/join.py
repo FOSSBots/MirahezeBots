@@ -12,7 +12,7 @@ from sopel.module import (commands, thread, require_admin)
 import time
 
 
-@require_admin()
+@require_admin
 @commands('joinall')
 @thread(True)
 def handle_joins(bot, trigger):
