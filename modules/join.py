@@ -7,21 +7,34 @@ from __future__ import (
     division
 )
 
-from sopel.module import (commands, thread, require_admin)
+from sopel import module
 
 import time
 
+chans = ['#miraheze-cvt', '#testadminwiki', '#miraheze-testwiki-es',
+         '#miraheze', '#miraheze-testwiki', '#miraheze-cvt-private',
+         '##CyberBogan', '##RhinosF1', '##acme', '#miraheze-offtopic',
+         '#ays']
 
-@require_admin
-@commands('joinall')
-@thread(True)
+
+@module.require_admin
+@module.commands('joinall')
+@module.thread(True)
 def handle_joins(bot, trigger):
     """Join some channels."""
     if trigger.sender == '#ZppixBot':
-        chans = ['#miraheze-cvt', '#testadminwiki', '#miraheze-testwiki-es',
-                 '#miraheze', '#miraheze-testwiki', '#miraheze-cvt-private',
-                 '##CyberBogan', '##RhinosF1', '##acme', '#miraheze-offtopic',
-                 '#ays']
+        for chan in chans:
+            bot.join(chan)
+            time.sleep(1)
+
+
+@module.rule('.*')
+@module.event('JOIN')
+@module.thread(True)
+@module.unblockable
+def handle_joins_auto(bot, trigger):
+    """Join some channels automatically."""
+    if trigger.nick == bot.nick and trigger.sender == '#ZppixBot':
         for chan in chans:
             bot.join(chan)
             time.sleep(1)
