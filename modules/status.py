@@ -12,11 +12,11 @@ from sopel.module import rule, commands, example
 pages = ''
 
 
-def save_wrap(site, requester, status, bot, trigger):
-    pagename = 'User:' + requester + '/Status'
+def save_wrap(site, request, bot, trigger):
+    pagename = 'User:' + request[0] + '/Status'
     bot.say(trigger.nick + " updating " + pagename + "!", trigger.sender)
     page = site.Pages[pagename]
-    save_edit(page, status, bot, trigger)
+    save_edit(page, request[1], bot, trigger)
 
 
 def save_edit(page, status, bot, trigger):
@@ -55,6 +55,8 @@ def main(bot, trigger, options):
             pass = 1
     if len(options) > 2:
         wiki = options[0]
+        host = trigger.host
+        host = host.split('/')
         x = 1
         status = ''
         while x < len(options):
@@ -93,7 +95,7 @@ def main(bot, trigger, options):
         except errors.LoginError as e:
             print(e)
             raise ValueError("Login failed.")
-        save_wrap(site, requester, status, bot, trigger)
+        save_wrap(site, request, bot, trigger)
 
 
 @commands('status')
