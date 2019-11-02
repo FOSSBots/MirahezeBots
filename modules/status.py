@@ -41,18 +41,18 @@ def save_edit(page, status, bot, trigger):
             continue
         except errors.UserBlocked:
             bot.say(trigger.nick + ": StatusBot is currently unavaiable for that wiki. Our team are working on it!", trigger.sender)
-            bot.say("ERR: The bot is blocked on " + page, '#ZppixBot') 
+            bot.say("ERR: The bot is blocked on " + page, '#ZppixBot')
         break
 
 
 def main(bot, trigger, options):
-    pass = 0
+    cont = 0
     if len(options) == 2:
-            wiki = options[0]
-            status = options[1]
-            host = trigger.host
-            host = host.split('/')
-            pass = 1
+        wiki = options[0]
+        status = options[1]
+        host = trigger.host
+        host = host.split('/')
+        cont = 1
     if len(options) > 2:
         wiki = options[0]
         host = trigger.host
@@ -62,11 +62,11 @@ def main(bot, trigger, options):
         while x < len(options):
             status = status + options[x]
             x = x + 1
-        pass = 1
+        cont = 1
     else:
         bot.say(trigger.nick + ": Syntax: .mh wikicode status", trigger.sender)
-        pass = 0
-    if pass == 1:
+        cont = 0
+    if cont == 1:
         cloakfile = open('/data/project/zppixbot/.sopel/modules/config/cloaks.csv', 'r')
         for line in file:
             auth = line.split.(',')
@@ -75,12 +75,12 @@ def main(bot, trigger, options):
             sulgroup = auth[1]
             wiki = [wiki, sulgroup]
             request = [user, status]
-            pass = 1
+            cont = 1
         else:
             bot.say(trigger.nick + ":This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. "
-                + "See phabricator.wikimedia.org/T234716 for updates.", trigger.sender)
-            pass = 0
-    if pass = 1:
+                    + "See phabricator.wikimedia.org/T234716 for updates.", trigger.sender)
+            cont = 0
+    if cont == 1:
         wikiurl = 'example.org'
         file = open('/data/project/zppixbot/.sopel/modules/config/statuswikis.csv', 'r')
         for line in file:
