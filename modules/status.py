@@ -62,7 +62,7 @@ def main(bot, trigger, options):
         while x < len(options):
             status = status + options[x]
             x = x + 1
-       pass = 1
+        pass = 1
     else:
         bot.say(trigger.nick + ": Syntax: .mh wikicode status", trigger.sender)
         pass = 0
