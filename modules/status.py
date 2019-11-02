@@ -21,7 +21,7 @@ def save_wrap(site, requester, status, bot, trigger):
 
 def save_edit(page, status, bot, trigger):
     time.sleep(5)
-    edit_summary = "BOT: Setting Status to: " + content + " per " + trigger.hostmask
+    edit_summary = "BOT: Setting Status to: " + status + " per " + trigger.hostmask
     times = 0
     while True:
         if times > 1:
@@ -51,17 +51,29 @@ def main(bot, trigger, options):
             status = options[1]
             host = trigger.host
             host = host.split('/')
-            if host[0] == 'miraheze':
-                requester = host[1]
-                main(wiki, requester, status, bot, trigger)
-            else:
-                bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. "
-                        + "See phabricator.wikimedia.org/T234716 for updates.")
+    if len(options) > 2:
+        wiki = options[0]
+        x = 1
+        status = ''
+        while x < len(options):
+            status = status + options[x]
+            x = x + 1
+    else:
+        bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. "
+                + "See phabricator.wikimedia.org/T234716 for updates.")
+    cloakfile = open('/data/project/zppixbot/.sopel/modules/config/cloaks.csv', 'r')
+    for line in file:
+        auth = line.split.(',')
+    if host[0] == auth[0]:
+        user = host[1]
+        sulgroup = auth[1]
+        wiki = [wiki, sulgroup]
+        request = [user, status]
     wikiurl = 'example.org'
     file = open('/data/project/zppixbot/.sopel/modules/config/statuswikis.csv', 'r')
     for line in file:
         data = line.split(',')
-        if data[1] == wiki:
+        if data[1] == wiki[0] and wiki[1] == data[2]:
             wikiurl = data[0]
     site = mwclient.Site(('https', wikiurl), '/w/')
     config = configparser.RawConfigParser()
