@@ -53,7 +53,7 @@ def main(bot, trigger, options):
         host = trigger.host
         host = host.split('/')
         cont = 1
-    if len(options) > 2:
+    elif len(options) > 2:
         wiki = options[0]
         host = trigger.host
         host = host.split('/')
