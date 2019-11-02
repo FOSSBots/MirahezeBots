@@ -68,7 +68,7 @@ def main(bot, trigger, options):
         cont = 0
     if cont == 1:
         cloakfile = open('/data/project/zppixbot/.sopel/modules/config/cloaks.csv', 'r')
-        for line in file:
+        for line in cloakfile:
             auth = line.split(',')
         if host[0] == auth[0]:
             user = host[1]
