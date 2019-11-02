@@ -46,11 +46,13 @@ def save_edit(page, status, bot, trigger):
 
 
 def main(bot, trigger, options):
+    pass = 0
     if len(options) == 2:
             wiki = options[0]
             status = options[1]
             host = trigger.host
             host = host.split('/')
+            pass = 1
     if len(options) > 2:
         wiki = options[0]
         x = 1
@@ -58,32 +60,40 @@ def main(bot, trigger, options):
         while x < len(options):
             status = status + options[x]
             x = x + 1
+       pass = 1
     else:
-        bot.say(trigger.sender + ": This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. "
-                + "See phabricator.wikimedia.org/T234716 for updates.")
-    cloakfile = open('/data/project/zppixbot/.sopel/modules/config/cloaks.csv', 'r')
-    for line in file:
-        auth = line.split.(',')
-    if host[0] == auth[0]:
-        user = host[1]
-        sulgroup = auth[1]
-        wiki = [wiki, sulgroup]
-        request = [user, status]
-    wikiurl = 'example.org'
-    file = open('/data/project/zppixbot/.sopel/modules/config/statuswikis.csv', 'r')
-    for line in file:
-        data = line.split(',')
-        if data[1] == wiki[0] and wiki[1] == data[2]:
-            wikiurl = data[0]
-    site = mwclient.Site(('https', wikiurl), '/w/')
-    config = configparser.RawConfigParser()
-    config.read('/data/project/zppixbot/.sopel/credentials.txt')
-    try:
-        site.login(config.get('zppixbot_status', 'username'), config.get('zppixbot_status', 'password'))
-    except errors.LoginError as e:
-        print(e)
-        raise ValueError("Login failed.")
-    save_wrap(site, requester, status, bot, trigger)
+        bot.say(trigger.nick + ": Syntax: .mh wikicode status", trigger.sender)
+        pass = 0
+    if pass == 1:
+        cloakfile = open('/data/project/zppixbot/.sopel/modules/config/cloaks.csv', 'r')
+        for line in file:
+            auth = line.split.(',')
+        if host[0] == auth[0]:
+            user = host[1]
+            sulgroup = auth[1]
+            wiki = [wiki, sulgroup]
+            request = [user, status]
+            pass = 1
+        else:
+            bot.say(trigger.nick + ":This service is only avaiable to users with a Miraheze/Wikimedia Cloaks. "
+                + "See phabricator.wikimedia.org/T234716 for updates.", trigger.sender)
+            pass = 0
+    if pass = 1:
+        wikiurl = 'example.org'
+        file = open('/data/project/zppixbot/.sopel/modules/config/statuswikis.csv', 'r')
+        for line in file:
+            data = line.split(',')
+            if data[1] == wiki[0] and wiki[1] == data[2]:
+                wikiurl = data[0]
+        site = mwclient.Site(('https', wikiurl), '/w/')
+        config = configparser.RawConfigParser()
+        config.read('/data/project/zppixbot/.sopel/credentials.txt')
+        try:
+            site.login(config.get('zppixbot_status', 'username'), config.get('zppixbot_status', 'password'))
+        except errors.LoginError as e:
+            print(e)
+            raise ValueError("Login failed.")
+        save_wrap(site, requester, status, bot, trigger)
 
 
 @commands('status')
