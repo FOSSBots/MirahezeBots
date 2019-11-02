@@ -167,7 +167,7 @@ def kick(bot, trigger):
         channel = opt
         reasonidx = 3
     reason = ' '.join(text[reasonidx:])
-    if nick != bot.config.core.nick and trigger.sender in chanops:
+    if nick != bot.config.core.nick and trigger.nick in chanops:
         bot.write(['KICK', channel, nick, ':' + reason])
     else:
         bot.reply('Access Denied. If in error, please contact the channel founder.')
