@@ -82,11 +82,9 @@ def main(bot, trigger, options):
             cont = 0
     if cont == 1:
         wikiurl = 'example.org'
-        bot.say(str(wiki), '#ZppixBot-logs')
         file = open('/data/project/zppixbot/.sopel/modules/config/statuswikis.csv', 'r')
         for line in file:
             data = line.split(',')
-            bot.say(str(data), '#ZppixBot-logs')
             if data[1] == wiki[0] and wiki[1] == data[2]:
                 wikiurl = data[0]
         site = mwclient.Site(('https', wikiurl), '/w/')
