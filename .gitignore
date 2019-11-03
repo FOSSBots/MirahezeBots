@@ -1,5 +1,5 @@
 default.cfg
-ZppixBot-irc.freenode.net.tell.db
+ZppixBot-chat.freenode.net.*.db
 logs/
 default.db
 GeoLiteCity.dat
