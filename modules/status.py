@@ -103,8 +103,5 @@ def main(bot, trigger, options):
 @commands('status')
 @example('.status mhtest offline')
 def status(bot, trigger):
-    try:
-        options = trigger.group(2).split(" ")
-        main(bot, trigger, options)
-    except AttributeError:
-        bot.say('Syntax: .mh sitecode status', trigger.sender)
+    options = trigger.group(2).split(" ")
+    main(bot, trigger, options)
