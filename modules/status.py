@@ -82,20 +82,28 @@ def main(bot, trigger, options):
             cont = 0
     if cont == 1:
         wikiurl = 'example.org'
+        wikiexists = 0
         file = open('/data/project/zppixbot/.sopel/modules/config/statuswikis.csv', 'r')
         for line in file:
             data = line.split(',')
+            if data[1] == wiki [0]:
+                wikiexists = 1
             if data[1] == wiki[0] and wiki[1] == data[2]:
                 wikiurl = data[0]
-        site = mwclient.Site(('https', wikiurl), '/w/')
-        config = configparser.RawConfigParser()
-        config.read('/data/project/zppixbot/.sopel/credentials.txt')
-        try:
-            site.login(config.get('zppixbot_status', 'username'), config.get('zppixbot_status', 'password'))
-        except errors.LoginError as e:
-            print(e)
-            raise ValueError("Login failed.")
-        save_wrap(site, request, bot, trigger)
+                site = mwclient.Site(('https', wikiurl), '/w/')
+                config = configparser.RawConfigParser()
+                config.read('/data/project/zppixbot/.sopel/credentials.txt')
+                try:
+                    site.login(config.get('zppixbot_status', 'username'), config.get('zppixbot_status', 'password'))
+                except errors.LoginError as e:
+                    print(e)
+                    raise ValueError("Login failed.")
+                save_wrap(site, request, bot, trigger)
+                cont = 0
+        if cont = 1 and wikiexists = 1:
+            bot.say(trigger.nick + ": I couldn't authentice you for that wiki.", trigger.sender)
+        elif wikiexists = 0:
+            bot.say(trigger.nick ": I don't recongise that wiki.", trigger.sender)
 
 
 @commands('status')
