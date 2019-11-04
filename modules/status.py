@@ -49,7 +49,7 @@ def save_edit(page, status, bot, trigger):
         except errors.UserBlocked:
             bot.say(trigger.nick + ": StatusBot is currently unavailable for "
                     + "that wiki. Our team are working on it!", trigger.sender)
-            bot.say("ERR: The bot is blocked on " + str(page), '#ZppixBot')
+            bot.say("ERR: The bot is blocked on " + str(page), '#ZppixBot-logs')
         except requests.exceptions.Timeout:
             bot.say(trigger.nick + ": We're experiencing delays connecting to "
                     + "that wiki. Try again in a few minutes. If this "
