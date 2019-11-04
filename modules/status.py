@@ -21,7 +21,7 @@ def save_wrap(site, request, bot, trigger):
 
 def save_edit(page, status, bot, trigger):
     time.sleep(5)
-    edit_summary = "BOT: Setting Status to: " + status + " per " + trigger.hostmask
+    edit_summary = "BOT: Setting Status to:" + status + " per " + trigger.hostmask
     times = 0
     while True:
         if times > 1:
@@ -60,7 +60,7 @@ def main(bot, trigger, options):
         x = 1
         status = ''
         while x < len(options):
-            status = status + options[x]
+            status = status + " " + options[x]
             x = x + 1
         cont = 1
     else:
