@@ -14,7 +14,7 @@ pages = ''
 
 def save_wrap(site, request, bot, trigger):
     pagename = 'User:' + request[0] + '/Status'
-    bot.say(trigger.nick + " updating " + pagename + "!", trigger.sender)
+    bot.say(trigger.nick + ": Updating " + pagename + " to " + request[1] + "!", trigger.sender)
     page = site.Pages[pagename]
     save_edit(page, request[1], bot, trigger)
 
@@ -28,7 +28,7 @@ def save_edit(page, status, bot, trigger):
             break
         try:
             page.save(status, summary=edit_summary, bot=True, minor=True)
-            bot.say(trigger.nick + ": Done!", trigger.sender)
+            bot.say(trigger.nick + ": Updated!", trigger.sender)
         except errors.ProtectedPageError:
             print('Could not edit ' + page + ' due to protection')
             bot.say(trigger.nick + ": Error: Page Protected", trigger.sender)
