@@ -16,7 +16,8 @@ def save_wrap(site, request, bot, trigger):
     pagename = 'User:' + request[0] + '/Status'
     bot.say(trigger.nick + ": Updating " + pagename + " to " + request[1] + "!", trigger.sender)
     page = site.Pages[pagename]
-    save_edit(page, request[1], bot, trigger)
+    try:
+         save_edit(page, request[1], bot, trigger)
 
 
 def save_edit(page, status, bot, trigger):
@@ -42,7 +43,18 @@ def save_edit(page, status, bot, trigger):
         except errors.UserBlocked:
             bot.say(trigger.nick + ": StatusBot is currently unavaiable for that wiki. Our team are working on it!", trigger.sender)
             bot.say("ERR: The bot is blocked on " + page, '#ZppixBot')
-        break
+        except requests.exceptions.Timeout:
+            bot.say(trigger.nick + ": We're experinecing delays connecting to that wiki. Try again in a few minutes. If this continues, let us know in #ZppixBot.", trigger.sender)
+        except requests.exceptions.TooManyRedirects as e:
+            bot.say(trigger.nick + ": We couldn't connect to that wiki. I've alerted a maintainer in #ZppixBot.", trigger.sender)
+            bot.say("Redirect Error: " + e, '#ZppixBot-logs')
+       except requests.exceptions.ConnectionError as e:
+            bot.say(trigger.nick + ": We couldn't connect to that wiki. I've alerted a maintainer in #ZppixBot.", trigger.sender)
+            bot.say("ConnectionError:" + e, '#ZppixBot-logs')
+       except requests.exceptions.RequestException as e:
+            bot.say(trigger.nick + ": A fatal error occured. I've alrted a maintainer in #ZppixBot.", trigger.sender)
+            bot.say("Fatal Error: " + e, '#ZppixBot-logs') 
+       break
 
 
 def main(bot, trigger, options):
@@ -98,6 +110,17 @@ def main(bot, trigger, options):
                 except errors.LoginError as e:
                     print(e)
                     raise ValueError("Login failed.")
+                except requests.exceptions.Timeout:
+                    bot.say(trigger.nick + ": We're experinecing delays connecting to that wiki. Try again in a few minutes. If this continues, let us know in #ZppixBot.", trigger.sender)
+                except requests.exceptions.TooManyRedirects as e:
+                    bot.say(trigger.nick + ": We couldn't connect to that wiki. I've alerted a maintainer in #ZppixBot.", trigger.sender)
+                    bot.say("Redirect Error: " + e, '#ZppixBot-logs')
+                except requests.exceptions.ConnectionError as e:
+                    bot.say(trigger.nick + ": We couldn't connect to that wiki. I've alerted a maintainer in #ZppixBot.", trigger.sender)
+                    bot.say("ConnectionError:" + e, '#ZppixBot-logs')
+                except requests.exceptions.RequestException as e:
+                    bot.say(trigger.nick + ": A fatal error occured. I've alrted a maintainer in #ZppixBot.", trigger.sender)
+                    bot.say("Fatal Error: " + e, '#ZppixBot-logs') 
                 save_wrap(site, request, bot, trigger)
                 cont = 0
         if cont = 1 and wikiexists = 1:
