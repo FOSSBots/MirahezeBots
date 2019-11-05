@@ -420,3 +420,24 @@ def show_mask(bot, trigger):
         bot.say(mask)
     else:
         bot.reply('Access Denied. If in error, please contact the channel founder.')
+        
+        
+@require_chanmsg
+@commands('invite')
+def invite_user(bot, trigger):
+     """
+    Command to invite users to a room.
+    """
+    chanops = get_chanops(bot, trigger)
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.nick in chanops:
+        bot.say('Please wait...')
+        bot.say('op ' + trigger.sender, 'ChanServ')
+        time.sleep(1)
+    nick = trigger.group(2)
+    channel = trigger.sender
+    if not nick:
+        bot.say(trigger.nick + ": No user specified.", trigger.sender)
+    elif trigger.nick in chanops:
+        bot.write(['INVITE', channel, nick])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
