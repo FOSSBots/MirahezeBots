@@ -436,7 +436,7 @@ def invite_user(bot, trigger):
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
-        bot.say(trigger.nick + ": No user specificed.", trigger.sender)
+        bot.say(trigger.nick + ": No user specified.", trigger.sender)
     elif trigger.nick in chanops:
         bot.write(['INVITE', channel, nick])
     else:
