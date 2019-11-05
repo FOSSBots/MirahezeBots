@@ -425,7 +425,7 @@ def show_mask(bot, trigger):
 @require_chanmsg
 @commands('invite')
 def invite_user(bot, trigger):
-     """
+    """
     Command to invite users to a room.
     """
     chanops = get_chanops(bot, trigger)
@@ -433,8 +433,8 @@ def invite_user(bot, trigger):
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
-    nick = trigger.group(2)
-    channel = trigger.sender
+        nick = trigger.group(2)
+        channel = trigger.sender
     if not nick:
         bot.say(trigger.nick + ": No user specified.", trigger.sender)
     elif trigger.nick in chanops:
