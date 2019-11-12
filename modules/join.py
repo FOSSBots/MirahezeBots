@@ -12,7 +12,7 @@ from sopel import module
 import time
 
 chans = ['#miraheze-cvt', '#testadminwiki', '#miraheze-testwiki-es',
-         '#miraheze', '#miraheze-testwiki', '#miraheze-cvt-private',
+         '#miraheze', '#miraheze-testwiki', '#miraheze-meetings', '#miraheze-cvt-private',
          '##CyberBogan', '##RhinosF1', '##acme', '#miraheze-offtopic',
          '#ays']
 
