@@ -20,8 +20,11 @@ def gj(bot, trigger):
     """Tell the user that they are doing good work."""
     bot.say(("You're doing good work, {}!").format(trigger.group(2)))
 
+
 @commans('meetinghelp')
 def pagemeet(bot, trigger):
-    """Ping a member of the Miraheze Meetings Team. Use when you're ready to start your meeting, need to claim a slot or other out of meeting issues. During a meeting, ask the chair for assistance"""
+    """Ping a member of the Miraheze Meetings Team. 
+    Use when you're ready to start your meeting, need to claim a slot or other out of meeting issues. 
+    During a meeting, ask the chair for assistance"""
     if trigger.sender == '#miraheze-meetings':
         bot.say("Paging RhinosF1, Paladox, Voidwalker, SPF|Cloud: Someone is looking for assistance in #miraheze-meetings, #miraheze-meetings)
