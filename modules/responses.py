@@ -23,6 +23,6 @@ def gj(bot, trigger):
 
 @commands('meetinghelp')
 def pagemeet(bot, trigger):
-    """Ping a member of the Miraheze Meetings Team. Use when you're ready to start your meeting, need to claim a slot or other out of meeting issues. During a meeting, ask the chair for assistance""" #noqa
+    """Ping a member of the Miraheze Meetings Team. Use when you're ready to start your meeting, need to claim a slot or other out of meeting issues. During a meeting, ask the chair for assistance"""
     if trigger.sender == '#miraheze-meetings':
-        bot.say("Paging RhinosF1, Paladox, Voidwalker, SPF|Cloud: Someone is looking for assistance in #miraheze-meetings, #miraheze-meetings)
+        bot.say("Paging RhinosF1, Paladox, Voidwalker, SPF|Cloud: Someone is looking for assistance in #miraheze-meetings", '#miraheze-meetings')
