@@ -3,7 +3,7 @@ from __future__ import unicode_literals, absolute_import, print_function, divisi
 
 import re
 from sopel.module import rule, commands, example
-
+  
 
 @commands('github', 'gh')
 @example('.github user')
