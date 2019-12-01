@@ -77,7 +77,7 @@ def setup(bot):
     if not bot.memory.contains('last_seen_url'):
         bot.memory['last_seen_url'] = tools.SopelMemory()
 
-    url_finder = re.compile(r'(?u)(%s?(?:http|https|ftp)(?:://\S+))' %
+    url_finder = re.compile(r'(?u)(%s?(?:http|https|ftp)(?:://\S+?)(?=\)|\s|\Z))' %
                             (bot.config.url.exclusion_char), re.IGNORECASE)
 
 
