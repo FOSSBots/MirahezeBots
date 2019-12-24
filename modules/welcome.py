@@ -68,7 +68,7 @@ def welcome_user(bot, trigger):
     if trigger.sender not in bot.known_users_list:
         bot.known_users_list[trigger.sender] = []
 
-    if trigger.account not in bot.known_users_list[trigger.sender] or trigger.nick not in bot.known_users_list[trigger.sender]:
+    if str(trigger.account) not in bot.known_users_list[trigger.sender] or str(trigger.nick) not in bot.known_users_list[trigger.sender]:
         if trigger.sender == '#miraheze':
             message = ("Hello {}! If you have any questions, feel free to ask "
                        "and someone should answer soon.").format(trigger.nick)
@@ -83,10 +83,10 @@ def welcome_user(bot, trigger):
             return
 
         bot.say(message)
-        if trigger.account == 'None':
-               bot.known_users_list[trigger.sender].append(trigger.nick)
+        if str(trigger.account) == 'None':
+            bot.known_users_list[trigger.sender].append(trigger.nick)
         else:
-               bot.known_users_list[trigger.sender].append(trigger.account)
+            bot.known_users_list[trigger.sender].append(trigger.account)
         save_known_users_list(get_filename(bot), bot.known_users_list)
 
 
