@@ -14,7 +14,7 @@ from sopel.module import commands, example
 @example('.botversion')
 def botversion(bot, trigger):
     """List the current version of the bot."""
-    bot.say('The current version of this bot is 5.0 (v5)')
+    bot.say('The current version of this bot is 6.0 (v6)')
 
 
 @commands('source', 'botsource')
