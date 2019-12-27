@@ -74,7 +74,7 @@ def op(bot, trigger):
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
-        nick = trigger.account
+        nick = trigger.nick
     if trigger.account in chanops:
         bot.write(['MODE', channel, "+o", nick])
     else:
@@ -95,7 +95,7 @@ def deop(bot, trigger):
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
-        nick = trigger.account
+        nick = trigger.nick
     if trigger.account in chanops:
         bot.write(['MODE', channel, "-o", nick])
     else:
@@ -116,7 +116,7 @@ def voice(bot, trigger):
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
-        nick = trigger.account
+        nick = trigger.nick
     if trigger.account in chanops:
         bot.write(['MODE', channel, "+v", nick])
     else:
@@ -137,7 +137,7 @@ def devoice(bot, trigger):
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
-        nick = trigger.account
+        nick = trigger.nick
     if trigger.account in chanops:
         bot.write(['MODE', channel, "-v", nick])
     else:
