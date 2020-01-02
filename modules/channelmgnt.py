@@ -95,8 +95,8 @@ def deop(bot, trigger):
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
-        nick = trigger.nick
-    if trigger.account in chanops:
+        bot.write(['MODE', channel, "-o", trigger.nick])
+    elif trigger.account in chanops:
         bot.write(['MODE', channel, "-o", nick])
     else:
         bot.reply('Access Denied. If in error, please contact the channel founder.')
@@ -137,8 +137,8 @@ def devoice(bot, trigger):
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
-        nick = trigger.nick
-    if trigger.account in chanops:
+        bot.write(['MODE', channel, "-v", trigger.nick])
+    elif trigger.account in chanops:
         bot.write(['MODE', channel, "-v", nick])
     else:
         bot.reply('Access Denied. If in error, please contact the channel founder.')
