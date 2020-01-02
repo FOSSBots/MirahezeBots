@@ -107,6 +107,7 @@ def main(bot, trigger, options):
         if cont == 0:
             usersfile = open('/data/project/zppixbot/.sopel/modules/config/'
                              + 'users.csv', 'r')
+            print(trigger.account)
             for line in usersfile:
                 auth = line.split(',')
                 if trigger.account == auth[0]:
