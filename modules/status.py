@@ -111,7 +111,7 @@ def main(bot, trigger, options):
                 auth = line.split(',')
                 bot.say(str(trigger.account), trigger.sender)
                 bot.say(str(auth), trigger.sender)
-                if trigger.account == auth[0]:
+                if str(trigger.account) == auth[0]:
                     user = auth[1]
                     sulgroup = auth[2]
                     wiki = [wiki, sulgroup]
