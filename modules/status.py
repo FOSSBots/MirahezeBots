@@ -92,17 +92,31 @@ def main(bot, trigger, options):
                 trigger.sender)
         cont = 0
     if cont == 1:
+        cont = 0
         cloakfile = open('/data/project/zppixbot/.sopel/modules/config/'
                          + 'cloaks.csv', 'r')
         for line in cloakfile:
             auth = line.split(',')
-        if host[0] == auth[0]:
-            user = host[1]
-            sulgroup = auth[1]
-            wiki = [wiki, sulgroup]
-            request = [user, status]
-            cont = 1
-        else:
+            if host[0] == auth[0]:
+                user = host[1]
+                sulgroup = auth[1]
+                wiki = [wiki, sulgroup]
+                request = [user, status]
+                cont = 1
+                break
+        if cont == 0:
+            usersfile = open('/data/project/zppixbot/.sopel/modules/config/'
+                         + 'users.csv', 'r')
+            for line in usersfile:
+                auth = line.split(',')
+                if trigger.account == auth[0]:
+                    user = auth[1]
+                    sulgroup = auth[2]
+                    wiki = [wiki, sulgroup]
+                    request = [user, status]
+                    cont = 1
+                    break
+        if cont == 0:
             bot.say(trigger.nick + ":This service is only available to users "
                     + "with Miraheze/Wikimedia Cloaks. See"
                     + "phabricator.wikimedia.org/T234716 for updates.",
