@@ -109,8 +109,6 @@ def main(bot, trigger, options):
                              + 'users.csv', 'r')
             for line in usersfile:
                 auth = line.split(',')
-                bot.say(str(trigger.account), trigger.sender)
-                bot.say(str(auth), trigger.sender)
                 if str(trigger.account) == auth[0]:
                     user = auth[1]
                     sulgroup = auth[2]
