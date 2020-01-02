@@ -117,10 +117,7 @@ def main(bot, trigger, options):
                     cont = 1
                     break
         if cont == 0:
-            bot.say(trigger.nick + ":This service is only available to users "
-                    + "with Miraheze/Wikimedia Cloaks. See"
-                    + "phabricator.wikimedia.org/T234716 for updates.",
-                    trigger.sender)
+            bot.say(trigger.nick + ": You don't seem to be authorised to use this module. Please check you are signed into NickServ and try again. If this persists, ask for help in #ZppixBot" ,trigger.sender)
             cont = 0
     if cont == 1:
         wikiurl = 'example.org'
