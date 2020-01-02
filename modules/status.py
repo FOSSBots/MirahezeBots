@@ -118,8 +118,8 @@ def main(bot, trigger, options):
                     break
         if cont == 0:
             bot.say(trigger.nick + ": You don't seem to be authorised to use this module."
-                     + "Please check you are signed into NickServ and try again. If this"
-                     + "persists, ask for help in #ZppixBot" ,trigger.sender)
+                    + "Please check you are signed into NickServ and try again. If this"
+                    + "persists, ask for help in #ZppixBot", trigger.sender)
             cont = 0
     if cont == 1:
         wikiurl = 'example.org'
