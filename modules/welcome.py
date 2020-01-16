@@ -67,8 +67,8 @@ def welcome_user(bot, trigger):
 
     if trigger.sender not in bot.known_users_list:
         bot.known_users_list[trigger.sender] = []
-    bot.say(str(trigger.account) + str(trigger.nick), '#ZppixBot-logs')
-    if str(trigger.account) not in bot.known_users_list[trigger.sender] or str(trigger.nick) not in bot.known_users_list[trigger.sender]:
+    bot.say(trigger.account + trigger.nick, '#ZppixBot-logs')
+    if trigger.account not in bot.known_users_list[trigger.sender] or trigger.nick not in bot.known_users_list[trigger.sender]:
         if trigger.sender == '#miraheze':
             message = ("Hello {}! If you have any questions, feel free to ask "
                        "and someone should answer soon.").format(trigger.nick)
