@@ -83,7 +83,7 @@ def welcome_user(bot, trigger):
             return
 
         bot.say(message)
-        if trigger.accoount is not None:
+        if trigger.account is not None:
             bot.known_users_list[trigger.sender].append(trigger.account)
         else:
             bot.known_users_list[trigger.sender].append(trigger.nick)
