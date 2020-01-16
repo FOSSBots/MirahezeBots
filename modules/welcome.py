@@ -83,10 +83,10 @@ def welcome_user(bot, trigger):
             return
 
         bot.say(message)
-        if str(trigger.account) == 'None':
-            bot.known_users_list[trigger.sender].append(trigger.nick)
-        else:
+        if trigger.accoount is not None:
             bot.known_users_list[trigger.sender].append(trigger.account)
+        else:
+            bot.known_users_list[trigger.sender].append(trigger.nick)
         save_known_users_list(get_filename(bot), bot.known_users_list)
 
 
