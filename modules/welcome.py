@@ -60,6 +60,31 @@ def save_known_users_list(filename, known_users_list):
 
 @event('JOIN')
 @rule('.*')
+def send_welcome(bot, trigger):
+    if trigger.sender == '#miraheze':
+            message = ("Hello {}! If you have any questions, feel free to ask "
+                       "and someone should answer soon.").format(trigger.nick)
+            bot.say(message)
+            if trigger.account is not None:
+                bot.known_users_list[trigger.sender].append(trigger.account)
+            else:
+                bot.known_users_list[trigger.sender].append(trigger.nick)
+            save_known_users_list(get_filename(bot), bot.known_users_list)
+    elif trigger.sender == '#miraheze-cvt':
+            message = ("Welcome {}. If you need to report spam or abuse,"
+                       " please feel free to notify"
+                       " any of the voiced (+v) users,"
+                       " if it contains personal information you can pm them,"
+                       " or email us"
+                       " at cvt [at] miraheze.org").format(trigger.nick)
+            bot.say(message)
+            if trigger.account is not None:
+                bot.known_users_list[trigger.sender].append(trigger.account)
+            else:
+                bot.known_users_list[trigger.sender].append(trigger.nick)
+            save_known_users_list(get_filename(bot), bot.known_users_list)
+    else:
+        return
 def welcome_user(bot, trigger):
     """Welcome users upon joining the channel."""
     if trigger.nick == bot.nick:
@@ -67,27 +92,10 @@ def welcome_user(bot, trigger):
 
     if trigger.sender not in bot.known_users_list:
         bot.known_users_list[trigger.sender] = []
-    bot.say(trigger.account + trigger.nick, '#ZppixBot-logs')
-    if trigger.account not in bot.known_users_list[trigger.sender] or trigger.nick not in bot.known_users_list[trigger.sender]:
-        if trigger.sender == '#miraheze':
-            message = ("Hello {}! If you have any questions, feel free to ask "
-                       "and someone should answer soon.").format(trigger.nick)
-        elif trigger.sender == '#miraheze-cvt':
-            message = ("Welcome {}. If you need to report spam or abuse,"
-                       " please feel free to notify"
-                       " any of the voiced (+v) users,"
-                       " if it contains personal information you can pm them,"
-                       " or email us"
-                       " at cvt [at] miraheze.org").format(trigger.nick)
-        else:
-            return
-
-        bot.say(message)
-        if trigger.account is not None:
-            bot.known_users_list[trigger.sender].append(trigger.account)
-        else:
-            bot.known_users_list[trigger.sender].append(trigger.nick)
-        save_known_users_list(get_filename(bot), bot.known_users_list)
+    if trigger.account not in bot.known_users_list[trigger.sender]:
+        send_welcome(bot,trigger)
+    elif trigger.nick not in bot.known_users_list[trigger.sender]:
+        send_welcome(bot,trigger)
 
 
 @commands('add_known', 'adduser')
