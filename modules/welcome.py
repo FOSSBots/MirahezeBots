@@ -79,7 +79,6 @@ def save_known_users_list(filename, known_users_list):
 @rule('.*')
 def welcome_user(bot, trigger):
     """Welcome users upon joining the channel."""
-    bot.say(str(trigger.account) + str(trigger.nick),'#ZppixBot-logs')
     if trigger.nick == bot.nick:
         return
 
