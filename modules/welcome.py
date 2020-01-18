@@ -29,10 +29,10 @@ def send_welcome(bot, trigger):
                    " at cvt [at] miraheze.org").format(trigger.nick)
     else:
         return
-    if trigger.account is not None:
-            bot.known_users_list[trigger.sender].append(trigger.account)
-    else:
+    if trigger.account == '*':
             bot.known_users_list[trigger.sender].append(trigger.nick)
+    else:
+            bot.known_users_list[trigger.sender].append(trigger.account)
     bot.say(message)
     save_known_users_list(get_filename(bot), bot.known_users_list)
 def get_filename(bot):
@@ -85,11 +85,11 @@ def welcome_user(bot, trigger):
 
     if trigger.sender not in bot.known_users_list:
         bot.known_users_list[trigger.sender] = []
-    if trigger.account is not None:
-        if trigger.account not in bot.known_users_list[trigger.sender] and trigger.nick not in bot.known_users_list[trigger.sender]:
+    if trigger.account == '*':
+        if trigger.nick not in bot.known_users_list[trigger.sender]:
             send_welcome(bot,trigger)
     else:
-        if trigger.nick not in bot.known_users_list[trigger.sender]:
+        if trigger.account not in bot.known_users_list[trigger.sender] and trigger.nick not in bot.known_users_list[trigger.sender]:
             send_welcome(bot,trigger)
 
 
