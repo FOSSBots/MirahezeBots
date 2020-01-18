@@ -16,7 +16,25 @@ DEFAULT_CHANNEL = '#miraheze'
 USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
 CHANNEL_RE = re.compile(r'#[A-Za-z0-9#\-]+$')
 
-
+def send_welcome(bot, trigger):
+    if trigger.sender == '#miraheze':
+        message = ("Hello {}! If you have any questions, feel free to ask "
+                   "and someone should answer soon.").format(trigger.nick)
+    elif trigger.sender == '#miraheze-cvt':
+        message = ("Welcome {}. If you need to report spam or abuse,"
+                   " please feel free to notify"
+                   " any of the voiced (+v) users,"
+                   " if it contains personal information you can pm them,"
+                   " or email us"
+                   " at cvt [at] miraheze.org").format(trigger.nick)
+    else:
+        return
+    if trigger.account is not None:
+            bot.known_users_list[trigger.sender].append(trigger.account)
+    else:
+            bot.known_users_list[trigger.sender].append(trigger.nick)
+    bot.say(message)
+    save_known_users_list(get_filename(bot), bot.known_users_list)
 def get_filename(bot):
     """Get name of file used to store known users list."""
     name = '{}-{}.known_users.db'.format(bot.nick, bot.config.core.host)
@@ -57,9 +75,6 @@ def save_known_users_list(filename, known_users_list):
             f.write('{}\t{}\n'.format(channel, user))
     f.close()
 
-
-@event('JOIN')
-@rule('.*')
 def send_welcome(bot, trigger):
     if trigger.sender == '#miraheze':
         message = ("Hello {}! If you have any questions, feel free to ask "
@@ -79,6 +94,8 @@ def send_welcome(bot, trigger):
             bot.known_users_list[trigger.sender].append(trigger.nick)
     bot.say(message)
     save_known_users_list(get_filename(bot), bot.known_users_list)
+@event('JOIN')
+@rule('.*')
 def welcome_user(bot, trigger):
     """Welcome users upon joining the channel."""
     if trigger.nick == bot.nick:
