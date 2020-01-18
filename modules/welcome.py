@@ -103,10 +103,12 @@ def welcome_user(bot, trigger):
 
     if trigger.sender not in bot.known_users_list:
         bot.known_users_list[trigger.sender] = []
-    if trigger.account not in bot.known_users_list[trigger.sender]:
-        send_welcome(bot,trigger)
-    elif trigger.nick not in bot.known_users_list[trigger.sender]:
-        send_welcome(bot,trigger)
+    if trigger.acount not NULL:
+        if trigger.account not in bot.known_users_list[trigger.sender] and if trigger.nick not in bot.known_users_list[trigger.sender]:
+            send_welcome(bot,trigger)
+    else:
+        if trigger.nick not in bot.known_users_list[trigger.sender]:
+            send_welcome(bot,trigger)
 
 
 @commands('add_known', 'adduser')
