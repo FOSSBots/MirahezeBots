@@ -103,7 +103,7 @@ def welcome_user(bot, trigger):
 
     if trigger.sender not in bot.known_users_list:
         bot.known_users_list[trigger.sender] = []
-    if trigger.acount not NULL:
+    if trigger.acount is not none:
         if trigger.account not in bot.known_users_list[trigger.sender] and if trigger.nick not in bot.known_users_list[trigger.sender]:
             send_welcome(bot,trigger)
     else:
