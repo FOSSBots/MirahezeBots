@@ -7,7 +7,7 @@ from __future__ import (
     division
 )
 
-from sopel import module
+from sopel import plugin
 
 import time
 
