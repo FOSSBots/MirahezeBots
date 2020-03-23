@@ -10,7 +10,7 @@ from __future__ import (
 import os
 import re
 import codecs
-from sopel.module import rule, event, commands, example
+from sopel.plugin import rule, event, commands, example
 
 DEFAULT_CHANNEL = '#miraheze'
 USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
