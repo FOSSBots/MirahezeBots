@@ -13,7 +13,7 @@ import re
 
 from time import time, sleep
 
-from sopel.module import commands, example, interval, rule
+from sopel.plugin import commands, example, interval, rule
 
 # sopel modules import problem workaround
 sys.path.insert(0, os.path.abspath(__file__ + "/.."))
