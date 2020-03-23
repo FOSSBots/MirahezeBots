@@ -1,6 +1,6 @@
 """This module sends responses to frequently posted messages at #miraheze."""
 
-from sopel.module import commands, example
+from sopel.plugin import commands, example
 
 
 @commands('addchannel')
@@ -26,3 +26,9 @@ def pagemeet(bot, trigger):
     """Ping a member of the Miraheze Meetings Team. Use when you're ready to start your meeting, need to claim a slot or other out of meeting issues. During a meeting, ask the chair for assistance"""
     if trigger.sender == '#miraheze-meetings':
         bot.say("Paging RhinosF1, Paladox, Voidwalker, SPF|Cloud: Someone is looking for assistance in #miraheze-meetings", '#miraheze-meetings')
+        
+@commands('ping')
+def ping2(bot, trigger):
+    """Reply to ping command."""
+    bot.say('Pong!')
+
