@@ -7,7 +7,7 @@ from __future__ import (
     division
 )
 
-from sopel.module import commands, example
+from sopel.plugin import commands, example
 
 MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL = (
     'Miraheze is a non-profit wikifarm running MediaWiki. If you would like '
