@@ -15,7 +15,7 @@ from __future__ import (
 )
 
 import sopel
-import sopel.module
+import sopel.plugin
 import requests
 import sopel.tools
 
