@@ -14,7 +14,7 @@ import re
 import time
 
 from sopel import formatting
-from sopel.module import (
+from sopel.plugin import (
     commands, example, priority, OP, require_chanmsg
 )
 from sopel.tools import Identifier
