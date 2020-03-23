@@ -7,7 +7,7 @@ from __future__ import (
     division
 )
 
-from sopel.module import commands, example
+from sopel.plugin import commands, example
 
 
 @commands('botversion', 'bv')
