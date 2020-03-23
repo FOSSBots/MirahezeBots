@@ -14,7 +14,7 @@ import threading
 import collections
 import codecs
 from datetime import datetime
-from sopel.module import commands, example, NOLIMIT
+from sopel.plugin import commands, example, NOLIMIT
 import sopel.tools
 from sopel.tools.time import get_timezone, format_time
 
@@ -242,5 +242,5 @@ def create_reminder(bot, trigger, duration, message, tz):
 @example('.cancelreminder (insert reminder message here)')
 def cancel(bot, trigger):
     """Cancel reminder."""
-    bot.reply(('Pinging MacFan4000, Reception123, or Zppix to cancel '
+    bot.reply(('Pinging Reception123, Voidwalker, RhinosF1 or Zppix to cancel '
                '{}\'s reminder.').format(trigger.nick))
