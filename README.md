@@ -12,7 +12,7 @@ To use this bot, copy `modules` folder to your Sopel installation
 
 [Source Github](http://github.com/sopel-irc/sopel)
 
-[More info](https://tools.wmflabs.org/zppixbot/)
+[More info](https://zppixbot.toolforge.org/)
 
-[Documentation](https://tools.wmflabs.org/zppixbot/documentation.html)
+[Documentation](https://zppixbot.toolforge.org/documentation.html)
 
