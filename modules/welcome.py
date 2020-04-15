@@ -18,7 +18,8 @@ CHANNEL_RE = re.compile(r'#[A-Za-z0-9#\-]+$')
 
 
 def send_welcome(bot, trigger):
-    if trigger.sender == '#miraheze':
+    user = trigger.nick
+    if trigger.sender == '#miraheze' and user[3] != 'Not-':
         message = ("Hello {}! If you have any questions, feel free to ask "
                    "and someone should answer soon.").format(trigger.nick)
     elif trigger.sender == '#miraheze-cvt':
