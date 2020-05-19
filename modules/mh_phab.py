@@ -26,11 +26,13 @@ def gethighpri():
     result = response["result"]
     data = result["data"]
         x = 0
-        while x < len(data):
-          parse = data[x]
-          parse2 = parse["fields"]
-          output = "https://phabricator.miraheze.org/T" + str(parse["id"]) + " - " + str(parse2["name"])
-          x = x + 1
+        if x > 5:
+              break
+          else:
+              parse = data[x]
+              parse2 = parse["fields"]
+              output = "https://phabricator.miraheze.org/T" + str(parse["id"]) + " - " + str(parse2["name"])
+              x = x + 1
     
     
 @commands('task')
