@@ -1,7 +1,7 @@
 """This module contains commands related to Miraheze Phabricator."""
 
 from sopel.module import commands, example, interval, rule, config
-
+import requests
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
@@ -24,7 +24,7 @@ def gethighpri():
     response = requests.post(url='https://'+config.phabricator.host+'/api/mainphest.search', data=data)
     response = response.json()
     result = response["result"]
-    data = result["data']
+    data = result["data"]
     
     
 @commands('task')
