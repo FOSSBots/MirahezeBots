@@ -20,7 +20,7 @@ def gj(bot, trigger):
     """Tell the user that they are doing good work."""
     bot.say(("You're doing good work, {}!").format(trigger.group(2)))
 
-        
+
 @commands('cancelreminder')
 @example('.cancelreminder (insert reminder message here)')
 def cancel(bot, trigger):
