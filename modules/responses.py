@@ -26,3 +26,10 @@ def pagemeet(bot, trigger):
     """Ping a member of the Miraheze Meetings Team. Use when you're ready to start your meeting, need to claim a slot or other out of meeting issues. During a meeting, ask the chair for assistance"""
     if trigger.sender == '#miraheze-meetings':
         bot.say("Paging RhinosF1, Paladox, Voidwalker, SPF|Cloud: Someone is looking for assistance in #miraheze-meetings", '#miraheze-meetings')
+
+@commands('cancelreminder')
+@example('.cancelreminder (insert reminder message here)')
+def cancel(bot, trigger):
+    """Cancel reminder."""
+    bot.reply(('Pinging RhinosF1, Reception123, Voidwalker or Zppix to cancel '
+               '{}\'s reminder.').format(trigger.nick))
