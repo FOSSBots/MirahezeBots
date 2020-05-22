@@ -9,7 +9,7 @@ HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
 startup_tasks_notifications = False
 priotasks_notify = []
-config = config.Config('$HOME/.sopel/default.cfg')
+config = config.Config('/data/project/zppixbot-test/.sopel/default.cfg')
 
 
 def searchphab(bot, trigger):
