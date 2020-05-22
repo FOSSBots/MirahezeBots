@@ -33,11 +33,8 @@ def setup(bot):
             bot.config.phabricator.api_token
         )
 
-        if (hasattr(bot.config.phabricator, 'priotasks_notify') and bot.config.phabricator.priotasks_notify is not None):
-            priotasks_notify = list(map(
-                lambda f: f.strip(),
-                bot.config.phabricator.priotasks_notify.split(',')
-            ))
+        if (hasattr(bot.config.phabricator, 'priotasks_notify') and not bot.config.phabricator.priotasks_notify):
+            priotasks_notify = [f.strip() for f in bot.config.phabricator.priotasks.notify.split(',')]
 
 
 def mass_message(bot, targets, message):
