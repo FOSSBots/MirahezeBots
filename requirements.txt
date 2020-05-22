@@ -1,4 +1,20 @@
-# Required dependencies to run ZppixBot modules
-requests
-configparser
-mwclient
+certifi==2020.4.5.1
+chardet==3.0.4
+configparser==5.0.0
+dnspython==1.16.0
+geoip2==2.9.0
+idna==2.9
+maxminddb==1.5.4
+mwclient==0.10.0
+oauthlib==3.1.0
+praw==5.4.0
+prawcore==0.14.0
+pytz==2020.1
+requests==2.23.0
+requests-oauthlib==1.3.0
+six==1.15.0
+sopel==7.0.3
+SQLAlchemy==1.3.17
+update-checker==0.17
+urllib3==1.25.9
+xmltodict==0.12.0
