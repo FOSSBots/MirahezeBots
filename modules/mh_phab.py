@@ -48,7 +48,7 @@ def searchphab(bot, trigger):
     owner = response2.get("result").get("data").get(0).get("fields").get("username")
     author = response3.get("result").get("data").get(0).get("fields").get("username")
     output = f'https://phabricator.miraheze.org/T{str(result["id"])} " - '
-    output = f'{output}{str(result["fields"]["name"]}, authored by {author}, assigned to {str(owner)})'
+    output = f'{output}{str(result.get("fields").get("name"))}, authored by {author}, assigned to {str(owner)}'
     bot.say(output, trigger.sender)
 
 
@@ -94,7 +94,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                 response3 = response3.json()
                 owner = response2["result"]["data"][0]["fields"]["username"] # TODO change to .get?
                 author = response3["result"]["data"][0]["fields"]["username"] # TODO change to .get?
-                output = f'https://phabricator.miraheze.org/T{str(currdata["id"]}) - {str(currdata.get("fields").get("name"))}, authored by {author}, assigned to {str(owner)})'
+                output = f'https://phabricator.miraheze.org/T{str(currdata["id"])} - {str(currdata.get("fields").get("name"))}, authored by {author}, assigned to {str(owner)})'
                 bot.say(output, channel)
                 x = x + 1
 
