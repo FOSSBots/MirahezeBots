@@ -91,12 +91,14 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                 x = x + 1
 
 
+# unnecessary method
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
     searchphab(bot=bot, channel=trigger.sender, task=trigger.group(2))
 
 
+# unnecessary method?
 @rule('T[1-9][0-9]*')
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
