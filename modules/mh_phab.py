@@ -52,24 +52,19 @@ def phabtask(bot, trigger):
 
     if not hasattr(bot, 'phabricator'):
         # Fallback for case if phabricator is not set up
-        bot.say('https://phabricator.miraheze.org/T{}'.format(task_id))
+        bot.say(f'https://phabricator.miraheze.org/T{task_id}')
         return
 
     task = bot.phabricator.get_task(task_id)
     if task is None:
-        bot.reply('I can\'t find task with id {}'.format(task_id))
+        bot.reply(f"I can't find task with id {task_id}")
         return
 
-    message = '{} - {} [{}] authored by {}'.format(
-        task.link,
-        task.title,
-        task.status,
-        task.author.username
-    )
-    if task.owner is not None:
-        message += ', assigned to {}'.format(task.owner.username)
+    message = f'{task.link} - {task.title} [{task.status}] authored by {task.author.username}' 
+    if not task.owner:
+        message = f'{message}, assigned to {task.owner.username})'
     else:
-        message += ', assigned to None'
+        message = f'{message}, assigned to None'
     bot.say(message)
 
 
@@ -112,16 +107,11 @@ def high_priority_tasks_no_updates(bot, trigger):
             page_overflow_tasks += 1
             continue
 
-        message = 'No updates for {} - {} - {} - authored by {}'.format(
-            str(time_diff) + ' days',
-            task.link,
-            task.title,
-            task.author.username
-        )
-        if task.owner is not None:
-            message += ', assigned to {}'.format(task.owner.username)
+        message = f'No updates for {str(time_diff)} days - {task.link} - {task.title} - authored by {task.author.username}'
+        if not task.owner:
+            message = f'{message}, assigned to {task.owner.username}'
         else:
-            message += ', assigned to None'
+            message = f'{message}, assigned to None'
         bot.say(message)
         sleep(MESSAGES_INTERVAL)
 
@@ -133,10 +123,7 @@ def high_priority_tasks_no_updates(bot, trigger):
         else:
             bot.reply('No tasks on this page')
     elif page_overflow_tasks != 0:
-        bot.say('and {} more (see page {}...)'.format(
-            page_overflow_tasks,
-            page_number + 1
-        ))
+        bot.say(f'and {page_overflow_tasks} more (see page {page_number+1}...)')
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
@@ -167,16 +154,11 @@ def high_priority_tasks_notification(bot):
             mass_message(bot, priotasks_notify, 'Hi! Here is the list of '
                          'currently open high priority tasks on Phabricator')
 
-        message = 'No updates for {} - {} - {} - authored by {}'.format(
-            str(time_diff) + ' days',
-            task.link,
-            task.title,
-            task.author.username
-        )
-        if task.owner is not None:
-            message += ', assigned to {}'.format(task.owner.username)
+        message = f'No updates for {str(time_diff)} days - {task.link} - {task.title} - authored by {task.author.username}'
+        if not task.owner:
+            message = f'{message}, assigned to {task.owner.username}'
         else:
-            message += ', assigned to None'
+            message = f'{message}, assigned to None'
 
         mass_message(bot, priotasks_notify, message)
 
@@ -188,9 +170,7 @@ def high_priority_tasks_notification(bot):
                      'update time > 3 days. Nice job!')
     elif page_overflow_tasks != 0:
         mass_message(bot, priotasks_notify,
-                     'and {} more (see next pages...)'.format(
-                         page_overflow_tasks
-                     ))
+                     f'and {page_overflow_tasks} more (see next pages...)')
 
 
 @rule('T[1-9][0-9]*')
@@ -200,22 +180,17 @@ def phabtask2(bot, trigger):
 
     if not hasattr(bot, 'phabricator'):
         # Fallback for case if phabricator is not set up
-        bot.say('https://phabricator.miraheze.org/T{}'.format(task_id))
+        bot.say(f'https://phabricator.miraheze.org/T{task_id}'
         return
 
     task = bot.phabricator.get_task(task_id)
     if task is None:
-        bot.reply('I can\'t find task with id {}'.format(task_id))
+        bot.reply(f"I can't find task with id {task_id}")
         return
 
-    message = '{} - {} [{}] authored by {}'.format(
-        task.link,
-        task.title,
-        task.status,
-        task.author.username
-    )
+    message = f'{task.link} - {task.title} [{task.status}] authored by {task.author.username}'
     if task.owner is not None:
-        message += ', assigned to {}'.format(task.owner.username)
+        message = f'{message}, assigned to {task.owner.username}'
     else:
-        message += ', assigned to None'
+        message = f'{message}, assigned to None'
     bot.say(message)
