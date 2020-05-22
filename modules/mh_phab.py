@@ -1,52 +1,73 @@
 """This module contains commands related to Miraheze Phabricator."""
 
+import requests  # FIX THIS
+from phabricator import Phabricator
+import json  # FIX THIS
 from sopel.module import commands, example, interval, rule, config
-import requests
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
 startup_tasks_notifications = False
 priotasks_notify = []
 
-def mass_message(bot, targets, message):
-    """Send the same message to multiple targets."""
-    for target in targets:
-        bot.say(message, target)
-        sleep(MESSAGES_INTERVAL)
-
-def searchphab():
-    
-def gethighpri():
+def searchphab(bot, trigger):
     data = {
-        'api.token': config.phabricator.api_token
-        'queryKey': config.phabricator.querykey #mFzMevK.KRMZ for mhphab
+        'api.token': config.phabricator.api_token,
+        'constraints[ids][0]': trigger.group(2)
+    }
+    
+def gethighpri(limit=True, channel='#miraheze', bot=None):
+    data = {
+        'api.token': config.phabricator.api_token,
+        'queryKey': config.phabricator.querykey, #mFzMevK.KRMZ for mhphab
     }
     response = requests.post(url='https://'+config.phabricator.host+'/api/mainphest.search', data=data)
     response = response.json()
-    result = response["result"]
-    data = result["data"]
+        result = response["result"]
+        data = result["data"]
         x = 0
-        if x > 5:
+        while x < len(data):
+          currdata = data[x]
+          if x > 5 and limit == True:
+              bot.say("They are more than 5 tasks. Please see " + config.phabricator.host + " for the rest or use .highpri", channel)
               break
           else:
-              parse = data[x]
-              parse2 = parse["fields"]
-              output = "https://phabricator.miraheze.org/T" + str(parse["id"]) + " - " + str(parse2["name"])
+              params = {
+                  'api.token': config.phabricator.api_token,
+                  'constraints[phids][0]': currdata["fields"]["ownerPHID"],
+              }
+              response2 = requests.post(url='https://' + config.phabricator.host + '/api/user.search', data=params)
+              response2 = response2.json()
+              params2 = {
+                  'api.token': config.phabricator.api_token,
+                  'constraints[phids][0]': currdata["fields"]["authorPHID"],
+              }
+              response3 = requests.post(url='https://' + config.phabricator.host + '/api/user.search', data=params2)
+              response3 = response3.json()
+              owner = response2["result"]["data"][0]["fields"]["username"]
+              author = response3["result"]["data"][0]["fields"]["username"]
+              output = "https://phabricator.miraheze.org/T" + str(currdata["id"]) + " - " + str(currdata["fields"]["name"] + ", authored by " + author + ", assigned to " + str(owner))
+              bot.say(output, channel)
               x = x + 1
     
     
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
-    searchphab()
+    searchphab(bot, trigger)
 
 @rule('T[1-9][0-9]*')	
 def phabtask2(bot, trigger):	
     """Get a Miraheze phabricator link to a the task number you provide."""
-    searchphab()
+    searchphab(bot, trigger)
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
     """Send high priority tasks notifications."""
-    gethighpri()
+    gethighpri(bot=bot)
+    
+@commands('highpri')
+@example('.highpri')
+def forcehighpri(bot, trigger):
+    gethighpri(limit=False, channel=trigger.sender, bot=bot)
