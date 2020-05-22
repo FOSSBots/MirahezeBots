@@ -65,20 +65,20 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
             break
         else:
             params = {
-                  'api.token': config.phabricator.api_token,
+                'api.token': config.phabricator.api_token,
                   'constraints[phids][0]': currdata["fields"]["ownerPHID"],
             }
             response2 = requests.post(
-                  url='https://' + config.phabricator.host + '/api/user.search',
-                  data=params)
+                url='https://' + config.phabricator.host + '/api/user.search',
+                data=params)
             response2 = response2.json()
             params2 = {
-                  'api.token': config.phabricator.api_token,
+                'api.token': config.phabricator.api_token,
                   'constraints[phids][0]': currdata["fields"]["authorPHID"],
                 }
             response3 = requests.post(
-                  url='https://' + config.phabricator.host + '/api/user.search',
-                  data=params2)
+                url='https://' + config.phabricator.host + '/api/user.search',
+                data=params2)
             response3 = response3.json()
             owner = response2["result"]["data"][0]["fields"]["username"]
             author = response3["result"]["data"][0]["fields"]["username"]
