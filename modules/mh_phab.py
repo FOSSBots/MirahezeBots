@@ -29,7 +29,10 @@ def searchphab(bot, trigger):
     response2 = requests.post(
         url='https://' + config.phabricator.host + '/user.search',
         data=params)
-    response2 = response2.json()
+    try:
+        response2 = response2.json()
+    except as e:
+        bot.say(e, '#ZppixBot-Logs')
     params2 = {
         'api.token': config.phabricator.api_token,
         'constraints[phids][0]': result["fields"]["authorPHID"]
