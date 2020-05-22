@@ -1,7 +1,6 @@
 """This module contains commands related to Miraheze Phabricator."""
 
 import requests  # FIX THIS
-from phabricator import Phabricator
 import json  # FIX THIS
 from sopel import config
 from sopel.module import commands, example, interval, rule
