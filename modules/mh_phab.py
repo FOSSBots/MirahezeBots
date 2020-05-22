@@ -92,8 +92,8 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                     url=f'https://{config.phabricator.host}/api/user.search',
                     data=params2)
                 response3 = response3.json()
-                owner = response2["result"]["data"][0]["fields"]["username"] # TODO change to .get?
-                author = response3["result"]["data"][0]["fields"]["username"] # TODO change to .get?
+                owner = response2["result"]["data"][0]["fields"]["username"]  # TODO change to .get?
+                author = response3["result"]["data"][0]["fields"]["username"]  # TODO change to .get?
                 output = f'https://phabricator.miraheze.org/T{str(currdata["id"])} - {str(currdata.get("fields").get("name"))}, authored by {author}, assigned to {str(owner)})'
                 bot.say(output, channel)
                 x = x + 1
