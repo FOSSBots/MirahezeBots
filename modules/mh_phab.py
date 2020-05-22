@@ -15,13 +15,41 @@ def searchphab(bot, trigger):
         'api.token': config.phabricator.api_token,
         'constraints[ids][0]': trigger.group(2)
     }
+    response = requests.post(
+        url='https://'+config.phabricator.host+'/api/maniphest.search',
+        data=data)
+    response = response.json()
+    result = response["result"]["data"][0]
+    params = {
+        'api.token': config.phabricator.api_token,
+        'constraints[phids][0]': result["fields"]["ownerPHID"]
+    }
+    response2 = requests.post(
+        url='https://'+config.phabricator.host+'/user.search',
+        data=params)
+    response2 = response2.json()
+    params2 = {
+        'api.token': config.phabricator.api_token,
+        'constraints[phids][0]': result["fields"]["authorPHID"]
+    }
+    response3 = requests.post(
+        url='https://'+config.phabricator.host+'/api/user.search',
+        data=params2)
+    response3 = response3.json()
+    owner = response2["result"]["data"][0]["fields"]["username"]
+    author = response3["result"]["data"][0]["fields"]["username"]
+    output = "https://phabricator.miraheze.org/T" + str(result["id"]) + " - " + str(
+        result["fields"]["name"] + ", authored by " + author + ", assigned to " + str(owner))
+    bot.say(output, trigger.sender)
     
 def gethighpri(limit=True, channel='#miraheze', bot=None):
     data = {
         'api.token': config.phabricator.api_token,
-        'queryKey': config.phabricator.querykey, #mFzMevK.KRMZ for mhphab
+        'queryKey': config.phabricator.querykey,  # mFzMevK.KRMZ for mhphab
     }
-    response = requests.post(url='https://'+config.phabricator.host+'/api/mainphest.search', data=data)
+    response = requests.post(
+        url='https://'+config.phabricator.host+'/api/mainphest.search',
+        data=data)
     response = response.json()
         result = response["result"]
         data = result["data"]
@@ -36,13 +64,17 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                   'api.token': config.phabricator.api_token,
                   'constraints[phids][0]': currdata["fields"]["ownerPHID"],
               }
-              response2 = requests.post(url='https://' + config.phabricator.host + '/api/user.search', data=params)
+              response2 = requests.post(
+                  url='https://' + config.phabricator.host + '/api/user.search', 
+                  data=params)
               response2 = response2.json()
               params2 = {
                   'api.token': config.phabricator.api_token,
                   'constraints[phids][0]': currdata["fields"]["authorPHID"],
               }
-              response3 = requests.post(url='https://' + config.phabricator.host + '/api/user.search', data=params2)
+              response3 = requests.post(
+                  url='https://' + config.phabricator.host + '/api/user.search', 
+                  data=params2)
               response3 = response3.json()
               owner = response2["result"]["data"][0]["fields"]["username"]
               author = response3["result"]["data"][0]["fields"]["username"]
