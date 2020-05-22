@@ -66,7 +66,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         else:
             params = {
                 'api.token': config.phabricator.api_token,
-                  'constraints[phids][0]': currdata["fields"]["ownerPHID"],
+                'constraints[phids][0]': currdata["fields"]["ownerPHID"],
             }
             response2 = requests.post(
                 url='https://' + config.phabricator.host + '/api/user.search',
@@ -74,8 +74,8 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
             response2 = response2.json()
             params2 = {
                 'api.token': config.phabricator.api_token,
-                  'constraints[phids][0]': currdata["fields"]["authorPHID"],
-                }
+                'constraints[phids][0]': currdata["fields"]["authorPHID"],
+            }
             response3 = requests.post(
                 url='https://' + config.phabricator.host + '/api/user.search',
                 data=params2)
