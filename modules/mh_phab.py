@@ -3,12 +3,14 @@
 import requests  # FIX THIS
 from phabricator import Phabricator
 import json  # FIX THIS
-from sopel.module import commands, example, interval, rule, config
+from sopel import config
+from sopel.module import commands, example, interval, rule
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
 startup_tasks_notifications = False
 priotasks_notify = []
+config = config.Config('$HOME/.sopel/default.cfg')
 
 
 def searchphab(bot, trigger):
@@ -66,23 +68,23 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                   'api.token': config.phabricator.api_token,
                   'constraints[phids][0]': currdata["fields"]["ownerPHID"],
             }
-              response2 = requests.post(
-                  url='https://' + config.phabricator.host + '/api/user.search', 
+            response2 = requests.post(
+                  url='https://' + config.phabricator.host + '/api/user.search',
                   data=params)
-              response2 = response2.json()
-              params2 = {
+            response2 = response2.json()
+            params2 = {
                   'api.token': config.phabricator.api_token,
                   'constraints[phids][0]': currdata["fields"]["authorPHID"],
               }
-              response3 = requests.post(
-                  url='https://' + config.phabricator.host + '/api/user.search', 
+            response3 = requests.post(
+                  url='https://' + config.phabricator.host + '/api/user.search',
                   data=params2)
-              response3 = response3.json()
-              owner = response2["result"]["data"][0]["fields"]["username"]
-              author = response3["result"]["data"][0]["fields"]["username"]
-              output = "https://phabricator.miraheze.org/T" + str(currdata["id"]) + " - " + str(currdata["fields"]["name"] + ", authored by " + author + ", assigned to " + str(owner))
-              bot.say(output, channel)
-              x = x + 1
+            response3 = response3.json()
+            owner = response2["result"]["data"][0]["fields"]["username"]
+            author = response3["result"]["data"][0]["fields"]["username"]
+            output = "https://phabricator.miraheze.org/T" + str(currdata["id"]) + " - " + str(currdata["fields"]["name"] + ", authored by " + author + ", assigned to " + str(owner))
+            bot.say(output, channel)
+            x = x + 1
  
 
 @commands('task')
@@ -91,8 +93,8 @@ def phabtask(bot, trigger):
     searchphab(bot, trigger)
 
 
-@rule('T[1-9][0-9]*')	
-def phabtask2(bot, trigger):	
+@rule('T[1-9][0-9]*')
+def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     searchphab(bot, trigger)
 
