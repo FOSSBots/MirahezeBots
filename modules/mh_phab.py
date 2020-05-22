@@ -27,7 +27,7 @@ def searchphab(bot, trigger):
         'constraints[phids][0]': result["fields"]["ownerPHID"]
     }
     response2 = requests.post(
-        url='https://' + config.phabricator.host + '/user.search',
+        url='https://' + config.phabricator.host + '/api/user.search',
         data=params)
     try:
         response2 = response2.json()
