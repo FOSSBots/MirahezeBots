@@ -61,11 +61,11 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
     result = response["result"]
     try:
         data = result["data"]
-        pass = 1
+        go = 1
     except TypeError:
         bot.say("They are no high priority tasks that I can view, good job!", channel)
-        pass = 0
-    if pass == 1:
+        go = 0
+    if go == 1:
         x = 0
         while x < len(data):
             currdata = data[x]
