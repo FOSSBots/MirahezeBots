@@ -1,9 +1,12 @@
 """This module contains commands related to Miraheze Phabricator."""
 
-import requests  # FIX THIS
 import json  # FIX THIS
+import requests  # FIX THIS
+
 from sopel import config
 from sopel.module import commands, example, interval, rule
+
+
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
