@@ -59,35 +59,41 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         data=data)
     response = response.json()
     result = response["result"]
-    data = result["data"]
-    x = 0
-    while x < len(data):
-        currdata = data[x]
-        if x > 5 and limit is True:
-            bot.say("They are more than 5 tasks. Please see " + config.phabricator.host + " for the rest or use .highpri", channel)
-            break
-        else:
-            params = {
-                'api.token': config.phabricator.api_token,
-                'constraints[phids][0]': currdata["fields"]["ownerPHID"],
-            }
-            response2 = requests.post(
-                url='https://' + config.phabricator.host + '/api/user.search',
-                data=params)
-            response2 = response2.json()
-            params2 = {
-                'api.token': config.phabricator.api_token,
-                'constraints[phids][0]': currdata["fields"]["authorPHID"],
-            }
-            response3 = requests.post(
-                url='https://' + config.phabricator.host + '/api/user.search',
-                data=params2)
-            response3 = response3.json()
-            owner = response2["result"]["data"][0]["fields"]["username"]
-            author = response3["result"]["data"][0]["fields"]["username"]
-            output = "https://phabricator.miraheze.org/T" + str(currdata["id"]) + " - " + str(currdata["fields"]["name"] + ", authored by " + author + ", assigned to " + str(owner))
-            bot.say(output, channel)
-            x = x + 1
+    try:
+        data = result["data"]
+        pass = 1
+    except TypeError:
+        bot.say("They are no high priority tasks that I can view, good job!", channel)
+        pass = 0
+    if pass == 1:
+        x = 0
+        while x < len(data):
+            currdata = data[x]
+            if x > 5 and limit is True:
+                bot.say("They are more than 5 tasks. Please see " + config.phabricator.host + " for the rest or use .highpri", channel)
+                break
+            else:
+                params = {
+                    'api.token': config.phabricator.api_token,
+                    'constraints[phids][0]': currdata["fields"]["ownerPHID"],
+                }
+                response2 = requests.post(
+                    url='https://' + config.phabricator.host + '/api/user.search',
+                    data=params)
+                response2 = response2.json()
+                params2 = {
+                    'api.token': config.phabricator.api_token,
+                    'constraints[phids][0]': currdata["fields"]["authorPHID"],
+                }
+                response3 = requests.post(
+                    url='https://' + config.phabricator.host + '/api/user.search',
+                    data=params2)
+                response3 = response3.json()
+                owner = response2["result"]["data"][0]["fields"]["username"]
+                author = response3["result"]["data"][0]["fields"]["username"]
+                output = "https://phabricator.miraheze.org/T" + str(currdata["id"]) + " - " + str(currdata["fields"]["name"] + ", authored by " + author + ", assigned to " + str(owner))
+                bot.say(output, channel)
+                x = x + 1
 
 
 @commands('task')
