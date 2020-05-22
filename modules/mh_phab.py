@@ -105,7 +105,7 @@ def phabtask(bot, trigger):
 @rule('T[1-9][0-9]*')
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
-    searchphab(bot, trigger)
+    bot.say("If you're expecting info on phab task to show up, nag RhinosF1 to fix this and use .task", trigger.sender)
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
