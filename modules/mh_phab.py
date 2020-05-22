@@ -134,7 +134,7 @@ def high_priority_tasks_notification(bot):
         statuses=[PhabricatorClient.STATUS_OPEN]
     )
 
-    if len(tasks) == 0:
+    if not tasks:
         mass_message(bot, priotasks_notify, 'Hi! Just contacting you to tell '
                      'that here are no high priority open tasks. Nice job!')
         return
