@@ -32,6 +32,7 @@ def searchphab(bot, trigger):
     try:
         response2 = response2.json()
     except json.decoder.JSONDecodeError as e:
+        bot.say(str(response2), '#ZppixBot-Logs')
         bot.say(str(e), '#ZppixBot-Logs')
     params2 = {
         'api.token': config.phabricator.api_token,
