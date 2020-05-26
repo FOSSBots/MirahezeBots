@@ -21,7 +21,7 @@ def searchphab(bot, trigger):
         'constraints[ids][0]': trigger.group(2)
     }
     response = requests.post(
-        url='https://{0}/api/maniphest.search'.format(config.phabricator.host)
+        url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
     response = response.json()
     result = response.get("result").get("data").get(0)
