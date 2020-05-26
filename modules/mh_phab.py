@@ -48,7 +48,7 @@ def searchphab(bot, trigger):
     owner = response2.get("result").get("data").get(0).get("fields").get("username")
     author = response3.get("result").get("data").get(0).get("fields").get("username")
     output = 'https://phabricator.miraheze.org/T{0} " - '.format(str(result["id"])
-    output = '{0}{1}, authored by {2}, assigned to {4}'.format(output, str(result.get("fields").get("name")), author, str(owner))
+    output = '{0}{1}, authored by {2}, assigned to {3}'.format(output, str(result.get("fields").get("name")), author, str(owner))
     bot.say(output, trigger.sender)
 
 
