@@ -99,7 +99,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                     data=params2)
                 response3 = response3.json()
                 owner = response2["result"]["data"][0]["fields"]["username"]
-                author  =response3["result"]["data"][0]["fields"]["username"]
+                author = response3["result"]["data"][0]["fields"]["username"]
                 output = 'https://phabricator.miraheze.org/T{0} - {1}, authored by {2}, assigned to {3})'.format(
                     str(currdata["id"]), str(currdata.get("fields").get("name")), author, str(owner))
                 bot.say(output, channel)
