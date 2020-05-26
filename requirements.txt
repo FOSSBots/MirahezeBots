@@ -1,4 +1,20 @@
-# Required dependencies to run ZppixBot modules
-requests
+certifi
+chardet
 configparser
+dnspython
+geoip2
+idna
+maxminddb
 mwclient
+oauthlib
+praw
+prawcore
+pytz
+requests
+requests-oauthlib
+six
+sopel
+SQLAlchemy
+update-checker
+urllib3
+xmltodict
