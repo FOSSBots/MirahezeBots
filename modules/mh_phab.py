@@ -106,23 +106,23 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                 x=x + 1
 
 
-@ commands('task')
-@ example('.task 1')
+@commands('task')
+@example('.task 1')
 def phabtask(bot, trigger):
     searchphab(bot, trigger)
 
-@ rule('T[1-9][0-9]*')
+@rule('T[1-9][0-9]*')
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     bot.say("If you're expecting info on phab task to show up, nag RhinosF1 to fix this and use .task", trigger.sender)
 
-@ interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
+@interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
     """Send high priority tasks notifications."""
     gethighpri(bot=bot)
 
 
-@ commands('highpri')
-@ example('.highpri')
+@commands('highpri')
+@example('.highpri')
 def forcehighpri(bot, trigger):
     gethighpri(limit=False, channel=trigger.sender, bot=bot)
