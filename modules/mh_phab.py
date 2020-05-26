@@ -98,9 +98,9 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                         config.phabricator.host),
                     data=params2)
                 response3=response3.json()
-                # TODO change to .get?
+                # TODO change to .get? or replace
                 owner=response2["result"]["data"][0]["fields"]["username"]
-                # TODO change to .get?
+                # as above
                 author=response3["result"]["data"][0]["fields"]["username"]
                 output='https://phabricator.miraheze.org/T{0} - {1}, authored by {2}, assigned to {3})'.format(
                     str(currdata["id"]), str(currdata.get("fields").get("name")), author, str(owner))
