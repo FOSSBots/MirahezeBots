@@ -45,58 +45,67 @@ def searchphab(bot, trigger):
         url='https://{0}/api/user.search'.format(config.phabricator.host),
         data=params2)
     response3 = response3.json()
-    owner = response2.get("result").get("data").get(0).get("fields").get("username")
-    author = response3.get("result").get("data").get(0).get("fields").get("username")
+    owner = response2.get("result").get(
+        "data").get(0).get("fields").get("username")
+    author = response3.get("result").get(
+        "data").get(0).get("fields").get("username")
     output = 'https://phabricator.miraheze.org/T{0} " - '.format(str(result["id"])
-    output = '{0}{1}, authored by {2}, assigned to {3}'.format(output, str(result.get("fields").get("name")), author, str(owner))
+    output='{0}{1}, authored by {2}, assigned to {3}'.format(
+        output, str(result.get("fields").get("name")), author, str(owner))
     bot.say(output, trigger.sender)
 
 
 def gethighpri(limit=True, channel='#miraheze', bot=None):
-    data = {
+    data={
         'api.token': config.phabricator.api_token,
         'queryKey': config.phabricator.querykey,  # mFzMevK.KRMZ for mhphab
     }
-    response = requests.post(
+    response=requests.post(
         url='https://{0}/api/mainphest.search'.format(config.phabricator.host),
         data=data)
-    response = response.json()
-    result = response.get("result")
+    response=response.json()
+    result=response.get("result")
     try:
-        data = result.get("data")
-        go = 1
+        data=result.get("data")
+        go=1
     except TypeError:
         bot.say("They are no high priority tasks that I can view, good job!", channel)
-        go = 0
+        go=0
     if go == 1:
-        x = 0
+        x=0
         while x < len(data):
-            currdata = data[x]
+            currdata=data[x]
             if x > 5 and limit:
-                bot.say("They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(config.phabricator.host), channel)
+                bot.say("They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(
+                    config.phabricator.host), channel)
                 break
             else:
-                params = {
+                params={
                     'api.token': config.phabricator.api_token,
                     'constraints[phids][0]': currdata.get("fields").get("ownerPHID"),
                 }
-                response2 = requests.post(
-                    url='https://{0}/api/user.search'.format(config.phabricator.host),
+                response2=requests.post(
+                    url='https://{0}/api/user.search'.format(
+                        config.phabricator.host),
                     data=params)
-                response2 = response2.json()
-                params2 = {
+                response2=response2.json()
+                params2={
                     'api.token': config.phabricator.api_token,
                     'constraints[phids][0]': currdata.get("fields").get("authorPHID"),
                 }
-                response3 = requests.post(
-                    url='https://{0}/api/user.search'.format(config.phabricator.host),
+                response3=requests.post(
+                    url='https://{0}/api/user.search'.format(
+                        config.phabricator.host),
                     data=params2)
-                response3 = response3.json()
-                owner = response2["result"]["data"][0]["fields"]["username"]  # TODO change to .get?
-                author = response3["result"]["data"][0]["fields"]["username"]  # TODO change to .get?
-                output = 'https://phabricator.miraheze.org/T{0} - {1}, authored by {2}, assigned to {3})'.format(str(currdata["id"]), str(currdata.get("fields").get("name")), author, str(owner))
+                response3=response3.json()
+                # TODO change to .get?
+                owner=response2["result"]["data"][0]["fields"]["username"]
+                # TODO change to .get?
+                author=response3["result"]["data"][0]["fields"]["username"]
+                output='https://phabricator.miraheze.org/T{0} - {1}, authored by {2}, assigned to {3})'.format(
+                    str(currdata["id"]), str(currdata.get("fields").get("name")), author, str(owner))
                 bot.say(output, channel)
-                x = x + 1
+                x=x + 1
 
 
 @commands('task')
