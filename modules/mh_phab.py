@@ -21,7 +21,7 @@ def searchphab(bot, trigger):
         'constraints[ids][0]': trigger.group(2)
     }
     response = requests.post(
-        url=f'https://{config.phabricator.host}/api/maniphest.search',
+        url='https://{0}/api/maniphest.search'.format(config.phabricator.host)
         data=data)
     response = response.json()
     result = response.get("result").get("data").get(0)
@@ -30,7 +30,7 @@ def searchphab(bot, trigger):
         'constraints[phids][0]': result.get("fields").get("ownerPHID")
     }
     response2 = requests.post(
-        url=f'https://{config.phabricator.host}/api/user.search',
+        url='https://{0}/api/user.search'.format(config.phabricator.host),
         data=params)
     try:
         response2 = response2.json()
@@ -42,13 +42,13 @@ def searchphab(bot, trigger):
         'constraints[phids][0]': result.get("fields").get("authorPHID")
     }
     response3 = requests.post(
-        url=f'https://{config.phabricator.host}/api/user.search',
+        url='https://{0}/api/user.search'.format(config.phabricator.host),
         data=params2)
     response3 = response3.json()
     owner = response2.get("result").get("data").get(0).get("fields").get("username")
     author = response3.get("result").get("data").get(0).get("fields").get("username")
-    output = f'https://phabricator.miraheze.org/T{str(result["id"])} " - '
-    output = f'{output}{str(result.get("fields").get("name"))}, authored by {author}, assigned to {str(owner)}'
+    output = 'https://phabricator.miraheze.org/T{0} " - '.format(str(result["id"])
+    output = '{0}{1}, authored by {2}, assigned to {3}'.format(output, str(result.get("fields").get("name")), author, str(owner))
     bot.say(output, trigger.sender)
 
 
@@ -58,7 +58,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         'queryKey': config.phabricator.querykey,  # mFzMevK.KRMZ for mhphab
     }
     response = requests.post(
-        url=f'https://{config.phabricator.host}/api/mainphest.search',
+        url='https://{0}/api/mainphest.search'.format(config.phabricator.host),
         data=data)
     response = response.json()
     result = response.get("result")
@@ -73,7 +73,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         while x < len(data):
             currdata = data[x]
             if x > 5 and limit:
-                bot.say(f"They are more than 5 tasks. Please see {config.phabricator.host} for the rest or use .highpri", channel)
+                bot.say("They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(config.phabricator.host), channel)
                 break
             else:
                 params = {
@@ -81,7 +81,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                     'constraints[phids][0]': currdata.get("fields").get("ownerPHID"),
                 }
                 response2 = requests.post(
-                    url=f'https://{config.phabricator.host}/api/user.search',
+                    url='https://{0}/api/user.search'.format(config.phabricator.host),
                     data=params)
                 response2 = response2.json()
                 params2 = {
@@ -89,29 +89,25 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                     'constraints[phids][0]': currdata.get("fields").get("authorPHID"),
                 }
                 response3 = requests.post(
-                    url=f'https://{config.phabricator.host}/api/user.search',
+                    url='https://{0}/api/user.search'.format(config.phabricator.host),
                     data=params2)
                 response3 = response3.json()
                 owner = response2["result"]["data"][0]["fields"]["username"]  # TODO change to .get?
                 author = response3["result"]["data"][0]["fields"]["username"]  # TODO change to .get?
-                output = f'https://phabricator.miraheze.org/T{str(currdata["id"])} - {str(currdata.get("fields").get("name"))}, authored by {author}, assigned to {str(owner)})'
+                output = 'https://phabricator.miraheze.org/T{0} - {1}, authored by {2}, assigned to {3})'.format(str(currdata["id"]), str(currdata.get("fields").get("name")), author, str(owner))
                 bot.say(output, channel)
                 x = x + 1
 
 
-# unnecessary method
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
     searchphab(bot, trigger)
 
-
-# unnecessary method?
 @rule('T[1-9][0-9]*')
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     bot.say("If you're expecting info on phab task to show up, nag RhinosF1 to fix this and use .task", trigger.sender)
-
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
