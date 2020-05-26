@@ -24,7 +24,7 @@ def searchphab(bot, trigger):
         url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
     response = response.json()
-    result = response.get("result").get("data").get(0)
+    result = response.get("result").get("data")[0]
     params = {
         'api.token': config.phabricator.api_token,
         'constraints[phids][0]': result.get("fields").get("ownerPHID")
@@ -45,8 +45,8 @@ def searchphab(bot, trigger):
         url='https://{0}/api/user.search'.format(config.phabricator.host),
         data=params2)
     response3 = response3.json()
-    owner = response2.get("result").get("data").get(0).get("fields").get("username")
-    author = response3.get("result").get("data").get(0).get("fields").get("username")
+    owner = response2.get("result").get("data")[0].get("fields").get("username")
+    author = response3.get("result").get("data")[0].get("fields").get("username")
     output = 'https://phabricator.miraheze.org/T{0} " - '.format(str(result["id"])
     output = '{0}{1}, authored by {2}, assigned to {3}'.format(output, str(result.get("fields").get("name")), author, str(owner))
     bot.say(output, trigger.sender)
