@@ -18,7 +18,6 @@ oauthlib
 parso
 pexpect
 pickleshare
-pkg-resources
 praw
 prawcore
 prompt-toolkit
