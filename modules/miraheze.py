@@ -22,6 +22,7 @@ MIRAHEZE_ABOUT_OTHER_CHANNELS = (
 
 
 @commands('miraheze')
+@rule('.*[w-wW-W]hat (even is [m-mM-M]iraheze|is [m-mM-M]iraheze|does [m-mM-M]iraheze do).*')
 @example('.miraheze')
 def miraheze(bot, trigger):
     """
@@ -43,23 +44,11 @@ def miraheze_gethelp(bot, trigger):
         bot.reply(trigger.nick + ', needs help. Pinging Reception123, Zppix, '
                 'PuppyKun, Voidwalker, RhinosF1.')
     else:
-         bot.reply('If you need Miraheze releated help, please join #miraheze')
+        bot.reply('If you need Miraheze releated help, please join #miraheze')
 
 
 @commands('discord')
 def miraheze_discord(bot, trigger):
     """Displays discord information for Miraheze."""
     bot.reply('You can join discord by going to, https://discord.is/miraheze!')
-    
-@rule('.*[w-wW-W]hat (even is [m-mM-M]iraheze|is [m-mM-M]iraheze|does [m-mM-M]iraheze do).*')
-def miraheze(bot, trigger):
-    """
-    Miraheze about command.
-
-    This command will tell you about Miraheze and where to learn more.
-    """
-    if trigger.sender == '#miraheze':
-        bot.reply(MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL)
-    else:
-        bot.reply(MIRAHEZE_ABOUT_OTHER_CHANNELS)
 
