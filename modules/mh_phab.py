@@ -24,12 +24,16 @@ def searchphab(bot, trigger, task=1):
         url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
     response = response.json()
+    go = 0
     try:
         result = response.get("result").get("data")[0]
         go = 1
     except AttributeError:
-        bot.say("An error occured while parsing the result", trigger.sender)
-        go = 0
+        bot.say("An error occurred while parsing the result.", trigger.sender)
+    except IndexError:
+        bot.say("We couldn't find information for the task you searched.", trigger.sender)
+    else:
+        bot.say("An unknown error occured.", trigger.sender)
     if go == 1:
         params = {
             'api.token': config.phabricator.api_token,
