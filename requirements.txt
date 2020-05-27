@@ -1,4 +1,4 @@
-# dependenices used in production ZppixBot
+# dependenices used in test ZppixBot
 backcall
 certifi
 chardet
