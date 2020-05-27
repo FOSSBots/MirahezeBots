@@ -65,8 +65,8 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
     try:
         data = result.get("data")
         go = 1
-    except TypeError:
-        bot.say("They are no high priority tasks that I can view, good job!", channel)
+    except:
+        bot.say("They are no high priority tasks that I can process, good job!", channel)
         go = 0
     if go == 1:
         x = 0
