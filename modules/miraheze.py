@@ -42,7 +42,7 @@ def miraheze_gethelp(bot, trigger):
     """Reply to help requests."""
     if trigger.sender == '#miraheze':
         bot.reply(trigger.nick + ', needs help. Pinging Reception123, Zppix, '
-                'PuppyKun, Voidwalker, RhinosF1.')
+                  'PuppyKun, Voidwalker, RhinosF1.')
     else:
         bot.reply('If you need Miraheze releated help, please join #miraheze')
 
@@ -51,4 +51,3 @@ def miraheze_gethelp(bot, trigger):
 def miraheze_discord(bot, trigger):
     """Displays discord information for Miraheze."""
     bot.reply('You can join discord by going to, https://discord.is/miraheze!')
-
