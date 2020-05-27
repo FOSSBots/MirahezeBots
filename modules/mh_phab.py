@@ -29,7 +29,7 @@ def searchphab(bot, trigger, task=1):
         result = response.get("result").get("data")[0]
         go = 1
     except AttributeError:
-        bot.say("An error occured while parsing the result", trigger.sender)
+        bot.say("An error occurred while parsing the result.", trigger.sender)
     except IndexError:
         bot.say("We couldn't find information for the task you searched.", trigger.sender)
     else:
