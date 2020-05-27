@@ -2,14 +2,14 @@
 
 ## Supported Versions
 
-We currently support the following versions with security releases:
+We currently support the following versions with security releases when running sopel 7.x on python 3.x:
 
 | Version | Supported          |
 | ------- | ------------------ |
 | master  | :white_check_mark: |
-| 5       | :white_check_mark: |
-| 4       | :white_check_mark: |
-| < 4.0   | :x:                |
+| dev     |                    |
+| 6       | :white_check_mark: |
+| < 6.0   | :x:                |
 
 ## Reporting a Vulnerability
 
