@@ -30,7 +30,7 @@ def searchphab(bot, trigger, task=1):
     except AttributeError:
         bot.say("An error occured while parsing the result", trigger.sender)
         go = 0
-    if go = 1:
+    if go == 1:
         params = {
             'api.token': config.phabricator.api_token,
             'constraints[phids][0]': result.get("fields").get("ownerPHID")
