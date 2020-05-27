@@ -24,32 +24,38 @@ def searchphab(bot, trigger, task=1):
         url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
     response = response.json()
-    result = response.get("result").get("data")[0]
-    params = {
-        'api.token': config.phabricator.api_token,
-        'constraints[phids][0]': result.get("fields").get("ownerPHID")
-    }
-    response2 = requests.post(
-        url='https://{0}/api/user.search'.format(config.phabricator.host),
-        data=params)
     try:
-        response2 = response2.json()
-    except json.decoder.JSONDecodeError as e:
-        bot.say(response2.text, '#ZppixBot-Logs')
-        bot.say(str(e), '#ZppixBot-Logs')
-    params2 = {
-        'api.token': config.phabricator.api_token,
-        'constraints[phids][0]': result.get("fields").get("authorPHID")
-    }
-    response3 = requests.post(
-        url='https://{0}/api/user.search'.format(config.phabricator.host),
-        data=params2)
-    response3 = response3.json()
-    owner = response2.get("result").get("data")[0].get("fields").get("username")
-    author = response3.get("result").get("data")[0].get("fields").get("username")
-    output = 'https://phabricator.miraheze.org/T{0} - '.format(str(result["id"]))
-    output = '{0}{1}, authored by {2}, assigned to {3}'.format(output, str(result.get("fields").get("name")), author, str(owner))
-    bot.say(output, trigger.sender)
+        result = response.get("result").get("data")[0]
+        go = 1
+    except AttributeError:
+        bot.say("An error occured while parsing the result", trigger.sender)
+        go = 0
+    if go = 1:
+        params = {
+            'api.token': config.phabricator.api_token,
+            'constraints[phids][0]': result.get("fields").get("ownerPHID")
+        }
+        response2 = requests.post(
+            url='https://{0}/api/user.search'.format(config.phabricator.host),
+            data=params)
+        try:
+            response2 = response2.json()
+        except json.decoder.JSONDecodeError as e:
+            bot.say(response2.text, '#ZppixBot-Logs')
+            bot.say(str(e), '#ZppixBot-Logs')
+        params2 = {
+            'api.token': config.phabricator.api_token,
+            'constraints[phids][0]': result.get("fields").get("authorPHID")
+        }
+        response3 = requests.post(
+            url='https://{0}/api/user.search'.format(config.phabricator.host),
+            data=params2)
+        response3 = response3.json()
+        owner = response2.get("result").get("data")[0].get("fields").get("username")
+        author = response3.get("result").get("data")[0].get("fields").get("username")
+        output = 'https://phabricator.miraheze.org/T{0} - '.format(str(result["id"]))
+        output = '{0}{1}, authored by {2}, assigned to {3}'.format(output, str(result.get("fields").get("name")), author, str(owner))
+        bot.say(output, trigger.sender)
 
 
 def gethighpri(limit=True, channel='#miraheze', bot=None):
@@ -106,7 +112,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
-    searchphab(bot=bot, trigger=trigger, task=trigger.group(1))
+    searchphab(bot=bot, trigger=trigger, task=trigger.group(2))
 
 
 @rule('T[1-9][0-9]*')
