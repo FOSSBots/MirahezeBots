@@ -32,7 +32,7 @@ requests-oauthlib
 six
 sopel
 sopel-modules.weather
-sopel-twitter
+sopel-modules.twitter
 SQLAlchemy
 traitlets
 update-checker
