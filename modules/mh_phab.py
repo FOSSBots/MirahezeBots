@@ -15,10 +15,10 @@ priotasks_notify = []
 config = config.Config('/data/project/zppixbot-test/.sopel/default.cfg')
 
 
-def searchphab(bot, trigger):
+def searchphab(bot, trigger, task=1):
     data = {
         'api.token': config.phabricator.api_token,
-        'constraints[ids][0]': trigger.group(2)
+        'constraints[ids][0]': task
     }
     response = requests.post(
         url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
@@ -106,7 +106,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
-    searchphab(bot, trigger)
+    searchphab(bot=bot, trigger=trigger, task=trigger.group(1))
 
 
 @rule('T[1-9][0-9]*')
