@@ -37,12 +37,12 @@ def miraheze(bot, trigger):
 
 
 @commands('gethelp')
+@rule([i-iI-I] need help|[c-cC-C]an someone help me|[i-iI-I] can(t|'t) login).*
 @example('.gethelp I cannot access https://meta.miraheze.org')
 def miraheze_gethelp(bot, trigger):
     """Reply to help requests."""
     if trigger.sender == '#miraheze':
-        bot.reply(trigger.nick + ', needs help. Pinging Reception123, Zppix, '
-                  'PuppyKun, Voidwalker, RhinosF1.')
+        bot.reply('I am sure that Reception123, Zppix, PuppyKun, Voidwalker, RhinosF1, or Examknow would be happy to help you.')                                                    
     else:
          bot.reply('If you need Miraheze releated help, please join #miraheze')
 
