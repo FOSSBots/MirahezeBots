@@ -94,7 +94,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
-    searchphab(bot=bot, trigger=trigger, task=trigger.group(2))
+    searchphab(bot=bot, channel=trigger.sender, task=trigger.group(2))
 
 
 @rule('T[1-9][0-9]*')
