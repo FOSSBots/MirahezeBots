@@ -71,6 +71,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         url='https://{0}/api/mainphest.search'.format(config.phabricator.host),
         data=data)
     response = response.json()
+    bot.reply(str(response))
     result = response.get("result")
     bot.reply(str(result))
     try:
