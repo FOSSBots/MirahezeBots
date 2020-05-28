@@ -17,9 +17,9 @@ config = config.Config('/data/project/zppixbot-test/.sopel/default.cfg')
 
 def searchphab(bot, channel, task=1):
     data = {
-            'api.token': config.phabricator.api_token,
-            'constraints[ids][0]': task
-     }
+        'api.token': config.phabricator.api_token,
+        'constraints[ids][0]': task
+    }
     response = requests.post(
         url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
