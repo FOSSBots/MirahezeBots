@@ -5,7 +5,7 @@ import requests  # FIX THIS
 
 from sopel import config
 from sopel.module import commands, example, interval, rule
-
+import sys
 
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
@@ -75,8 +75,8 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
     try:
         data = result.get("data")
         go = 1
-    except as e:
-        bot.say(str(e), '#ZppixBot-Logs')
+    except:
+        bot.say(str(sys.exc_info()[0]), '#ZppixBot-Logs')
         bot.say("They are no high priority tasks that I can process, good job!", channel)
         go = 0
     if go == 1:
