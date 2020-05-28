@@ -15,11 +15,11 @@ priotasks_notify = []
 config = config.Config('/data/project/zppixbot-test/.sopel/default.cfg')
 
 
-def searchphab(bot, trigger, task=1):
+def searchphab(bot, channel, task=1,:
     data = {
-        'api.token': config.phabricator.api_token,
-        'constraints[ids][0]': task
-    }
+            'api.token': config.phabricator.api_token,
+            'constraints[ids][0]': task
+     }
     response = requests.post(
         url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
@@ -29,11 +29,11 @@ def searchphab(bot, trigger, task=1):
         result = response.get("result").get("data")[0]
         go = 1
     except AttributeError:
-        bot.say("An error occurred while parsing the result.", trigger.sender)
+        bot.say("An error occurred while parsing the result.", channel)
     except IndexError:
-        bot.say("Sorry, but I couldn't find information for the task you searched.", trigger.sender)
+        bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
     except:
-        bot.say("An unknown error occured.", trigger.sender)
+        bot.say("An unknown error occured.", channel)
     if go == 1:
         params = {
             'api.token': config.phabricator.api_token,
@@ -59,7 +59,7 @@ def searchphab(bot, trigger, task=1):
         author = response3.get("result").get("data")[0].get("fields").get("username")
         output = 'https://phabricator.miraheze.org/T{0} - '.format(str(result["id"]))
         output = '{0}\x02{1}\x02, authored by \x02{2}\x02, assigned to \x02{3}\x02'.format(output, str(result.get("fields").get("name")), author, str(owner))
-        bot.say(output, trigger.sender)
+        bot.say(output, channel)
 
 
 def gethighpri(limit=True, channel='#miraheze', bot=None):
@@ -87,29 +87,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                     config.phabricator.host), channel)
                 break
             else:
-                params = {
-                    'api.token': config.phabricator.api_token,
-                    'constraints[phids][0]': currdata.get("fields").get("ownerPHID"),
-                }
-                response2 = requests.post(
-                    url='https://{0}/api/user.search'.format(
-                        config.phabricator.host),
-                    data=params)
-                response2 = response2.json()
-                params2 = {
-                    'api.token': config.phabricator.api_token,
-                    'constraints[phids][0]': currdata.get("fields").get("authorPHID"),
-                }
-                response3 = requests.post(
-                    url='https://{0}/api/user.search'.format(
-                        config.phabricator.host),
-                    data=params2)
-                response3 = response3.json()
-                owner = response2["result"]["data"][0]["fields"]["username"]
-                author = response3["result"]["data"][0]["fields"]["username"]
-                output = 'https://phabricator.miraheze.org/T{0} - {1}, authored by {2}, assigned to {3})'.format(
-                    str(currdata["id"]), str(currdata.get("fields").get("name")), author, str(owner))
-                bot.say(output, channel)
+                searchphab(bot=bot, channel=channel, task=currdata.get("id"))
                 x = x + 1
 
 
