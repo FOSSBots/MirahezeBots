@@ -76,7 +76,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         data = result.get("data")
         go = 1
     except:
-        bot.say(str(sys.exc_info()[0]), '#ZppixBot-Logs')
+        bot.say(sys.exc_info()[0], '#ZppixBot-Logs')
         bot.say("They are no high priority tasks that I can process, good job!", channel)
         go = 0
     if go == 1:
