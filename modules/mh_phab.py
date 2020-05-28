@@ -15,7 +15,7 @@ priotasks_notify = []
 config = config.Config('/data/project/zppixbot-test/.sopel/default.cfg')
 
 
-def searchphab(bot, channel, task=1,:
+def searchphab(bot, channel, task=1):
     data = {
             'api.token': config.phabricator.api_token,
             'constraints[ids][0]': task
