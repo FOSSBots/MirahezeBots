@@ -68,17 +68,14 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         'queryKey': config.phabricator.querykey,  # mFzMevK.KRMZ for mhphab
     }
     response = requests.post(
-        url='https://{0}/api/mainphest.search'.format(config.phabricator.host),
+        url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
     response = response.json()
-    bot.reply(str(response))
     result = response.get("result")
-    bot.reply(str(result))
     try:
         data = result.get("data")
         go = 1
     except:
-        bot.say(sys.exc_info()[0], '#ZppixBot-Logs')
         bot.say("They are no high priority tasks that I can process, good job!", channel)
         go = 0
     if go == 1:
