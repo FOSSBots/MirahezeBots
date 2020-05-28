@@ -72,6 +72,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         data=data)
     response = response.json()
     result = response.get("result")
+    bot.reply(str(result))
     try:
         data = result.get("data")
         go = 1
