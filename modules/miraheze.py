@@ -36,7 +36,7 @@ def miraheze(bot, trigger):
 
 
 @commands('gethelp')
-@rule('[i-iI-I] need help|[c-cC-C]an someone help me|[i-iI-I] can(t|'t) login).*')
+@rule('([i-iI-I] need help|[c-cC-C]an someone help me|[i-iI-I] can(t|'t) login).*')
 @example('.gethelp I cannot access https://meta.miraheze.org')
 def miraheze_gethelp(bot, trigger):
     """Reply to help requests."""
