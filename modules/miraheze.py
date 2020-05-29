@@ -1,5 +1,4 @@
 """This module contains #miraheze-specific commands."""
-
 from __future__ import (
     unicode_literals,
     absolute_import,
@@ -37,12 +36,12 @@ def miraheze(bot, trigger):
 
 
 @commands('gethelp')
+@rule("([i-iI-I] need help|[c-cC-C]an someone help me|[i-iI-I] can(t|'t) login).*")
 @example('.gethelp I cannot access https://meta.miraheze.org')
 def miraheze_gethelp(bot, trigger):
     """Reply to help requests."""
     if trigger.sender == '#miraheze':
-        bot.reply(trigger.nick + ', needs help. Pinging Reception123, Zppix, '
-                  'PuppyKun, Voidwalker, RhinosF1.')
+        bot.reply('Pinging Reception123, Zppix, PuppyKun, Voidwalker, RhinosF1, and Examknow who might be able to help you.')
     else:
          bot.reply('If you need Miraheze releated help, please join #miraheze')
 
