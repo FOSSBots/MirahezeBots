@@ -1,4 +1,2 @@
 # Development requirements
 vcrpy==4.0.2
-autopep8
-six
