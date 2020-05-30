@@ -18,9 +18,13 @@ before_script:
     - docker cp ./ testenv:/
     - docker exec testenv pip install -r dev-requirements.txt
 <<<<<<< HEAD
+<<<<<<< HEAD
     # - docker exec testenv pip install -r pip-install.txt
 =======
     - docker exec testenv pip install -r dev-requirements.txt
+=======
+    - docker exec testenv pip install -r requirements.txt
+>>>>>>> 1247713... Update .travis.yml
     - docker exec testenv pip install -r pip-install.txt
 >>>>>>> 184ed51... Update .travis.yml
     - docker exec testenv python --version
