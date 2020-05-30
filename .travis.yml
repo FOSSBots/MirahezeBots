@@ -16,9 +16,13 @@ install:
     - docker exec testenv pip install flake8 pytest
 before_script:
     - docker cp ./ testenv:/
-    - docker exec testenv pip install -r requirements.txt
     - docker exec testenv pip install -r dev-requirements.txt
+<<<<<<< HEAD
     # - docker exec testenv pip install -r pip-install.txt
+=======
+    - docker exec testenv pip install -r dev-requirements.txt
+    - docker exec testenv pip install -r pip-install.txt
+>>>>>>> 184ed51... Update .travis.yml
     - docker exec testenv python --version
 
 script:
