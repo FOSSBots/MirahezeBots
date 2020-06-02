@@ -1,20 +1,13 @@
+# dependenices used in test ZppixBot
 certifi
-chardet
 configparser
-dnspython
-geoip2
-idna
-maxminddb
 mwclient
-oauthlib
-praw
-prawcore
 pytz
+PyYAML
 requests
 requests-oauthlib
-six
 sopel
 SQLAlchemy
 update-checker
-urllib3
 xmltodict
+yarl

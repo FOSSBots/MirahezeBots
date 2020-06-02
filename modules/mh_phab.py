@@ -5,7 +5,7 @@ import requests  # FIX THIS
 
 from sopel import config
 from sopel.module import commands, example, interval, rule
-
+import sys
 
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
@@ -15,10 +15,10 @@ priotasks_notify = []
 config = config.Config('/data/project/zppixbot-test/.sopel/default.cfg')
 
 
-def searchphab(bot, trigger):
+def searchphab(bot, channel, task=1):
     data = {
         'api.token': config.phabricator.api_token,
-        'constraints[ids][0]': trigger.group(2)
+        'constraints[ids][0]': task
     }
     response = requests.post(
         url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
@@ -51,22 +51,21 @@ def searchphab(bot, trigger):
     output = '{0}{1}, authored by {2}, assigned to {3}'.format(output, str(result.get("fields").get("name")), author, str(owner))
     bot.say(output, trigger.sender)
 
-
 def gethighpri(limit=True, channel='#miraheze', bot=None):
     data = {
         'api.token': config.phabricator.api_token,
         'queryKey': config.phabricator.querykey,  # mFzMevK.KRMZ for mhphab
     }
     response = requests.post(
-        url='https://{0}/api/mainphest.search'.format(config.phabricator.host),
+        url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
     response = response.json()
     result = response.get("result")
     try:
         data = result.get("data")
         go = 1
-    except TypeError:
-        bot.say("They are no high priority tasks that I can view, good job!", channel)
+    except:
+        bot.say("They are no high priority tasks that I can process, good job!", channel)
         go = 0
     if go == 1:
         x = 0
@@ -77,36 +76,14 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                     config.phabricator.host), channel)
                 break
             else:
-                params = {
-                    'api.token': config.phabricator.api_token,
-                    'constraints[phids][0]': currdata.get("fields").get("ownerPHID"),
-                }
-                response2 = requests.post(
-                    url='https://{0}/api/user.search'.format(
-                        config.phabricator.host),
-                    data=params)
-                response2 = response2.json()
-                params2 = {
-                    'api.token': config.phabricator.api_token,
-                    'constraints[phids][0]': currdata.get("fields").get("authorPHID"),
-                }
-                response3 = requests.post(
-                    url='https://{0}/api/user.search'.format(
-                        config.phabricator.host),
-                    data=params2)
-                response3 = response3.json()
-                owner = response2["result"]["data"][0]["fields"]["username"]
-                author = response3["result"]["data"][0]["fields"]["username"]
-                output = 'https://phabricator.miraheze.org/T{0} - {1}, authored by {2}, assigned to {3})'.format(
-                    str(currdata["id"]), str(currdata.get("fields").get("name")), author, str(owner))
-                bot.say(output, channel)
+                searchphab(bot=bot, channel=channel, task=currdata.get("id"))
                 x = x + 1
 
 
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
-    searchphab(bot, trigger)
+    searchphab(bot=bot, channel=trigger.sender, task=trigger.group(2))
 
 
 @rule('T[1-9][0-9]*')
