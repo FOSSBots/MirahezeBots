@@ -60,9 +60,10 @@ def get_chanops(bot, trigger):
 
 @require_chanmsg
 @commands('op')
+@example('.op Zppix')
 def op(bot, trigger):
     """
-    Command to op users in a room. If no nick is given, Sopel will op the nick who sent the command
+    Command to op users in a room. If no nick is given, Sopel will op the nick who sent the command.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
@@ -81,9 +82,10 @@ def op(bot, trigger):
 
 @require_chanmsg
 @commands('deop')
+@example('.deop Zppix')
 def deop(bot, trigger):
     """
-    Command to deop users in a room. If no nick is given, Sopel will deop the nick who sent the command
+    Command to deop users in a room. If no nick is given, Sopel will deop the nick who sent the command.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
@@ -102,9 +104,10 @@ def deop(bot, trigger):
 
 @require_chanmsg
 @commands('voice')
+@example('.voice Zppix')
 def voice(bot, trigger):
     """
-    Command to voice users in a room. If no nick is given, Sopel will voice the nick who sent the command
+    Command to voice users in a room. If no nick is given, Sopel will voice the nick who sent the command.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
@@ -123,9 +126,10 @@ def voice(bot, trigger):
 
 @require_chanmsg
 @commands('devoice')
+@example('.devoice Zppix')
 def devoice(bot, trigger):
     """
-    Command to devoice users in a room. If no nick is given, the nick who sent the command will be devoiced
+    Command to devoice users in a room. If no nick is given, the nick who sent the command will be devoiced.
     """
     chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
@@ -145,6 +149,7 @@ def devoice(bot, trigger):
 @require_chanmsg
 @commands('kick')
 @priority('high')
+@example('.kick Zppix')
 def kick(bot, trigger):
     """Kick a user from the channel."""
     chanops = get_chanops(bot, trigger)
@@ -198,6 +203,7 @@ def configureHostMask(mask):
 @require_chanmsg
 @commands('ban')
 @priority('high')
+@example('.ban Zppix')
 def ban(bot, trigger):
     chanops = get_chanops(bot, trigger)
     """Ban a user from the channel. The bot must be a channel operator for this command to work.
@@ -229,6 +235,7 @@ def ban(bot, trigger):
 
 @require_chanmsg
 @commands('unban')
+@example('.unban Zppix')
 def unban(bot, trigger):
     """Unban a user from the channel. The bot must be a channel operator for this command to work.
     """
@@ -260,6 +267,7 @@ def unban(bot, trigger):
 
 @require_chanmsg
 @commands('quiet')
+@example('.quiet Zppix')
 def quiet(bot, trigger):
     """Quiet a user. The bot must be a channel operator for this command to work.
     """
@@ -291,6 +299,7 @@ def quiet(bot, trigger):
 
 @require_chanmsg
 @commands('unquiet')
+@example('.unquiet Zppix')
 def unquiet(bot, trigger):
     """Unquiet a user. The bot must be a channel operator for this command to work.
     """
@@ -361,6 +370,7 @@ def kickban(bot, trigger):
 
 @require_chanmsg
 @commands('topic')
+@example('.topic Your Great New Topic')
 def topic(bot, trigger):
     """Change the channel topic. The bot must be a channel operator for this command to work.
     """
@@ -398,6 +408,7 @@ def topic(bot, trigger):
 
 @require_chanmsg
 @commands('tmask')
+@example('.tmask Welcome to My Channel | Info: {}')
 def set_mask(bot, trigger):
     """Set the topic mask to use for the current channel. Within the topic mask, {} is used to allow substituting in chunks of text. This mask is used when running the 'topic' command.
     """
@@ -411,6 +422,7 @@ def set_mask(bot, trigger):
 
 @require_chanmsg
 @commands('showmask')
+@example('showmask')
 def show_mask(bot, trigger):
     """Show the topic mask for the current channel."""
     chanops = get_chanops(bot, trigger)
