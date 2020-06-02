@@ -3,7 +3,7 @@ users = []
 userfile = open(file, 'r')
 for line in userfile:
   users.append(line)
-databse = input("Full path to database: ")
+database = input("Full path to database: ")
 with sqlite3.connect(database) as conn: 
   with conn.cursor() as curs:
     for user in users:
