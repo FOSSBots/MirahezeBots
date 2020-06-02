@@ -1,4 +1,10 @@
 language: python
+  - "3.5" # support our own setup
+  - "3.6" # Until 2021-12-23 at latest
+  - "3.7" # supported until  2023-06-27 at latest
+  - "3.8" # latest python version
+  - "3.8-dev"  # 3.8 development branch - ONLY DEV BRANCH RUNS TESTS ON
+  - "nightly"  # nightly build  - ONLY DEV BRANCH RUNS TESTS ON
 dist: xenial
 os: linux
 
