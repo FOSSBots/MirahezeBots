@@ -1,4 +1,6 @@
 import sqlite3
+import time
+start = time.time()
 file = input("Full path to the deletion list: ")
 with open(file, 'r') as f: # ensure the file is open and closed properly
     users = f.readlines()
@@ -10,3 +12,4 @@ with sqlite3.connect(database) as conn:
         curs.execute('DELETE FROM nicknames WHERE nick_id = ?', (user,))
         curs.execute('DELETE FROM nick_ids WHERE nick_id = ?', (user,))
     conn.commit()
+print('Ran for {0}'.format(time.time()-start))
