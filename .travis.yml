@@ -8,27 +8,17 @@ python:
 dist: xenial
 os: linux
 
-services:
-    - docker
-
-before_install:
-    - docker run -t -d --name=testenv python
-
 install:
-    - docker exec testenv apt update
-    - docker exec testenv apt upgrade -y
-    - docker exec testenv apt install -y python-pip
-    - docker exec testenv pip install flake8 pytest
+    - pip install flake8
 before_script:
-    - docker cp ./ testenv:/
-    - docker exec testenv pip install -r dev-requirements.txt
-    - docker exec testenv pip install -r requirements.txt
-    - docker exec testenv pip install -r pip-install.txt
-    - docker exec testenv python --version
+    - pip install -r dev-requirements.txt
+    - pip install -r requirements.txt
+    - pip install -r pip-install.txt
+    - python --version
 
 script:
     # we ignore E402 because of workarounds we use for modules loading, and F401 because some imports aren't directly used but needed for modules and travis doesn't like that
-    - docker exec testenv flake8 modules --ignore E402,F401,W503,E722 --max-line-length 210 --exclude=channelmgnt.py
+    - flake8 modules --ignore E402,F401,W503,E722 --max-line-length 210 --exclude=channelmgnt.py
 
 notifications:
   irc:
