@@ -1,3 +1,4 @@
+import sqlite3
 file = input("Full path to the deletion list: ")
 with open(file, 'r') as f: # ensure the file is open and closed properly
     users = f.readlines()
