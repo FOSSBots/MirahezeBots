@@ -16,12 +16,14 @@ install:
     - docker exec testenv pip install flake8 pytest
 before_script:
     - docker cp ./ testenv:/
-    - docker exec testenv pip install sopel argparse pyowm
+    - docker exec testenv pip install -r dev-requirements.txt
+    - docker exec testenv pip install -r requirements.txt
+    - docker exec testenv pip install -r pip-install.txt
     - docker exec testenv python --version
 
 script:
     # we ignore E402 because of workarounds we use for modules loading, and F401 because some imports aren't directly used but needed for modules and travis doesn't like that
-    - docker exec testenv flake8 modules --ignore E402,F401,W503,E722 --max-line-length 210
+    - docker exec testenv flake8 modules --ignore E402,F401,W503,E722 --max-line-length 210 --exclude=channelmgnt.py
 
 notifications:
   irc:
