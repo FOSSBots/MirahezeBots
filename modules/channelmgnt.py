@@ -205,9 +205,9 @@ def configureHostMask(mask):
 @priority('high')
 @example('.ban Zppix')
 def ban(bot, trigger):
-    chanops = get_chanops(bot, trigger)
     """Ban a user from the channel. The bot must be a channel operator for this command to work.
     """
+    chanops = get_chanops(bot, trigger)
     if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
         bot.say('Please wait...')
         bot.say('op ' + trigger.sender, 'ChanServ')
