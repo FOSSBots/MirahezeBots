@@ -33,6 +33,8 @@ def get_chanops(bot, trigger):
     chanops = ''
     if str(trigger.sender) == '##RhinosF1':
         chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
+    elif str(trigger.sender) == '##Examknow':
+        chanops = ['Examknow', 'RhinosF1', 'Reception123', 'Zppix', 'paladox']
     elif str(trigger.sender) == '##acme':
         chanops = ['RhinosF1', 'tex', 'BlackOp']
     elif str(trigger.sender) == '#miraheze' or str(trigger.sender) == '#miraheze-offtopic':
@@ -344,6 +346,7 @@ def kickban(bot, trigger):
     text = trigger.group().split()
     argc = len(text)
     if argc < 3:
+        bot.reply('Syntax is: .kickban <nick> <reason>')
         return
     opt = Identifier(text[1])
     nick = opt
@@ -352,6 +355,7 @@ def kickban(bot, trigger):
     reasonidx = 3 if mask != '' else 2
     if not opt.is_nick():
         if argc < 5:
+            bot.reply('Syntax is: .kickban <nick> <reason>')
             return
         channel = opt
         nick = text[2]
