@@ -1,4 +1,5 @@
 # Installs for pip that are NOT required for our modules but RECOMENDED or MAY BE REQUIRED for sopel in general - anything installed on ZppixBot(-test) not in other files goes in here
+argparse
 backcall
 chardet
 decorator
@@ -21,7 +22,7 @@ prompt-toolkit
 ptyprocess
 pycodestyle
 Pygments
-sopel-modules.weather
+pwowm
 sopel-modules.twitter
 urllib3
 wcwidth
