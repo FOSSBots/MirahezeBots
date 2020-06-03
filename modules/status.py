@@ -174,5 +174,6 @@ def main(bot, trigger, options):
 @commands('status')
 @example('.status mhtest offline')
 def status(bot, trigger):
+    """Update's the /status subpage of Special:MyPage on the indicated wiki"""
     options = trigger.group(2).split(" ")
     main(bot, trigger, options)
