@@ -1,0 +1,4 @@
+[submodule "modules/sopel-openweathermap"]
+	path = modules/sopel-openweathermap
+	url = https://github.com/RhinosF1/sopel-openweathermap
+	branch = master
