@@ -346,6 +346,7 @@ def kickban(bot, trigger):
     text = trigger.group().split()
     argc = len(text)
     if argc < 3:
+        bot.reply('Syntax is: .kickban <nick> <reason>')
         return
     opt = Identifier(text[1])
     nick = opt
