@@ -1,0 +1,1 @@
+sopel-openweathermap/owm-weather.py
