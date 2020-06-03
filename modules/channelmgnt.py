@@ -354,6 +354,7 @@ def kickban(bot, trigger):
     reasonidx = 3 if mask != '' else 2
     if not opt.is_nick():
         if argc < 5:
+            bot.reply('Syntax is: .kickban <nick> <reason>')
             return
         channel = opt
         nick = text[2]
