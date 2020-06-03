@@ -1,9 +1,11 @@
 # dependenices used in test ZppixBot
+argparse
 certifi
 configparser
 mwclient
 pytz
 PyYAML
+pyowm
 requests
 requests-oauthlib
 sopel
