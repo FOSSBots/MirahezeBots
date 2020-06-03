@@ -22,7 +22,7 @@ prompt-toolkit
 ptyprocess
 pycodestyle
 Pygments
-pwowm
+pyowm
 sopel-modules.twitter
 urllib3
 wcwidth
