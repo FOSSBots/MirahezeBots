@@ -1,0 +1,4 @@
+[submodule "modules/sopel-openweathermap"]
+	path = modules/sopel-openweathermap
+	url = https://github.com/davidpirogov/sopel-openweathermap
+	branch = master
