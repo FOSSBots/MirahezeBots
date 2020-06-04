@@ -1,11 +1,9 @@
 # dependenices used in production ZppixBot
-argparse
 certifi
 configparser
 mwclient
 pytz
 PyYAML
-pyowm
 requests
 requests-oauthlib
 sopel
