@@ -35,7 +35,6 @@ def cancel(bot, trigger):
 
 @commands('botversion', 'bv')
 @example('.botversion')
-@require_account()
 @rate(user=2, channel=1, server=0)
 def botversion(bot, trigger):
     """List the current version of the bot."""
