@@ -6,6 +6,7 @@ from sopel.module import commands, example, rate, require_account
 @commands('addchannel')
 @example('.addchannel (insert which)')
 @rate(user=120, channel=240, server=60)
+@require_account()
 def addchan(bot, trigger):
     """Reply to channel request message."""
     bot.say(("Hey MacFan4000, RhinosF1, Texas, Voidwalker, Reception123 or Zppix, {} would like to have "
