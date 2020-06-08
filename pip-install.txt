@@ -26,3 +26,6 @@ urllib3
 wcwidth
 wrapt
 traitlets
+gitpython
+gitdb
+smmap
