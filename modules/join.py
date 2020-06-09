@@ -14,7 +14,7 @@ import time
 chans = ['#miraheze-cvt', '#testadminwiki', '#miraheze-testwiki-es',
          '#miraheze', '#miraheze-testwiki', '#miraheze-cvt-private',
          '##CyberBogan', '##RhinosF1', '##acme', '#miraheze-offtopic',
-         '#ays', '#miraheze-bots']
+         '#ays', '#miraheze-bots', '#MacFan4000']
 
 
 @module.require_admin
