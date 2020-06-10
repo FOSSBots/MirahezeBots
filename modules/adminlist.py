@@ -18,7 +18,7 @@ def admin_list(bot, trigger):
         bot.reply('There are no bot admins')
         return
 
-    admins = ['You' if admin == trigger.nick else admin for admin in admins]
+    admins = ['You' if admin == trigger.account else admin for admin in admins]
     admins_str = ', '.join(admins[:-1]) + ' and ' + admins[-1]
     bot.reply('The bot\'s admins are: ' + admins_str)
 
