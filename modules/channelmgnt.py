@@ -34,7 +34,11 @@ def get_chanops(bot, trigger):
     if str(trigger.sender) == '##RhinosF1':
         chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
     elif str(trigger.sender) == '##Examknow':
-        chanops = ['Examknow', 'RhinosF1', 'Reception123', 'Zppix', 'paladox']
+        chanops = ['Examknow', 'RhinosF1', 'Reception123', 'MacFan4000', 'Voidwalker', 'ChanSave']
+    elif str[trigger.sender) == '#sygnal-alerts':
+        chanops = ['Examknow']
+    elif str[trigger.sender) == '#MacFan4000':
+        chanops = ['MacFan4000']
     elif str(trigger.sender) == '##acme':
         chanops = ['RhinosF1', 'tex', 'BlackOp']
     elif str(trigger.sender) == '#miraheze' or str(trigger.sender) == '#miraheze-offtopic':
