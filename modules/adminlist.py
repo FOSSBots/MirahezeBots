@@ -26,7 +26,7 @@ def admin_list(bot, trigger):
 @commands('accesslevel', 'access')
 def access_level(bot, trigger):
     """Tell user what access level they have for the bot."""
-    if trigger.account == bot.config.core.owner:
+    if trigger.account == bot.config.core.owner_account:
         level = 'Owner'
     elif trigger.account in bot.config.core.admin_accounts:
         level = 'Admin'
