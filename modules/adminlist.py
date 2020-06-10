@@ -13,7 +13,7 @@ from sopel.module import commands
 @commands('botadmins', 'admins')
 def admin_list(bot, trigger):
     """Provide the list of bot admins."""
-    admins = bot.config.core.admins
+    admins = bot.config.core.admin_accounts
     if len(admins) == 0:
         bot.reply('There are no bot admins')
         return
@@ -26,9 +26,9 @@ def admin_list(bot, trigger):
 @commands('accesslevel', 'access')
 def access_level(bot, trigger):
     """Tell user what access level they have for the bot."""
-    if trigger.nick == bot.config.core.owner:
+    if trigger.account == bot.config.core.owner:
         level = 'Owner'
-    elif trigger.nick in bot.config.core.admins:
+    elif trigger.account in bot.config.core.admin_accounts:
         level = 'Admin'
     else:
         level = 'User'
