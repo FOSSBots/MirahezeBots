@@ -83,9 +83,5 @@ def mhwiki(bot, trigger):
             page = options[1]
             page = page.replace(" ", "_")
             bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
-        elif len(options) > 2:
-            page = options[1]
-            page = page.replace(" ", "_")
-            bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
