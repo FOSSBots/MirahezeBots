@@ -73,7 +73,7 @@ def twlink(bot, trigger):
 def mhwiki(bot, trigger):
     """Expands a link to Miraheze wikis."""
     try:
-        options = trigger.group(2).split(" ")
+        options = trigger.group(2).split(" ", 1)
         if len(options) == 1:
             page = options[0]
             page = page.replace(" ", "_")
