@@ -87,7 +87,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
                     config.phabricator.host), channel)
                 break
             else:
-                searchphab(bot=bot, channel=channel, task=currdata.get("id"))
+                searchphab(bot, channel, currdata.get("id"))
                 x = x + 1
 
 
@@ -98,7 +98,7 @@ def phabtask(bot, trigger):
         task_id = trigger.group(2).split('T')[1]
     else:
         task_id = trigger.group(2)
-    searchphab(bot=bot, channel=trigger.sender, task=task_id)
+    searchphab(bot, trigger.sender, task_id)
 
 
 @rule('T[1-9][0-9]*')
@@ -106,16 +106,17 @@ def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     bot.say(trigger)
     task_id = trigger.split('T')[1]
-    searchphab(bot=bot, channel=trigger.sender, task=task_id)
+    searchphab(bot, trigger.sender, task_id)
+    
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
     """Send high priority tasks notifications."""
-    gethighpri(bot=bot)
+    gethighpri(bot)
 
 
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
-    gethighpri(limit=False, channel=trigger.sender, bot=bot)
+    gethighpri(False, trigger.sender, bot)
