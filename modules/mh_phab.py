@@ -97,15 +97,11 @@ def phabtask(bot, trigger):
     searchphab(bot=bot, channel=trigger.sender, task=trigger.group(2))
 
 
-@rule('.*T[1-9][0-9]*')
+@rule('T[1-9][0-9]*')
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
-    task_match = re.search("T[1-9][0-9]*", trigger.match.group[2])
-    bot.say('Trigger was %s' % (trigger.match.group(2),))
-    if task_match:
-        searchphab(bot=bot, channel=trigger.sender, task=trigger.match.group(2))
-    else:
-        bot.say('No match :(')
+    task_id = int(re.sub("[^0-9]", "", trigger))
+    searchphab(bot=bot, channel=trigger.sender, task=task_id)
     
 
 
