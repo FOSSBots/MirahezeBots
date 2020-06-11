@@ -82,7 +82,7 @@ def phabtask(bot, trigger):
 @example('.priotasks 2')
 def high_priority_tasks_no_updates(bot, trigger):
     """Command to find high priority tasks whithout updates for a while."""
-    if trigger.nick not in bot.config.core.admins:
+    if trigger.account not in bot.config.core.admin_accounts:
         bot.reply('Only bot admins can search Phabricator tasks.')
         return
 
