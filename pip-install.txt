@@ -23,6 +23,7 @@ pycodestyle
 Pygments
 sopel-modules.twitter
 sopel-modules.youtube
+sopel-modules.weather
 urllib3
 wcwidth
 wrapt
