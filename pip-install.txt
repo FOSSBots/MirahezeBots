@@ -22,10 +22,8 @@ ptyprocess
 pycodestyle
 Pygments
 sopel-modules.twitter
+sopel-modules.youtube
 urllib3
 wcwidth
 wrapt
 traitlets
-gitpython
-gitdb
-smmap
