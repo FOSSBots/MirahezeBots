@@ -101,8 +101,7 @@ def phabtask(bot, trigger):
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     bot.say(trigger)
-    task_id = int(re.sub("[^0-9]", "", trigger))
-    searchphab(bot=bot, channel=trigger.sender, task=task_id)
+    searchphab(bot=bot, channel=trigger.sender, task=trigger)
     
 
 
