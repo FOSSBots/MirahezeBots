@@ -81,6 +81,7 @@ def mhwiki(bot, trigger):
         elif len(options) == 2:
             wiki = options[0]
             page = options[1]
+            page = page.replace(" ", "_")
             bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
         elif len(options) > 2:
             page = options[1]
