@@ -107,7 +107,6 @@ def phabtask2(bot, trigger):
     bot.say(trigger)
     task_id = trigger.split('T')[1]
     searchphab(bot, trigger.sender, task_id)
-    
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
