@@ -55,7 +55,12 @@ def searchphab(bot, channel, task=1):
             url='https://{0}/api/user.search'.format(config.phabricator.host),
             data=params2)
         response3 = response3.json()
-        owner = response2.get("result").get("data")[0].get("fields").get("username")
+        if (response2.get("result") is null) {
+            owner = None
+        }
+        else {
+            owner = response2.get("result").get("data")[0].get("fields").get("username")
+        }
         author = response3.get("result").get("data")[0].get("fields").get("username")
         output = 'https://phabricator.miraheze.org/T{0} - '.format(str(result["id"]))
         output = '{0}\x02{1}\x02, authored by \x02{2}\x02, assigned to \x02{3}\x02'.format(output, str(result.get("fields").get("name")), author, str(owner))
