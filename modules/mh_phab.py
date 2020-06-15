@@ -55,7 +55,7 @@ def searchphab(bot, channel, task=1):
             url='https://{0}/api/user.search'.format(config.phabricator.host),
             data=params2)
         response3 = response3.json()
-        if response2.get("result") is None:
+        if result.get("fields").get("ownerPHID") is None:
             owner = None
         else:
             owner = response2.get("result").get("data")[0].get("fields").get("username")
