@@ -60,8 +60,9 @@ def searchphab(bot, channel, task=1):
         else:
             owner = response2.get("result").get("data")[0].get("fields").get("username")
         author = response3.get("result").get("data")[0].get("fields").get("username")
+        priority = result.get("fields").get("priority").get("name")
         output = 'https://phabricator.miraheze.org/T{0} - '.format(str(result["id"]))
-        output = '{0}\x02{1}\x02, authored by \x02{2}\x02, assigned to \x02{3}\x02'.format(output, str(result.get("fields").get("name")), author, str(owner))
+        output = '{0}\x02{1}\x02, authored by \x02{2}\x02, assigned to \x02{3}\x02, Priority: \x02{4}\x02'.format(output, str(result.get("fields").get("name")), author, str(owner), priority)
         bot.say(output, channel)
 
 
