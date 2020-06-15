@@ -11,10 +11,7 @@ from sopel import module
 
 import time
 
-chans = ['#miraheze-cvt', '#testadminwiki', '#miraheze-testwiki-es',
-         '#miraheze', '#miraheze-testwiki', '#miraheze-meetings', '#miraheze-cvt-private',
-         '##CyberBogan', '##RhinosF1', '##acme', '#miraheze-offtopic',
-         '#ays', '#miraheze-bots']
+channels = bot.config.core.channels
 
 
 @module.require_admin
@@ -23,8 +20,8 @@ chans = ['#miraheze-cvt', '#testadminwiki', '#miraheze-testwiki-es',
 def handle_joins(bot, trigger):
     """Join some channels."""
     if trigger.sender == '#ZppixBot':
-        for chan in chans:
-            bot.join(chan)
+        for channel in channels:
+            bot.join(channel)
             time.sleep(1)
 
 
