@@ -67,7 +67,7 @@ def get_chanops(bot, trigger):
 @require_chanmsg
 @commands('chanmode')
 @example('.chanmode +mz')
-def op(bot, trigger):
+def chanmode(bot, trigger):
     """
     Command to change channel mode.
     """
