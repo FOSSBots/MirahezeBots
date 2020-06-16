@@ -65,6 +65,28 @@ def get_chanops(bot, trigger):
 
 
 @require_chanmsg
+@commands('chanmode')
+@example('.chanmode +mz')
+def op(bot, trigger):
+    """
+    Command to change channel mode.
+    """
+    chanops = get_chanops(bot, trigger)
+    if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
+        bot.say('Please wait...')
+        bot.say('op ' + trigger.sender, 'ChanServ')
+        time.sleep(1)
+    modes = trigger.group(2)
+    channel = trigger.sender
+    if not modes:
+        bot.reply('Please specify what mode(s) to set')
+    if trigger.account in chanops:
+        bot.write(['MODE', channel, modes])
+    else:
+        bot.reply('Access Denied. If in error, please contact the channel founder.')
+
+
+@require_chanmsg
 @commands('op')
 @example('.op Zppix')
 def op(bot, trigger):
