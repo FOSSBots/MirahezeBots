@@ -21,10 +21,9 @@ prompt-toolkit
 ptyprocess
 pycodestyle
 Pygments
-sopel-modules.quotes
 sopel-modules.twitter
-sopel-modules.weather
 sopel-modules.youtube
+sopel-modules.weather
 urllib3
 wcwidth
 wrapt
