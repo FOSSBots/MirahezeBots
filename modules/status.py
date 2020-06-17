@@ -93,7 +93,7 @@ def main(bot, trigger, options):
         cont = 0
     if cont == 1:
         cont = 0
-        cloakfile = open('/data/project/zppixbot/.sopel/modules/config/'
+        cloakfile = open('/data/project/zppixbot-test/.sopel/modules/config/'
                          + 'cloaks.csv', 'r')
         for line in cloakfile:
             auth = line.split(',')
@@ -105,7 +105,7 @@ def main(bot, trigger, options):
                 cont = 1
                 break
         if cont == 0:
-            usersfile = open('/data/project/zppixbot/.sopel/modules/config/'
+            usersfile = open('/data/project/zppixbot-test/.sopel/modules/config/'
                              + 'users.csv', 'r')
             for line in usersfile:
                 auth = line.split(',')
@@ -124,7 +124,7 @@ def main(bot, trigger, options):
     if cont == 1:
         wikiurl = 'example.org'
         wikiexists = 0
-        file = open('/data/project/zppixbot/.sopel/modules/config/'
+        file = open('/data/project/zppixbot-test/.sopel/modules/config/'
                     + 'statuswikis.csv', 'r')
         for line in file:
             data = line.split(',')
@@ -134,7 +134,7 @@ def main(bot, trigger, options):
                 wikiurl = data[0]
                 site = mwclient.Site(('https', wikiurl), '/w/')
                 config = configparser.RawConfigParser()
-                config.read('/data/project/zppixbot/.sopel/credentials.txt')
+                config.read('/data/project/zppixbot-test/.sopel/credentials.txt')
                 try:
                     site.login(config.get('zppixbot_status', 'username'),
                                config.get('zppixbot_status', 'password'))
