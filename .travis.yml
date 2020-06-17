@@ -1,8 +1,8 @@
 language: python
 python:
-  - "3.5" # support our own setup
-  - "3.6" # Until 2021-12-23 at latest
-  - "3.7" # supported until  2023-06-27 at latest
+  - "3.5" # To remove by 2020-08-31, no longer used.
+  - "3.6" # Supported until 2021-21-23, never ran.
+  - "3.7" # Our instance, supported until  2023-06-27
   - "3.8" # latest python version
   - "3.8-dev"  # 3.8 development branch - ONLY DEV BRANCH RUNS TESTS ON
 dist: xenial
@@ -18,7 +18,7 @@ before_script:
 
 script:
     # we ignore E402 because of workarounds we use for modules loading, and F401 because some imports aren't directly used but needed for modules and travis doesn't like that
-    - flake8 modules --ignore E402,F401,W503,E722 --max-line-length 210 --exclude=channelmgnt.py
+    - flake8 modules --ignore E402,F401,W503,E722 --max-line-length 220 --exclude=channelmgnt.py
 
 notifications:
   irc:
