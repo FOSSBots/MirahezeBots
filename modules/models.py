@@ -4,25 +4,26 @@ from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import Sequence
-import sqlalchemy.dialects.sqlite 
+import sqlalchemy.dialects.sqlite
 
 Base = declarative_base()
 
+
 class NickNames(Base):
     __tablename__ = 'nicknames'
-    plugin=Column(String, primary_key=True)
-    key=Column(String, primary_key=True)
-    value=Column(String)
+    plugin = Column(String, primary_key=True)
+    key = Column(String, primary_key=True)
+    value = Column(String)
 
     def __str__(self):
-        return '%s <%s, %s, %s>' % (self.__tablename__, self.key, self.value,)
+        return '%s <%s, %s>' % (self.__tablename__, self.key, self.value,)
 
 
 class NickValues(Base):
     __tablename__ = 'nick_values'
     nick_id = Column(Integer, primary_key=True)
     key = Column(String, primary_key=True)
-    value=Column(String)
+    value = Column(String)
     
     def __str__(self):
         return NickNames.__str__(self)
