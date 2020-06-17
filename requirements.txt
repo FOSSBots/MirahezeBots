@@ -1,4 +1,4 @@
-# dependenices used in test ZppixBot
+# dependenices used in production ZppixBot
 certifi
 configparser
 mwclient
