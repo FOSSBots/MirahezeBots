@@ -9,7 +9,7 @@ import sqlalchemy.dialects.sqlite
 Base = declarative_base()
 
 class NickNames(Base):
-    __tablename__ = 'nicknams'
+    __tablename__ = 'nicknames'
     plugin=Column(String, primary_key=True)
     key=Column(String, primary_key=True)
     value=Column(String)
