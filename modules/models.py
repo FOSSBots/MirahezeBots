@@ -24,7 +24,7 @@ class NickValues(Base):
     nick_id = Column(Integer, primary_key=True)
     key = Column(String, primary_key=True)
     value = Column(String)
-    
+
     def __str__(self):
         return NickNames.__str__(self)
 
@@ -54,5 +54,5 @@ if __name__ == '__main__':
         engine = create_engine('sqlite:///{0}'.format(sys.argv[1]), echo=True)
     except IndexError:
         print('argument not provided')
-        engine =  create_engine('sqlite:///hasan2.db', echo=True)
+        engine = create_engine('sqlite:///hasan2.db', echo=True)
     Base.metadata.create_all(engine)
