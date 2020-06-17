@@ -7,6 +7,7 @@ from sopel import config
 from sopel.module import commands, example, interval, rule
 import sys
 
+BOLD = r'\x02'
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
@@ -63,7 +64,12 @@ def searchphab(bot, channel, task=1):
         priority = result.get("fields").get("priority").get("name")
         status = result.get("fields").get("status").get("name")
         output = 'https://phabricator.miraheze.org/T{0} - '.format(str(result["id"]))
-        output = '{0}{1}, authored by {2}, assigned to {3}, Priority: {4}, Status: {5}'.format(output, str(result.get("fields").get("name")), author, str(owner), priority, status)
+        output = '{0}{2}{1}{2}, '.format(output, str(result.get('fields').get('output')), BOLD)
+        output = output + 'Author: {1}{0}{1}, '.format(author, BOLD)
+        output = output + 'Assignee: {1}{0}{1}, '.format(result.get("fields").get("name"), BOLD)
+        output = output + 'Owner: {1}{0}{1}, '.format(owner, BOLD)
+        output = output + 'Priority: {1}{0}{1}, '.format(priority, BOLD)
+        output = output + 'Status: {1}{0}{1}'.format(status, BOLD)
         bot.say(output, channel)
 
 
