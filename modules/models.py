@@ -16,7 +16,7 @@ class NickNames(Base):
 
     def __str__(self):
         return '%s <%s, %s, %s>' % (self.__tablename__, self.key, self.value,)
-    
+
 
 class NickValues(Base):
     __tablename__ = 'nick_values'
@@ -31,6 +31,16 @@ class NickValues(Base):
 class ChannelValues(Base):
     __tablename__ = 'channel_values'
     channel = Column(String, primary_key=True)
+    key = Column(String, primary_key=True)
+    value = Column(String)
+
+    def __str__(self):
+        return NickNames.__str__(self)
+
+
+class PluginValues(Base):
+    __tablename__ = 'plugin_values'
+    plugin = Column(String, primary_key=True)
     key = Column(String, primary_key=True)
     value = Column(String)
 
