@@ -39,9 +39,8 @@ def redditr(bot, trigger):
 @example('.wmca example')
 def wmca(bot, trigger):
     """Expands a link to Wikimedia CentralAuth."""
-    target = trigger.group(2).replace(" ", "_")
     try:
-        bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + target)
+        bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + trigger.group(2))
     except TypeError:
         bot.say('Syntax: .wmca example', trigger.sender)
 
@@ -50,9 +49,8 @@ def wmca(bot, trigger):
 @example('.mhca example')
 def mhca(bot, trigger):
     """Expands a link to Miraheze Central Auth."""
-    target = trigger.group(2).replace(" ", "_")
     try:
-        bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + target)
+        bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + trigger.group(2))
     except TypeError:
         bot.say('Syntax: .mhca example', trigger.sender)
 
@@ -61,9 +59,8 @@ def mhca(bot, trigger):
 @example('.tw user')
 def twlink(bot, trigger):
     """Expands a link to Twitter."""
-    target = trigger.group(2).replace(" ", "_")
     try:
-        bot.say("https://twitter.com/" + target)
+        bot.say("https://twitter.com/" + trigger.group(2))
     except TypeError:
         bot.say('Syntax: .tw user', trigger.sender)
 
@@ -73,15 +70,13 @@ def twlink(bot, trigger):
 def mhwiki(bot, trigger):
     """Expands a link to Miraheze wikis."""
     try:
-        options = trigger.group(2).split(" ", 1)
+        options = trigger.group(2).split(" ")
         if len(options) == 1:
             page = options[0]
-            page = page.replace(" ", "_")
             bot.say("https://meta.miraheze.org/wiki/" + page)
         elif len(options) == 2:
             wiki = options[0]
             page = options[1]
-            page = page.replace(" ", "_")
             bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
