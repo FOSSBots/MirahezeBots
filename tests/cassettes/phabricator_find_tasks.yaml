@@ -1,0 +1,69 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: https://phabricator.miraheze.org/api/maniphest.search?constraints%5Bpriorities%5D%5B0%5D=75&constraints%5Bstatuses%5D%5B0%5D=open&api.token=api_token
+  response:
+    body:
+      string: !!binary |
+        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
+        yuTvKVryTiCeKL0yrdSv0TTp8LUSAAA=
+    headers:
+      Cache-Control: [no-store]
+      Connection: [Keep-Alive]
+      Content-Encoding: [gzip]
+      Content-Length: ['2075']
+      Content-Type: [application/json]
+      Date: ['Wed, 10 Jan 2018 04:50:50 GMT']
+      Expires: ['Sat, 01 Jan 2000 00:00:00 GMT']
+      Keep-Alive: ['timeout=5, max=100']
+      Server: [Apache/2.4.10 (Debian)]
+      Set-Cookie: ['phsid=A%2Fpm5f3yo4lj7pi4c6xx4l3mjhu5ji2fzntc664vd7; expires=Mon,
+          09-Jan-2023 04:50:50 GMT; Max-Age=157680000; path=/; domain=phabricator.miraheze.org;
+          secure; httponly']
+      Strict-Transport-Security: [max-age=0; includeSubdomains; preload]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [Deny]
+    status: {code: 200, message: OK}
+version: 1
