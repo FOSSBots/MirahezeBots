@@ -31,6 +31,7 @@ def searchphab(bot, channel, task=1):
         go = 1
     except AttributeError:
         bot.say("An error occurred while parsing the result.", channel)
+        bot.say(response.text, "#ZppixBot-logs")
     except IndexError:
         bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
     except:
