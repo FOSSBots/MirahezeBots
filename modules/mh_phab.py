@@ -24,6 +24,7 @@ def searchphab(bot, channel, task=1):
     response = requests.post(
         url='https://{0}/api/maniphest.search'.format(config.phabricator.host),
         data=data)
+    bot.say(response.text, "#ZppixBot-logs")
     response = response.json()
     go = 0
     try:
@@ -31,7 +32,6 @@ def searchphab(bot, channel, task=1):
         go = 1
     except AttributeError:
         bot.say("An error occurred while parsing the result.", channel)
-        bot.say(response, "#ZppixBot-logs")
     except IndexError:
         bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
     except:
