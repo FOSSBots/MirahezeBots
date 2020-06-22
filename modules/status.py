@@ -70,7 +70,7 @@ def save_edit(page, status, bot, trigger):
             bot.say("ERR: The bot is blocked on " + str(page), 'bot.config.core.logging_channel')
         except requests.exceptions.Timeout:
             bot.reply("We're experinecing delays "
-                    + "connecting to that wiki. Try again in a few minutes.")
+                     + "connecting to that wiki. Try again in a few minutes.")
             if bot.config.status.support_channel is not None:
                 bot.say("If this continues, let us know in "
                         + "{}".format(bot.config.status.support_channel))
