@@ -109,7 +109,7 @@ def main(bot, trigger, options):
             x = x + 1
         cont = 1
     else:
-        bot.reply(".status wikicode status")
+        bot.reply("Syntax: .status wikicode status")
         cont = 0
     if cont == 1:
         cont = 0
