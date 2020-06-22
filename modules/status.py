@@ -30,8 +30,8 @@ def setup(bot):
 def configure(config):
     config.define_section('status', StatusSection, validate=False)
     config.status.configure_setting('data_path', 'What is the path to the statusbot data files?')
-    config.status.configure_setting('wiki_username', 'What is the statusbot wiki username?')
-    config.status.configure_setting('wiki_password', 'What is the statusbot wiki password? (from Special:BotPasswords')
+    config.status.configure_setting('wiki_username', 'What is the statusbot wiki username? (from Special:BotPasswords)')
+    config.status.configure_setting('wiki_password', 'What is the statusbot wiki password? (from Special:BotPasswords)')
     config.status.configure_setting('data_path', 'Specify a support IRC channel (leave blank for none).')
 
 
@@ -78,7 +78,7 @@ def save_edit(page, status, bot, trigger):
                 bot.say("I've alerted a maintainer in {}"
                         + "{}".format(bot.config.status.support_channel))
             print(e)
-            raise ValueError("Recirect error")
+            raise ValueError("Redirect error")
        except requests.exceptions.ConnectionError as e:
             bot.reply("We couldn't connect to that wiki.")
             if bot.config.status.support_channel is not None:
@@ -179,7 +179,7 @@ def main(bot, trigger, options):
                         bot.say("I've alerted a maintainer in {}"
                             + "{}".format(bot.config.status.support_channel))
                     print(e)
-                    raise ValueError("Recirect error")
+                    raise ValueError("Redirect error")
                 except requests.exceptions.ConnectionError as e:
                     bot.reply("We couldn't connect to that wiki.")
                     if bot.config.status.support_channel is not None:
