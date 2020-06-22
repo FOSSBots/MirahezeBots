@@ -81,11 +81,13 @@ def save_edit(page, status, bot, trigger):
             bot.reply("We couldn't connect to that wiki.")
             if bot.config.status.support_channel is not None:
                 bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
+            print(e)
             raise ValueError("Connection error")
         except requests.exceptions.RequestException as e:
             bot.reply("A fatal error occured.")
             if bot.config.status.support_channel is not None:
                 bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
+            print(e)
             raise ValueError("Fatal error")
         break
 
@@ -177,11 +179,13 @@ def main(bot, trigger, options):
                     bot.reply("We couldn't connect to that wiki.")
                     if bot.config.status.support_channel is not None:
                         bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
+                    print(e)
                     raise ValueError("Connection error")
                 except requests.exceptions.RequestException as e:
                     bot.reply("A fatal error occured.")
                     if bot.config.status.support_channel is not None:
                         bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
+                    print(e)
                     raise ValueError("Fatal error")
                 save_wrap(site, request, bot, trigger)
                 cont = 0
