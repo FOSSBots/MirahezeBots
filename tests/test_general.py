@@ -15,7 +15,7 @@ def test_db_schema_is_same():
         [original.add(tbl[0]) for tbl in res if not tbl[0] == 'nick_ids' and not tbl[0] == 'sqlite_sequence']
         
     try:
-        os.unlink(f'{os.path.join(PATH, "..", "hasan2.db")}')
+        os.unlink(os.path.join(PATH, "..", "hasan2.db"))
     except FileNotFoundError:
         pass
 
