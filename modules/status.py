@@ -13,6 +13,9 @@ from sopel.module import rule, commands, example
 from sopel.config.types import StaticSection, ValidatedAttribute
 
 
+pages = ''
+
+
 class StatusSection(StaticSection):
     data_path = ValidatedAttribute('data_path', str)
     wiki_username = ValidatedAttribute('wiki_username', str)
@@ -30,9 +33,6 @@ def configure(config):
     config.status.configure_setting('wiki_username', 'What is the statusbot wiki username?')
     config.status.configure_setting('wiki_password', 'What is the statusbot wiki password? (from Special:BotPasswords')
     config.status.configure_setting('data_path', 'Specify a support IRC channel (leave blank for none).')
-
-
-pages = ''
 
 
 def save_wrap(site, request, bot, trigger):
