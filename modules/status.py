@@ -11,6 +11,7 @@ from mwclient import errors
 import requests
 import re
 import time
+
 from sopel.module import rule, commands, example
 from sopel.config.types import StaticSection, ValidatedAttribute
 
