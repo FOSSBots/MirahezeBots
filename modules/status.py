@@ -12,15 +12,35 @@ import requests
 import re
 import time
 from sopel.module import rule, commands, example
+from sopel.config.types import StaticSection, ValidatedAttribute
 
+class StatusSection(StaticSection):
+    data_path = ValidatedAttribute('data_path', str)
+    wiki_username = ValidatedAttribute('wiki_username', str)
+    wiki_password = ValidatedAttribute('wiki_username', str)
+    support_channel = ValidatedAttribute('support_channel', str)
+
+def setup(bot):
+    bot.config.define_section('status', StatusSection)
+
+def configure(config):
+    config.define_section('status', StatusSection, validate=False)
+    config.status.configure_setting('data_path',
+                                     'What is the path to the statusbot data files?')
+    config.status.configure_setting('wiki_username',
+                                     'What is the statusbot wiki username?')
+    config.status.configure_setting('wiki_password',
+                                     'What is the statusbot wiki password')
+    config.status.configure_setting('data_path',
+                                     'Specify a support IRC channel (leave blank for none).')
 
 pages = ''
 
 
 def save_wrap(site, request, bot, trigger):
     pagename = 'User:' + request[0] + '/Status'
-    bot.say(trigger.nick + ": Updating " + pagename + " to " + request[1]
-            + "!", trigger.sender)
+    bot.reply("Updating " + pagename + " to " + request[1]
+            + "!")
     page = site.Pages[pagename]
     save_edit(page, request[1], bot, trigger)
 
@@ -35,37 +55,46 @@ def save_edit(page, status, bot, trigger):
             break
         try:
             page.save(status, summary=edit_summary, bot=True, minor=True)
-            bot.say(trigger.nick + ": Updated!", trigger.sender)
+            bot.reply("Updated!")
         except errors.ProtectedPageError:
             print('Could not edit ' + page + ' due to protection')
-            bot.say(trigger.nick + ": Error: Page Protected", trigger.sender)
+            bot.reply("Error: Page Protected")
             times += 1
         except errors.EditError:
             print("Error")
-            bot.say(trigger.nick + ": An Error Occurred :(", trigger.sender)
+            bot.reply("An Error Occurred :(")
             times += 1
             time.sleep(5)  # sleep for 5 seconds before trying again
             continue
         except errors.UserBlocked:
-            bot.say(trigger.nick + ": StatusBot is currently unavailable for "
-                    + "that wiki. Our team are working on it!", trigger.sender)
-            bot.say("ERR: The bot is blocked on " + str(page), '#ZppixBot-logs')
+            bot.reply("StatusBot is currently unavailable for "
+                    + "that wiki. Our team are working on it!")
+            bot.say("ERR: The bot is blocked on " + str(page), 'bot.config.core.logging_channel')
         except requests.exceptions.Timeout:
-            bot.say(trigger.nick + ": We're experiencing delays connecting to "
-                    + "that wiki. Try again in a few minutes. If this "
-                    + "continues, let us know in #ZppixBot.", trigger.sender)
+             bot.reply("We're experinecing delays "
+                            + "connecting to that wiki. Try again in a few minutes.")
+                    if bot.config.status.support_channel is not None
+                        bot.say("If this continues, let us know in "
+                            + "{}".format(bot.config.status.support_channel))
         except requests.exceptions.TooManyRedirects as e:
-            bot.say(trigger.nick + ": We couldn't connect to that wiki. I've "
-                    + "alerted a maintainer in #ZppixBot.", trigger.sender)
-            bot.say("Redirect Error: " + e, '#ZppixBot-logs')
-        except requests.exceptions.ConnectionError as e:
-            bot.say(trigger.nick + ": We couldn't connect to that wiki. I've "
-                    + "alerted a maintainer in #ZppixBot.", trigger.sender)
-            bot.say("ConnectionError: " + e, '#ZppixBot-logs')
+            bot.reply("We couldn't connect to that wiki.")
+            if bot.config.status.support_channel is not None
+                bot.say("I've alerted a maintainer in {}"
+                    + "{}".format(bot.config.status.support_channel))
+            print(e)
+            raise ValueError("Recirect error")
+       except requests.exceptions.ConnectionError as e:
+            bot.reply("We couldn't connect to that wiki.")
+            if bot.config.status.support_channel is not None
+                bot.say("I've alerted a maintainer in {}"
+                    + "{}".format(bot.config.status.support_channel))
+            raise ValueError("Connection error")
         except requests.exceptions.RequestException as e:
-            bot.say(trigger.nick + ": A fatal error occurred. I've alerted a "
-                    + "maintainer in #ZppixBot.", trigger.sender)
-            bot.say("Fatal Error: " + e, '#ZppixBot-logs')
+            bot.reply("A fatal error occured.")
+            if bot.config.status.support_channel is not None
+                bot.say("I've alerted a maintainer in {}"
+                    + "{}".format(bot.config.status.support_channel))
+             raise ValueError("Fatal error")
         break
 
 
@@ -93,7 +122,7 @@ def main(bot, trigger, options):
         cont = 0
     if cont == 1:
         cont = 0
-        cloakfile = open('/data/project/zppixbot-test/.sopel/modules/config/'
+        cloakfile = open(bot.config.status.data_path
                          + 'cloaks.csv', 'r')
         for line in cloakfile:
             auth = line.split(',')
@@ -105,7 +134,7 @@ def main(bot, trigger, options):
                 cont = 1
                 break
         if cont == 0:
-            usersfile = open('/data/project/zppixbot-test/.sopel/modules/config/'
+            usersfile = open(bot.config.status.data_path
                              + 'users.csv', 'r')
             for line in usersfile:
                 auth = line.split(',')
@@ -117,14 +146,15 @@ def main(bot, trigger, options):
                     cont = 1
                     break
         if cont == 0:
-            bot.say(trigger.nick + ": You don't seem to be authorised to use this module."
-                    + "Please check you are signed into NickServ and try again. If this"
-                    + "persists, ask for help in #ZppixBot", trigger.sender)
+            bot.reply("You don't seem to be authorised to use this module."
+                    + "Please check you are signed into NickServ and try again.", trigger.sender)
+            if bot.config.status.support_channel is not None
+                bot.say("If this persists, ask for help in {}".format(bot.config.status.support_channel))
             cont = 0
     if cont == 1:
         wikiurl = 'example.org'
         wikiexists = 0
-        file = open('/data/project/zppixbot-test/.sopel/modules/config/'
+        file = open(bot.config.status.data_path
                     + 'statuswikis.csv', 'r')
         for line in file:
             data = line.split(',')
@@ -132,43 +162,46 @@ def main(bot, trigger, options):
                 wikiexists = 1
             if data[1] == wiki[0] and wiki[1] == data[2]:
                 wikiurl = data[0]
-                site = mwclient.Site(('https', wikiurl), '/w/')
+                site = mwclient.Site((wikiurl), '/w/')
                 config = configparser.RawConfigParser()
-                config.read('/data/project/zppixbot-test/.sopel/credentials.txt')
+                config.read(bot.config.status.data_path + 'credentials.txt')
                 try:
-                    site.login(config.get('zppixbot_status', 'username'),
-                               config.get('zppixbot_status', 'password'))
+                    site.login(bot.config.status.wiki_username,
+                               bot.config.status.wiki_password))
                 except errors.LoginError as e:
                     print(e)
                     raise ValueError("Login failed.")
                 except requests.exceptions.Timeout:
-                    bot.say(trigger.nick + ": We're experinecing delays "
-                            + "connecting to that wiki. Try again in a few "
-                            + "minutes. If this continues, let us know in "
-                            + "#ZppixBot.", trigger.sender)
+                    bot.reply("We're experinecing delays "
+                            + "connecting to that wiki. Try again in a few minutes.")
+                    if bot.config.status.support_channel is not None
+                        bot.say("If this continues, let us know in "
+                            + "{}".format(bot.config.status.support_channel))
                 except requests.exceptions.TooManyRedirects as e:
-                    bot.say(trigger.nick + ": We couldn't connect to that "
-                            + "wiki. I've alerted a maintainer in #ZppixBot.",
-                            trigger.sender)
-                    bot.say("Redirect Error: " + e, '#ZppixBot-logs')
+                    bot.reply("We couldn't connect to that wiki.")
+                    if bot.config.status.support_channel is not None
+                        bot.say("I've alerted a maintainer in {}"
+                            + "{}".format(bot.config.status.support_channel))
+                    print(e)
+                    raise ValueError("Recirect error")
                 except requests.exceptions.ConnectionError as e:
-                    bot.say(trigger.nick + ": We couldn't connect to that "
-                            + "wiki. I've alerted a maintainer in #ZppixBot.",
-                            trigger.sender)
-                    bot.say("ConnectionError: " + e, '#ZppixBot-logs')
+                    bot.reply("We couldn't connect to that wiki.")
+                    if bot.config.status.support_channel is not None
+                        bot.say("I've alerted a maintainer in {}"
+                            + "{}".format(bot.config.status.support_channel))
+                    raise ValueError("Connection error")
                 except requests.exceptions.RequestException as e:
-                    bot.say(trigger.nick + ": A fatal error occured. I've "
-                            + "alerted a maintainer in #ZppixBot.",
-                            trigger.sender)
-                    bot.say("Fatal Error: " + e, '#ZppixBot-logs')
+                    bot.reply("A fatal error occured.")
+                    if bot.config.status.support_channel is not None
+                        bot.say("I've alerted a maintainer in {}"
+                            + "{}".format(bot.config.status.support_channel))
+                    raise ValueError("Fatal error")
                 save_wrap(site, request, bot, trigger)
                 cont = 0
         if cont == 1 and wikiexists == 1:
-            bot.say(trigger.nick + ": I couldn't authentice you for that "
-                    + "wiki.", trigger.sender)
+            bot.reply("I couldn't authentice you for that wiki.")
         elif wikiexists == 0:
-            bot.say(trigger.nick + ": I don't recongise that wiki.",
-                    trigger.sender)
+            bot.reply("I don't recongise that wiki.")
 
 
 @commands('status')
