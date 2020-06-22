@@ -33,10 +33,6 @@ def get_chanops(bot, trigger):
     chanops = ''
     if str(trigger.sender) == '##RhinosF1':
         chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
-    elif str(trigger.sender) == '##Examknow':
-        chanops = ['Examknow', 'RhinosF1', 'Reception123', 'MacFan4000', 'Voidwalker', 'ChanSave']
-    elif str(trigger.sender) == '#sygnal-alerts':
-        chanops = ['Examknow']
     elif str(trigger.sender) == '#MacFan4000':
         chanops = ['MacFan4000']
     elif str(trigger.sender) == '##acme':
@@ -50,7 +46,7 @@ def get_chanops(bot, trigger):
     elif str(trigger.sender) == '#miraheze-testwiki-es':
         chanops = ['Reception123', 'NDKilla', 'Voidwalker']
     elif str(trigger.sender) == '#ZppixBot' or str(trigger.sender) == '#ZppixBot-logs':
-        chanops = ['Zppix', 'Reception123', 'Voidwalker', 'RhinosF1', 'MacFan4000', 'Examknow']
+        chanops = ['Zppix', 'Reception123', 'Voidwalker', 'RhinosF1', 'MacFan4000']
     elif str(trigger.sender) == '#testadminwiki':
         chanops = ['MacFan4000', 'Voidwalker']
     elif str(trigger.sender) == '##CyberBogan':
