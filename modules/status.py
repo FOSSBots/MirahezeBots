@@ -1,11 +1,13 @@
 from __future__ import unicode_literals, absolute_import, print_function, division
+
 import configparser
 import json
 import mwclient
-from mwclient import errors
 import requests
 import re
 import time
+
+from mwclient import errors
 
 from sopel.module import rule, commands, example
 from sopel.config.types import StaticSection, ValidatedAttribute
