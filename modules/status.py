@@ -156,8 +156,6 @@ def main(bot, trigger, options):
             if data[1] == wiki[0] and wiki[1] == data[2]:
                 wikiurl = data[0]
                 site = mwclient.Site((wikiurl), '/w/')
-                config = configparser.RawConfigParser()
-                config.read(bot.config.status.data_path + 'credentials.txt')
                 try:
                     site.login(bot.config.status.wiki_username,
                                bot.config.status.wiki_password)
