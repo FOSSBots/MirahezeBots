@@ -140,7 +140,7 @@ def main(bot, trigger, options):
                     break
         if cont == 0:
             bot.reply("You don't seem to be authorised to use this module."
-                      + "Please check you are signed into NickServ and try again.", trigger.sender)
+                      + " Please check you are signed into NickServ and try again.", trigger.sender)
             if bot.config.status.support_channel is not None:
                 bot.say("If this persists, ask for help in {}".format(bot.config.status.support_channel))
             cont = 0
