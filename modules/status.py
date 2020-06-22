@@ -77,7 +77,7 @@ def save_edit(page, status, bot, trigger):
                 bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
             print(e)
             raise ValueError("Redirect error")
-       except requests.exceptions.ConnectionError as e:
+        except requests.exceptions.ConnectionError as e:
             bot.reply("We couldn't connect to that wiki.")
             if bot.config.status.support_channel is not None:
                 bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
@@ -86,7 +86,7 @@ def save_edit(page, status, bot, trigger):
             bot.reply("A fatal error occured.")
             if bot.config.status.support_channel is not None:
                 bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
-             raise ValueError("Fatal error")
+            raise ValueError("Fatal error")
         break
 
 
@@ -138,7 +138,7 @@ def main(bot, trigger, options):
                     break
         if cont == 0:
             bot.reply("You don't seem to be authorised to use this module."
-                    + "Please check you are signed into NickServ and try again.", trigger.sender)
+                      + "Please check you are signed into NickServ and try again.", trigger.sender)
             if bot.config.status.support_channel is not None:
                 bot.say("If this persists, ask for help in {}".format(bot.config.status.support_channel))
             cont = 0
@@ -158,13 +158,13 @@ def main(bot, trigger, options):
                 config.read(bot.config.status.data_path + 'credentials.txt')
                 try:
                     site.login(bot.config.status.wiki_username,
-                               bot.config.status.wiki_password))
+                               bot.config.status.wiki_password)
                 except errors.LoginError as e:
                     print(e)
                     raise ValueError("Login failed.")
                 except requests.exceptions.Timeout:
                     bot.reply("We're experinecing delays "
-                            + "connecting to that wiki. Try again in a few minutes.")
+                              + "connecting to that wiki. Try again in a few minutes.")
                     if bot.config.status.support_channel is not None:
                         bot.say("If this continues, let us know in {}".format(bot.config.status.support_channel))
                 except requests.exceptions.TooManyRedirects as e:
