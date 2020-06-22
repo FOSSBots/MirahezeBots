@@ -37,7 +37,7 @@ def configure(config):
 
 def save_wrap(site, request, bot, trigger):
     pagename = 'User:' + request[0] + '/Status'
-    bot.reply("Updating " + pagename + " to " + request[1]"!")
+    bot.reply("Updating " + pagename + " to " + request[1] + "!")
     page = site.Pages[pagename]
     save_edit(page, request[1], bot, trigger)
 
