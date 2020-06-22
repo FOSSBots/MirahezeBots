@@ -14,33 +14,32 @@ import time
 from sopel.module import rule, commands, example
 from sopel.config.types import StaticSection, ValidatedAttribute
 
+
 class StatusSection(StaticSection):
     data_path = ValidatedAttribute('data_path', str)
     wiki_username = ValidatedAttribute('wiki_username', str)
     wiki_password = ValidatedAttribute('wiki_username', str)
     support_channel = ValidatedAttribute('support_channel', str)
 
+
 def setup(bot):
     bot.config.define_section('status', StatusSection)
 
+
 def configure(config):
     config.define_section('status', StatusSection, validate=False)
-    config.status.configure_setting('data_path',
-                                     'What is the path to the statusbot data files?')
-    config.status.configure_setting('wiki_username',
-                                     'What is the statusbot wiki username?')
-    config.status.configure_setting('wiki_password',
-                                     'What is the statusbot wiki password')
-    config.status.configure_setting('data_path',
-                                     'Specify a support IRC channel (leave blank for none).')
+    config.status.configure_setting('data_path', 'What is the path to the statusbot data files?')
+    config.status.configure_setting('wiki_username', 'What is the statusbot wiki username?')
+    config.status.configure_setting('wiki_password', 'What is the statusbot wiki password')
+    config.status.configure_setting('data_path', 'Specify a support IRC channel (leave blank for none).')
+
 
 pages = ''
 
 
 def save_wrap(site, request, bot, trigger):
     pagename = 'User:' + request[0] + '/Status'
-    bot.reply("Updating " + pagename + " to " + request[1]
-            + "!")
+    bot.reply("Updating " + pagename + " to " + request[1]!")
     page = site.Pages[pagename]
     save_edit(page, request[1], bot, trigger)
 
@@ -67,15 +66,14 @@ def save_edit(page, status, bot, trigger):
             time.sleep(5)  # sleep for 5 seconds before trying again
             continue
         except errors.UserBlocked:
-            bot.reply("StatusBot is currently unavailable for "
-                    + "that wiki. Our team are working on it!")
+            bot.reply("StatusBot is currently unavailable for that wiki. Our team are working on it!")
             bot.say("ERR: The bot is blocked on " + str(page), 'bot.config.core.logging_channel')
         except requests.exceptions.Timeout:
              bot.reply("We're experinecing delays "
-                            + "connecting to that wiki. Try again in a few minutes.")
-                    if bot.config.status.support_channel is not None
-                        bot.say("If this continues, let us know in "
-                            + "{}".format(bot.config.status.support_channel))
+                     + "connecting to that wiki. Try again in a few minutes.")
+             if bot.config.status.support_channel is not None
+                 bot.say("If this continues, let us know in "
+                         + "{}".format(bot.config.status.support_channel))
         except requests.exceptions.TooManyRedirects as e:
             bot.reply("We couldn't connect to that wiki.")
             if bot.config.status.support_channel is not None
