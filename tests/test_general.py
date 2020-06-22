@@ -19,7 +19,7 @@ def test_db_schema_is_same():
     except FileNotFoundError:
         pass
 
-    engine = create_engine(f'sqlite:///{os.path.join(PATH, "..", "hasan2.db")}')
+    engine = create_engine('sqlite:///{0}'.format(os.path.join(PATH, "..", "hasan2.db")))
     models.Base.metadata.create_all(bind=engine)
     assert original == set(engine.table_names()) 
 
