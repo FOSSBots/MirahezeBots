@@ -9,7 +9,7 @@ from sopel.module import commands, example, rate, require_account
 @require_account()
 def addchan(bot, trigger):
     """Reply to channel request message."""
-    bot.say(("Hey MacFan4000, RhinosF1, Texas, Voidwalker, Reception123 or Zppix, {} would like to have "
+    bot.say(("Hey MacFan4000, RhinosF1, Voidwalker, Reception123 or Zppix, {} would like to have "
             + "me in their channel: {}").format(trigger.nick, trigger.group(2)),
             '#ZppixBot')
     if trigger.sender != '#ZppixBot':
