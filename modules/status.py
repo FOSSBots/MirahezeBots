@@ -37,7 +37,7 @@ def configure(config):
 
 def save_wrap(site, request, bot, trigger):
     pagename = 'User:' + request[0] + '/Status'
-    bot.reply("Updating " + pagename + " to " + request[1]!")
+    bot.reply("Updating " + pagename + " to " + request[1]"!")
     page = site.Pages[pagename]
     save_edit(page, request[1], bot, trigger)
 
@@ -109,8 +109,7 @@ def main(bot, trigger, options):
             x = x + 1
         cont = 1
     else:
-        bot.say(trigger.nick + ": Syntax: .status wikicode status",
-                trigger.sender)
+        bot.reply(".status wikicode status")
         cont = 0
     if cont == 1:
         cont = 0
