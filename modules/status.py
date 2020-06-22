@@ -70,26 +70,26 @@ def save_edit(page, status, bot, trigger):
             bot.say("ERR: The bot is blocked on " + str(page), 'bot.config.core.logging_channel')
         except requests.exceptions.Timeout:
             bot.reply("We're experinecing delays "
-                        + "connecting to that wiki. Try again in a few minutes.")
-            if bot.config.status.support_channel is not None
+                    + "connecting to that wiki. Try again in a few minutes.")
+            if bot.config.status.support_channel is not None:
                 bot.say("If this continues, let us know in "
                         + "{}".format(bot.config.status.support_channel))
         except requests.exceptions.TooManyRedirects as e:
             bot.reply("We couldn't connect to that wiki.")
-            if bot.config.status.support_channel is not None
+            if bot.config.status.support_channel is not None:
                 bot.say("I've alerted a maintainer in {}"
                         + "{}".format(bot.config.status.support_channel))
             print(e)
             raise ValueError("Recirect error")
        except requests.exceptions.ConnectionError as e:
             bot.reply("We couldn't connect to that wiki.")
-            if bot.config.status.support_channel is not None
+            if bot.config.status.support_channel is not None:
                 bot.say("I've alerted a maintainer in {}"
                     + "{}".format(bot.config.status.support_channel))
             raise ValueError("Connection error")
         except requests.exceptions.RequestException as e:
             bot.reply("A fatal error occured.")
-            if bot.config.status.support_channel is not None
+            if bot.config.status.support_channel is not None:
                 bot.say("I've alerted a maintainer in {}"
                     + "{}".format(bot.config.status.support_channel))
              raise ValueError("Fatal error")
@@ -146,7 +146,7 @@ def main(bot, trigger, options):
         if cont == 0:
             bot.reply("You don't seem to be authorised to use this module."
                     + "Please check you are signed into NickServ and try again.", trigger.sender)
-            if bot.config.status.support_channel is not None
+            if bot.config.status.support_channel is not None:
                 bot.say("If this persists, ask for help in {}".format(bot.config.status.support_channel))
             cont = 0
     if cont == 1:
@@ -172,25 +172,25 @@ def main(bot, trigger, options):
                 except requests.exceptions.Timeout:
                     bot.reply("We're experinecing delays "
                             + "connecting to that wiki. Try again in a few minutes.")
-                    if bot.config.status.support_channel is not None
+                    if bot.config.status.support_channel is not None:
                         bot.say("If this continues, let us know in "
                             + "{}".format(bot.config.status.support_channel))
                 except requests.exceptions.TooManyRedirects as e:
                     bot.reply("We couldn't connect to that wiki.")
-                    if bot.config.status.support_channel is not None
+                    if bot.config.status.support_channel is not None:
                         bot.say("I've alerted a maintainer in {}"
                             + "{}".format(bot.config.status.support_channel))
                     print(e)
                     raise ValueError("Recirect error")
                 except requests.exceptions.ConnectionError as e:
                     bot.reply("We couldn't connect to that wiki.")
-                    if bot.config.status.support_channel is not None
+                    if bot.config.status.support_channel is not None:
                         bot.say("I've alerted a maintainer in {}"
                             + "{}".format(bot.config.status.support_channel))
                     raise ValueError("Connection error")
                 except requests.exceptions.RequestException as e:
                     bot.reply("A fatal error occured.")
-                    if bot.config.status.support_channel is not None
+                    if bot.config.status.support_channel is not None:
                         bot.say("I've alerted a maintainer in {}"
                             + "{}".format(bot.config.status.support_channel))
                     raise ValueError("Fatal error")
