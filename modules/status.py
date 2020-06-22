@@ -70,26 +70,22 @@ def save_edit(page, status, bot, trigger):
             bot.reply("We're experinecing delays "
                       + "connecting to that wiki. Try again in a few minutes.")
             if bot.config.status.support_channel is not None:
-                bot.say("If this continues, let us know in "
-                        + "{}".format(bot.config.status.support_channel))
+                bot.say("If this continues, let us know in {}".format(bot.config.status.support_channel))
         except requests.exceptions.TooManyRedirects as e:
             bot.reply("We couldn't connect to that wiki.")
             if bot.config.status.support_channel is not None:
-                bot.say("I've alerted a maintainer in {}"
-                        + "{}".format(bot.config.status.support_channel))
+                bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
             print(e)
             raise ValueError("Redirect error")
        except requests.exceptions.ConnectionError as e:
             bot.reply("We couldn't connect to that wiki.")
             if bot.config.status.support_channel is not None:
-                bot.say("I've alerted a maintainer in {}"
-                    + "{}".format(bot.config.status.support_channel))
+                bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
             raise ValueError("Connection error")
         except requests.exceptions.RequestException as e:
             bot.reply("A fatal error occured.")
             if bot.config.status.support_channel is not None:
-                bot.say("I've alerted a maintainer in {}"
-                    + "{}".format(bot.config.status.support_channel))
+                bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
              raise ValueError("Fatal error")
         break
 
@@ -171,26 +167,22 @@ def main(bot, trigger, options):
                     bot.reply("We're experinecing delays "
                             + "connecting to that wiki. Try again in a few minutes.")
                     if bot.config.status.support_channel is not None:
-                        bot.say("If this continues, let us know in "
-                            + "{}".format(bot.config.status.support_channel))
+                        bot.say("If this continues, let us know in {}".format(bot.config.status.support_channel))
                 except requests.exceptions.TooManyRedirects as e:
                     bot.reply("We couldn't connect to that wiki.")
                     if bot.config.status.support_channel is not None:
-                        bot.say("I've alerted a maintainer in {}"
-                            + "{}".format(bot.config.status.support_channel))
+                        bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
                     print(e)
                     raise ValueError("Redirect error")
                 except requests.exceptions.ConnectionError as e:
                     bot.reply("We couldn't connect to that wiki.")
                     if bot.config.status.support_channel is not None:
-                        bot.say("I've alerted a maintainer in {}"
-                            + "{}".format(bot.config.status.support_channel))
+                        bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
                     raise ValueError("Connection error")
                 except requests.exceptions.RequestException as e:
                     bot.reply("A fatal error occured.")
                     if bot.config.status.support_channel is not None:
-                        bot.say("I've alerted a maintainer in {}"
-                            + "{}".format(bot.config.status.support_channel))
+                        bot.say("I've alerted a maintainer in {}".format(bot.config.status.support_channel))
                     raise ValueError("Fatal error")
                 save_wrap(site, request, bot, trigger)
                 cont = 0
