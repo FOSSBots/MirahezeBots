@@ -19,7 +19,7 @@ pages = ''
 class StatusSection(StaticSection):
     data_path = ValidatedAttribute('data_path', str)
     wiki_username = ValidatedAttribute('wiki_username', str)
-    wiki_password = ValidatedAttribute('wiki_username', str)
+    wiki_password = ValidatedAttribute('wiki_password', str)
     support_channel = ValidatedAttribute('support_channel', str)
 
 
