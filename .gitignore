@@ -5,7 +5,6 @@ default.db
 GeoLiteCity.dat
 GeoIPASNum.dat
 malwaredomains.txt
-credentials.txt
 
 __pycache__
 .cache
