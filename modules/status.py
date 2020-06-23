@@ -44,7 +44,7 @@ def save_wrap(site, request, bot, trigger):
 
 def save_edit(page, status, bot, trigger):
     time.sleep(5)
-    edit_summary = "BOT: Setting Status to:" + status + " per " \
+    edit_summary = "BOT: Setting Status to: " + status + " per " \
                    + trigger.hostmask
     times = 0
     while True:
