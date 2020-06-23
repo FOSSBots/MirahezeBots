@@ -155,7 +155,7 @@ def main(bot, trigger, options):
                 wikiexists = 1
             if data[1] == wiki[0] and wiki[1] == data[2]:
                 wikiurl = data[0]
-                site = mwclient.Site((wikiurl), '/w/')
+                site = mwclient.Site((wikiurl), path='/w/')
                 try:
                     site.login(bot.config.status.wiki_username,
                                bot.config.status.wiki_password)
