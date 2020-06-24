@@ -7,6 +7,7 @@ from sopel.config.types import StaticSection, ValidatedAttribute
 class ResponsesSection(StaticSection):
     support_channel = ValidatedAttribute('support_channel', str)
 
+
 def setup(bot):
     bot.config.define_section('responses', ResponsesSection)
 
@@ -28,7 +29,7 @@ def addchan(bot, trigger):
                 + "me in their channel: {}").format(admins, trigger.nick, trigger.group(2)),
                 bot.config.responses.support_channel)
         if trigger.sender != bot.config.responses.support_channel:
-            bot.reply("Request sent! Action upon the request should be taken shortly. Thank you for using ()!".format(bot.nick))
+            bot.reply("Request sent! Action upon the request should be taken shortly. Thank you for using {}!".format(bot.nick))
 
 
 @commands('gj', 'gw')
