@@ -1,6 +1,5 @@
 language: python
 python:
-  - "3.5" # To remove by 2020-08-31, no longer used.
   - "3.6" # Supported until 2021-21-23, never ran.
   - "3.7" # Our instance, supported until  2023-06-27
   - "3.8" # latest python version
