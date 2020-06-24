@@ -25,7 +25,7 @@ def configure(config):
     config.phabricator.configure_setting('api_token', 'Please enter a Phabricator API token.')
     config.phabricator.configure_setting('querykey', 'Please enter a Phabricator query key.')
     config.phabricator.configure_setting('highpri_notify', 'Would you like to enable automatic notification of high priority tasks? (true/false)')
-    config.phabricator.configure_setting('highpri_channel', 
+    config.phabricator.configure_setting('highpri_channel',
                                          'If you enabled high priority notifications, what channel would you like them sent to? (notifications will be sent once every week.')
 
 
