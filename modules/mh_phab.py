@@ -94,7 +94,7 @@ def searchphab(bot, channel, task=1):
         bot.say(output, channel)
 
 
-def gethighpri(limit=True, channel, bot=None):
+def gethighpri(limit=True, channel=None, bot=None):
     data = {
         'api.token': bot.settings.phabricator.api_token,
         'queryKey': bot.settings.phabricator.querykey,  # mFzMevK.KRMZ for mhphab
