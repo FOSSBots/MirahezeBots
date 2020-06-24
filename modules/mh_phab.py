@@ -13,7 +13,6 @@ class PhabricatorSection(StaticSection):
     querykey = ValidatedAttribute('querykey', str)
     highpri_notify = ValidatedAttribute('highpri_notify', bool)
     highpri_channel = ValidatedAttribute('highpri_channel', str)
-    highpri_notify_interval = ValidatedAttribute('highpri_notify_interval', int)
 
 
 def setup(bot):
@@ -26,13 +25,13 @@ def configure(config):
     config.phabricator.configure_setting('api_token', 'Please enter a Phabricator API token.')
     config.phabricator.configure_setting('querykey', 'Please enter a Phabricator query key.')
     config.phabricator.configure_setting('highpri_notify', 'Would you like to enable automatic notification of high priority tasks? (true/false)')
-    config.phabricator.configure_setting('highpri_channel', 'If you enabled high priority notifications, what channel would you like them sent to?')
-    config.phabricator.configure_setting('highpri_notify_interval',
-                                         'If you enabled high priority notifications, how often (in secconds) would you like notifications to be sent?')
+    config.phabricator.configure_setting('highpri_channel', 
+                                         'If you enabled high priority notifications, what channel would you like them sent to? (notifications will be sent once every week.')
 
 
 BOLD = '\x02'
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
+HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
 startup_tasks_notifications = False
 priotasks_notify = []
@@ -94,7 +93,7 @@ def searchphab(bot, channel, task=1):
         bot.say(output, channel)
 
 
-def gethighpri(limit=True, channel=None, bot=None):
+def gethighpri(limit=True, channel='#miraheze', bot=None):
     data = {
         'api.token': bot.settings.phabricator.api_token,
         'queryKey': bot.settings.phabricator.querykey,  # mFzMevK.KRMZ for mhphab
@@ -140,7 +139,7 @@ def phabtask2(bot, trigger):
     searchphab(bot=bot, channel=trigger.sender, task=task_id)
 
 
-@interval(bot.settings.phabricator.highpri_notify_interval)
+@interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
