@@ -22,9 +22,9 @@ def configure(config):
 @rate(user=120, channel=240, server=60)
 @require_account()
 def addchan(bot, trigger):
+    """Reply to channel request message."""
+    admins = ' '.join(map(str, bot.config.core.admin_accounts))
     if bot.config.responses.support_channel is not None:
-        """Reply to channel request message."""
-        admins = ' '.join(map(str, bot.config.core.admin_accounts))
         bot.say(("Hey (), {} would like to have "
                 + "me in their channel: {}").format(admins, trigger.nick, trigger.group(2)),
                 bot.config.responses.support_channel)
