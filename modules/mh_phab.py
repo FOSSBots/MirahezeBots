@@ -115,7 +115,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
             currdata = data[x]
             if x > 5 and limit:
                 bot.say("They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(
-                    bot.settings.phabricator.host), )
+                    bot.settings.phabricator.host), channel)
                 break
             else:
                 searchphab(bot=bot, channel=channel, task=currdata.get("id"))
