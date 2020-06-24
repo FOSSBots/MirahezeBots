@@ -32,7 +32,7 @@ def configure(config):
     config.status.configure_setting('data_path', 'What is the path to the statusbot data files?')
     config.status.configure_setting('wiki_username', 'What is the statusbot wiki username? (from Special:BotPasswords)')
     config.status.configure_setting('wiki_password', 'What is the statusbot wiki password? (from Special:BotPasswords)')
-    config.status.configure_setting('data_path', 'Specify a support IRC channel (leave blank for none).')
+    config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
 
 def save_wrap(site, request, bot, trigger):
