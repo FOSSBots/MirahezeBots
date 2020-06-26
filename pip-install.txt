@@ -37,3 +37,6 @@ py
 pyparsing
 pytest
 wcwidth
+gitpython
+gitdb
+smmap
