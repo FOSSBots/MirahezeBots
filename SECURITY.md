@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-We currently support the following versions with security releases when running sopel 7.x on python 3.5+:
+We currently support the following versions with security releases when running sopel 7.x on python 3.6+:
 
 | Version | Supported          |
 | ------- | ------------------ |
