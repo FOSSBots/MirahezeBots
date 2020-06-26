@@ -29,3 +29,11 @@ urllib3
 wcwidth
 wrapt
 traitlets
+attrs
+more-itertools
+packaging
+pluggy
+py
+pyparsing
+pytest
+wcwidth

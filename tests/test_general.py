@@ -15,11 +15,11 @@ def test_db_schema_is_same():
         [original.add(tbl[0]) for tbl in res if not tbl[0] == 'nick_ids' and not tbl[0] == 'sqlite_sequence']
         
     try:
-        os.unlink(f'{os.path.join(PATH, "..", "hasan2.db")}')
+        os.unlink(os.path.join(PATH, "..", "hasan2.db"))
     except FileNotFoundError:
         pass
 
-    engine = create_engine(f'sqlite:///{os.path.join(PATH, "..", "hasan2.db")}')
+    engine = create_engine('sqlite:///{0}'.format(os.path.join(PATH, "..", "hasan2.db")))
     models.Base.metadata.create_all(bind=engine)
     assert original == set(engine.table_names()) 
 
@@ -42,10 +42,10 @@ def test_line_length():
             with open(os.path.join(PATH, filen)) as python_source:
                 src = python_source.readlines()
                 for line_number, line in enumerate(src):
-                    assert len(line.strip()) < MAX_LENGTH, f'length of line #{line_number} exceeds limit'
+                    assert len(line.strip()) < MAX_LENGTH, 'length of line #{0} exceeds limit'.format(line_number)
 
 def future_test_db_cleanup():
-    engine = create_engine(f'sqlite:///{os.path.join(PATH, "..", "hasan2.db")}')
+    engine = create_engine('sqlite:///{0}'.format(os.path.join(PATH, "..", "hasan2.db")))
     models.Base.metadata.create_all(bind=engine)
 
 def test_no_get_on_lists():
@@ -57,5 +57,3 @@ def test_no_get_on_lists():
             with open(os.path.join(PATH, filen)) as python_source:
                 src = python_source.read()
                 assert not re.search(reg, src) 
-
-
