@@ -1,5 +1,5 @@
 # ZppixBot
-[![Build Status](https://travis-ci.org/Pix1234/ZppixBot-Source.svg?branch=master)](https://travis-ci.org/Pix1234/ZppixBot-Source)
+[![Build Status](https://travis-ci.org/Pix1234/ZppixBot-Source.svg?branch=dev)](https://travis-ci.org/Pix1234/ZppixBot-Source)
 
 ZppixBot is an IRC bot mainly used by [Miraheze](https://meta.miraheze.org)
 ([#miraheze on freenode](http://webchat.freenode.net/?channels=miraheze)).
