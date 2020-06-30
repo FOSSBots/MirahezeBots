@@ -57,8 +57,11 @@ def get_chanops(bot, trigger):
         chanops = ['Mbrt', 'Arifys', 'Murbaut']
     elif str(trigger.sender) == '#miraheze-botlogs':
         chanops = ['MacFan4000', 'Zppix', 'RhinosF1', 'Reception123', 'Voidwalker']
+<<<<<<< HEAD
     elif str(trigger.sender) == '#miraheze-bots' or str(trigger.sender) == '#miraheze-bot-alerts':
         chanops = ['MacFan4000', 'Zppix', 'RhinosF1', 'Reception123', 'Voidwalker', 'SPF|Cloud', 'PuppyKun', 'JohnLewis']
+=======
+>>>>>>> 89ca504... + #miraheze-botlogs
     else:
         bot.say('Please ask in #ZppixBot for assistance configuring the channel management module.', trigger.sender)
     return chanops
