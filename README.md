@@ -17,4 +17,3 @@ Please note that in line with our security policy, we can only support Sopel 7.x
 [More info](https://zppixbot.toolforge.org/)
 
 [Documentation](https://zppixbot.toolforge.org/documentation.html)
-
