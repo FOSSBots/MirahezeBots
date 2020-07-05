@@ -1,7 +1,7 @@
-# ZppixBot
-[![Build Status](https://travis-ci.org/Pix1234/ZppixBot-Source.svg?branch=dev)](https://travis-ci.org/Pix1234/ZppixBot-Source)
+# MirahezeBots
+[![Build Status](https://travis-ci.org/Pix1234/ZppixBot-Source.svg?branch=dev)](https://travis-ci.org/miraheze/MirahezeBots)
 
-ZppixBot is an IRC bot mainly used by [Miraheze](https://meta.miraheze.org)
+MirahezeBots is an IRC bot mainly used by [Miraheze](https://meta.miraheze.org)
 ([#miraheze on freenode](http://webchat.freenode.net/?channels=miraheze)).
 
 It is simple and easy to customize.
@@ -14,6 +14,6 @@ Please note that in line with our security policy, we can only support Sopel 7.x
 
 [Source Github](http://github.com/sopel-irc/sopel)
 
-[More info](https://zppixbot.toolforge.org/)
+[More info](https://bots.miraheze.wiki)
 
-[Documentation](https://zppixbot.toolforge.org/documentation.html)
+[Documentation](https://bots.miraheze.wiki/documentation.html)
