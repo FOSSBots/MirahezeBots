@@ -5,7 +5,7 @@ MirahezeBots is an IRC bot mainly used by [Miraheze](https://meta.miraheze.org)
 ([#miraheze on freenode](http://webchat.freenode.net/?channels=miraheze)).
 
 It is simple and easy to customize.
-ZppixBot uses [Sopel](https://sopel.chat).
+MirahezeBot uses [Sopel](https://sopel.chat).
 
 To use this bot, copy `modules` folder to your Sopel installation
 (and don't forget to setup your `default.cfg` if needed)
