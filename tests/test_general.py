@@ -10,13 +10,13 @@ import models
 
 def test_db_schema_is_same():
     original, new = set(), set()
-    with sqlite3.connect(os.path.join(PATH, '..', 'hasan.db')) as conn:
+    with sqlite3.connect(os.path.join(PATH, 'hasan.db')) as conn:
         conn.text_factory = str
         res = conn.execute("SELECT name FROM sqlite_master WHERE type='table';")
         [original.add(tbl[0]) for tbl in res if not tbl[0] == 'nick_ids' and not tbl[0] == 'sqlite_sequence']
         
     try:
-        os.unlink(os.path.join(PATH, "..", "hasan2.db"))
+        os.unlink(os.path.join(PATH, "hasan2.db"))
     except FileNotFoundError:
         pass
 
