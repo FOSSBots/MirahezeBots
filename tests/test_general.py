@@ -24,16 +24,6 @@ def test_db_schema_is_same():
     models.Base.metadata.create_all(bind=engine)
     assert original == set(engine.table_names()) 
 
-def test_no_f_strings():
-    for top, dirs, files in os.walk(MODULEPATH):
-        for filen in files:
-            if not filen.endswith('.py'):
-                continue
-            with open(os.path.join(MODULEPATH, filen)) as python_source:
-                src = python_source.read()
-                assert "f'" not in src
-                assert 'f"' not in src
-
 def test_line_length():
     MAX_LENGTH = 220+1
     for top, dirs, files in os.walk(MODULEPATH):
