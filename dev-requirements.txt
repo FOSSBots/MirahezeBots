@@ -2,3 +2,4 @@
 vcrpy==4.0.2
 autopep8
 six
+models==0.9.3
