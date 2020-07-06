@@ -362,7 +362,7 @@ def configure(config):
     config.define_section('rss', RSSSection)
     config.rss.configure_setting('feeds', 'comma separated strings consisting of channel, name, url and an optional format separated by pipes')
     config.rss.configure_setting('formats', 'comma separated strings consisting hash and output fields separated by {}'.format(FORMAT_SEPARATOR))
-    config.rss.configure_setting('templates', 'comma separated strings consisting format field and template string separated by pipes'.format(FORMAT_SEPARATOR))
+    config.rss.configure_setting('templates', 'comma separated strings consisting format field and template string separated by pipes')
 
 
 @require_admin
