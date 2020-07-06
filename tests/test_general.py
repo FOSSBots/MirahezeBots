@@ -2,7 +2,7 @@ import os
 import re
 import sqlite3
 import sys
-PATH = '../ZppixBot-Source/modules'
+PATH = '../MirahezeBots/modules'
 sys.path.append(PATH)
 from sqlalchemy import create_engine
 import models
