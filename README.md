@@ -1,5 +1,5 @@
 # MirahezeBots
-[![Build Status](https://travis-ci.org/Pix1234/ZppixBot-Source.svg?branch=dev)](https://travis-ci.org/miraheze/MirahezeBots)
+[![Build Status](https://travis-ci.org/miraheze/MirahezeBots.svg?branch=dev)](https://travis-ci.org/miraheze/MirahezeBots)
 
 MirahezeBots is an IRC bot mainly used by [Miraheze](https://meta.miraheze.org)
 ([#miraheze on freenode](http://webchat.freenode.net/?channels=miraheze)).
