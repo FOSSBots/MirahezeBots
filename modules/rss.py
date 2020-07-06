@@ -22,7 +22,7 @@ LOGGER = get_logger(__name__)
 
 MAX_HASHES_PER_FEED = 300
 
-UPDATE_INTERVAL = 60 # seconds
+UPDATE_INTERVAL = 60  # seconds
 
 ESCAPE_CHARACTER = '%'
 
@@ -351,6 +351,7 @@ FEED_EXAMPLE = '''<?xml version="1.0" encoding="utf-8" ?>
 </channel>
 </rss>'''
 
+
 class RSSSection(StaticSection):
     feeds = ListAttribute('feeds')
     formats = ListAttribute('formats')
@@ -421,7 +422,7 @@ def _config_concatenate_templates(bot):
     for field in bot.memory['rss']['templates']:
         template = bot.memory['rss']['templates'][field]
 
-        #only save template that differ from the default
+        # only save template that differ from the default
         if not TEMPLATES_DEFAULT[field] == template:
             templates.append('t=' + field + '|' + template)
     templates = sorted(templates)
@@ -510,7 +511,7 @@ def _config_save(bot):
         bot.config.save()
         message = MESSAGES['saved_config_to_disk']
         LOGGER.debug(message)
-    except:
+    except BaseException:
         message = MESSAGES['unable_to_save_config_to_disk']
         LOGGER.error(message)
 
@@ -606,7 +607,7 @@ def _config_split_templates(bot, templates):
     return result
 
 
-def  _config_templates_example(bot):
+def _config_templates_example(bot):
     feedreader = MockFeedReader(FEED_EXAMPLE)
     options = Options(bot, feedreader, 'f=fl+adfglpsty')
     feed = feedreader.get_feed()
@@ -687,7 +688,7 @@ def _db_save_hash_to_database(bot, feedname, hash):
         bot.db.execute(sql_save_hashes, (hash,))
         message = MESSAGES['saved_hash_of_feed_to_sqlite_table'].format(hash, feedname, tablename)
         LOGGER.debug(message)
-    except:
+    except BaseException:
         message = MESSAGES['unable_to_save_hash_of_feed_to_sqlite_table'].format(hash, feedname, tablename)
         LOGGER.error(message)
 
@@ -812,7 +813,7 @@ def _feed_update(bot, feedreader, feedname, chatty):
     # bot.say new or all items
     for item in reversed(feed['entries']):
         hash = bot.memory['rss']['options'][feedname].get_hash(feedname, item)
-        new_item = not hash in bot.memory['rss']['hashes'][feedname].get()
+        new_item = hash not in bot.memory['rss']['hashes'][feedname].get()
         if chatty or new_item:
             if new_item:
                 bot.memory['rss']['hashes'][feedname].append(hash)
@@ -861,7 +862,7 @@ def _rss(bot, args):
     args_count = len(args)
 
     # check if we have a valid command or output general synopsis
-    if  args_count == 0 or args[0] not in COMMANDS.keys():
+    if args_count == 0 or args[0] not in COMMANDS.keys():
         message = MESSAGES['synopsis_rss'].format(
             bot.config.core.prefix, '|'.join(sorted(COMMANDS.keys())))
         bot.say(message)
@@ -870,7 +871,7 @@ def _rss(bot, args):
     cmd = args[0]
 
     # check if the number of arguments is valid
-    present = args_count-1
+    present = args_count - 1
     required = COMMANDS[cmd]['required']
     optional = COMMANDS[cmd]['optional']
     if present < required or present > required + optional:
@@ -1011,7 +1012,7 @@ def _rss_help(bot, args):
     args_count = len(args)
 
     # check if we have a valid command or output general synopsis
-    if  args_count == 1 or args[0] not in COMMANDS.keys():
+    if args_count == 1 or args[0] not in COMMANDS.keys():
         message = COMMANDS[args[0]]['synopsis'].format(bot.config.core.prefix)
         bot.say(message)
         if args_count == 1:
@@ -1106,7 +1107,7 @@ class Options:
 
     LOGGER = get_logger(__name__)
 
-    def __init__(self, bot, feedreader = '', options = ''):
+    def __init__(self, bot, feedreader='', options=''):
         self.bot = bot
 
         if feedreader == '':
@@ -1226,7 +1227,7 @@ class Options:
         templates = CONFIG_SEPARATOR.join(templates_list)
         return templates
 
-    def is_format_valid(self, format, separator, fields = ''):
+    def is_format_valid(self, format, separator, fields=''):
         hashed, output, remainder = self._format_split(format, separator)
         return(self._is_format_valid(hashed, output, remainder, fields))
 
@@ -1265,7 +1266,7 @@ class Options:
                 continue
             f = templates_split[0]
             fields = self._format_get_fields(self.feedreader)
-            if not f in fields:
+            if f not in fields:
                 continue
             t = templates_split[1]
             if not self.is_template_valid(t):
@@ -1355,7 +1356,7 @@ class Options:
 
                     # add the color escape character
                     irc += ESCAPE_COLOR
-                           
+
                     # add a foreground color
                     irc += key
 
@@ -1431,7 +1432,6 @@ class Options:
         # else return the minimal valid format
         return self.get_format_minimal()
 
-
     def _format_split(self, format, separator):
         format_split = str(format).split(separator)
         hashed = format_split[0]
@@ -1466,7 +1466,7 @@ class Options:
 
         return templates
 
-    def _is_format_valid(self, hashed, output, remainder, fields =''):
+    def _is_format_valid(self, hashed, output, remainder, fields=''):
 
         # check format for duplicate separators
         if remainder:
@@ -1542,7 +1542,7 @@ class FeedReader:
         try:
             feed = feedparser.parse(self.url)
             return feed
-        except:
+        except BaseException:
             return dict()
 
     def get_tinyurl(self, url):
@@ -1564,7 +1564,7 @@ class MockFeedReader:
         try:
             feed = feedparser.parse(self.url)
             return feed
-        except:
+        except BaseException:
             return dict()
 
     def get_tinyurl(self, url):
@@ -1575,22 +1575,25 @@ class MockFeedReader:
 # https://www.safaribooksonline.com/library/view/python-cookbook/0596001673/ch05s19.html
 class RingBuffer:
     """ class that implements a not-yet-full buffer """
-    def __init__(self,size_max):
+
+    def __init__(self, size_max):
         self.max = size_max
         self.index = 0
         self.data = []
 
     class __Full:
         """ class that implements a full buffer """
+
         def append(self, x):
             """ Append an element overwriting the oldest one. """
             self.data[self.cur] = x
-            self.cur = (self.cur+1) % self.max
+            self.cur = (self.cur + 1) % self.max
+
         def get(self):
             """ return list of elements in correct order """
-            return self.data[self.cur:]+self.data[:self.cur]
+            return self.data[self.cur:] + self.data[:self.cur]
 
-    def append(self,x):
+    def append(self, x):
         """ append an element at the end of the buffer """
         self.data.append(x)
         if len(self.data) == self.max:
