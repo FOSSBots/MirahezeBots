@@ -58,6 +58,9 @@ def get_chanops(bot, trigger):
     elif str(trigger.sender) == '#miraheze-botlogs':
         chanops = ['MacFan4000', 'Zppix', 'RhinosF1', 'Reception123', 'Voidwalker']
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c0d1294... fix
     elif str(trigger.sender) == '#miraheze-bots' or str(trigger.sender) == '#miraheze-bot-alerts':
         chanops = ['MacFan4000', 'Zppix', 'RhinosF1', 'Reception123', 'Voidwalker', 'SPF|Cloud', 'PuppyKun', 'JohnLewis']
 =======
