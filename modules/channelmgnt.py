@@ -32,7 +32,7 @@ def default_mask(trigger):
 def get_chanops(bot, trigger):
     chanops = ''
     if str(trigger.sender) == '##RhinosF1':
-        chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot']
+        chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot', 'MacFan4000']
     elif str(trigger.sender) == '#MacFan4000':
         chanops = ['MacFan4000']
     elif str(trigger.sender) == '##acme':
@@ -55,6 +55,10 @@ def get_chanops(bot, trigger):
         chanops = ['Zppix', 'tom29739', 'SwisterTwister', 'Snowycats', 'DatGuy', 'mattwj2002']
     elif str(trigger.sender) == '#ays':
         chanops = ['Mbrt', 'Arifys', 'Murbaut']
+    elif str(trigger.sender) == '#miraheze-botlogs':
+        chanops = ['MacFan4000', 'Zppix', 'RhinosF1', 'Reception123', 'Voidwalker']
+    elif str(trigger.sender) == '#miraheze-botlogs' or str(trigger.sender) == '#miraheze-bot-alerts':
+        chanops = ['MacFan4000', 'Zppix', 'RhinosF1', 'Reception123', 'Voidwalker', 'SPF|Cloud', 'PuppyKun', 'JohnLewis']
     else:
         bot.say('Please ask in #ZppixBot for assistance configuring the channel management module.', trigger.sender)
     return chanops
