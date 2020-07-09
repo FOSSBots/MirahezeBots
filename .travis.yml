@@ -22,7 +22,7 @@ script:
 notifications:
   irc:
     channels:
-      - "chat.freenode.net#ZppixBot"
+      - "chat.freenode.net#miraheze-bots"
     on_success: change
     on_failure: always
     template:
