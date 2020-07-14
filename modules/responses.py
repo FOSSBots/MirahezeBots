@@ -1,6 +1,20 @@
-"""This module sends responses to frequently posted messages at #miraheze."""
+"""This module sends responses to frequently posted messages."""
 
 from sopel.module import commands, example, rate, require_account
+from sopel.config.types import StaticSection, ValidatedAttribute
+
+
+class ResponsesSection(StaticSection):
+    support_channel = ValidatedAttribute('support_channel', str)
+
+
+def setup(bot):
+    bot.config.define_section('responses', ResponsesSection)
+
+
+def configure(config):
+    config.define_section('responses', ResponsesSection, validate=False)
+    config.responses.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
 
 @commands('addchannel')
@@ -9,11 +23,13 @@ from sopel.module import commands, example, rate, require_account
 @require_account()
 def addchan(bot, trigger):
     """Reply to channel request message."""
-    bot.say(("Hey MacFan4000, RhinosF1, Texas, Voidwalker, Reception123 or Zppix, {} would like to have "
-            + "me in their channel: {}").format(trigger.nick, trigger.group(2)),
-            '#ZppixBot')
-    if trigger.sender != '#ZppixBot':
-        bot.reply("Request sent! Action upon the request should be taken shortly. Thank you for using ZppixBot!")
+    admins = ' '.join(map(str, bot.config.core.admin_accounts))
+    if bot.config.responses.support_channel is not None:
+        bot.say(("Hey {}, {} would like to have "
+                + "me in their channel: {}").format(admins, trigger.nick, trigger.group(2)),
+                bot.config.responses.support_channel)
+        if trigger.sender != bot.config.responses.support_channel:
+            bot.reply("Request sent! Action upon the request should be taken shortly. Thank you for using {}!".format(bot.nick))
 
 
 @commands('gj', 'gw')
@@ -29,8 +45,9 @@ def gj(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def cancel(bot, trigger):
     """Cancel reminder."""
-    bot.reply(('Pinging RhinosF1, Reception123, Voidwalker or Zppix to cancel '
-               '{}\'s reminder.').format(trigger.nick))
+    admins = ' '.join(map(str, bot.config.core.admin_accounts))
+    bot.reply(('Pinging {} to cancel '
+               '{}\'s reminder.').format(admins, trigger.nick))
 
 
 @commands('botversion', 'bv')
@@ -38,7 +55,7 @@ def cancel(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def botversion(bot, trigger):
     """List the current version of the bot."""
-    bot.say('The current version of this bot is 7.0 (v7)')
+    bot.say('The current version of this bot is 7.1 (v7.1)')
 
 
 @commands('source', 'botsource')

@@ -1,6 +1,5 @@
 language: python
 python:
-  - "3.5" # To remove by 2020-08-31, no longer used.
   - "3.6" # Supported until 2021-21-23, never ran.
   - "3.7" # Our instance, supported until  2023-06-27
   - "3.8" # latest python version
@@ -18,11 +17,12 @@ before_script:
 script:
     # we ignore E402 because of workarounds we use for modules loading, and F401 because some imports aren't directly used but needed for modules and travis doesn't like that
     - flake8 modules --ignore E402,F401,W503,E722 --max-line-length 220 --exclude=channelmgnt.py
+    - pytest tests/test_general.py
 
 notifications:
   irc:
     channels:
-      - "chat.freenode.net#ZppixBot"
+      - "chat.freenode.net#miraheze-bots"
     on_success: change
     on_failure: always
     template:
