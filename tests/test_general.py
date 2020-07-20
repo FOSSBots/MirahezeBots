@@ -2,8 +2,8 @@ import os
 import re
 import sqlite3
 import sys
-PATH = '../MirahezeBots'
-PLUGINPATH = '../MirahezeBots/plugins'
+PATH = '../MirahezeBots/MirahezeBots'
+PLUGINPATH = '../MirahezeBots/MirahezeBots/plugins'
 sys.path.append(PATH)
 from sqlalchemy import create_engine
 import models
