@@ -14,9 +14,6 @@ if __name__ == '__main__':
 with open('README.md') as readme_file:
     readme = readme_file.read()
 
-with open('NEWS') as history_file:
-    history = history_file.read()
-
 with open('requirements.txt') as requirements_file:
     requirements = [req for req in requirements_file.readlines()]
 
