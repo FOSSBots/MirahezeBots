@@ -5,7 +5,7 @@ Custom Sopel Plugins For Miraheze Bots
 from __future__ import unicode_literals, absolute_import, division, print_function
 
 try:
-    from .youtube import *
+    from .MirahezeBots import *
 except ImportError:
     # probably being imported by setup.py to get metadata before installation
     # no cause for alarm
