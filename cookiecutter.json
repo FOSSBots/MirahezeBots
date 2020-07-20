@@ -1,0 +1,12 @@
+{
+	"plugin_name": "MirahezeBot Plugins",
+	"full_name": "Miraheze Bot Contributors",
+	"email": "bots@miraheze.org",
+	"github_username": "MirahezeBots",
+	"repo_name": "MirahezeBots",
+	"project_name": "{{ cookiecutter.repo_name }}",
+	"project_short_description": "Custom Sopel Plugins For Miraheze Bots",
+	"release_date": "{% now 'local', '%Y-%m-%d' %}",
+	"year": "{% now 'local', '%Y' %}",
+	"version": "8"
+}
