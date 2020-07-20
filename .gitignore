@@ -14,5 +14,4 @@ __pycache__
 .idea
 .github/
 .DS_Store
-MirahezeBots/.DS_Store
-MirahezeBots/.DS_Store
+*/.DS_Store
