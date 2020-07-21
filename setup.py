@@ -14,6 +14,8 @@ if __name__ == '__main__':
 with open('README.md') as readme_file:
     readme = readme_file.read()
 
+with open('CHANGELOG.md') as history_file:
+    history = history_file.read()
 with open('requirements.txt') as requirements_file:
     requirements = [req for req in requirements_file.readlines()]
 
@@ -25,7 +27,7 @@ setup(
     name='MirahezeBot_Plugins',
     version='8.0.0',
     description='Sopel Plugins for Miraheze Bots',
-    long_description=readme + '\n\n', # + history,
+    long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',  # This is important!
     author='MirahezeBot Contributors',
     author_email='bots@miraheze.org',
