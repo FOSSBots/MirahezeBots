@@ -462,8 +462,8 @@ def show_mask(bot, trigger):
         bot.say(mask)
     else:
         bot.reply('Access Denied. If in error, please contact the channel founder.')
-        
-        
+
+
 @require_chanmsg
 @commands('invite')
 def invite_user(bot, trigger):
