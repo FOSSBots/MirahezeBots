@@ -1,93 +1,92 @@
-== ZppixBot v2 ==
-
-=== Changes since v1 ===
+# ZppixBot v2
+## Changes since v1
 * Added an admin list command (.adminlist)
 * Added .accesslevel command
 * Added .gethelp command (pings helpful users in channels)
 * Added a converse module
 * Added a new reminder system
 
-== ZppixBot v3 ==
-=== New modules added ===
+# ZppixBot v3
+## New modules added
 mh_phab
 welcome
 
-=== Modules updated ===
+## Modules updated
 converse
 adminlist
 reminders
 
-== ZppixBot v5 ==
-=== New modules added ===
+# ZppixBot v5
+## New modules added
 test_module
 channelmgnt
 
-=== Modules changed ===
+## Modules changed
 urls
 miraheze
 adminlist
 
-== ZppixBot v6 ==
-=== Channel Management ===
+# ZppixBot v6
+## Channel Management
 - Added option to set channel operators individually for each channel
 - Now supports inviting users
 - Bug fixes
-=== Mediawiki Status ===
+## Mediawiki Status
 - Created to allow users to set a status on mediawiki wikis.
 - Compatible user script and template developed by RhinosF1
 - See meta.miraheze.org/wiki/Template:UserStatus and https://meta.miraheze.org/wiki/User:RhinosF1/status.js
-=== Join ===
+## Join
 - Bug Fixes
-=== Responses ===
+## Responses
 - Added new ones
 - Removed poorly used ones
-=== Short Links ===
+## Short Links
 - Created to allow you to access your favourite sites in fewer clicks
-=== Urls ===
+## Urls
 - Bug fixes
 
-== ZppixBot v7 ==
-=== mh_phab ===
+# ZppixBot v7
+## mh_phab
 This has been completely rewrote to be more efficent.
 We've introduced more config options as well.
-=== dbclean ===
+## dbclean
 This is a new cli script to help clean up databases
-=== adminlist ===
+## adminlist
 Now uses the owner/admin account config rather than nickname.
-=== channelmgnt ===
+## channelmgnt
 You can now set modes, we've improved documentation and fixed a few bugs
-=== find_updates ===
+## find_updates
 Has been replaced by the upstream version
-=== joinall (was join) ===
+## joinall (was join)
 We've removed the join control and replaced it with joinall that forces the bot to join all channels in your config file
-=== responses ===
+## responses
 Has had some merged from other responses and no longer breaks with spaces
-=== status ===
+## status
 Now works with non cloaked users
-=== welcome ===
+## welcome
 Now also recognises accounts
-=== Requirements ===
+## Requirements
 We changed the way we install things from pip.
 You only need to install requirments.txt but you might find pip-install.txt has some more fun modules on.
 
-== MirahezeBot v7.1 ==
+# MirahezeBot v7.1
 With Version 7.1, we bring you a fancy new name as MirahezeBot and some
 bug fixes and improvements.
 
 Please note that with this version we no longer support python 3.5, please upgrade to python 3.6 or above.
 
-=== Phabricator ===
+## Phabricator
 This module now supports all phabricator installs with conduit enabled.
 
-=== Responses ===
+## Responses
 A support_channel configuration variable was introduced.
 
-=== Status ===
+## Status
 - Removed deceprated tuple
 - Introduced support_channel, wiki_username, wiki_password and data_path cnfiguration.
 - some functions now use bot.reply
 
-=== models ===
+## models
 This was incorrectly placed in the modules folder and has been moved to tests.
 
 
