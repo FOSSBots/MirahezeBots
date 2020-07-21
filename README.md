@@ -7,8 +7,9 @@ MirahezeBots is an IRC bot mainly used by [Miraheze](https://meta.miraheze.org)
 It is simple and easy to customize.
 MirahezeBot uses [Sopel](https://sopel.chat).
 
-To use this bot, copy `modules` folder to your Sopel installation
-(and don't forget to setup your `default.cfg` if needed)
+To use this bot, simply type install 'MirahezeBot-Plugins' from PyPi and then run 'sopel configure --plugins'
+
+To make use of the beta branch, clone the repo and check the 'dev' branch out and use pip's "install ." function to install it. You can then use 'sopel configure --plugins' as normal.
 
 Please note that in line with our security policy, we can only support Sopel 7.x installations running Python 3.6+.
 
