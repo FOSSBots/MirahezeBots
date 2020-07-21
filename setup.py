@@ -31,7 +31,6 @@ setup(
     author_email='bots@miraheze.org',
     url='https://github.com/MirahezeBots/MirahezeBots',
     packages=find_packages('.'),
-    namespace_packages=['MirahezeBots'],
     include_package_data=True,
     install_requires=requirements,
     tests_require=dev_requirements,
