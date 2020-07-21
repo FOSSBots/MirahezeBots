@@ -25,7 +25,7 @@ setup(
     name='MirahezeBot_Plugins',
     version='8.0.0',
     description='Sopel Plugins for Miraheze Bots',
-    long_description=readme + '\n\n' + history,
+    long_description=readme + '\n\n', # + history,
     long_description_content_type='text/markdown',  # This is important!
     author='MirahezeBot Contributors',
     author_email='bots@miraheze.org',
