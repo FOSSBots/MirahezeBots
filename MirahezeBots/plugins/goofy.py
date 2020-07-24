@@ -17,7 +17,7 @@ def coffee(bot, trigger):
 
 @module.example('.hug JohnBishop')
 @module.commands('hug')
-def coffee(bot, trigger):
+def hug(bot, trigger):
     """
     Makes me give the specified nick a hug.
     """
@@ -28,7 +28,7 @@ def coffee(bot, trigger):
 
 @module.example('.burger JohnBishop')
 @module.commands('burger')
-def coffee(bot, trigger):
+def burger(bot, trigger):
     """
     Makes me give the specified nick a burger.
     """
@@ -39,7 +39,7 @@ def coffee(bot, trigger):
 
 @module.example('.present JohnBishop')
 @module.commands('present')
-def coffee(bot, trigger):
+def present(bot, trigger):
     """
     Makes me give the specified nick a present.
     """
