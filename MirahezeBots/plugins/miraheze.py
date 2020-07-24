@@ -1,4 +1,4 @@
-"""This module contains #miraheze-specific commands."""
+"""This module contains miraheze specific commands."""
 from __future__ import (
     unicode_literals,
     absolute_import,
