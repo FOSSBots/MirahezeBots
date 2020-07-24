@@ -21,6 +21,7 @@ class StatusSection(StaticSection):
     wiki_username = ValidatedAttribute('wiki_username', str)
     wiki_password = ValidatedAttribute('wiki_password', str)
     support_channel = ValidatedAttribute('support_channel', str)
+    config_path = ValidatedAttribute('config_path', str)
 
 
 def setup(bot):
@@ -33,6 +34,7 @@ def configure(config):
     config.status.configure_setting('wiki_username', 'What is the statusbot wiki username? (from Special:BotPasswords)')
     config.status.configure_setting('wiki_password', 'What is the statusbot wiki password? (from Special:BotPasswords)')
     config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
+    config.responses.configure_setting('config_path', 'Specify a path to the status config directory')
 
 
 def save_wrap(site, request, bot, trigger):
