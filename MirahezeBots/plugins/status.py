@@ -64,7 +64,7 @@ def save_edit(page, status, bot, trigger):
             time.sleep(5)  # sleep for 5 seconds before trying again
             continue
         except errors.UserBlocked:
-            bot.reply("StatusBot is currently unavailable for that wiki. Our team is working on it!")
+            bot.reply("StatusBot is currently unavailable for that wiki. Our team are working on it!")
             bot.say("ERR: The bot is blocked on " + str(page), 'bot.config.core.logging_channel')
         except requests.exceptions.Timeout:
             bot.reply("We're experinecing delays "
