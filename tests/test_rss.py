@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from sopel.db import SopelDB
-from MirahezeBot-Plugins import sopel.plugins-rss
+import MirahezeBot-Plugins
 from sopel.test_tools import MockSopel, MockConfig
 import hashlib
 import os
