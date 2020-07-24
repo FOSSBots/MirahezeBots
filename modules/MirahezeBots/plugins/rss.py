@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-rss.py - Sopel rss module
+rss.py - Sopel rss plugins
 Copyright © 2016, RebelCodeBase, https://github.com/RebelCodeBase/sopel-rss
 Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3
 
