@@ -41,7 +41,7 @@ def future_test_db_cleanup():
 
 def test_no_get_on_lists():
     reg = r'get\([0-9]'
-    for top, dirs, files in os.walk(MODULEPATH):
+    for top, dirs, files in os.walk(PLUGINPATH):
         for filen in files:
             if not filen.endswith('.py'):
                 continue
