@@ -63,4 +63,4 @@ def botversion(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def githubsource(bot, trigger):
     """Give the link to ZppixBot's Github."""
-    bot.reply('My code can be found here: https://github.com/Pix1234/ZppixBot-Source')
+    bot.reply('My code can be found here: https://github.com/MirahezeBots/MirahezeBots')
