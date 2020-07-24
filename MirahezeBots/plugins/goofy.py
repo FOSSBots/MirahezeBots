@@ -8,3 +8,21 @@ def coffee(bot, trigger):
     if trigger.group(2) == '':
       bot.reply("To whom should I give this cup of coffee?")
     bot.action("gives %s a nice warm cup of coffee" % (trigger.group(2)), trigger.sender)
+
+@module.commands('hug')
+def coffee(bot, trigger):
+    if trigger.group(2) == '':
+      bot.reply("To whom should I give this hug?")
+    bot.action("gives %s a great big bear hug" % (trigger.group(2)), trigger.sender)
+    
+@module.commands('burger')
+def coffee(bot, trigger):
+    if trigger.group(2) == '':
+      bot.reply("To whom should I give this cheeseburger?")
+    bot.action("gives %s a freshly cooked cheeseburger" % (trigger.group(2)), trigger.sender)
+    
+@module.commands('present')
+def coffee(bot, trigger):
+    if trigger.group(2) == '':
+      bot.reply("To whom should I give this present?")
+    bot.action("gives %s a present" % (trigger.group(2)), trigger.sender)
