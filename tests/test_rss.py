@@ -109,6 +109,7 @@ FEED_SPY = '''<?xml version="1.0" encoding="UTF-8"?>
 </rss>
 '''
 
+
 def _fixture_bot_setup(request):
     bot = MockSopel('Sopel')
     bot = rss._config_define(bot)
@@ -121,7 +122,8 @@ def _fixture_bot_setup(request):
         if channel not in bot.channels:
             bot.config.core.channels.append(channel)
     bot.join = types.MethodType(join, bot)
-    def say(self, message, channel = ''):
+
+    def say(self, message, channel=''):
         bot.output += message + "\n"
     bot.say = types.MethodType(say, bot)
 
@@ -135,11 +137,11 @@ def _fixture_bot_setup(request):
 
 
 def _fixture_bot_add_data(bot, id, url):
-    bot.memory['rss']['feeds']['feed'+id] = {'channel': '#channel' + id, 'name': 'feed' + id, 'url': url}
-    bot.memory['rss']['hashes']['feed'+id] = rss.RingBuffer(100)
+    bot.memory['rss']['feeds']['feed' + id] = {'channel': '#channel' + id, 'name': 'feed' + id, 'url': url}
+    bot.memory['rss']['hashes']['feed' + id] = rss.RingBuffer(100)
     feedreader = rss.MockFeedReader(FEED_VALID)
-    bot.memory['rss']['options']['feed'+id] = rss.Options(bot, feedreader)
-    sql_create_table = 'CREATE TABLE ' + rss._digest_tablename('feed'+id) + ' (id INTEGER PRIMARY KEY, hash VARCHAR(32) UNIQUE)'
+    bot.memory['rss']['options']['feed' + id] = rss.Options(bot, feedreader)
+    sql_create_table = 'CREATE TABLE ' + rss._digest_tablename('feed' + id) + ' (id INTEGER PRIMARY KEY, hash VARCHAR(32) UNIQUE)'
     bot.db.execute(sql_create_table)
     bot.config.core.channels = ['#channel' + id]
     return bot
@@ -209,7 +211,7 @@ def test_rss_global_too_few_parameters(bot):
 
 def test_rss_global_color(bot):
     rss._rss(bot, ['colors'])
-    expected = '\x0301,00 00: white \x0f\x0300,01 01: black \x0f\x0300,02 02: blue \x0f\x0300,03 03: green \x0f\x0301,04 04: red \x0f\x0300,05 05: brown \x0f\x0300,06 06: purple \x0f\x0301,07 07: orange \x0f\x0301,08 08: yellow \x0f\x0301,09 09: lime \x0f\x0300,10 10: cyan \x0f\x0301,11 11: aqua \x0f\x0301,12 12: azure \x0f\x0301,13 13: pink \x0f\x0300,14 14: grey \x0f\x0301,15 15: silver \x0f\x0300,01 16: \x02bold\x02 \x0f\x0301,00 17: \x1ditalic\x1d \x0f\x0300,01 18: \x1funderline\x1f \x0f\n'
+    expected = '\x0301,00 00: white \x0f\x0300,01 01: black \x0f\x0300,02 02: blue \x0f\x0300,03 03: green \x0f\x0301,04 04: red \x0f\x0300,05 05: brown \x0f\x0300,06 06: purple \x0f\x0301,07 07: orange \x0f\x0301,08 08: yellow \x0f\x0301,09 09: lime \x0f\x0300,10 10: cyan \x0f\x0301,11 11: aqua \x0f\x0301,12 12: azure \x0f\x0301,13 13: pink \x0f\x0300,14 14: grey \x0f\x0301,15 15: silver \x0f\x0300,01 16: \x02bold\x02 \x0f\x0301,00 17: \x1ditalic\x1d \x0f\x0300,01 18: \x1funderline\x1f \x0f\n'   # noqa: E501
     assert expected == bot.output
 
 
@@ -223,13 +225,13 @@ def test_rss_global_config_templates(bot):
 
 def test_rss_global_feed_add(bot):
     rss._rss(bot, ['add', '#channel', 'feedname', FEED_VALID])
-    assert rss._feed_exists(bot, 'feedname') == True
+    assert rss._feed_exists(bot, 'feedname')
 
 
 def test_rss_global_feed_delete(bot):
     rss._rss(bot, ['add', '#channel', 'feedname', FEED_VALID])
     rss._rss(bot, ['del', 'feedname'])
-    assert rss._feed_exists(bot, 'feedname') == False
+    assert rss._feed_exists(bot, 'feedname') is False
 
 
 def test_rss_global_fields_get(bot):
@@ -257,7 +259,7 @@ def test_rss_global_get_post_feed_items(bot):
     rss._rss(bot, ['add', '#channel', 'feedname', FEED_VALID])
     bot.output = ''
     rss._rss(bot, ['get', 'feedname'])
-    expected = '\x02[feedname]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feedname]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feedname]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'
+    expected = '\x02[feedname]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feedname]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feedname]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'  # noqa: E501
     assert expected == bot.output
 
 
@@ -308,25 +310,25 @@ def test_rss_global_update_update(bot_rss_update):
 def test_config_define_sopelmemory():
     bot = MockSopel('Sopel')
     bot = rss._config_define(bot)
-    assert type(bot.memory['rss']) == rss.SopelMemory
+    assert isinstance(bot.memory['rss'], rss.SopelMemory)
 
 
 def test_config_define_feeds():
     bot = MockSopel('Sopel')
     bot = rss._config_define(bot)
-    assert type(bot.memory['rss']['feeds']) == dict
+    assert isinstance(bot.memory['rss']['feeds'], dict)
 
 
 def test_config_define_hashes():
     bot = MockSopel('Sopel')
     bot = rss._config_define(bot)
-    assert type(bot.memory['rss']['hashes']) == dict
+    assert isinstance(bot.memory['rss']['hashes'], dict)
 
 
 def test_config_define_formats():
     bot = MockSopel('Sopel')
     bot = rss._config_define(bot)
-    assert type(bot.memory['rss']['options']) == dict
+    assert isinstance(bot.memory['rss']['options'], dict)
 
 
 def test_config_concatenate_channels(bot):
@@ -343,7 +345,7 @@ def test_config_concatenate_feeds(bot, feedreader_feed_valid):
 
 
 def test_config_concatenate_formats(bot):
-    bot.memory['rss']['formats'] = ['yt+yt','ftla+ft']
+    bot.memory['rss']['formats'] = ['yt+yt', 'ftla+ft']
     formats = rss._config_concatenate_formats(bot)
     expected = ['f=yt+yt;f=ftla+ft']
     assert expected == formats
@@ -376,7 +378,7 @@ def test_config_read_format_custom_valid(bot_basic):
     bot_basic.config.rss.formats = formats_custom
     rss._config_read(bot_basic)
     formats = bot_basic.memory['rss']['formats']
-    expected = ['al+fpatl','y+fty']
+    expected = ['al+fpatl', 'y+fty']
     assert expected == formats
 
 
@@ -419,8 +421,8 @@ def FIXME_test_config_save_writes(bot_config_save):
     bot_config_save.memory['rss']['templates']['t'] = '<<{}>>'
     rss._config_save(bot_config_save)
     expected = '''[core]
-owner = '''+'''
-admins = '''+'''
+owner = ''' + '''
+admins = ''' + '''
 homedir = ''' + bot_config_save.config.homedir + '''
 db_filename = ''' + bot_config_save.db.filename + '''
 channels = #channel1
@@ -437,40 +439,42 @@ templates = t=t|<<{}>>
 def test_config_set_feeds_change_returns_true(bot_basic):
     feeds = '#channel' + rss.CONFIG_SEPARATOR + 'feed' + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + 'f=fl+ftl'
     result = rss._config_set_feeds(bot_basic, feeds)
-    assert True == result
+    assert result is True
 
 
 def test_config_set_feeds_no_change_returns_false(bot_basic):
     feeds = ''
     result = rss._config_set_feeds(bot_basic, feeds)
-    assert False == result
+    assert result is False
 
 
 def test_config_set_feeds_get(bot_basic):
-    feeds = '#channelA' + rss.CONFIG_SEPARATOR + 'feedA' + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + 'f=t+t,#channelB' + rss.CONFIG_SEPARATOR + 'feedB' + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + 'f=tl+tl'
+    feeds = '#channelA' + rss.CONFIG_SEPARATOR + 'feedA' + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + \
+        'f=t+t,#channelB' + rss.CONFIG_SEPARATOR + 'feedB' + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + 'f=tl+tl'
     rss._config_set_feeds(bot_basic, feeds)
     rss._config_get_feeds(bot_basic)
     expected = feeds + '\n'
-    assert expected ==   bot_basic.output
+    assert expected == bot_basic.output
 
 
 def test_config_set_feeds_exists(bot_basic):
-    feeds = '#channelA' + rss.CONFIG_SEPARATOR + 'feedA' + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + 'f=fyg+fgty,#channelB' + rss.CONFIG_SEPARATOR + 'feedB'  + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + 'f=lp+fptl'
+    feeds = '#channelA' + rss.CONFIG_SEPARATOR + 'feedA' + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + \
+        'f=fyg+fgty,#channelB' + rss.CONFIG_SEPARATOR + 'feedB' + rss.CONFIG_SEPARATOR + FEED_BASIC + rss.CONFIG_SEPARATOR + 'f=lp+fptl'
     rss._config_set_feeds(bot_basic, feeds)
     result = rss._feed_exists(bot_basic, 'feedB')
-    assert True == result
+    assert result is True
 
 
 def test_config_set_formats_change_returns_true(bot):
     formats = 'f=t+t'
     result = rss._config_set_formats(bot, formats)
-    assert True == result
+    assert result is True
 
 
 def test_config_set_formats_no_change_returns_false(bot):
     formats = ''
     result = rss._config_set_formats(bot, formats)
-    assert False == result
+    assert result is False
 
 
 def test_config_set_formats_get(bot):
@@ -493,13 +497,13 @@ def test_config_set_formats_join(bot):
 def test_config_set_templates_change_returns_true(bot):
     templates = 't=t|≈{}≈'
     result = rss._config_set_templates(bot, templates)
-    assert True == result
+    assert result is True
 
 
 def test_config_set_templates_no_change_returns_false(bot):
     templates = ''
     result = rss._config_set_templates(bot, templates)
-    assert False == result
+    assert result is False
 
 
 def test_config_set_templates_get(bot):
@@ -531,25 +535,25 @@ def test_config_split_feeds_valid(bot):
     feeds = ['#channel2' + rss.CONFIG_SEPARATOR + 'feed2' + rss.CONFIG_SEPARATOR + FEED_VALID + rss.CONFIG_SEPARATOR + 'f=fy+fty']
     rss._config_split_feeds(bot, feeds)
     result = rss._feed_exists(bot, 'feed2')
-    assert True == result
+    assert result is True
 
 
 def test_config_split_feeds_invalid(bot):
     feeds = ['#channel2' + rss.CONFIG_SEPARATOR + 'feed2' + rss.CONFIG_SEPARATOR + FEED_INVALID + rss.CONFIG_SEPARATOR + 'f=fy+fty']
     rss._config_split_feeds(bot, feeds)
     result = rss._feed_exists(bot, 'feed2')
-    assert False == result
+    assert result is False
 
 
 def test_config_split_feeds_format_and_template(bot):
     feeds = ['#channel2' + rss.CONFIG_SEPARATOR + 'feed2' + rss.CONFIG_SEPARATOR + FEED_VALID + rss.CONFIG_SEPARATOR + 'f=fy+fty;t=t|+++{}+++']
     rss._config_split_feeds(bot, feeds)
     result = rss._feed_exists(bot, 'feed2')
-    assert True == result
+    assert result is True
 
 
 def test_config_split_formats_valid(bot):
-    formats = ['f=yt+yt','f=ftla+ft']
+    formats = ['f=yt+yt', 'f=ftla+ft']
     rss._config_split_formats(bot, formats)
     formats_split = bot.memory['rss']['formats']
     expected = ['yt+yt', 'ftla+ft']
@@ -557,7 +561,7 @@ def test_config_split_formats_valid(bot):
 
 
 def test_config_split_formats_invalid(bot):
-    formats = ['f=abcd','f=ftla+ft']
+    formats = ['f=abcd', 'f=ftla+ft']
     rss._config_split_formats(bot, formats)
     formats_split = bot.memory['rss']['formats']
     expected = ['ftla+ft']
@@ -565,16 +569,16 @@ def test_config_split_formats_invalid(bot):
 
 
 def test_config_split_templates_valid(bot):
-    templates = { 't=t|>>{}<<' }
+    templates = {'t=t|>>{}<<'}
     rss._config_split_templates(bot, templates)
-    templates_split =  bot.memory['rss']['templates']
+    templates_split = bot.memory['rss']['templates']
     assert templates_split['t'] == '>>{}<<'
 
 
 def test_config_split_templates_invalid(bot):
-    templates = { 't=t|>><<' }
+    templates = {'t=t|>><<'}
     rss._config_split_templates(bot, templates)
-    templates_split =  bot.memory['rss']['templates']
+    templates_split = bot.memory['rss']['templates']
     assert templates_split['t'] == '{}'
 
 
@@ -639,7 +643,7 @@ def test_feed_add_create_db_table(bot):
 
 def test_feed_add_create_ring_buffer(bot):
     rss._feed_add(bot, '#channel', 'feedname', FEED_VALID)
-    assert type(bot.memory['rss']['hashes']['feedname']) == rss.RingBuffer
+    assert isinstance(bot.memory['rss']['hashes']['feedname'], rss.RingBuffer)
 
 
 def test_feed_add_create_feed(bot):
@@ -697,11 +701,11 @@ def test_feed_delete_delete_feed(bot):
 
 
 def test_feed_exists_passes(bot):
-    assert rss._feed_exists(bot, 'feed1') == True
+    assert rss._feed_exists(bot, 'feed1')
 
 
 def test_feed_exists_fails(bot):
-    assert rss._feed_exists(bot, 'nofeed') == False
+    assert rss._feed_exists(bot, 'nofeed') is False
 
 
 def test_feed_list_format(bot):
@@ -764,7 +768,7 @@ def test_help_text_del(bot):
 
 def test_rss_add_feed_add(bot):
     rss._rss_add(bot, ['add', '#channel', 'feedname', FEED_VALID])
-    assert rss._feed_exists(bot, 'feedname') == True
+    assert rss._feed_exists(bot, 'feedname')
 
 
 def test_rss_config_feeds_list(bot):
@@ -773,7 +777,8 @@ def test_rss_config_feeds_list(bot):
     bot.output = ''
     args = ['config', 'feeds']
     rss._rss_config(bot, args)
-    expected = '#channel1' + rss.CONFIG_SEPARATOR + 'feed1' + rss.CONFIG_SEPARATOR + 'http://www.site1.com/feed' + rss.CONFIG_SEPARATOR + 'f=asl+als,#channel2' + rss.CONFIG_SEPARATOR + 'feed2' + rss.CONFIG_SEPARATOR + FEED_VALID + rss.CONFIG_SEPARATOR + 'f=p+tlpas\n'
+    expected = '#channel1' + rss.CONFIG_SEPARATOR + 'feed1' + rss.CONFIG_SEPARATOR + 'http://www.site1.com/feed' + rss.CONFIG_SEPARATOR + \
+        'f=asl+als,#channel2' + rss.CONFIG_SEPARATOR + 'feed2' + rss.CONFIG_SEPARATOR + FEED_VALID + rss.CONFIG_SEPARATOR + 'f=p+tlpas\n'
     assert expected == bot.output
 
 
@@ -784,7 +789,7 @@ def test_rss_config_formats_default(bot):
 
 
 def test_rss_config_formats_list(bot):
-    bot.memory['rss']['formats'] = ['lts+flts','at+at']
+    bot.memory['rss']['formats'] = ['lts+flts', 'at+at']
     args = ['config', 'formats']
     rss._rss_config(bot, args)
     expected = 'f=lts+flts;f=at+at;f=fl+ftl' + '\n'
@@ -903,7 +908,7 @@ def test_rss_config_invalid_key(bot):
 
 def test_rss_colors(bot):
     rss._rss_colors(bot, ['colors'])
-    expected = '\x0301,00 00: white \x0f\x0300,01 01: black \x0f\x0300,02 02: blue \x0f\x0300,03 03: green \x0f\x0301,04 04: red \x0f\x0300,05 05: brown \x0f\x0300,06 06: purple \x0f\x0301,07 07: orange \x0f\x0301,08 08: yellow \x0f\x0301,09 09: lime \x0f\x0300,10 10: cyan \x0f\x0301,11 11: aqua \x0f\x0301,12 12: azure \x0f\x0301,13 13: pink \x0f\x0300,14 14: grey \x0f\x0301,15 15: silver \x0f\x0300,01 16: \x02bold\x02 \x0f\x0301,00 17: \x1ditalic\x1d \x0f\x0300,01 18: \x1funderline\x1f \x0f\n'
+    expected = '\x0301,00 00: white \x0f\x0300,01 01: black \x0f\x0300,02 02: blue \x0f\x0300,03 03: green \x0f\x0301,04 04: red \x0f\x0300,05 05: brown \x0f\x0300,06 06: purple \x0f\x0301,07 07: orange \x0f\x0301,08 08: yellow \x0f\x0301,09 09: lime \x0f\x0300,10 10: cyan \x0f\x0301,11 11: aqua \x0f\x0301,12 12: azure \x0f\x0301,13 13: pink \x0f\x0300,14 14: grey \x0f\x0301,15 15: silver \x0f\x0300,01 16: \x02bold\x02 \x0f\x0301,00 17: \x1ditalic\x1d \x0f\x0300,01 18: \x1funderline\x1f \x0f\n'  # noqa: E501
     assert expected == bot.output
 
 
@@ -916,7 +921,7 @@ def test_rss_del_feed_nonexistent(bot):
 def test_rss_del_feed_delete(bot):
     rss._rss_add(bot, ['add', '#channel', 'feedname', FEED_VALID])
     rss._rss_del(bot, ['del', 'feedname'])
-    assert rss._feed_exists(bot, 'feedname') == False
+    assert rss._feed_exists(bot, 'feedname') is False
 
 
 def test_rss_fields_feed_nonexistent(bot):
@@ -1001,7 +1006,7 @@ def test_rss_get_feed_nonexistent(bot):
 def test_rss_get_post_feed_items(bot):
     rss._feed_add(bot, '#channel', 'feedname', FEED_VALID)
     rss._rss_get(bot, ['get', 'feedname'])
-    expected = '\x02[feedname]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feedname]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feedname]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'
+    expected = '\x02[feedname]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feedname]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feedname]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'  # noqa: E501
     assert expected == bot.output
 
 
@@ -1126,7 +1131,7 @@ def test_rss_templates_override(bot):
     rss._rss_config(bot, ['config', 'templates', templates_default])
     bot.output = ''
     rss._rss_get(bot, ['get', 'feed'])
-    expected = 'feedauthor:Author 1 addguid:1 at http://www.site1.com/ defaultpublished:2016-08-21 01:10 feedtitle:Title 1\nfeedauthor:Author 2 addguid:2 at http://www.site1.com/ defaultpublished:2016-08-22 02:20 feedtitle:Title 2\nfeedauthor:Author 3 addguid:3 at http://www.site1.com/ defaultpublished:2016-08-23 03:30 feedtitle:Title 3\n'
+    expected = 'feedauthor:Author 1 addguid:1 at http://www.site1.com/ defaultpublished:2016-08-21 01:10 feedtitle:Title 1\nfeedauthor:Author 2 addguid:2 at http://www.site1.com/ defaultpublished:2016-08-22 02:20 feedtitle:Title 2\nfeedauthor:Author 3 addguid:3 at http://www.site1.com/ defaultpublished:2016-08-23 03:30 feedtitle:Title 3\n'  # noqa: E501
     assert expected == bot.output
 
 
@@ -1206,7 +1211,7 @@ def test_options_check_format_duplicate_separator(bot, feedreader_feed_valid):
     assert format != options.get_format()
 
 
-def test_options_check_format_duplicate_field_hashed(bot,feedreader_feed_valid):
+def test_options_check_format_duplicate_field_hashed(bot, feedreader_feed_valid):
     format = 'f=ll+t'
     options = rss.Options(bot, feedreader_feed_valid, format)
     assert format != options.get_format()
@@ -1236,19 +1241,19 @@ def test_options_check_tinyurl_output(bot, feedreader_feed_valid):
 def test_options_check_template_valid(bot):
     template = '{}'
     result = rss.Options(bot, rss.FeedReader('')).is_template_valid(template)
-    assert True == result
+    assert result is True
 
 
 def test_options_check_template_invalid_no_curly_braces(bot):
     template = ''
     result = rss.Options(bot, rss.FeedReader('')).is_template_valid(template)
-    assert False == result
+    assert result is False
 
 
 def test_options_check_template_invalid_duplicate_curly_braces(bot):
     template = '{}{}'
     result = rss.Options(bot, rss.FeedReader('')).is_template_valid(template)
-    assert False == result
+    assert result is False
 
 
 def test_options_set_get_templates(bot):
