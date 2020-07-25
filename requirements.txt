@@ -1,6 +1,7 @@
 # dependenices used in test ZppixBot
 certifi==2020.6.20
 configparser==5.0.0
+feedparser==5.2.1
 mwclient==0.10.1
 pytz==2020.1
 PyYAML==5.3.1
