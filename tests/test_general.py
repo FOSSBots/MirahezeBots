@@ -10,7 +10,7 @@ sys.path.append(PATH)
 
 
 def test_db_schema_is_same():
-    original, new = set(), set()
+    original, new = set(), set() # noqa: F841
     with sqlite3.connect(os.path.join(PATH, 'hasan.db')) as conn:
         conn.text_factory = str
         res = conn.execute("SELECT name FROM sqlite_master WHERE type='table';")
