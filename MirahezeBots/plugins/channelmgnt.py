@@ -30,37 +30,8 @@ def default_mask(trigger):
 
 
 def get_chanops(bot, trigger):
-    chanops = ''
-    if str(trigger.sender) == '##RhinosF1':
-        chanops = ['RhinosF1', 'Zppix', 'Reception123', 'LakesideMiners', 'Vermont', 'Oshwah', 'TheSandDoctor', 'dtm', 'Kb03', 'Aldnonymous', 'ShakespeareFan00', 'Qui', 'Southparkfan', 'gonzobot', 'MacFan4000']
-    elif str(trigger.sender) == '#MacFan4000':
-        chanops = ['MacFan4000']
-    elif str(trigger.sender) == '##acme':
-        chanops = ['RhinosF1', 'tex', 'BlackOp']
-    elif str(trigger.sender) == '#miraheze' or str(trigger.sender) == '#miraheze-offtopic':
-        chanops = ['Southparkfan', 'Zppix', 'NDKilla', 'labster', 'Reception123', 'Voidwalker', 'Void|bot', 'JohnLewis', 'Paladox', 'RhinosF1']
-    elif str(trigger.sender) == '#miraheze-cvt' or str(trigger.sender) == '#miraheze-cvt-private':
-        chanops = ['NDKilla', 'Voidwalker', 'Reception123', 'The_Pionner', 'JohnLewis']
-    elif str(trigger.sender) == '#miraheze-testwiki':
-        chanops = ['Reception123', 'NDKilla', 'Voidwalker', 'Zppix', 'RhinosF1']
-    elif str(trigger.sender) == '#miraheze-testwiki-es':
-        chanops = ['Reception123', 'NDKilla', 'Voidwalker']
-    elif str(trigger.sender) == '#ZppixBot' or str(trigger.sender) == '#ZppixBot-logs':
-        chanops = ['Zppix', 'Reception123', 'Voidwalker', 'RhinosF1', 'MacFan4000']
-    elif str(trigger.sender) == '#testadminwiki':
-        chanops = ['MacFan4000', 'Voidwalker']
-    elif str(trigger.sender) == '##CyberBogan':
-        chanops = ['NeoBogan', 'Oshwah', 'enterprisey', 'Havyk', 'Athyria', 'LakesideMiners', 'foks', 'Jobe', 'MarxLenin99', 'SQLDb', 'TxHadriel', 'ShakespeareFan00', 'Zppix', 'KSFT']
-    elif str(trigger.sender) == '##Zppix-Wikipedia':
-        chanops = ['Zppix', 'tom29739', 'SwisterTwister', 'Snowycats', 'DatGuy', 'mattwj2002']
-    elif str(trigger.sender) == '#ays':
-        chanops = ['Mbrt', 'Arifys', 'Murbaut']
-    elif str(trigger.sender) == '#miraheze-botlogs':
-        chanops = ['MacFan4000', 'Zppix', 'RhinosF1', 'Reception123', 'Voidwalker']
-    elif str(trigger.sender) == '#miraheze-bots' or str(trigger.sender) == '#miraheze-bot-alerts':
-        chanops = ['MacFan4000', 'Zppix', 'RhinosF1', 'Reception123', 'Voidwalker', 'SPF|Cloud', 'PuppyKun', 'JohnLewis']
-    else:
-        bot.say('Please ask in #ZppixBot for assistance configuring the channel management module.', trigger.sender)
+    chanops = []
+    # add the json config parser here on Sunday/Monday
     return chanops
 
 
