@@ -1247,13 +1247,13 @@ def test_options_check_template_valid(bot):
 def test_options_check_template_invalid_no_curly_braces(bot):
     template = ''
     result = rss.Options(bot, rss.FeedReader('')).is_template_valid(template)
-    assert result is True
+    assert result is False
 
 
 def test_options_check_template_invalid_duplicate_curly_braces(bot):
     template = '{}{}'
     result = rss.Options(bot, rss.FeedReader('')).is_template_valid(template)
-    assert result is True
+    assert result is False
 
 
 def test_options_set_get_templates(bot):
