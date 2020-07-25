@@ -23,6 +23,7 @@ script:
     - pytest tests/test_general.py
     - pytest tests/test_rss.py
     - pip check
+    - flake8 tests --ignore E402,F401,W503,E722 --max-line-length 220
 
 notifications:
   irc:
