@@ -14,6 +14,8 @@ before_script:
     - pip install -r requirements.txt
     - python --version
     - pip install .
+    - sopel --version
+    - pip show MirahezeBot-Plugins
 
 script:
     # we ignore E402 because of workarounds we use for modules loading, and F401 because some imports aren't directly used but needed for modules and travis doesn't like that
