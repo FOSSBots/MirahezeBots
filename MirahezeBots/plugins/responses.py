@@ -55,7 +55,7 @@ def cancel(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def botversion(bot, trigger):
     """List the current version of the bot."""
-    bot.say('The current version of this bot is 7.1 (v7.1)')
+    bot.say('The current version of this bot is 8.0.0 (v8)')
 
 
 @commands('source', 'botsource')
