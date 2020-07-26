@@ -1,3 +1,4 @@
 # Development requirements
 vcrpy==4.0.2
 six==1.15.0
+pip-check-reqs==2.1.1
