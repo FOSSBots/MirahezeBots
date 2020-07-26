@@ -24,7 +24,7 @@ script:
     - pytest tests/test_rss.py
     - pip check
     - flake8 tests --ignore E402,F401,W503,E722 --max-line-length 220
-    - pip-missing-reqs --ignore-module=MirahezeBots.* .
+    - pip-missing-reqs --ignore-module=MirahezeBots.* --ignore-module=setuptools --ignore-module=pytest .
     - pip-extra-reqs .
 
 deploy:
