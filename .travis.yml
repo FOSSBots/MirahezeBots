@@ -27,6 +27,9 @@ script:
     - pip-extra-reqs .
     - pip check
 
+after_script:
+    - pip freeze
+
 deploy:
   provider: pypi
   username: MirahezeBots
