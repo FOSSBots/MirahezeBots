@@ -1,10 +1,9 @@
-# Some commands for just goofing around and having fun
-# Created by John Bishop for Miraheze
+""" Some commands for just goofing around and having fun """
 
 from sopel import module
 
 
-@module.example('.coffee JohnBishop')
+@module.example('.coffee MirahezeBot')
 @module.commands('coffee')
 def coffee(bot, trigger):
     """
@@ -15,7 +14,7 @@ def coffee(bot, trigger):
     bot.action("gives %s a nice warm cup of coffee" % (trigger.group(2)), trigger.sender)
 
 
-@module.example('.hug JohnBishop')
+@module.example('.hug MirahezeBot')
 @module.commands('hug')
 def hug(bot, trigger):
     """
@@ -26,7 +25,7 @@ def hug(bot, trigger):
     bot.action("gives %s a great big bear hug" % (trigger.group(2)), trigger.sender)
 
 
-@module.example('.burger JohnBishop')
+@module.example('.burger MirahezeBot')
 @module.commands('burger')
 def burger(bot, trigger):
     """
@@ -37,7 +36,7 @@ def burger(bot, trigger):
     bot.action("gives %s a freshly cooked cheeseburger" % (trigger.group(2)), trigger.sender)
 
 
-@module.example('.present JohnBishop')
+@module.example('.present MirahezeBot')
 @module.commands('present')
 def present(bot, trigger):
     """
