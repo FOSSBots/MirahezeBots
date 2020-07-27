@@ -91,5 +91,12 @@ A support_channel configuration variable was introduced.
 ## models
 This was incorrectly placed in the modules folder and has been moved to tests.
 
+# MirahezeBot v7.2
+## Status
+- Removed modules/config/*.csv
+## Responses
+- Bug fixes
+## channelmgnt
+- Switched to a new json config system
 
 
