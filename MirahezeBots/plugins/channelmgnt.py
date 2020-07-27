@@ -18,6 +18,7 @@ from sopel import formatting
 from sopel.module import (
     commands, example, priority, OP, require_chanmsg
 )
+from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
 
 
@@ -52,7 +53,6 @@ def fileread(file):
 
 def chanopget(channeldata, chanopsjson):
     chanops = []
-    types = channeldata.keys()
     if 'inherits-from' in channeldata.keys():
         for x in channeldata["inherits-from"]:
             y = channelparse(chanopsjson, x)
@@ -75,6 +75,7 @@ def channelparse(chanopsjson, channel):
 
 
 def get_chanops(bot, trigger):
+    file = bot.settings.channelmgnt.datafile
     channel = trigger.sender
     chanopsjson = fileread(file)
     channeldata = channelparse(chanopsjson, channel)
@@ -515,7 +516,6 @@ def set_mask(bot, trigger):
 @example('showmask')
 def show_mask(bot, trigger):
     """Show the topic mask for the current channel."""
-    chanops = get_chanops(bot, trigger)
     mask = bot.db.get_channel_value(trigger.sender, 'topic_mask')
     mask = mask or default_mask(trigger)
     bot.say(mask)
