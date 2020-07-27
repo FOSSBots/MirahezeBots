@@ -78,9 +78,9 @@ def get_chanops(bot, trigger):
     file = bot.settings.channelmgnt.datafile
     channel = trigger.sender
     chanopsjson = fileread(file)
-    print(chanopsjson)
+    bot.reply(chanopsjson)
     channeldata = channelparse(chanopsjson, channel)
-    print(channeldata)
+    bot.reply(channeldata)
     if not channeldata:
         chanops = False
     else:
