@@ -44,7 +44,7 @@ def default_mask(trigger):
 
 
 def fileread(file):
-    bot.say(str(file), "#miraheze-botlogs")
+    print(str(file))
     channellist = open(str(file), 'r')
     chanopsjson = channellist.read()
     channellist.close()
