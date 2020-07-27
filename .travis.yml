@@ -3,6 +3,7 @@ python:
   - "3.6" # Supported until 2021-21-23, never ran.
   - "3.7" # Our instance, supported until  2023-06-27
   - "3.8" # latest python version
+  - "3.8-dev"  # 3.8 development branch
 dist: xenial
 os: linux
 
