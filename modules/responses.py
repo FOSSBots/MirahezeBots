@@ -55,7 +55,7 @@ def cancel(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def botversion(bot, trigger):
     """List the current version of the bot."""
-    bot.say('The current version of this bot is 7.1 (v7.1)')
+    bot.say('The current version of this bot is 7.2 (v7.2)')
 
 
 @commands('source', 'botsource')
@@ -63,4 +63,4 @@ def botversion(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def githubsource(bot, trigger):
     """Give the link to ZppixBot's Github."""
-    bot.reply('My code can be found here: https://github.com/Pix1234/ZppixBot-Source')
+    bot.reply('My code can be found here: https://github.com/MirahezeBots/MirahezeBots')
