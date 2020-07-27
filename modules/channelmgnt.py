@@ -21,16 +21,16 @@ from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
 
 
-class PhabricatorSection(StaticSection):
+class ChannelmgntSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
 
 
 def setup(bot):
-    bot.config.define_section('channelmgnt', PhabricatorSection)
+    bot.config.define_section('channelmgnt', ChannelmgntSection)
 
 
 def configure(config):
-    config.define_section('phabricator', PhabricatorSection, validate=False)
+    config.define_section('phabricator', ChannelmgntSection, validate=False)
     config.phabricator.configure_setting('datafile', 'Where is the datafile for channelmgnt?')
 
 
