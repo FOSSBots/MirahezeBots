@@ -71,7 +71,7 @@ def channelparse(chanopsjson, channel):
         channeldata = chanopsjsontemp[channel]
         return channeldata, chanopsjson
     else:
-        return False, channeljsontemp
+        return False, chanopsjsontemp
 
 
 def get_chanops(bot, trigger):
