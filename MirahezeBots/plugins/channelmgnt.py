@@ -12,12 +12,14 @@ from __future__ import unicode_literals, absolute_import, print_function, divisi
 
 import re
 import time
+import json
 
 from sopel import formatting
 from sopel.module import (
     commands, example, priority, OP, require_chanmsg
 )
 from sopel.tools import Identifier
+
 
 class PhabricatorSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
@@ -31,6 +33,7 @@ def configure(config):
     config.define_section('phabricator', PhabricatorSection, validate=False)
     config.phabricator.configure_setting('datafile', 'Where is the datafile for channelmgnt?')
 
+    
 def default_mask(trigger):
     welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
     chan = formatting.color(trigger.sender, formatting.colors.TEAL)
@@ -39,7 +42,6 @@ def default_mask(trigger):
     arg = formatting.color('{}', formatting.colors.GREEN)
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
-import json
 
 def fileread(file):
     channellist = open(file, 'r')
@@ -47,20 +49,21 @@ def fileread(file):
     channellist.close()
     return chanopsjson
 
+
 def chanopget(channeldata, chanopsjson):
     chanops = []
     types = channeldata.keys()
     if 'inherits-from' in channeldata.keys():
         for x in channeldata["inherits-from"]:
-            y = channelparse(chanopsjson,x)
-            chanops =  chanops + y[0]["chanops"]
+            y = channelparse(chanopsjson, x)
+            chanops = chanops + y[0]["chanops"]
     if 'chanops' in channeldata.keys():
         chanops = chanops + (channeldata["chanops"])
     if chanops == []:
-            return False
+        return False
     else:
         return chanops
-        
+   
 
 def channelparse(chanopsjson, channel):
     chanopsjsontemp = (json.loads(chanopsjson))
@@ -155,6 +158,7 @@ def deop(bot, trigger):
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+
 
 @require_chanmsg
 @commands('voice')
@@ -292,7 +296,7 @@ def ban(bot, trigger):
         return
     if chanops:
         if trigger.account in chanops:
-        bot.write(['MODE', channel, '+b', banmask])
+            bot.write(['MODE', channel, '+b', banmask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
@@ -332,6 +336,7 @@ def unban(bot, trigger):
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+
 
 @require_chanmsg
 @commands('quiet')
@@ -445,6 +450,7 @@ def kickban(bot, trigger):
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+
 
 @require_chanmsg
 @commands('topic')
