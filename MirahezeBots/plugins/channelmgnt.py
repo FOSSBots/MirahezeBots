@@ -19,6 +19,17 @@ from sopel.module import (
 )
 from sopel.tools import Identifier
 
+class PhabricatorSection(StaticSection):
+    datafile = ValidatedAttribute('datafile', str)
+
+
+def setup(bot):
+    bot.config.define_section('channelmgnt', PhabricatorSection)
+
+
+def configure(config):
+    config.define_section('phabricator', PhabricatorSection, validate=False)
+    config.phabricator.configure_setting('datafile', 'Where is the datafile for channelmgnt?')
 
 def default_mask(trigger):
     welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
@@ -28,10 +39,47 @@ def default_mask(trigger):
     arg = formatting.color('{}', formatting.colors.GREEN)
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
+import json
+
+def fileread(file):
+    channellist = open(file, 'r')
+    chanopsjson = channellist.read()
+    channellist.close()
+    return chanopsjson
+
+def chanopget(channeldata, chanopsjson):
+    chanops = []
+    types = channeldata.keys()
+    if 'inherits-from' in channeldata.keys():
+        for x in channeldata["inherits-from"]:
+            y = channelparse(chanopsjson,x)
+            chanops =  chanops + y[0]["chanops"]
+    if 'chanops' in channeldata.keys():
+        chanops = chanops + (channeldata["chanops"])
+    if chanops == []:
+            return False
+    else:
+        return chanops
+        
+
+def channelparse(chanopsjson, channel):
+    chanopsjsontemp = (json.loads(chanopsjson))
+    if channel in chanopsjsontemp.keys():
+        channeldata = chanopsjsontemp[channel]
+        return channeldata, chanopsjson
+    else:
+        return False
+
 
 def get_chanops(bot, trigger):
+    channel = trigger.sender
     chanops = []
-    # add the json config parser here on Sunday/Monday
+    chanopsjson = fileread(file)
+    channeldata = channelparse(chanopsjson, channel)
+    if not channeldata:
+        chanops = False
+    else:
+        chanops = chanopget(channeldata[0], channeldata[1])
     return chanops
 
 
