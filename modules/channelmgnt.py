@@ -71,7 +71,7 @@ def channelparse(chanopsjson, channel):
         channeldata = chanopsjsontemp[channel]
         return channeldata, chanopsjson
     else:
-        return False, chanopsjsontemp.keys(), channel
+        return False
 
 
 def get_chanops(bot, trigger):
@@ -79,10 +79,8 @@ def get_chanops(bot, trigger):
     channel = str(trigger.sender)
     chanopsjson = fileread(file)
     channeldata = channelparse(chanopsjson, channel)
-    if not channeldata[0]:
+    if not channeldata:
         chanops = False
-        bot.reply(channeldata[1])
-        bot.reply(channeldata[2])
     else:
         chanops = chanopget(channeldata[0], channeldata[1])
     return chanops
