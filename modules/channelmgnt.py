@@ -77,6 +77,7 @@ def channelparse(chanopsjson, channel):
 def get_chanops(bot, trigger):
     file = bot.settings.channelmgnt.datafile
     channel = trigger.sender
+    bot.reply(trigger.sender)
     chanopsjson = fileread(file)
     bot.reply(chanopsjson)
     channeldata = channelparse(chanopsjson, channel)
