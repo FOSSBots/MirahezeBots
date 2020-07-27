@@ -34,7 +34,7 @@ def configure(config):
     config.define_section('phabricator', PhabricatorSection, validate=False)
     config.phabricator.configure_setting('datafile', 'Where is the datafile for channelmgnt?')
 
-    
+
 def default_mask(trigger):
     welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
     chan = formatting.color(trigger.sender, formatting.colors.TEAL)
@@ -63,7 +63,7 @@ def chanopget(channeldata, chanopsjson):
         return False
     else:
         return chanops
-   
+
 
 def channelparse(chanopsjson, channel):
     chanopsjsontemp = (json.loads(chanopsjson))
