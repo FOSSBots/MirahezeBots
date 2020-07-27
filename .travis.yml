@@ -10,10 +10,9 @@ os: linux
 install:
     - pip install flake8
     - pip install -r dev-requirements.txt
-    - pip install -r requirements.txt
+    - pip install .
 before_script:
     - python --version
-    - pip install .
     - sopel --version
     - pip show MirahezeBot-Plugins
 
