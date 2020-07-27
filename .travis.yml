@@ -9,16 +9,31 @@ os: linux
 
 install:
     - pip install flake8
-before_script:
     - pip install -r dev-requirements.txt
-    - pip install -r requirements.txt
-    - pip install -r pip-install.txt
+    - pip install .
+before_script:
     - python --version
+    - sopel --version
+    - pip show MirahezeBot-Plugins
 
 script:
     # we ignore E402 because of workarounds we use for modules loading, and F401 because some imports aren't directly used but needed for modules and travis doesn't like that
-    - flake8 modules --ignore E402,F401,W503,E722 --max-line-length 220 --exclude=channelmgnt.py
+    - flake8 MirahezeBots/plugins --ignore E402,F401,W503,E722 --max-line-length 220 --exclude=__init__.py
+    - flake8 tests --ignore E402,F401,W503,E722 --max-line-length 220
     - pytest tests/test_general.py
+    - pytest tests/test_rss.py
+    - pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* .
+    - pip-extra-reqs .
+    - pip check
+
+after_script:
+    - pip freeze
+
+deploy:
+  provider: pypi
+  username: MirahezeBots
+  password:
+    secure: GwwAedcvaPamDyuAtWFVd66nXg2NsQlHIbvZqlDvqvzAde362pCcgRn5PSkOMJX+iDKFXqgedfF+97EYO6snXwtA1FX3D1rfsAHRjgP5xPl6H2QFPp9NeOTqO2hFSYwktazd4631OpjyTEkezuYyzehM+eyH2wXJpvVoutKYjKxmHt9rjzk5nzXjDh+k/4zMNsAPMJ2r10QTRbV03WbLvws1iCgPXh2QELk6WEdnF7PdBdYYLX2Yg/wOkvcqT4qqkrLzdvVhcaIchf5gpnJhKQx6UH9Cm53TqcNmzr2KCn28ZRGZcfRFnBMq4Jkru3SQtndMes0n4tRIECvI+TueYJvEKsMGFAYGguTHIvzKk2FJ/yEefzX9KtEC74jYjE590B2vjUqY/ykGePEUOP4VSOaLIgOhSBC39RVCR/unq856QzYueL4N7Uj/qfJmjFX+vBvwB9mP94cT7ANv8CWLS+a6HZQMarJ1tQHd9Qsk0HkpKuV7V9JkN0CE9CP8mEgGTDu6BR2ysfZ8LD6mMSZ7NOhNILy9AWGO9SAmncRbY4s1fTYvNq2txUab5uHyWYOscux/v2AjvDiyoA+14Z91cEGHtQ+R1DeIt0HJWK0JfctTAnnPTbhRWHJVd9FT/ZiLSR39YfDDyPYO+hzxRwilk6gg2/TulZv+qaoJL5/bMQw=
 
 notifications:
   irc:
