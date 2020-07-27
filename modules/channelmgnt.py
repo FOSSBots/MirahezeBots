@@ -81,7 +81,7 @@ def get_chanops(bot, trigger):
     channeldata = channelparse(chanopsjson, channel)
     if not channeldata[0]:
         chanops = False
-        bot.reply(channeldata[1])
+        bot.reply(str(channeldata[1]))
         bot.reply(channeldata[2])
     else:
         chanops = chanopget(channeldata[0], channeldata[1])
