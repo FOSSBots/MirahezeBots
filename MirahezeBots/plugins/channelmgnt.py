@@ -98,10 +98,13 @@ def chanmode(bot, trigger):
     channel = trigger.sender
     if not modes:
         bot.reply('Please specify what mode(s) to set')
-    if trigger.account in chanops:
-        bot.write(['MODE', channel, modes])
+    if chanops:
+        if trigger.account in chanops:
+            bot.write(['MODE', channel, modes])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -120,10 +123,13 @@ def op(bot, trigger):
     channel = trigger.sender
     if not nick:
         nick = trigger.nick
-    if trigger.account in chanops:
-        bot.write(['MODE', channel, "+o", nick])
+    if chanops:
+        if trigger.account in chanops:
+            bot.write(['MODE', channel, "+o", nick])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -140,13 +146,15 @@ def deop(bot, trigger):
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
-    if not nick:
-        bot.write(['MODE', channel, "-o", trigger.nick])
-    elif trigger.account in chanops:
-        bot.write(['MODE', channel, "-o", nick])
+    if chanops:
+        if not nick:
+            bot.write(['MODE', channel, "-o", trigger.nick])
+        elif trigger.account in chanops:
+            bot.write(['MODE', channel, "-o", nick])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
-
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 @require_chanmsg
 @commands('voice')
@@ -162,12 +170,15 @@ def voice(bot, trigger):
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
-    if not nick:
-        nick = trigger.nick
-    if trigger.account in chanops:
-        bot.write(['MODE', channel, "+v", nick])
+    if chanops:
+        if not nick:
+            nick = trigger.nick
+        if trigger.account in chanops:
+            bot.write(['MODE', channel, "+v", nick])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -184,12 +195,15 @@ def devoice(bot, trigger):
         time.sleep(1)
     nick = trigger.group(2)
     channel = trigger.sender
-    if not nick:
-        bot.write(['MODE', channel, "-v", trigger.nick])
-    elif trigger.account in chanops:
-        bot.write(['MODE', channel, "-v", nick])
+    if chanops:
+        if not nick:
+            bot.write(['MODE', channel, "-v", trigger.nick])
+        elif trigger.account in chanops:
+            bot.write(['MODE', channel, "-v", nick])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -218,10 +232,13 @@ def kick(bot, trigger):
         channel = opt
         reasonidx = 3
     reason = ' '.join(text[reasonidx:])
-    if nick != bot.config.core.nick and trigger.account in chanops:
-        bot.write(['KICK', channel, nick, ':' + reason])
+    if chanops:
+        if nick != bot.config.core.nick and trigger.account in chanops:
+            bot.write(['KICK', channel, nick, ':' + reason])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 def configureHostMask(mask):
@@ -273,10 +290,13 @@ def ban(bot, trigger):
     banmask = configureHostMask(banmask)
     if banmask == '':
         return
-    if trigger.account in chanops:
+    if chanops:
+        if trigger.account in chanops:
         bot.write(['MODE', channel, '+b', banmask])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -305,11 +325,13 @@ def unban(bot, trigger):
     banmask = configureHostMask(banmask)
     if banmask == '':
         return
-    if trigger.account in chanops:
-        bot.write(['MODE', channel, '-b', banmask])
+    if chanops:
+        if trigger.account in chanops:
+            bot.write(['MODE', channel, '-b', banmask])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
-
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 @require_chanmsg
 @commands('quiet')
@@ -337,10 +359,13 @@ def quiet(bot, trigger):
     quietmask = configureHostMask(quietmask)
     if quietmask == '':
         return
-    if trigger.account in chanops:
-        bot.write(['MODE', channel, '+q', quietmask])
+    if chanops:
+        if trigger.account in chanops:
+            bot.write(['MODE', channel, '+q', quietmask])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -369,10 +394,13 @@ def unquiet(bot, trigger):
     quietmask = configureHostMask(quietmask)
     if quietmask == '':
         return
-    if trigger.account in chanops:
-        bot.write(['MODE', channel, '-q', quietmask])
+    if chanops:
+        if trigger.account in chanops:
+            bot.write(['MODE', channel, '-q', quietmask])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -409,12 +437,14 @@ def kickban(bot, trigger):
     mask = configureHostMask(mask)
     if mask == '':
         mask = nick + '!*@*'
-    if trigger.account in chanops:
-        bot.write(['MODE', channel, '+b', mask])
-        bot.write(['KICK', channel, nick, ':' + reason])
+    if chanops:
+        if trigger.account in chanops:
+            bot.write(['MODE', channel, '+b', mask])
+            bot.write(['KICK', channel, nick, ':' + reason])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
-
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 @require_chanmsg
 @commands('topic')
@@ -448,10 +478,13 @@ def topic(bot, trigger):
             len(args), narg)
         return bot.say(message)
     topic = mask.format(*args)
-    if trigger.account in chanops:
-        bot.write(('TOPIC', channel + ' :' + topic))
+    if chanops:
+        if trigger.account in chanops:
+            bot.write(('TOPIC', channel + ' :' + topic))
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -461,11 +494,14 @@ def set_mask(bot, trigger):
     """Set the topic mask to use for the current channel. Within the topic mask, {} is used to allow substituting in chunks of text. This mask is used when running the 'topic' command.
     """
     chanops = get_chanops(bot, trigger)
-    if trigger.account in chanops:
-        bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
-        bot.say("Gotcha, " + trigger.account)
+    if chanops:
+        if trigger.account in chanops:
+            bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
+            bot.say("Gotcha, " + trigger.account)
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
 @require_chanmsg
@@ -474,12 +510,9 @@ def set_mask(bot, trigger):
 def show_mask(bot, trigger):
     """Show the topic mask for the current channel."""
     chanops = get_chanops(bot, trigger)
-    if trigger.account in chanops:
-        mask = bot.db.get_channel_value(trigger.sender, 'topic_mask')
-        mask = mask or default_mask(trigger)
-        bot.say(mask)
-    else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+    mask = bot.db.get_channel_value(trigger.sender, 'topic_mask')
+    mask = mask or default_mask(trigger)
+    bot.say(mask)
 
 
 @require_chanmsg
@@ -496,9 +529,12 @@ def invite_user(bot, trigger):
         bot.say('op ' + trigger.sender, 'ChanServ')
         time.sleep(1)
         nick = trigger.group(2)
-    if not nick:
-        bot.say(trigger.account + ": No user specified.", trigger.sender)
-    elif trigger.account in chanops:
-        bot.write(['INVITE', channel, nick])
+    if chanops:
+        if not nick:
+            bot.say(trigger.account + ": No user specified.", trigger.sender)
+        elif trigger.account in chanops:
+            bot.write(['INVITE', channel, nick])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('Access Denied. If in error, please contact the channel founder.')
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
