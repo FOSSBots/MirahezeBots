@@ -30,7 +30,7 @@ def setup(bot):
 
 
 def configure(config):
-    config.define_section('phabricator', ChannelmgntSection, validate=False)
+    config.define_section('channelmgnt', ChannelmgntSection, validate=False)
     config.phabricator.configure_setting('datafile', 'Where is the datafile for channelmgnt?')
 
 
