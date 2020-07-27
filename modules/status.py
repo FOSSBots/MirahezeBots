@@ -104,9 +104,10 @@ def main(bot, trigger, options):
         wiki = options[0]
         host = trigger.host
         host = host.split('/')
-        x = 1
-        status = ''
+        status = options[1]
+        x = 2
         while x < len(options):
+            status = status + options[x]
             status = status + " " + options[x]
             x = x + 1
         cont = 1
