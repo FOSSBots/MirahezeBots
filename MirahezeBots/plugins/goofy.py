@@ -49,15 +49,15 @@ def present(bot, trigger):
         bot.reply("To whom should I give this present?")
     else:
         bot.action("gives %s a present." % (trigger.group(2)), trigger.sender)
-        
+ 
 
 @module.example('.hotchoc MirahezeBot')
 @module.commands('hotchoc', 'hotchocolate')
-def present(bot, trigger):
+def hotchoc(bot, trigger):
     """
     Makes me give the specified nick a hot chocolate.
     """
     if trigger.group(2) is None:
         bot.reply("To whom should I give this hot chocolate?")
     else:
-        bot.action("gives %s a warm, velvety salted caramel hot chocolate with cream and marhsmellows." % (trigger.group(2)), trigger.sender) 
+        bot.action("gives %s a warm, velvety salted caramel hot chocolate with cream and marhsmellows." % (trigger.group(2)), trigger.sender)
