@@ -1,6 +1,13 @@
-# dependenices used in test ZppixBot
-feedparser==5.2.1
-mwclient==0.10.1
-requests==2.24.0
-sopel>=7.0.5,<8
-SQLAlchemy==1.3.18
+# dependenices used in MirahezeBot
+certifi
+configparser
+mwclient
+pytz
+PyYAML
+requests
+requests-oauthlib
+sopel
+SQLAlchemy
+update-checker
+xmltodict
+yarl

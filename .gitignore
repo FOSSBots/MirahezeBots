@@ -13,5 +13,3 @@ __pycache__
 *.pyc
 .idea
 .github/
-.DS_Store
-*/.DS_Store
