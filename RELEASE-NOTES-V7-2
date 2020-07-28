@@ -1,0 +1,6 @@
+# Status
+- Removed modules/config/*.csv
+# Responses
+- Bug fixes
+# channelmgnt
+- Switched to a new json config system
