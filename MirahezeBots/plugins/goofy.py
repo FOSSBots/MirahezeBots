@@ -49,7 +49,7 @@ def present(bot, trigger):
         bot.reply("To whom should I give this present?")
     else:
         bot.action("gives %s a present." % (trigger.group(2)), trigger.sender)
- 
+
 
 @module.example('.hotchoc MirahezeBot')
 @module.commands('hotchoc', 'hotchocolate')
