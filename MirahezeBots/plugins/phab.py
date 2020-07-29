@@ -1,4 +1,4 @@
-"""This module contains commands related to Phabricator."""
+"""phab.by - Phabricator Task Information Plugin"""
 
 import json  # FIX THIS
 import requests  # FIX THIS
