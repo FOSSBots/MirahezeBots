@@ -42,7 +42,7 @@ def wmca(bot, trigger):
     target = trigger.group(2).replace(" ", "_")
     try:
         bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + target)
-    except TypeError:
+    except AttributeError:
         bot.say('Syntax: .wmca example', trigger.sender)
 
 
@@ -53,7 +53,7 @@ def mhca(bot, trigger):
     target = trigger.group(2).replace(" ", "_")
     try:
         bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + target)
-    except TypeError:
+    except AttributeError:
         bot.say('Syntax: .mhca example', trigger.sender)
 
 
@@ -64,7 +64,7 @@ def twlink(bot, trigger):
     target = trigger.group(2).replace(" ", "_")
     try:
         bot.say("https://twitter.com/" + target)
-    except TypeError:
+    except AttributeError:
         bot.say('Syntax: .tw user', trigger.sender)
 
 
