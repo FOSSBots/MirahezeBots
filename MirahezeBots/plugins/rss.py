@@ -367,20 +367,20 @@ def configure(config):
 
 @require_admin(message="Please ask a bot admin for assistance in configuring rss", reply=True)
 @commands('rss')
-@example('.rss add <channel> <name> <url> [<options>]')
-@example('.rss colours')
-@example('.rss config <key> [<value>]')
-@example('.rss del <name>')
-@example('.rss fields <name>')
-@example('.rss formats <name> [f=<format>]')
-@example('.rss get <name>')
-@example('.rss help [<command>]')
-@example('.rss list [<feed>|<channel>]')
-@example('.rss join')
-@example('.rss templates <name> [t=<field1>|<template1>;t=<field1>|<template1>;...]')
-@example('.rss update')
+@example(msg='.rss add <channel> <name> <url> [<options>]', user_help=True)
+@example(msg='.rss colours', user_help=True)
+@example(msg='.rss config <key> [<value>]', user_help=True)
+@example(msg='.rss del <name>', user_help=True)
+@example(msg='.rss fields <name>', user_help=True)
+@example(msg='.rss formats <name> [f=<format>]', user_help=True)
+@example(msg='.rss get <name>', user_help=True)
+@example(msg='.rss help [<command>]', user_help=True)
+@example(msg='.rss list [<feed>|<channel>]', user_help=True)
+@example(msg='.rss join', user_help=True)
+@example(msg='.rss templates <name> [t=<field1>|<template1>;t=<field1>|<template1>;...]', user_help=True)
+@example(msg='.rss update', user_help=True)
 def rss(bot, trigger):
-    """Command to control the rss plugin. Based off https://github.com/RebelCodeBase/sopel-rss/blob/master/README.md or use .rss help.rss list [<feed>|<channel>]"""
+    """Command to control the rss plugin. Based off https://github.com/RebelCodeBase/sopel-rss/blob/master/README.md or use .rss help"""
     # trigger(1) == 'rss'
     # trigger(2) are the arguments separated by spaces
     args = shlex.split(trigger.group(2))
