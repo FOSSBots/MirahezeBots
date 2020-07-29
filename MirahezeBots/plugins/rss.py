@@ -9,7 +9,7 @@ This module posts rss feed items to irc channels
 from __future__ import unicode_literals
 from sopel.config.types import StaticSection, ListAttribute, ValidatedAttribute
 from sopel.logger import get_logger
-from sopel.module import commands, interval, require_admin
+from sopel.module import commands, interval, require_admin, example
 from sopel.tools import SopelMemory
 import feedparser
 import hashlib
@@ -365,9 +365,22 @@ def configure(config):
     config.rss.configure_setting('templates', 'comma separated strings consisting format field and template string separated by pipes')
 
 
-@require_admin
+@require_admin(message="Please ask a bot admin for assistance in configuring rss", reply=True)
 @commands('rss')
+@example('.rss add <channel> <name> <url> [<options>]')
+@example('.rss colours')
+@example('.rss config <key> [<value>]')
+@example('.rss del <name>')
+@example('.rss fields <name>')
+@example('.rss formats <name> [f=<format>]')
+@example('.rss get <name>')
+@example('.rss help [<command>]')
+@example('.rss list [<feed>|<channel>]')
+@example('.rss join')
+@example('.rss templates <name> [t=<field1>|<template1>;t=<field1>|<template1>;...]')
+@example('.rss update')
 def rss(bot, trigger):
+    """Command to control the rss plugin. Based off https://github.com/RebelCodeBase/sopel-rss/blob/master/README.md or use .rss help.rss list [<feed>|<channel>]"""
     # trigger(1) == 'rss'
     # trigger(2) are the arguments separated by spaces
     args = shlex.split(trigger.group(2))
