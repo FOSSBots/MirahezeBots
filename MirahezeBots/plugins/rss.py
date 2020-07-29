@@ -365,7 +365,7 @@ def configure(config):
     config.rss.configure_setting('templates', 'comma separated strings consisting format field and template string separated by pipes')
 
 
-@require_admin(message="Please ask a bot admin for assistance in configuring rss", reply=True")
+@require_admin(message="Please ask a bot admin for assistance in configuring rss", reply=True)
 @commands('rss')
 @example('.rss add <channel> <name> <url> [<options>]')
 @example('.rss colours')
