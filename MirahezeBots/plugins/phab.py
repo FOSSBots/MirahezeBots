@@ -131,7 +131,7 @@ def phabtask(bot, trigger):
         else:
             task_id = trigger.group(2)
         searchphab(bot=bot, channel=trigger.sender, task=task_id)
-    except TypeError:
+    except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
 
 
