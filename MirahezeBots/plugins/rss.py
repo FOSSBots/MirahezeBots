@@ -379,8 +379,8 @@ def configure(config):
 @example('.rss join')
 @example('.rss templates <name> [t=<field1>|<template1>;t=<field1>|<template1>;...]')
 @example('.rss update')
-"""Command to control the rss plugin. Based off https://github.com/RebelCodeBase/sopel-rss/blob/master/README.md or use .rss help.rss list [<feed>|<channel>]"""
 def rss(bot, trigger):
+    """Command to control the rss plugin. Based off https://github.com/RebelCodeBase/sopel-rss/blob/master/README.md or use .rss help.rss list [<feed>|<channel>]"""
     # trigger(1) == 'rss'
     # trigger(2) are the arguments separated by spaces
     args = shlex.split(trigger.group(2))
