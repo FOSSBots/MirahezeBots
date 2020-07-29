@@ -63,7 +63,7 @@ def twlink(bot, trigger):
     """Expands a link to Twitter."""
     try:
         bot.say("https://twitter.com/" + trigger.group(2))
-    except AttributeError:
+    except TypeError:
         bot.say('Syntax: .tw user', trigger.sender)
 
 
