@@ -1,7 +1,7 @@
 # coding=utf-8
 """
-Modified from the original
-adminchannel.py - Sopel Channel Admin Module
+channelmgnt.py - Sopel Channel Management Plugin
+Modified from adminchannel.py - Sopel Channel Admin Module
 Copyright 2010-2011, Michael Yanovich, Alek Rollyson, and Elsie Powell
 Copyright © 2012, Elad Alfassa <elad@fedoraproject.org>
 Licensed under the Eiffel Forum License 2.
