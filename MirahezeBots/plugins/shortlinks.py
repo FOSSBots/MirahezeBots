@@ -62,8 +62,7 @@ def mhca(bot, trigger):
 def twlink(bot, trigger):
     """Expands a link to Twitter."""
     try:
-        target = trigger.group(2).replace(" ", "_")
-        bot.say("https://twitter.com/" + target)
+        bot.say("https://twitter.com/" + trigger.group(2))
     except AttributeError:
         bot.say('Syntax: .tw user', trigger.sender)
 
