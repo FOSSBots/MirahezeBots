@@ -34,10 +34,10 @@ def configure(config):
     config.wikimgnt.configure_setting('wiki_password', 'What is the wikimgnt wiki password? (from Special:BotPasswords)')
 
 
-def main(bot, trigger, performer, target, action, reason):
+def main(bot, trigger, performer, target, action, reason, url):
     S = requests.Session()
 
-    URL = target
+    URL = url
 
 # Step 1: GET request to fetch login token
 
@@ -72,7 +72,7 @@ def main(bot, trigger, performer, target, action, reason):
         R = S.post(URL, data=PARAMS_1)
     except:
         bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-        return 
+        return
 
 # Step 3: GET request to fetch CSRF token
 
@@ -92,7 +92,7 @@ def main(bot, trigger, performer, target, action, reason):
     if action == 'edit':
         PARAMS_3 = {
             'action': 'edit',
-            'title': bot.settings.wikimgnt.log_page,
+            'title': target,
             'summary': reason + ' (' + performer + ')',
             'appendtext': '\n* ' + performer + ': ' + reason,
             'token': CSRF_TOKEN,
@@ -164,11 +164,12 @@ def logpage(bot, trigger):
     if trigger.account in bot.settings.wikimgnt.wiki_acl:
         sender = trigger.nick
         url = bot.settings.wikimgnt.log_wiki_url
+        target = bot.settings.wikimgnt.log_page
         if trigger.group(2) is None:
             bot.say("Syntax: .log message")
         else:
             message = trigger.group(2)
-            main(bot, trigger, sender, 'edit', url, message)
+            main(bot, trigger, sender, 'edit', target, message, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
 
@@ -188,7 +189,7 @@ def deletepage(bot, trigger):
                 url = options[1] + '.' + bot.settings.wikimgnt.wiki_domain
                 target = options[2]
                 reason = options[3]
-                main(bot, trigger, sender, delete, url, reason)
+                main(bot, trigger, sender, 'delete', target, reason, url)
         else:
             if len(options) < 2:
                 bot.say("Syntax: .delete page reason")
@@ -196,7 +197,7 @@ def deletepage(bot, trigger):
                 url = bot.settings.wikimgnt.wiki_domain
                 target = options[1]
                 reason = options[2]
-                main(bot, trigger, sender, delete, url, reason)
+                main(bot, trigger, sender, 'delete', target, reason, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
 
@@ -216,7 +217,7 @@ def blockuser(bot, trigger):
                 url = options[1] + '.' + bot.settings.wikimgnt.wiki_domain
                 target = options[2]
                 reason = options[3]
-                main(bot, trigger, sender, block, url, reason)
+                main(bot, trigger, sender, 'block', target, reason, url)
         else:
             if len(options) < 2:
                 bot.say("Syntax: .block user reason")
@@ -224,7 +225,7 @@ def blockuser(bot, trigger):
                 url = bot.settings.wikimgnt.wiki_domain
                 target = options[1]
                 reason = options[2]
-                main(bot, trigger, sender, block, url, reason)
+                main(bot, trigger, sender, 'block', target, reason, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
 
@@ -244,7 +245,7 @@ def unblockuser(bot, trigger):
                 url = options[1] + '.' + bot.settings.wikimgnt.wiki_domain
                 target = options[2]
                 reason = options[3]
-                main(bot, trigger, sender, unblock, url, reason)
+                main(bot, trigger, sender, 'unblock', target, reason, url)
         else:
             if len(options) < 2:
                 bot.say("Syntax: .unblock user reason")
@@ -252,6 +253,6 @@ def unblockuser(bot, trigger):
                 url = bot.settings.wikimgnt.wiki_domain
                 target = options[1]
                 reason = options[2]
-                main(bot, trigger, sender, unblock, url, reason)
+                main(bot, trigger, sender, 'unblock', target, reason, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
