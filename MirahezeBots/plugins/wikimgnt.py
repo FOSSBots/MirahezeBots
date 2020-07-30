@@ -70,9 +70,9 @@ def main(bot, trigger, performer, target, action, reason):
     }
     try:
         R = S.post(URL, data=PARAMS_1)
-   except:
+    except:
         bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-        return
+        return 
 
 # Step 3: GET request to fetch CSRF token
 
