@@ -197,7 +197,7 @@ def deletepage(bot, trigger):
             sender = trigger.nick
             if bot.settings.wikimgnt.wiki_farm is True:
                 if len(options) < 3:
-                     bot.say("Syntax: .deletepage wiki page reason")
+                    bot.say("Syntax: .deletepage wiki page reason")
                 else:
                     url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
                     target = options[1]
@@ -272,9 +272,9 @@ def unblockuser(bot, trigger):
                     reason = options[2]
                     main(bot, trigger, sender, target, 'unblock', reason, url)
             else:
-               if len(options) < 2:
+                if len(options) < 2:
                     bot.say("Syntax: .unblock user reason")
-               else:
+                else:
                     url = bot.settings.wikimgnt.wiki_domain
                     target = options[0]
                     reason = options[1]
