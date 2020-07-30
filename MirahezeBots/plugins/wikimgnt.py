@@ -51,9 +51,9 @@ def main(bot, trigger, performer, target, action, reason):
     try:
         R = S.get(url=URL, params=PARAMS_0)
         DATA = R.json()
-#    except:
-#        bot.reply("Catostrophic Error! Unable to connect to the wiki.")
-#        return
+    except:
+        bot.reply("Catostrophic Error! Unable to connect to the wiki.")
+        return
 
     LOGIN_TOKEN = DATA['query']['tokens']['logintoken']
 
@@ -70,9 +70,9 @@ def main(bot, trigger, performer, target, action, reason):
         }
     try:
         R = S.post(URL, data=PARAMS_1)
-#   except:
-#        bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-#        return
+   except:
+        bot.reply("Catastrophic Error! Unable to connect to the wiki.")
+        return
 
 # Step 3: GET request to fetch CSRF token
 
@@ -81,9 +81,9 @@ def main(bot, trigger, performer, target, action, reason):
     try:
         R = S.get(url=URL, params=PARAMS_2)
         DATA = R.json()
-#    except:
-#        bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-#        return
+    except:
+        bot.reply("Catastrophic Error! Unable to connect to the wiki.")
+        return
 
     CSRF_TOKEN = DATA['query']['tokens']['csrftoken']
 
@@ -171,6 +171,8 @@ def logpage(bot, trigger):
         else:
             message = trigger.group(2)
             main(bot, trigger, sender, 'edit', url, message)
+    else:
+        bot.reply("Sorry: you don't have permission to use this module")
 
 
 @commands('delete')
@@ -197,6 +199,8 @@ def deletepage(bot, trigger):
                 target = options[1]
                 reason = options[2]
                 main(bot, trigger, sender, delete, url, reason)
+    else:
+        bot.reply("Sorry: you don't have permission to use this module")
 
 
 @commands('block')
@@ -223,6 +227,8 @@ def blockuser(bot, trigger):
                 target = options[1]
                 reason = options[2]
                 main(bot, trigger, sender, block, url, reason)
+    else:
+        bot.reply("Sorry: you don't have permission to use this module")
 
 
 @commands('unblock')
@@ -249,3 +255,5 @@ def unblockuser(bot, trigger):
                 target = options[1]
                 reason = options[2]
                 main(bot, trigger, sender, unblock, url, reason)
+    else:
+        bot.reply("Sorry: you don't have permission to use this module")
