@@ -27,7 +27,7 @@ def test_db_schema_is_same():
 
 
 def test_line_length():
-    MAX_LENGTH = 220 + 1
+    MAX_LENGTH = 265 + 1
     for top, dirs, files in os.walk(PLUGINPATH):
         for filen in files:
             if not filen.endswith('.py'):
