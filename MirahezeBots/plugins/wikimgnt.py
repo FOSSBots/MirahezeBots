@@ -186,17 +186,17 @@ def deletepage(bot, trigger):
             if len(options) < 3:
                 bot.say("Syntax: .delete wiki page reason")
             else:
-                url = options[1] + '.' + bot.settings.wikimgnt.wiki_domain
-                target = options[2]
-                reason = options[3]
+                url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                target = options[1]
+                reason = options[2]
                 main(bot, trigger, sender, 'delete', target, reason, url)
         else:
             if len(options) < 2:
                 bot.say("Syntax: .delete page reason")
             else:
                 url = bot.settings.wikimgnt.wiki_domain
-                target = options[1]
-                reason = options[2]
+                target = options[0]
+                reason = options[1]
                 main(bot, trigger, sender, 'delete', target, reason, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
@@ -214,17 +214,17 @@ def blockuser(bot, trigger):
             if len(options) < 3:
                 bot.say("Syntax: .block wiki user reason")
             else:
-                url = options[1] + '.' + bot.settings.wikimgnt.wiki_domain
-                target = options[2]
-                reason = options[3]
+                url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                target = options[1]
+                reason = options[2]
                 main(bot, trigger, sender, 'block', target, reason, url)
         else:
             if len(options) < 2:
                 bot.say("Syntax: .block user reason")
             else:
                 url = bot.settings.wikimgnt.wiki_domain
-                target = options[1]
-                reason = options[2]
+                target = options[0]
+                reason = options[1]
                 main(bot, trigger, sender, 'block', target, reason, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
@@ -242,17 +242,17 @@ def unblockuser(bot, trigger):
             if len(options) < 3:
                 bot.say("Syntax: .unblock wiki user reason")
             else:
-                url = options[1] + '.' + bot.settings.wikimgnt.wiki_domain
-                target = options[2]
-                reason = options[3]
+                url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                target = options[1]
+                reason = options[2]
                 main(bot, trigger, sender, 'unblock', target, reason, url)
         else:
             if len(options) < 2:
                 bot.say("Syntax: .unblock user reason")
             else:
                 url = bot.settings.wikimgnt.wiki_domain
-                target = options[1]
-                reason = options[2]
+                target = options[0]
+                reason = options[1]
                 main(bot, trigger, sender, 'unblock', target, reason, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
