@@ -1,7 +1,7 @@
 language: python
 python:
-  - "3.6" # Supported until 2021-21-23, never ran.
-  - "3.7" # Our instance, supported until  2023-06-27
+  - "3.6" # Supported until at least 2021-12-23 upstream, never ran by us.
+  - "3.7" # Our instance, supported until at least 2023-06-27 upstream.
   - "3.8" # latest python version
   - "3.8-dev"  # 3.8 development branch
 dist: xenial
