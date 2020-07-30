@@ -4,6 +4,7 @@ import requests
 import re
 import time
 import random
+import json
 
 from sopel.module import rule, commands, example
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
@@ -103,7 +104,10 @@ def main(bot, trigger, performer, target, action, reason, url):
         try:
             R = S.post(URL, data=PARAMS_3)
             DATA = R.json()
-            bot.say("Logged message at https://ops.miraheze.org/wiki/Global_IRC_Log")
+            if DATA.get("error").get("info") is not None:
+                bot.say(DATA.get("error").get("info"))
+            else:
+                bot.say("Logged message")
         except:
             bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
     elif action == 'block':
@@ -120,10 +124,12 @@ def main(bot, trigger, performer, target, action, reason, url):
         try:
             R = S.post(URL, data=PARAMS_3)
             DATA = R.json()
-            bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
+            if DATA.get("error").get("info") is not None:
+                bot.say(DATA.get("error").get("info"))
+            else:
+                bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
         except:
             bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
-            return
     elif action == 'unblock':
         PARAMS_3 = {
             'action': 'unblock',
@@ -136,7 +142,10 @@ def main(bot, trigger, performer, target, action, reason, url):
         try:
             R = S.post(URL, data=PARAMS_3)
             DATA = R.json()
-            bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
+            if DATA.get("error") is not None:
+                bot.say(DATA.get("error").get("info"))
+            else:
+                bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
         except:
             bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
 
@@ -152,7 +161,10 @@ def main(bot, trigger, performer, target, action, reason, url):
         try:
             R = S.post(URL, data=PARAMS_3)
             DATA = R.json()
-            bot.reply("Delete request sent. You may want to check the deletion log to be sure that it worked.")
+            if DATA.get("error") is not None:
+                bot.say(DATA.get("error").get("info"))
+            else:
+                bot.reply("Delete request sent. You may want to check the block log to be sure that it worked.")
         except:
             bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
 
@@ -169,35 +181,41 @@ def logpage(bot, trigger):
             bot.say("Syntax: .log message")
         else:
             message = trigger.group(2)
-            main(bot, trigger, sender, 'edit', target, message, url)
+            main(bot, trigger, sender, target, 'edit', message, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
 
 
-@commands('delete')
-@example('.delete Test_page vandalism')
-@example('.delete test Test_page vandalism')
+@commands('deletepage')
+@example('.deletepage Test_page vandalism')
+@example('.deletepage test Test_page vandalism')
 def deletepage(bot, trigger):
     """Delete the given page (depending on config, on the given wiki)"""
     if trigger.account in bot.settings.wikimgnt.wiki_acl:
-        options = trigger.group(2).split(" ")
-        sender = trigger.nick
-        if bot.settings.wikimgnt.wiki_farm is True:
-            if len(options) < 3:
-                bot.say("Syntax: .delete wiki page reason")
+        try:
+            options = trigger.group(2).split(" ")
+            sender = trigger.nick
+            if bot.settings.wikimgnt.wiki_farm is True:
+                if len(options) < 3:
+                     bot.say("Syntax: .deletepage wiki page reason")
+                else:
+                    url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                    target = options[1]
+                    reason = options[2]
+                    main(bot, trigger, sender, target, 'delete', reason, url)
             else:
-                url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-                target = options[1]
-                reason = options[2]
-                main(bot, trigger, sender, 'delete', target, reason, url)
-        else:
-            if len(options) < 2:
-                bot.say("Syntax: .delete page reason")
+                if len(options) < 2:
+                    bot.say("Syntax: .deletepage page reason")
+                else:
+                    url = bot.settings.wikimgnt.wiki_domain
+                    target = options[0]
+                    reason = options[1]
+                    main(bot, trigger, sender, target, 'delete', reason, url)
+        except:
+            if bot.settings.wikimgnt.wiki_farm is True:
+                bot.say("Syntax: .deletepage wiki page reason")
             else:
-                url = bot.settings.wikimgnt.wiki_domain
-                target = options[0]
-                reason = options[1]
-                main(bot, trigger, sender, 'delete', target, reason, url)
+                bot.say("Syntax: .deletepage page reason")
     else:
         bot.reply("Sorry: you don't have permission to use this module")
 
@@ -208,24 +226,30 @@ def deletepage(bot, trigger):
 def blockuser(bot, trigger):
     """Block the given user indefinitely (depending on config, on the given wiki)"""
     if trigger.account in bot.settings.wikimgnt.wiki_acl:
-        options = trigger.group(2).split(" ")
-        sender = trigger.nick
-        if bot.settings.wikimgnt.wiki_farm is True:
-            if len(options) < 3:
+        try:
+            options = trigger.group(2).split(" ")
+            sender = trigger.nick
+            if bot.settings.wikimgnt.wiki_farm is True:
+                if len(options) < 3:
+                    bot.say("Syntax: .block wiki user reason")
+                else:
+                    url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                    target = options[1]
+                    reason = options[2]
+                    main(bot, trigger, sender, target, 'block', reason, url)
+            else:
+                if len(options) < 2:
+                    bot.say("Syntax: .block user reason")
+                else:
+                    url = bot.settings.wikimgnt.wiki_domain
+                    target = options[0]
+                    reason = options[1]
+                    main(bot, trigger, sender, target, 'block', reason, url)
+        except:
+            if bot.settings.wikimgnt.wiki_farm is True:
                 bot.say("Syntax: .block wiki user reason")
             else:
-                url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-                target = options[1]
-                reason = options[2]
-                main(bot, trigger, sender, 'block', target, reason, url)
-        else:
-            if len(options) < 2:
                 bot.say("Syntax: .block user reason")
-            else:
-                url = bot.settings.wikimgnt.wiki_domain
-                target = options[0]
-                reason = options[1]
-                main(bot, trigger, sender, 'block', target, reason, url)
     else:
         bot.reply("Sorry: you don't have permission to use this module")
 
@@ -236,23 +260,29 @@ def blockuser(bot, trigger):
 def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)"""
     if trigger.account in bot.settings.wikimgnt.wiki_acl:
-        options = trigger.group(2).split(" ")
-        sender = trigger.nick
-        if bot.settings.wikimgnt.wiki_farm is True:
-            if len(options) < 3:
-                bot.say("Syntax: .unblock wiki user reason")
+        try:
+            options = trigger.group(2).split(" ")
+            sender = trigger.nick
+            if bot.settings.wikimgnt.wiki_farm is True:
+                if len(options) < 3:
+                    bot.say("Syntax: .unblock wiki user reason")
+                else:
+                    url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                    target = options[1]
+                    reason = options[2]
+                    main(bot, trigger, sender, target, 'unblock', reason, url)
             else:
-                url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-                target = options[1]
-                reason = options[2]
-                main(bot, trigger, sender, 'unblock', target, reason, url)
-        else:
-            if len(options) < 2:
-                bot.say("Syntax: .unblock user reason")
+               if len(options) < 2:
+                    bot.say("Syntax: .unblock user reason")
+               else:
+                    url = bot.settings.wikimgnt.wiki_domain
+                    target = options[0]
+                    reason = options[1]
+                    main(bot, trigger, sender, target, 'unblock', reason, url)
+        except:
+            if bot.settings.wikimgnt.wiki_farm is True:
+                bot.say("Syntax: .block wiki user reason")
             else:
-                url = bot.settings.wikimgnt.wiki_domain
-                target = options[0]
-                reason = options[1]
-                main(bot, trigger, sender, 'unblock', target, reason, url)
+                bot.say("Syntax: .block user reason")
     else:
         bot.reply("Sorry: you don't have permission to use this module")
