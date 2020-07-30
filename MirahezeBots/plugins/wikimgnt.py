@@ -46,7 +46,7 @@ def main(bot, trigger, performer, target, action, reason):
         'meta': 'tokens',
         'type': 'login',
         'format': 'json',
-        }
+    }
 
     try:
         R = S.get(url=URL, params=PARAMS_0)
@@ -67,7 +67,7 @@ def main(bot, trigger, performer, target, action, reason):
         'lgpassword': bot.settings.wikimgnt.wiki_password,
         'lgtoken': LOGIN_TOKEN,
         'format': 'json',
-        }
+    }
     try:
         R = S.post(URL, data=PARAMS_1)
    except:
@@ -98,7 +98,7 @@ def main(bot, trigger, performer, target, action, reason):
             'token': CSRF_TOKEN,
             'bot': 'true',
             'format': 'json',
-            }
+        }
 
         try:
             R = S.post(URL, data=PARAMS_3)
@@ -115,7 +115,7 @@ def main(bot, trigger, performer, target, action, reason):
             'bot': 'false',
             'token': CSRF_TOKEN,
             'format': 'json',
-            }
+        }
 
         try:
             R = S.post(URL, data=PARAMS_3)
@@ -128,11 +128,10 @@ def main(bot, trigger, performer, target, action, reason):
         PARAMS_3 = {
             'action': 'unblock',
             'user': target,
-            'reason': 'Requested by ' + performer + ' Reason: ' \
-                + reason,
+            'reason': 'Requested by ' + performer + ' Reason: ' + reason,
             'token': CSRF_TOKEN,
             'format': 'json',
-            }
+        }
 
         try:
             R = S.post(URL, data=PARAMS_3)
@@ -145,11 +144,10 @@ def main(bot, trigger, performer, target, action, reason):
         PARAMS_3 = {
             'action': 'delete',
             'title': target,
-            'reason': 'Requested by ' + performer + ' Reason: ' \
-                + reason,
+            'reason': 'Requested by ' + performer + ' Reason: ' + reason,
             'token': CSRF_TOKEN,
             'format': 'json',
-            }
+        }
 
         try:
             R = S.post(URL, data=PARAMS_3)
