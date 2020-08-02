@@ -1,7 +1,7 @@
 include LICENSE
 include CHANGELOG.md
 include README.md
-SECURITY.md
+include SECURITY.md
 include *requirements.txt
 
 recursive-include tests *
