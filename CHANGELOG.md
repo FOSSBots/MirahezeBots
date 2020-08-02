@@ -99,4 +99,19 @@ This was incorrectly placed in the modules folder and has been moved to tests.
 ## channelmgnt
 - Switched to a new json config system
 
+# MirahezeBot v8.0.0
+In this update, we switch to using PyPi to install rather than copying to the plugins/modules folder. You should now delete our plugins from the plugins/modules folder and must switch to using PyPi to install. The minimum sopel version is now 7.0.5. Other requirements have changed. Please review compatibility with your install.
+## goofy
+- This new fun module was added
+## dbclean
+- This is now wrapped in a main() script and can be called using 'sopel-dbclean'
+## mh_phab --> phab
+- Bug fixes
+- renamed from mh_phab to phab
+## responses
+- bug fixes
+## shortlinks
+- bug fixes
+## Status
+- minor correction to help text
 
