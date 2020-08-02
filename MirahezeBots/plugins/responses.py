@@ -1,4 +1,4 @@
-"""This module sends responses to frequently posted messages."""
+"""responses.py - like a FAQ bot"""
 
 from sopel.module import commands, example, rate, require_account
 from sopel.config.types import StaticSection, ValidatedAttribute
@@ -55,7 +55,7 @@ def cancel(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def botversion(bot, trigger):
     """List the current version of the bot."""
-    bot.say('The current version of this bot is 7.2 (v7.2)')
+    bot.say('The current version of this bot is 8.0.0 (v8)')
 
 
 @commands('source', 'botsource')
