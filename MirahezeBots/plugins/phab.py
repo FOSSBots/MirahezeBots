@@ -138,7 +138,8 @@ def phabtask(bot, trigger):
 @rule('T[1-9][0-9]*')
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
-    bot.reply(trigger.match)
+    task_id = trigger.match.group(1)
+    bot.reply(task_id)
     task_id = trigger.match.split('T')[1]
     searchphab(bot=bot, channel=trigger.sender, task=task_id)
 
