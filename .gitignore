@@ -1,15 +1,7 @@
-default.cfg
-ZppixBot-chat.freenode.net.*.db
-logs/
-default.db
-*.tell.db
-*.reminders.db
-GeoLiteCity.dat
-GeoIPASNum.dat
-malwaredomains.txt
 dist/*
 dist
 __pycache__
+__pycache__/*
 .cache
 *.pyc
 .idea
