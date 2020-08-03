@@ -1,53 +1,29 @@
-Changelog
 
-# ZppixBot v2
-## Changes since v1
-* Added an admin list command (.adminlist)
-* Added .accesslevel command
-* Added .gethelp command (pings helpful users in channels)
-* Added a converse module
-* Added a new reminder system
+**Changelog**
+Please see below for changes to MirahezeBot-Plugins
 
-# ZppixBot v3
-## New modules added
-* mh_phab
-* welcome
+# Version 8.0.3
 
-## Modules updated
-* converse
-* adminlist
-* reminders
+# Version 8.0.1 & 8.0.2
+- Changes to the build configuartion to prevent PyPi errors
 
-# ZppixBot v5
-## New modules added
-* test_module
-* channelmgnt
+# Version 8.0.0
+In this update, we switch to using PyPi to install rather than copying to the plugins/modules folder. You should now delete our plugins from the plugins/modules folder and must switch to using PyPi to install. The minimum sopel version is now 7.0.5. Other requirements have changed. Please review compatibility with your install.
+## goofy
+- This new fun module was added
+## dbclean
+- This is now wrapped in a main() script and can be called using 'sopel-dbclean'
+## mh_phab --> phab
+- Bug fixes
+- renamed from mh_phab to phab
+## responses
+- bug fixes
+## shortlinks
+- bug fixes
+## Status
+- minor correction to help text
 
-## Modules changed
-* urls
-* miraheze
-* adminlist
-
-# ZppixBot v6
-## Channel Management
-* Added option to set channel operators individually for each channel
-* Now supports inviting users
-* Bug fixes
-## Mediawiki Status
-* Created to allow users to set a status on mediawiki wikis.
-* Compatible user script and template developed by RhinosF1
-* See meta.miraheze.org/wiki/Template:UserStatus and https://meta.miraheze.org/wiki/User:RhinosF1/status.js
-## Join
-* Bug Fixes
-## Responses
-* Added new ones
-* Removed poorly used ones
-## Short Links
-* Created to allow you to access your favourite sites in fewer clicks
-## Urls
-* Bug fixes
-
-# ZppixBot v7
+# Version 7
 ## mh_phab
 This has been completely rewrote to be more efficent.
 We've introduced more config options as well.
@@ -70,6 +46,52 @@ Now also recognises accounts
 ## Requirements
 We changed the way we install things from pip.
 You only need to install requirments.txt but you might find pip-install.txt has some more fun modules on.
+
+# Version 6
+## Channel Management
+* Added option to set channel operators individually for each channel
+* Now supports inviting users
+* Bug fixes
+## Mediawiki Status
+* Created to allow users to set a status on mediawiki wikis.
+* Compatible user script and template developed by RhinosF1
+* See meta.miraheze.org/wiki/Template:UserStatus and https://meta.miraheze.org/wiki/User:RhinosF1/status.js
+## Join
+* Bug Fixes
+## Responses
+* Added new ones
+* Removed poorly used ones
+## Short Links
+* Created to allow you to access your favourite sites in fewer clicks
+## Urls
+* Bug fixes
+
+# Version 5
+## New modules added
+* test_module
+* channelmgnt
+
+## Modules changed
+* urls
+* miraheze
+* adminlist
+
+# Version 3
+## New modules added
+* mh_phab
+* welcome
+
+## Modules updated
+* converse
+* adminlist
+* reminders
+
+# Version 2
+* Added an admin list command (.adminlist)
+* Added .accesslevel command
+* Added .gethelp command (pings helpful users in channels)
+* Added a converse module
+* Added a new reminder system
 
 # MirahezeBot v7.1
 With Version 7.1, we bring you a fancy new name as MirahezeBot and some
@@ -98,20 +120,4 @@ This was incorrectly placed in the modules folder and has been moved to tests.
 - Bug fixes
 ## channelmgnt
 - Switched to a new json config system
-
-# MirahezeBot v8.0.0
-In this update, we switch to using PyPi to install rather than copying to the plugins/modules folder. You should now delete our plugins from the plugins/modules folder and must switch to using PyPi to install. The minimum sopel version is now 7.0.5. Other requirements have changed. Please review compatibility with your install.
-## goofy
-- This new fun module was added
-## dbclean
-- This is now wrapped in a main() script and can be called using 'sopel-dbclean'
-## mh_phab --> phab
-- Bug fixes
-- renamed from mh_phab to phab
-## responses
-- bug fixes
-## shortlinks
-- bug fixes
-## Status
-- minor correction to help text
 
