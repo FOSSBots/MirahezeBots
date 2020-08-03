@@ -4,6 +4,14 @@
 Please see below for changes to MirahezeBot-Plugins
 
 # Version 8.0.3
+## Miscellaneous
+- Changes to the gitignore file & manifest to ensure proper handling of downloads & uploads
+- Changes to build configuration to prevent wasted checks
+- Cleaner Changelog
+## requirements
+- Setuptools was bumped from 49.2.0 to 49.2.1 for developers
+## phab
+- A bug was fixed with the task regex (T57)
 
 # Version 8.0.1 & 8.0.2
 - Changes to the build configuartion to prevent PyPi errors
