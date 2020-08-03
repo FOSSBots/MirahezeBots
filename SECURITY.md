@@ -7,9 +7,9 @@ We currently support the following versions with security releases when running 
 | Version | Supported          |
 | ------- | ------------------ |
 | master  | :white_check_mark: |
-| dev     |                    |
-| 8.x     | :white_check_mark: |
-| 7.x.    | :x:                |
+| dev     | :white_check_mark: |
+| 8       | :white_check_mark: |
+| < 8.0.3 | :x:                |
 
 ## Reporting a Vulnerability
 
