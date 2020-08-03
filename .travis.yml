@@ -41,7 +41,7 @@ jobs:
           
 stages:
   - name: deploy
-    if: branch = master
+    if: branch = master AND type = push
 
 notifications:
   irc:
