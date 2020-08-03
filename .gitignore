@@ -7,7 +7,8 @@ default.db
 GeoLiteCity.dat
 GeoIPASNum.dat
 malwaredomains.txt
-
+dist/*
+dist
 __pycache__
 .cache
 *.pyc
@@ -15,3 +16,6 @@ __pycache__
 .github/
 .DS_Store
 */.DS_Store
+hasan2.db
+MirahezeBot_Plugins.egg-info/*
+MirahezeBot_Plugins.egg-info

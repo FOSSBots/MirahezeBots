@@ -17,7 +17,7 @@ with open('dev-requirements.txt') as dev_requirements_file:
 
 setup(
     name='MirahezeBot_Plugins',
-    version='8.0.0',
+    version='8.0.2',
     description='Sopel Plugins for Miraheze Bots',
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',  # This is important!
