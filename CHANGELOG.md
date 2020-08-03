@@ -32,6 +32,33 @@ In this update, we switch to using PyPi to install rather than copying to the pl
 ## Status
 - minor correction to help text
 
+# Version 7.2
+## Status
+- Removed modules/config/*.csv
+## Responses
+- Bug fixes
+## channelmgnt
+- Switched to a new json config system
+# Version 7.1
+With Version 7.1, we bring you a fancy new name as MirahezeBot and some
+bug fixes and improvements.
+
+Please note that with this version we no longer support python 3.5, please upgrade to python 3.6 or above.
+
+## Phabricator
+This module now supports all phabricator installs with conduit enabled.
+
+## Responses
+A support_channel configuration variable was introduced.
+
+## Status
+* Removed deceprated tuple
+* Introduced support_channel, wiki_username, wiki_password and data_path cnfiguration.
+* some functions now use bot.reply
+
+## models
+This was incorrectly placed in the modules folder and has been moved to tests.
+
 # Version 7
 ## mh_phab
 This has been completely rewrote to be more efficent.
@@ -101,32 +128,3 @@ You only need to install requirments.txt but you might find pip-install.txt has 
 * Added .gethelp command (pings helpful users in channels)
 * Added a converse module
 * Added a new reminder system
-
-# MirahezeBot v7.1
-With Version 7.1, we bring you a fancy new name as MirahezeBot and some
-bug fixes and improvements.
-
-Please note that with this version we no longer support python 3.5, please upgrade to python 3.6 or above.
-
-## Phabricator
-This module now supports all phabricator installs with conduit enabled.
-
-## Responses
-A support_channel configuration variable was introduced.
-
-## Status
-* Removed deceprated tuple
-* Introduced support_channel, wiki_username, wiki_password and data_path cnfiguration.
-* some functions now use bot.reply
-
-## models
-This was incorrectly placed in the modules folder and has been moved to tests.
-
-# MirahezeBot v7.2
-## Status
-- Removed modules/config/*.csv
-## Responses
-- Bug fixes
-## channelmgnt
-- Switched to a new json config system
-
