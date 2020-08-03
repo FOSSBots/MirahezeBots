@@ -43,7 +43,7 @@ after_script:
           
 stages:
   - name: test
-    if branch != none
+    if: branch != none
   - name: deploy
     if: branch = master AND type = push
 
