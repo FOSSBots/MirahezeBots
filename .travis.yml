@@ -36,6 +36,8 @@ deploy:
     secure: "s7+VjPrBDBICr3yvDEw9lq/iqE22BNYuNH3l6LL/5ebaQ+yqZ9hF0wWnd5JE8tdJnm2wXK5tHbIoIKr6quJLYYdZJ7MnuHdetYQFJjq8EQy3rU7LHcjho7nFU9I1b/RgQrLtFLx6Yq+Ozcceyux0+WWqfhoJ8Tptz1n03dOtdRupn+OMDSoJZLDAJqRrPseeVZpFKHFvitzbnPDYn5yAb2EW96wodYFYtJNZ4VFC5Gvh7qejbt7Cwtsu3KlPWubpYGBWnwMfyyM7yoV+gSQ/NvdFTtdbjH4Ebwy/DDKkwP9i9jNB5H5P0ntEIpDGvUhmbfj2G11rKHpLdAZsZgWqqLL74YsGTCmqoLVxNNDByWP8eN+U+u9uFY9D1fRbIshisl2yzTKkGV+dr9N+ZZNa9O8ii+emT9PpwCdWft9YrdsHuPNah3RkuuNede2jNeXpkBPd1t5sZvNtyto/CPRLNEavG8Z60yp+cXBNpam8FSBOK9ZAhc6DC7jPuX6hwPcNGwoZQra7wZMS457Pbpi7pfhjxApHhGSUikZ60+DvbEgDgi6Nut36M3SfS4FP/vRnJbIIb4k4I8o0X38Re4E4R5W5sD3TS7MACCRvOy/JNNmYnK0paxqgaUDZULDchdu3aU32mitDM8zC6ylDFVwLIpqkIaYmWjoD0CvNkpYh88U="
   on:
     python: "3.7"
+    branch: master
+  skip_existing: true
     
 notifications:
   irc:
