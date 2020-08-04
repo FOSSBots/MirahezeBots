@@ -164,7 +164,7 @@ def main(bot, trigger, performer, target, action, reason, url):
             if DATA.get("error") is not None:
                 bot.say(DATA.get("error").get("info"))
             else:
-                bot.reply("Delete request sent. You may want to check the block log to be sure that it worked.")
+                bot.reply("Delete request sent. You may want to check the delete log to be sure that it worked.")
         except:
             bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
 
