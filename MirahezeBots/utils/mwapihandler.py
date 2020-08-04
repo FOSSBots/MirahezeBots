@@ -91,21 +91,21 @@ def makeaction(url, session, action, TOKEN):
             request = session.post(url, data=PARAMS)
             DATA = request.json()
             if DATA.get("error") is not None:
-                return ["MWError", DATA.get("error").get("info"))]
-                else:
-                    return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
-            except:
-                return ["Fatal", "An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
+                return ["MWError", (DATA.get("error").get("info"))]
+            else:
+                return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
+        except:
+            return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
 
 
 def main(performer, target, action, reason, url, username, password):
     session = requests.Session()
     lg = login(url, session, username, password)
-    if lg[0] = "Error":
+    if lg[0] == "Error":
         return lg[1]
     else:
         TOKEN = gettoken(url, session, type='crsftoken')
-        if TOKEN[0] = "Error":
+        if TOKEN[0] == "Error":
             return TOKEN[1]
         else:
             act = makeaction(url, session, action, TOKEN)
