@@ -16,8 +16,8 @@ class WikimgntSection(StaticSection):
     wiki_acl = ListAttribute('wiki_acl')
     wiki_farm = ValidatedAttribute('wiki_farm', bool)
     wiki_domain = ValidatedAttribute('wiki_domain', str)
-    wiki_username = ValidatedAttribute('wiki_username', str)
-    wiki_password = ValidatedAttribute('wiki_password', str)
+    bot_username = ValidatedAttribute('bot_username', str)
+    bot_password = ValidatedAttribute('bot_password', str)
 
 
 def setup(bot):
@@ -31,8 +31,8 @@ def configure(config):
     config.wikimgnt.configure_setting('wiki_acl', 'Please enter NickServ accounts that are allowed to use the commands in this plugin. (No spaces)')
     config.wikimgnt.configure_setting('wiki_farm', 'Are you using this for a wiki farm? (true/false)')
     config.wikimgnt.configure_setting('wiki_domain', 'If you said true to the previous question then What the domain name of your wiki farm? Please specify  the URL to api.php without a subdomain. If you said false, please specify the URL of your wikis api.php.')
-    config.wikimgnt.configure_setting('wiki_username', 'What is the wikimgnt wiki username? (from Special:BotPasswords)')
-    config.wikimgnt.configure_setting('wiki_password', 'What is the wikimgnt wiki password? (from Special:BotPasswords)')
+    config.wikimgnt.configure_setting('bot_username', 'What is the username the bot should use to login? (from Special:BotPasswords)')
+    config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
 
 def main(bot, trigger, performer, target, action, reason, url):
@@ -64,8 +64,8 @@ def main(bot, trigger, performer, target, action, reason, url):
 
     PARAMS_1 = {
         'action': 'login',
-        'lgname': bot.settings.wikimgnt.wiki_username,
-        'lgpassword': bot.settings.wikimgnt.wiki_password,
+        'lgname': bot.settings.wikimgnt.bot_username,
+        'lgpassword': bot.settings.wikimgnt.bot_password,
         'lgtoken': LOGIN_TOKEN,
         'format': 'json',
     }
