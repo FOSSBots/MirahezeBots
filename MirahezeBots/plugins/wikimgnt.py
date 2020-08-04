@@ -7,6 +7,7 @@ import random
 import json
 
 from sopel.module import rule, commands, example
+from MirahezeBot_Plugins.utils.mwapihandler import main
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
 
 
@@ -34,157 +35,22 @@ def configure(config):
     config.wikimgnt.configure_setting('bot_username', 'What is the username the bot should use to login? (from Special:BotPasswords)')
     config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
-
-def main(bot, trigger, performer, target, action, reason, url):
-    S = requests.Session()
-
-    URL = url
-
-# Step 1: GET request to fetch login token
-
-    PARAMS_0 = {
-        'action': 'query',
-        'meta': 'tokens',
-        'type': 'login',
-        'format': 'json',
-    }
-
-    try:
-        R = S.get(url=URL, params=PARAMS_0)
-        DATA = R.json()
-    except:
-        bot.reply("Catostrophic Error! Unable to connect to the wiki.")
-        return
-
-    LOGIN_TOKEN = DATA['query']['tokens']['logintoken']
-
-# Step 2: POST request to log in. Use of main account for login is not
-# supported. Obtain credentials via Special:BotPasswords
-# (https://www.mediawiki.org/wiki/Special:BotPasswords) for lgname & lgpassword
-
-    PARAMS_1 = {
-        'action': 'login',
-        'lgname': bot.settings.wikimgnt.bot_username,
-        'lgpassword': bot.settings.wikimgnt.bot_password,
-        'lgtoken': LOGIN_TOKEN,
-        'format': 'json',
-    }
-    try:
-        R = S.post(URL, data=PARAMS_1)
-    except:
-        bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-        return
-
-# Step 3: GET request to fetch CSRF token
-
-    PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
-
-    try:
-        R = S.get(url=URL, params=PARAMS_2)
-        DATA = R.json()
-    except:
-        bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-        return
-
-    CSRF_TOKEN = DATA['query']['tokens']['csrftoken']
-
-# Step 4: POST request to perform action
-
-    if action == 'edit':
-        PARAMS_3 = {
-            'action': 'edit',
-            'title': target,
-            'summary': reason + ' (' + performer + ')',
-            'appendtext': '\n* ' + performer + ': ' + reason,
-            'token': CSRF_TOKEN,
-            'bot': 'true',
-            'format': 'json',
-        }
-
-        try:
-            R = S.post(URL, data=PARAMS_3)
-            DATA = R.json()
-            if DATA.get("error").get("info") is not None:
-                bot.say(DATA.get("error").get("info"))
-            else:
-                bot.say("Logged message")
-        except:
-            bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
-    elif action == 'block':
-        PARAMS_3 = {
-            'action': 'block',
-            'user': target,
-            'expiry': 'infinite',
-            'reason': 'Blocked by ' + performer + ' for ' + reason,
-            'bot': 'false',
-            'token': CSRF_TOKEN,
-            'format': 'json',
-        }
-
-        try:
-            R = S.post(URL, data=PARAMS_3)
-            DATA = R.json()
-            if DATA.get("error").get("info") is not None:
-                bot.say(DATA.get("error").get("info"))
-            else:
-                bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
-        except:
-            bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
-    elif action == 'unblock':
-        PARAMS_3 = {
-            'action': 'unblock',
-            'user': target,
-            'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': CSRF_TOKEN,
-            'format': 'json',
-        }
-
-        try:
-            R = S.post(URL, data=PARAMS_3)
-            DATA = R.json()
-            if DATA.get("error") is not None:
-                bot.say(DATA.get("error").get("info"))
-            else:
-                bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
-        except:
-            bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
-
-    elif action == 'delete':
-        PARAMS_3 = {
-            'action': 'delete',
-            'title': target,
-            'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': CSRF_TOKEN,
-            'format': 'json',
-        }
-
-        try:
-            R = S.post(URL, data=PARAMS_3)
-            DATA = R.json()
-            if DATA.get("error") is not None:
-                bot.say(DATA.get("error").get("info"))
-            else:
-                bot.reply("Delete request sent. You may want to check the delete log to be sure that it worked.")
-        except:
-            bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
-
-
-@commands('log')
-@example('.log restarting sopel')
-def logpage(bot, trigger):
-    """Log given message to configured page"""
-    if trigger.account in bot.settings.wikimgnt.wiki_acl:
-        sender = trigger.nick
-        url = bot.settings.wikimgnt.log_wiki_url
-        target = bot.settings.wikimgnt.log_page
-        if trigger.group(2) is None:
-            bot.say("Syntax: .log message")
-        else:
-            message = trigger.group(2)
-            main(bot, trigger, sender, target, 'edit', message, url)
-    else:
+@commands('log')	
+@example('.log restarting sopel')	
+def logpage(bot, trigger):	
+    """Log given message to configured page"""	
+    if trigger.account in bot.settings.wikimgnt.wiki_acl:	
+        sender = trigger.nick	
+        url = bot.settings.wikimgnt.log_wiki_url	
+        target = bot.settings.wikimgnt.log_page	
+        if trigger.group(2) is None:	
+            bot.say("Syntax: .log message")	
+        else:	
+            message = trigger.group(2)	
+            main(sender, target, 'edit', message, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)	
+    else:	
         bot.reply("Sorry: you don't have permission to use this plugin")
-
+       
 
 @commands('deletepage')
 @example('.deletepage Test_page vandalism')
