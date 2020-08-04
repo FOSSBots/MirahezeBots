@@ -18,7 +18,7 @@ def login(url, session, username='Example', password='password'):
         R = session.get(url=url, params=PARAMS_0)
         DATA = R.json()
     except:
-        #bot.reply("Catostrophic Error! Unable to connect to the wiki.")
+        # bot.reply("Catostrophic Error! Unable to connect to the wiki.")
         return None
 
     LOGIN_TOKEN = DATA['query']['tokens']['logintoken']
@@ -33,21 +33,20 @@ def login(url, session, username='Example', password='password'):
     try:
         R = session.post(url, data=PARAMS_1)
     except:
-        #bot.reply("Catastrophic Error! Unable to connect to the wiki.")
+        # bot.reply("Catastrophic Error! Unable to connect to the wiki.")
         return None
 
 
 def gettoken(url, session, type='csrftoken'):
-  # Step 3: GET request to fetch CSRF token
 
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
 
     try:
         R = session.get(url=url, params=PARAMS_2)
         DATA = R.json()
-    except BaseException:
-        bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-        return
+    except:
+        # bot.reply("Catastrophic Error! Unable to connect to the wiki.")
+        return None
 
     TOKEN = DATA['query']['tokens'][type]
     return TOKEN
@@ -72,14 +71,14 @@ def main(performer, target, action, reason, url, username, password):
         }
 
         try:
-            R = session.post(URL, data=PARAMS_3)
+            R = session.post(url, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error").get("info") is not None:
               return None
-                # bot.say(DATA.get("error").get("info"))
+              # bot.say(DATA.get("error").get("info"))
             else:
               return None
-                # bot.say("Logged message")
+              # bot.say("Logged message")
         except:
             # bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
             return None
@@ -119,7 +118,8 @@ def main(performer, target, action, reason, url, username, password):
             R = session.post(url, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error") is not None:
-                bot.say(DATA.get("error").get("info"))
+                # bot.say(DATA.get("error").get("info"))
+                return None
             else:
                 return None
             # bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
