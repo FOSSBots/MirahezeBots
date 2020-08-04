@@ -8,7 +8,6 @@ dist: xenial
 os: linux
 
 install:
-    - pip install flake8
     - pip install -r dev-requirements.txt
     - pip install .
 before_script:
