@@ -48,24 +48,24 @@ def gettoken(url, session, type='csrftoken'):
 def makeaction(url, session, action, TOKEN):
     if action == 'edit':
         PARAMS = {
-                'action': 'edit',
-                'title': target,
-                'summary': reason + ' (' + performer + ')',
-                'appendtext': '\n* ' + performer + ': ' + reason,
-                'token': TOKEN,
-                'bot': 'true',
-                'format': 'json',
+            'action': 'edit',
+            'title': target,
+            'summary': reason + ' (' + performer + ')',
+            'appendtext': '\n* ' + performer + ': ' + reason,
+            'token': TOKEN,
+            'bot': 'true',
+            'format': 'json',
         }
 
     elif action == 'block':
-            PARAMS = {
-                'action': 'block',
-                'user': target,
-                'expiry': 'infinite',
-                'reason': 'Blocked by ' + performer + ' for ' + reason,
-                'bot': 'false',
-                'token': TOKEN,
-                'format': 'json',
+        PARAMS = {
+            'action': 'block',
+            'user': target,
+            'expiry': 'infinite',
+            'reason': 'Blocked by ' + performer + ' for ' + reason,
+            'bot': 'false',
+            'token': TOKEN,
+            'format': 'json',
         }
 
     elif action == 'unblock':
@@ -79,11 +79,11 @@ def makeaction(url, session, action, TOKEN):
 
     elif action == 'delete':
         PARAMS = {
-                'action': 'delete',
-                'title': target,
-                'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-                'token': TOKEN,
-                'format': 'json',
+            'action': 'delete',
+            'title': target,
+            'reason': 'Requested by ' + performer + ' Reason: ' + reason,
+            'token': TOKEN,
+            'format': 'json',
         }
 
     try:
