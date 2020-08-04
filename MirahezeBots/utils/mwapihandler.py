@@ -5,7 +5,6 @@ import random
 
 
 def login(url, session, username='Example', password='password'):
-
     PARAMS_0 = {
         'action': 'query',
         'meta': 'tokens',
@@ -49,54 +48,54 @@ def gettoken(url, session, type='csrftoken'):
 
 def makeaction(url, session, action, TOKEN):
         if action == 'edit':
-        PARAMS = {
-            'action': 'edit',
-            'title': target,
-            'summary': reason + ' (' + performer + ')',
-            'appendtext': '\n* ' + performer + ': ' + reason,
-            'token': TOKEN,
-            'bot': 'true',
-            'format': 'json',
-        }
+            PARAMS = {
+                'action': 'edit',
+                'title': target,
+                'summary': reason + ' (' + performer + ')',
+                'appendtext': '\n* ' + performer + ': ' + reason,
+                'token': TOKEN,
+                'bot': 'true',
+                'format': 'json',
+            }
 
-    elif action == 'block':
-        PARAMS = {
-            'action': 'block',
-            'user': target,
-            'expiry': 'infinite',
-            'reason': 'Blocked by ' + performer + ' for ' + reason,
-            'bot': 'false',
-            'token': TOKEN,
-            'format': 'json',
-        }
+        elif action == 'block':
+            PARAMS = {
+                'action': 'block',
+                'user': target,
+                'expiry': 'infinite',
+                'reason': 'Blocked by ' + performer + ' for ' + reason,
+                'bot': 'false',
+                'token': TOKEN,
+                'format': 'json',
+            }
 
-    elif action == 'unblock':
-        PARAMS = {
-            'action': 'unblock',
-            'user': target,
-            'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': TOKEN,
-            'format': 'json',
-        }
+        elif action == 'unblock':
+            PARAMS = {
+                'action': 'unblock',
+                'user': target,
+                'reason': 'Requested by ' + performer + ' Reason: ' + reason,
+                'token': TOKEN,
+                'format': 'json',
+            }
 
-    elif action == 'delete':
-        PARAMS = {
-            'action': 'delete',
-            'title': target,
-            'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': TOKEN,
-            'format': 'json',
-        }
+        elif action == 'delete':
+            PARAMS = {
+                'action': 'delete',
+                'title': target,
+                'reason': 'Requested by ' + performer + ' Reason: ' + reason,
+                'token': TOKEN,
+                'format': 'json',
+            }
 
-    try:
-        request = session.post(url, data=PARAMS)
-        DATA = request.json()
-        if DATA.get("error") is not None:
-            return ["MWError", DATA.get("error").get("info"))]
-            else:
-                return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
-        except:
-            return ["Fatal", "An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
+        try:
+            request = session.post(url, data=PARAMS)
+            DATA = request.json()
+            if DATA.get("error") is not None:
+                return ["MWError", DATA.get("error").get("info"))]
+                else:
+                    return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
+            except:
+                return ["Fatal", "An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
 
 
 def main(performer, target, action, reason, url, username, password):
