@@ -80,8 +80,10 @@ def main(performer, target, action, reason, url, username, password):
             R = session.post(URL, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error").get("info") is not None:
+              return None
                 # bot.say(DATA.get("error").get("info"))
             else:
+              return None
                 #bot.say("Logged message")
         except:
             bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
