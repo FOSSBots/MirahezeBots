@@ -45,7 +45,7 @@ def gettoken(url, session, type='csrftoken'):
     return TOKEN
 
 
-def makeaction(url, session, action, TOKEN):
+def makeaction(url, session, action, TOKEN, target, performer, reason):
     if action == 'edit':
         PARAMS = {
             'action': 'edit',
@@ -70,11 +70,11 @@ def makeaction(url, session, action, TOKEN):
 
     elif action == 'unblock':
         PARAMS = {
-                'action': 'unblock',
-                'user': target,
-                'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-                'token': TOKEN,
-                'format': 'json',
+            'action': 'unblock',
+            'user': target,
+            'reason': 'Requested by ' + performer + ' Reason: ' + reason,
+            'token': TOKEN,
+            'format': 'json',
         }
 
     elif action == 'delete':
@@ -107,5 +107,5 @@ def main(performer, target, action, reason, url, username, password):
         if TOKEN[0] == "Error":
             return TOKEN[1]
         else:
-            act = makeaction(url, session, action, TOKEN)
+            act = makeaction(url, session, action, TOKEN, target, performer, reason)
             return act[1]
