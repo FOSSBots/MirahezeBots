@@ -48,7 +48,8 @@ def logpage(bot, trigger):
             bot.say("Syntax: .log message")
         else:
             message = trigger.group(2)
-            mwapi.main(sender, target, 'edit', message, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+            response = mwapi.main(sender, target, 'edit', message, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+            bot.reply(response)
     else:
         bot.reply("Sorry: you don't have permission to use this plugin")
 
