@@ -28,7 +28,7 @@ def configure(config):
     config.define_section('wikimgnt', WikimgntSection, validate=False)
     config.wikimgnt.configure_setting('log_wiki_url', 'What is the URL of the wiki that you would like .log messages to go to? Please specify the URL to that wikis api.php.')
     config.wikimgnt.configure_setting('log_page', 'What page on that wiki would like .log messages to go to? Instead of a space, type a _ please.')
-    config.wikimgnt.configure_setting('wiki_acl', 'Please enter NickServ accounts that are allowed to use the commands in this module. (No spaces)')
+    config.wikimgnt.configure_setting('wiki_acl', 'Please enter NickServ accounts that are allowed to use the commands in this plugin. (No spaces)')
     config.wikimgnt.configure_setting('wiki_farm', 'Are you using this for a wiki farm? (true/false)')
     config.wikimgnt.configure_setting('wiki_domain', 'If you said true to the previous question then What the domain name of your wiki farm? Please specify  the URL to api.php without a subdomain. If you said false, please specify the URL of your wikis api.php.')
     config.wikimgnt.configure_setting('wiki_username', 'What is the wikimgnt wiki username? (from Special:BotPasswords)')
@@ -183,7 +183,7 @@ def logpage(bot, trigger):
             message = trigger.group(2)
             main(bot, trigger, sender, target, 'edit', message, url)
     else:
-        bot.reply("Sorry: you don't have permission to use this module")
+        bot.reply("Sorry: you don't have permission to use this plugin")
 
 
 @commands('deletepage')
@@ -217,7 +217,7 @@ def deletepage(bot, trigger):
             else:
                 bot.say("Syntax: .deletepage page reason")
     else:
-        bot.reply("Sorry: you don't have permission to use this module")
+        bot.reply("Sorry: you don't have permission to use this plugin")
 
 
 @commands('block')
@@ -251,7 +251,7 @@ def blockuser(bot, trigger):
             else:
                 bot.say("Syntax: .block user reason")
     else:
-        bot.reply("Sorry: you don't have permission to use this module")
+        bot.reply("Sorry: you don't have permission to use this plugin")
 
 
 @commands('unblock')
@@ -285,4 +285,4 @@ def unblockuser(bot, trigger):
             else:
                 bot.say("Syntax: .block user reason")
     else:
-        bot.reply("Sorry: you don't have permission to use this module")
+        bot.reply("Sorry: you don't have permission to use this plugin")
