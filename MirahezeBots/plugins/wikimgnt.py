@@ -7,7 +7,7 @@ import random
 import json
 
 from sopel.module import rule, commands, example
-import MirahezeBot-Plugins.utils.mwapihandler as mwapi
+from MirahezeBots.utils import mwapihandler as mwapi
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
 
 
