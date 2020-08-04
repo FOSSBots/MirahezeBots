@@ -35,22 +35,23 @@ def configure(config):
     config.wikimgnt.configure_setting('bot_username', 'What is the username the bot should use to login? (from Special:BotPasswords)')
     config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
-@commands('log')	
-@example('.log restarting sopel')	
-def logpage(bot, trigger):	
-    """Log given message to configured page"""	
-    if trigger.account in bot.settings.wikimgnt.wiki_acl:	
-        sender = trigger.nick	
-        url = bot.settings.wikimgnt.log_wiki_url	
-        target = bot.settings.wikimgnt.log_page	
-        if trigger.group(2) is None:	
-            bot.say("Syntax: .log message")	
-        else:	
-            message = trigger.group(2)	
-            main(sender, target, 'edit', message, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)	
-    else:	
+
+@commands('log')
+@example('.log restarting sopel')
+def logpage(bot, trigger):
+    """Log given message to configured page"""
+    if trigger.account in bot.settings.wikimgnt.wiki_acl:
+        sender = trigger.nick
+        url = bot.settings.wikimgnt.log_wiki_url
+        target = bot.settings.wikimgnt.log_page
+        if trigger.group(2) is None:
+            bot.say("Syntax: .log message")
+        else:
+            message = trigger.group(2)
+            main(sender, target, 'edit', message, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+    else:
         bot.reply("Sorry: you don't have permission to use this plugin")
-       
+
 
 @commands('deletepage')
 @example('.deletepage Test_page vandalism')
