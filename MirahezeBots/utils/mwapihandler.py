@@ -2,7 +2,6 @@ import requests
 import re
 import time
 import random
-import json
 
 
 def login(url, session, username='Example', password='password'):
@@ -13,13 +12,11 @@ def login(url, session, username='Example', password='password'):
         'type': 'login',
         'format': 'json',
     }
-
     try:
-        R = session.get(url=url, params=PARAMS_0)
-        DATA = R.json()
+        request = session.get(url=url, params=PARAMS_0)
+        DATA = request.json()
     except:
-        # bot.reply("Catostrophic Error! Unable to connect to the wiki.")
-        return None
+        return ["Error", "Unable to conect to wiki"]
 
     LOGIN_TOKEN = DATA['query']['tokens']['logintoken']
 
@@ -31,10 +28,9 @@ def login(url, session, username='Example', password='password'):
         'format': 'json',
     }
     try:
-        R = session.post(url, data=PARAMS_1)
+        request = session.post(url, data=PARAMS_1)
     except:
-        # bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-        return None
+        return ["Error", "Unable to conect to wiki"]
 
 
 def gettoken(url, session, type='csrftoken'):
@@ -42,109 +38,76 @@ def gettoken(url, session, type='csrftoken'):
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
 
     try:
-        R = session.get(url=url, params=PARAMS_2)
-        DATA = R.json()
+        request = session.get(url=url, params=PARAMS_2)
+        DATA = request.json()
     except:
-        # bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-        return None
+        return ["Error", "Unable to conect to wiki"]
 
     TOKEN = DATA['query']['tokens'][type]
     return TOKEN
 
 
-def main(performer, target, action, reason, url, username, password):
-    session = requests.Session()
-    login(url, session, username, password)
-    CSRF_TOKEN = gettoken(url, session, type='crsftoken')
-
-# Step 4: POST request to perform action -- TO MIGRATE
-
-    if action == 'edit':
-        PARAMS_3 = {
+def makeaction(url, session, action, TOKEN):
+        if action == 'edit':
+        PARAMS = {
             'action': 'edit',
             'title': target,
             'summary': reason + ' (' + performer + ')',
             'appendtext': '\n* ' + performer + ': ' + reason,
-            'token': CSRF_TOKEN,
+            'token': TOKEN,
             'bot': 'true',
             'format': 'json',
         }
 
-        try:
-            R = session.post(url, data=PARAMS_3)
-            DATA = R.json()
-            if DATA.get("error").get("info") is not None:
-                return None
-                # bot.say(DATA.get("error").get("info"))
-            else:
-                return None
-                # bot.say("Logged message")
-        except:
-            return None
-            # bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
     elif action == 'block':
-        PARAMS_3 = {
+        PARAMS = {
             'action': 'block',
             'user': target,
             'expiry': 'infinite',
             'reason': 'Blocked by ' + performer + ' for ' + reason,
             'bot': 'false',
-            'token': CSRF_TOKEN,
+            'token': TOKEN,
             'format': 'json',
         }
 
-        try:
-            R = session.post(url, data=PARAMS_3)
-            DATA = R.json()
-            if DATA.get("error").get("info") is not None:
-                return None
-                # bot.say(DATA.get("error").get("info"))
-            else:
-                return None
-                # bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
-        except:
-            return None
-            # bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
     elif action == 'unblock':
-        PARAMS_3 = {
+        PARAMS = {
             'action': 'unblock',
             'user': target,
             'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': CSRF_TOKEN,
+            'token': TOKEN,
             'format': 'json',
         }
 
-        try:
-            R = session.post(url, data=PARAMS_3)
-            DATA = R.json()
-            if DATA.get("error") is not None:
-                # bot.say(DATA.get("error").get("info"))
-                return None
-            else:
-                return None
-            # bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
-        except:
-            return None
-            # bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
-
     elif action == 'delete':
-        PARAMS_3 = {
+        PARAMS = {
             'action': 'delete',
             'title': target,
             'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': CSRF_TOKEN,
+            'token': TOKEN,
             'format': 'json',
         }
 
-        try:
-            R = session.post(url, data=PARAMS_3)
-            DATA = R.json()
-            if DATA.get("error") is not None:
-                return None
-                # bot.say(DATA.get("error").get("info"))
+    try:
+        request = session.post(url, data=PARAMS)
+        DATA = request.json()
+        if DATA.get("error") is not None:
+            return ["MWError", DATA.get("error").get("info"))]
             else:
-                return None
-                # bot.reply("Delete request sent. You may want to check the delete log to be sure that it worked.")
+                return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
         except:
-            return None
-            # bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
+            return ["Fatal", "An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
+
+
+def main(performer, target, action, reason, url, username, password):
+    session = requests.Session()
+    lg = login(url, session, username, password)
+    if lg[0] = "Error":
+        return lg[1]
+    else:
+        TOKEN = gettoken(url, session, type='crsftoken')
+        if TOKEN[0] = "Error":
+            return TOKEN[1]
+        else:
+            act = makeaction(url, session, action, TOKEN)
+            return act[1]
