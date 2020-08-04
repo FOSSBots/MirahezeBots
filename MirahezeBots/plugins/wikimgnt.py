@@ -7,7 +7,7 @@ import random
 import json
 
 from sopel.module import rule, commands, example
-from MirahezeBot_Plugins.utils.mwapihandler import main
+import MirahezeBot-Plugins.utils.mwapihandler as mwapi
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
 
 
@@ -48,7 +48,7 @@ def logpage(bot, trigger):
             bot.say("Syntax: .log message")
         else:
             message = trigger.group(2)
-            main(sender, target, 'edit', message, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+            mwapi.main(sender, target, 'edit', message, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
     else:
         bot.reply("Sorry: you don't have permission to use this plugin")
 
