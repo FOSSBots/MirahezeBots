@@ -6,7 +6,6 @@ import json
 
 
 def login(url, session, username='Example', password='password'):
-  # Step 1: GET request to fetch login token
 
     PARAMS_0 = {
         'action': 'query',
@@ -18,15 +17,11 @@ def login(url, session, username='Example', password='password'):
     try:
         R = session.get(url=url, params=PARAMS_0)
         DATA = R.json()
-    except BaseException:
-        bot.reply("Catostrophic Error! Unable to connect to the wiki.")
-        return
+    except:
+        #bot.reply("Catostrophic Error! Unable to connect to the wiki.")
+        return None
 
     LOGIN_TOKEN = DATA['query']['tokens']['logintoken']
-
-# Step 2: POST request to log in. Use of main account for login is not
-# supported. Obtain credentials via Special:BotPasswords
-# (https://www.mediawiki.org/wiki/Special:BotPasswords) for lgname & lgpassword
 
     PARAMS_1 = {
         'action': 'login',
@@ -38,8 +33,8 @@ def login(url, session, username='Example', password='password'):
     try:
         R = session.post(url, data=PARAMS_1)
     except:
-        bot.reply("Catastrophic Error! Unable to connect to the wiki.")
-        return
+        #bot.reply("Catastrophic Error! Unable to connect to the wiki.")
+        return None
 
 
 def gettoken(url, session, type='csrftoken'):
@@ -84,9 +79,10 @@ def main(performer, target, action, reason, url, username, password):
                 # bot.say(DATA.get("error").get("info"))
             else:
               return None
-                #bot.say("Logged message")
+                # bot.say("Logged message")
         except:
-            bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
+            # bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
+            return None
     elif action == 'block':
         PARAMS_3 = {
             'action': 'block',
@@ -106,10 +102,10 @@ def main(performer, target, action, reason, url, username, password):
                 # bot.say(DATA.get("error").get("info"))
             else:
                 return None
-                #bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
+                # bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
         except:
             return None
-            #bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
+            # bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
     elif action == 'unblock':
         PARAMS_3 = {
             'action': 'unblock',
@@ -120,16 +116,16 @@ def main(performer, target, action, reason, url, username, password):
         }
 
         try:
-            R = S.post(URL, data=PARAMS_3)
+            R = session.post(url, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error") is not None:
                 bot.say(DATA.get("error").get("info"))
             else:
                 return None
-            #bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
+            # bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
         except:
             return None
-            #bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
+            # bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
 
     elif action == 'delete':
         PARAMS_3 = {
@@ -148,7 +144,7 @@ def main(performer, target, action, reason, url, username, password):
                 # bot.say(DATA.get("error").get("info"))
             else:
                 return None
-                #bot.reply("Delete request sent. You may want to check the delete log to be sure that it worked.")
+                # bot.reply("Delete request sent. You may want to check the delete log to be sure that it worked.")
         except:
             return None
-            #bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
+            # bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
