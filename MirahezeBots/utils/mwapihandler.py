@@ -98,9 +98,11 @@ def main(performer, target, action, reason, url, username, password):
             R = session.post(url, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error").get("info") is not None:
+                return None
                 #bot.say(DATA.get("error").get("info"))
             else:
-                #bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
+              return None
+              #bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
         except:
             bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
     elif action == 'unblock':
@@ -118,8 +120,10 @@ def main(performer, target, action, reason, url, username, password):
             if DATA.get("error") is not None:
                 bot.say(DATA.get("error").get("info"))
             else:
-                #bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
+              return None
+            #bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
         except:
+          return None
             #bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
 
     elif action == 'delete':
@@ -135,8 +139,11 @@ def main(performer, target, action, reason, url, username, password):
             R = session.post(url, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error") is not None:
+              return None
                 #bot.say(DATA.get("error").get("info"))
             else:
+              return None
                 #bot.reply("Delete request sent. You may want to check the delete log to be sure that it worked.")
         except:
+          return None
             #bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
