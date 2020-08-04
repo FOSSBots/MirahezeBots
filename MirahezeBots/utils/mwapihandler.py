@@ -74,14 +74,14 @@ def main(performer, target, action, reason, url, username, password):
             R = session.post(url, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error").get("info") is not None:
-              return None
-              # bot.say(DATA.get("error").get("info"))
+                return None
+                # bot.say(DATA.get("error").get("info"))
             else:
-              return None
-              # bot.say("Logged message")
+                return None
+                # bot.say("Logged message")
         except:
-            # bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
             return None
+            # bot.reply("An unexpected error occurred. Do I have edit rights on that wiki?")
     elif action == 'block':
         PARAMS_3 = {
             'action': 'block',
