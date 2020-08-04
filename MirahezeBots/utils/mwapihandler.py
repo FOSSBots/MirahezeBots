@@ -33,7 +33,6 @@ def login(url, session, username='Example', password='password'):
 
 
 def gettoken(url, session, type='csrftoken'):
-
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
 
     try:
@@ -47,8 +46,8 @@ def gettoken(url, session, type='csrftoken'):
 
 
 def makeaction(url, session, action, TOKEN):
-        if action == 'edit':
-            PARAMS = {
+    if action == 'edit':
+        PARAMS = {
                 'action': 'edit',
                 'title': target,
                 'summary': reason + ' (' + performer + ')',
@@ -56,9 +55,9 @@ def makeaction(url, session, action, TOKEN):
                 'token': TOKEN,
                 'bot': 'true',
                 'format': 'json',
-            }
+        }
 
-        elif action == 'block':
+    elif action == 'block':
             PARAMS = {
                 'action': 'block',
                 'user': target,
@@ -67,35 +66,35 @@ def makeaction(url, session, action, TOKEN):
                 'bot': 'false',
                 'token': TOKEN,
                 'format': 'json',
-            }
+        }
 
-        elif action == 'unblock':
-            PARAMS = {
+    elif action == 'unblock':
+        PARAMS = {
                 'action': 'unblock',
                 'user': target,
                 'reason': 'Requested by ' + performer + ' Reason: ' + reason,
                 'token': TOKEN,
                 'format': 'json',
-            }
+        }
 
-        elif action == 'delete':
-            PARAMS = {
+    elif action == 'delete':
+        PARAMS = {
                 'action': 'delete',
                 'title': target,
                 'reason': 'Requested by ' + performer + ' Reason: ' + reason,
                 'token': TOKEN,
                 'format': 'json',
-            }
+        }
 
-        try:
-            request = session.post(url, data=PARAMS)
-            DATA = request.json()
-            if DATA.get("error") is not None:
-                return ["MWError", (DATA.get("error").get("info"))]
-            else:
-                return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
-        except:
-            return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
+    try:
+        request = session.post(url, data=PARAMS)
+        DATA = request.json()
+        if DATA.get("error") is not None:
+            return ["MWError", (DATA.get("error").get("info"))]
+        else:
+            return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
+    except:
+        return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
 
 
 def main(performer, target, action, reason, url, username, password):
