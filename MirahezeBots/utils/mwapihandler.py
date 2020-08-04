@@ -4,7 +4,8 @@ import time
 import random
 import json
 
-def login (url, session, username='Example', password='password'):
+
+def login(url, session, username='Example', password='password'):
   # Step 1: GET request to fetch login token
 
     PARAMS_0 = {
@@ -17,7 +18,7 @@ def login (url, session, username='Example', password='password'):
     try:
         R = session.get(url=url, params=PARAMS_0)
         DATA = R.json()
-    except:
+    except BaseException:
         bot.reply("Catostrophic Error! Unable to connect to the wiki.")
         return
 
@@ -40,6 +41,7 @@ def login (url, session, username='Example', password='password'):
         bot.reply("Catastrophic Error! Unable to connect to the wiki.")
         return
 
+
 def gettoken(url, session, type='csrftoken'):
   # Step 3: GET request to fetch CSRF token
 
@@ -48,13 +50,13 @@ def gettoken(url, session, type='csrftoken'):
     try:
         R = session.get(url=url, params=PARAMS_2)
         DATA = R.json()
-    except:
+    except BaseException:
         bot.reply("Catastrophic Error! Unable to connect to the wiki.")
         return
 
     TOKEN = DATA['query']['tokens'][type]
     return TOKEN
-  
+
 
 def main(performer, target, action, reason, url, username, password):
     session = requests.Session()
@@ -78,7 +80,7 @@ def main(performer, target, action, reason, url, username, password):
             R = session.post(URL, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error").get("info") is not None:
-                #bot.say(DATA.get("error").get("info"))
+                # bot.say(DATA.get("error").get("info"))
             else:
                 #bot.say("Logged message")
         except:
@@ -99,12 +101,13 @@ def main(performer, target, action, reason, url, username, password):
             DATA = R.json()
             if DATA.get("error").get("info") is not None:
                 return None
-                #bot.say(DATA.get("error").get("info"))
+                # bot.say(DATA.get("error").get("info"))
             else:
-              return None
-              #bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
+                return None
+                #bot.reply("Block request sent. You may want to check the block log to be sure that it worked.")
         except:
-            bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
+            return None
+            #bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
     elif action == 'unblock':
         PARAMS_3 = {
             'action': 'unblock',
@@ -120,10 +123,10 @@ def main(performer, target, action, reason, url, username, password):
             if DATA.get("error") is not None:
                 bot.say(DATA.get("error").get("info"))
             else:
-              return None
+                return None
             #bot.reply("Unblock request sent. You may want to check the block log to be sure that it worked.")
         except:
-          return None
+            return None
             #bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
 
     elif action == 'delete':
@@ -139,11 +142,11 @@ def main(performer, target, action, reason, url, username, password):
             R = session.post(url, data=PARAMS_3)
             DATA = R.json()
             if DATA.get("error") is not None:
-              return None
-                #bot.say(DATA.get("error").get("info"))
+                return None
+                # bot.say(DATA.get("error").get("info"))
             else:
-              return None
+                return None
                 #bot.reply("Delete request sent. You may want to check the delete log to be sure that it worked.")
         except:
-          return None
+            return None
             #bot.reply("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have admin rights on that wiki?")
