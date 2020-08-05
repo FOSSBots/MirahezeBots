@@ -46,7 +46,7 @@ def gettoken(url, session, type='csrftoken'):
     return TOKEN
 
 
-def makeaction(url, session, action, TOKEN, target, performer, reason):
+def makeaction(url, session, action, TOKEN, target, performer, reason, content):
     if action == 'edit':
         PARAMS = {
             'action': 'edit',
@@ -56,6 +56,20 @@ def makeaction(url, session, action, TOKEN, target, performer, reason):
             'token': TOKEN,
             'bot': 'true',
             'format': 'json',
+        }
+    elif action == "create":
+        PARAMS = {
+            'action': 'edit',
+            'title': target,
+            'summary': reason,
+            'text': content,
+            'token': TOKEN,
+            'bot': 'true',
+            'format': 'json',
+            'contentmodel': 'wikitext',
+            'recreate': True,
+            'watchlist': 'nochange',
+            'redirect': False,
         }
 
     elif action == 'block':
