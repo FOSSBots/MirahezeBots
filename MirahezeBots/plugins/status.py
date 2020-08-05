@@ -15,8 +15,8 @@ pages = ''
 
 class StatusSection(StaticSection):
     data_path = ValidatedAttribute('data_path', str)
-    wiki_username = ValidatedAttribute('bot_username', str)
-    wiki_password = ValidatedAttribute('bot_password', str)
+    bot_username = ValidatedAttribute('bot_username', str)
+    bot_password = ValidatedAttribute('bot_password', str)
     support_channel = ValidatedAttribute('support_channel', str)
 
 
