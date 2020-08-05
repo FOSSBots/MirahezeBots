@@ -67,7 +67,7 @@ def deletepage(bot, trigger):
                 if len(options) < 3:
                     bot.say("Syntax: .deletepage wiki page reason")
                 else:
-                    url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                    url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
                     target = options[1]
                     reason = options[2]
                     response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
@@ -103,7 +103,7 @@ def blockuser(bot, trigger):
                 if len(options) < 3:
                     bot.say("Syntax: .block wiki user reason")
                 else:
-                    url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                    url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
                     target = options[1]
                     reason = options[2]
                     response = mwapi.main(sender, target, 'block', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
@@ -139,7 +139,7 @@ def unblockuser(bot, trigger):
                 if len(options) < 3:
                     bot.say("Syntax: .unblock wiki user reason")
                 else:
-                    url = options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+                    url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
                     target = options[1]
                     reason = options[2]
                     response = mwapi.main(sender, target, 'unblock', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
