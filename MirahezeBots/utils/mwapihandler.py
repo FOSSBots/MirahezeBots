@@ -70,7 +70,6 @@ def makeaction(url, session, action, TOKEN, target, performer, reason, content='
             'contentmodel': 'wikitext',
             'recreate': True,
             'watchlist': 'nochange',
-            'redirect': False,
         }
 
     elif action == 'block':
