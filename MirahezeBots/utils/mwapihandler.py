@@ -31,7 +31,7 @@ def login(url, session, username='Example', password='password'):
         request = session.post(url, data=PARAMS_1)
     except:
         return ["Error", "Unable to conect to wiki"]
-
+    return ["Success", "Logged in"]
 
 def gettoken(url, session, type='csrftoken'):
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
@@ -110,7 +110,6 @@ def makeaction(url, session, action, TOKEN, target, performer, reason, content='
             return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
     except:
         return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
-
 
 def main(performer, target, action, reason, url, username, password, content=''):
     session = requests.Session()
