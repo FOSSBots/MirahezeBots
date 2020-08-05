@@ -46,7 +46,7 @@ def gettoken(url, session, type='csrftoken'):
     return TOKEN
 
 
-def makeaction(url, session, action, TOKEN, target, performer, reason, content):
+def makeaction(url, session, action, TOKEN, target, performer, reason, content=''):
     if action == 'edit':
         PARAMS = {
             'action': 'edit',
