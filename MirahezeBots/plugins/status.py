@@ -5,8 +5,6 @@ import requests
 import re
 import time
 
-from mwclient import errors
-
 from sopel.module import rule, commands, example
 from sopel.config.types import StaticSection, ValidatedAttribute
 from MirahezeBots.utils import mwapihandler as mwapi
