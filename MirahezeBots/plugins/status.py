@@ -83,13 +83,12 @@ def updatestatus(bot, trigger, options):
         if cont == 0:
             message = "You don't seem to be authorised to use this module. Please check you are signed into NickServ and try again."
             if bot.config.status.support_channel is not None:
-                message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel))
+                message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
             return message
     if cont == 1:
         wikiurl = 'example.org'
         wikiexists = 0
-        file = open(bot.config.status.data_path
-                    + 'statuswikis.csv', 'r')
+        file = open(bot.config.status.data_path + 'statuswikis.csv', 'r')
         for line in file:
             data = line.split(',')
             if data[1] == wiki[0]:
