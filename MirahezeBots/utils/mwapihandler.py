@@ -112,6 +112,7 @@ def makeaction(url, session, action, TOKEN, target, performer, reason, content='
     except:
         return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
 
+
 def main(performer, target, action, reason, url, username, password, content=''):
     session = requests.Session()
     lg = login(url, session, username, password)
