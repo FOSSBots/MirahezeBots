@@ -33,7 +33,8 @@ def configure(config):
     config.status.configure_setting('bot_password', "What is the statusbot accounts's bot password? (from Special:BotPasswords)")
     config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
-def main(bot, trigger, options):
+
+def updatestatus(bot, trigger, options):
     cont = 0
     if len(options) == 2:
         wiki = options[0]
@@ -95,7 +96,7 @@ def main(bot, trigger, options):
                 wikiexists = 1
             if data[1] == wiki[0] and wiki[1] == data[2]:
                 wikiurl = "https://" + str(data[0]) + "/w/api.php"
-                content = mwapi.main(request[0], str((str(request[0]) + "/Status")), "create", str("Updating status to " + str(request[1]) + "per" + str(request[0])), wikiurl, bot.settings.status.bot_username, bot.settings.status.bot_password, str(request[1])) 
+                content = mwapi.main(request[0], str((str(request[0]) + "/Status")), "create", str("Updating status to " + str(request[1]) + "per" + str(request[0])), wikiurl, bot.settings.status.bot_username, bot.settings.status.bot_password, str(request[1]))
         if cont == 1 and wikiexists == 1:
             bot.reply("I couldn't authentice you for that wiki.")
         elif wikiexists == 0:
@@ -107,8 +108,8 @@ def main(bot, trigger, options):
 def status(bot, trigger):
     """Update's the /Status subpage of Special:MyPage on the indicated wiki"""
     options = trigger.group(2).split(" ")
-    response = main(bot, trigger, options)
-    if response = "create request sent. You may want to check the create log to be sure that it worked.":
+    response = updatestatus(bot, trigger, options)
+    if response == "create request sent. You may want to check the create log to be sure that it worked.":
         bot.reply("Success")
     else:
         bot.reply(str(response))
