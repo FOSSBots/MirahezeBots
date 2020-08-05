@@ -33,6 +33,7 @@ def login(url, session, username='Example', password='password'):
         return ["Error", "Unable to conect to wiki"]
     return ["Success", "Logged in"]
 
+
 def gettoken(url, session, type='csrftoken'):
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
 
