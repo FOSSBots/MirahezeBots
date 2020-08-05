@@ -118,7 +118,7 @@ def main(performer, target, action, reason, url, username, password, content='')
     if lg[0] == "Error":
         return lg[1]
     else:
-        TOKEN = gettoken(url, session, type='crsftoken')
+        TOKEN = gettoken(url, session, type='csrftoken')
         if TOKEN[0] == "Error":
             return TOKEN[1]
         else:
