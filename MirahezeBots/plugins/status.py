@@ -81,10 +81,10 @@ def updatestatus(bot, trigger, options):
                     cont = 1
                     break
         if cont == 0:
-            return "You don't seem to be authorised to use this module."
-                      + " Please check you are signed into NickServ and try again."
+            message = "You don't seem to be authorised to use this module. Please check you are signed into NickServ and try again."
             if bot.config.status.support_channel is not None:
-                return "If this persists, ask for help in {}".format(bot.config.status.support_channel))
+                message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel))
+            return message
     if cont == 1:
         wikiurl = 'example.org'
         wikiexists = 0
