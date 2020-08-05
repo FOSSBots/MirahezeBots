@@ -93,7 +93,7 @@ def updatestatus(bot, trigger, options):
                 wikiexists = 1
             if data[1] == wiki[0] and wiki[1] == data[2]:
                 wikiurl = "https://" + str(data[0]) + "/w/api.php"
-                content = mwapi.main(request[0], str((str(request[0]) + "/Status")), "create", str("Updating status to " + str(request[1]) + "per" + str(request[0])), wikiurl, bot.settings.status.bot_username, bot.settings.status.bot_password, str(request[1]))
+                content = mwapi.main(request[0], str("User:" + (str(request[0]) + "/Status")), "create", str("Updating status to " + str(request[1]) + " per " + str(request[0])), wikiurl, bot.settings.status.bot_username, bot.settings.status.bot_password, str(request[1]))
                 return content
         if cont == 1 and wikiexists == 1:
             return "I couldn't authentice you for that wiki."
