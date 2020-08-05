@@ -81,10 +81,10 @@ def updatestatus(bot, trigger, options):
                     cont = 1
                     break
         if cont == 0:
-            bot.reply("You don't seem to be authorised to use this module."
-                      + " Please check you are signed into NickServ and try again.", trigger.sender)
+            return "You don't seem to be authorised to use this module."
+                      + " Please check you are signed into NickServ and try again."
             if bot.config.status.support_channel is not None:
-                bot.say("If this persists, ask for help in {}".format(bot.config.status.support_channel))
+                return "If this persists, ask for help in {}".format(bot.config.status.support_channel))
     if cont == 1:
         wikiurl = 'example.org'
         wikiexists = 0
@@ -97,10 +97,11 @@ def updatestatus(bot, trigger, options):
             if data[1] == wiki[0] and wiki[1] == data[2]:
                 wikiurl = "https://" + str(data[0]) + "/w/api.php"
                 content = mwapi.main(request[0], str((str(request[0]) + "/Status")), "create", str("Updating status to " + str(request[1]) + "per" + str(request[0])), wikiurl, bot.settings.status.bot_username, bot.settings.status.bot_password, str(request[1]))
+                return content
         if cont == 1 and wikiexists == 1:
-            bot.reply("I couldn't authentice you for that wiki.")
+            return "I couldn't authentice you for that wiki."
         elif wikiexists == 0:
-            bot.reply("I don't recongise that wiki.")
+            return "I don't recongise that wiki."
 
 
 @commands('status')
