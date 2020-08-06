@@ -32,15 +32,15 @@ def configure(config):
     config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
 
-def updatestatus(bot, options):
+def updatestatus(bot, requestdata):
     cont = 0
     cloakfile = open(bot.config.status.data_path + 'cloaks.csv', 'r')
     for line in cloakfile:
         auth = line.split(',')
-        if host[0] == auth[0]:
-            user = host[1]
+        if requestdata[1][0] == auth[0]:
+            user = requestdata[1][1]
             sulgroup = auth[1]
-            wiki = [wiki, sulgroup]
+            wiki = [requestdata[2], sulgroup]
             request = [user, status]
             cont = 1
             break
@@ -48,7 +48,7 @@ def updatestatus(bot, options):
         usersfile = open(bot.config.status.data_path + 'users.csv', 'r')
         for line in usersfile:
             auth = line.split(',')
-            if str(trigger.account) == auth[0]:
+            if requestdata[1][0] == auth[0]:
                 user = auth[1]
                 sulgroup = auth[2]
                 wiki = [wiki, sulgroup]
@@ -105,12 +105,13 @@ def status(bot, trigger):
         else:
             bot.reply("Syntax: .status wikicode new-status")
             cont = 0
-    except AtributeError as e:
+    except AttributeError as e:
         bot.reply("Syntax: .status wikicode new-status")
         bot.say("AttributeError: {} from Status plugin in {}".format(e, trigger.sender), bot.config.core.logging_channel)
         cont = 0
     if cont == 1:
-        response = updatestatus(bot, options)
+        requestdata = [str(trigger.account), host, wiki]
+        response = updatestatus(bot, requestdata)
         if response == "create request sent. You may want to check the create log to be sure that it worked.":
             bot.reply("Success")
         else:
