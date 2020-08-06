@@ -41,7 +41,7 @@ def updatestatus(bot, requestdata):
             user = requestdata[1][1]
             sulgroup = auth[1]
             wiki = [requestdata[2], sulgroup]
-            request = [user, status]
+            request = [user, requestdata[3]]
             cont = 1
             break
     if cont == 0:
@@ -51,8 +51,8 @@ def updatestatus(bot, requestdata):
             if requestdata[1][0] == auth[0]:
                 user = auth[1]
                 sulgroup = auth[2]
-                wiki = [wiki, sulgroup]
-                request = [user, status]
+                wiki = [requestdata[2], sulgroup]
+                request = [user, requestdata[3]]
                 cont = 1
                 break
     if cont == 0:
@@ -110,7 +110,7 @@ def status(bot, trigger):
         bot.say("AttributeError: {} from Status plugin in {}".format(e, trigger.sender), bot.config.core.logging_channel)
         cont = 0
     if cont == 1:
-        requestdata = [str(trigger.account), host, wiki]
+        requestdata = [str(trigger.account), host, wiki, str(status)]
         response = updatestatus(bot, requestdata)
         if response == "create request sent. You may want to check the create log to be sure that it worked.":
             bot.reply("Success")
