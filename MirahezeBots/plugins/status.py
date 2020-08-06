@@ -32,57 +32,34 @@ def configure(config):
     config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
 
-def updatestatus(bot, trigger, options):
+def updatestatus(bot, requestdata):
     cont = 0
-    if len(options) == 2:
-        wiki = options[0]
-        status = options[1]
-        host = trigger.host
-        host = host.split('/')
-        cont = 1
-    elif len(options) > 2:
-        wiki = options[0]
-        host = trigger.host
-        host = host.split('/')
-        status = options[1]
-        x = 2
-        while x < len(options):
-            status = status + " " + options[x]
-            x = x + 1
-        cont = 1
-    else:
-        bot.reply("Syntax: .status wikicode status")
-        cont = 0
-    if cont == 1:
-        cont = 0
-        cloakfile = open(bot.config.status.data_path
-                         + 'cloaks.csv', 'r')
-        for line in cloakfile:
+    cloakfile = open(bot.config.status.data_path + 'cloaks.csv', 'r')
+    for line in cloakfile:
+        auth = line.split(',')
+        if requestdata[1][0] == auth[0]:
+            user = requestdata[1][1]
+            sulgroup = auth[1]
+            wiki = [requestdata[2], sulgroup]
+            request = [user, status]
+            cont = 1
+            break
+    if cont == 0:
+        usersfile = open(bot.config.status.data_path + 'users.csv', 'r')
+        for line in usersfile:
             auth = line.split(',')
-            if host[0] == auth[0]:
-                user = host[1]
-                sulgroup = auth[1]
+            if requestdata[1][0] == auth[0]:
+                user = auth[1]
+                sulgroup = auth[2]
                 wiki = [wiki, sulgroup]
                 request = [user, status]
                 cont = 1
                 break
-        if cont == 0:
-            usersfile = open(bot.config.status.data_path
-                             + 'users.csv', 'r')
-            for line in usersfile:
-                auth = line.split(',')
-                if str(trigger.account) == auth[0]:
-                    user = auth[1]
-                    sulgroup = auth[2]
-                    wiki = [wiki, sulgroup]
-                    request = [user, status]
-                    cont = 1
-                    break
-        if cont == 0:
-            message = "You don't seem to be authorised to use this module. Please check you are signed into NickServ and try again."
-            if bot.config.status.support_channel is not None:
-                message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
-            return message
+    if cont == 0:
+        message = "You don't seem to be authorised to use this module. Please check you are signed into NickServ and try again."
+        if bot.config.status.support_channel is not None:
+            message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
+        return message
     if cont == 1:
         wikiurl = 'example.org'
         wikiexists = 0
@@ -106,9 +83,36 @@ def updatestatus(bot, trigger, options):
 @example('.status mhtest offline')
 def status(bot, trigger):
     """Update's the /Status subpage of Special:MyPage on the indicated wiki"""
-    options = trigger.group(2).split(" ")
-    response = updatestatus(bot, trigger, options)
-    if response == "create request sent. You may want to check the create log to be sure that it worked.":
-        bot.reply("Success")
-    else:
-        bot.reply(str(response))
+    options = []
+    try:
+        options = trigger.group(2).split(" ")
+        if len(options) == 2:
+            wiki = options[0]
+            status = options[1]
+            host = trigger.host
+            host = host.split('/')
+            cont = 1
+        elif len(options) > 2:
+            wiki = options[0]
+            host = trigger.host
+            host = host.split('/')
+            status = options[1]
+            x = 2
+            while x < len(options):
+                status = status + " " + options[x]
+                x = x + 1
+            cont = 1
+        else:
+            bot.reply("Syntax: .status wikicode new-status")
+            cont = 0
+    except AttributeError as e:
+        bot.reply("Syntax: .status wikicode new-status")
+        bot.say("AttributeError: {} from Status plugin in {}".format(e, trigger.sender), bot.config.core.logging_channel)
+        cont = 0
+    if cont == 1:
+        requestdata = [str(trigger.account), host, wiki]
+        response = updatestatus(bot, requestdata)
+        if response == "create request sent. You may want to check the create log to be sure that it worked.":
+            bot.reply("Success")
+        else:
+            bot.reply(str(response))
