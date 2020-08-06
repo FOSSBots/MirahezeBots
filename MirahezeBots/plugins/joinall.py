@@ -18,7 +18,6 @@ import time
 def handle_joins(bot, trigger):
     """Join some channels."""
     channels = bot.config.core.channels
-    if trigger.sender == '#ZppixBot':
-        for channel in channels:
+    for channel in channels:
             bot.join(channel)
             time.sleep(1)
