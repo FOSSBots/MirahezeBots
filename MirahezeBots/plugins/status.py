@@ -44,22 +44,22 @@ def updatestatus(bot, options):
             request = [user, status]
             cont = 1
             break
-        if cont == 0:
-            usersfile = open(bot.config.status.data_path + 'users.csv', 'r')
-            for line in usersfile:
-                auth = line.split(',')
-                if str(trigger.account) == auth[0]:
-                    user = auth[1]
-                    sulgroup = auth[2]
-                    wiki = [wiki, sulgroup]
-                    request = [user, status]
-                    cont = 1
-                    break
-        if cont == 0:
-            message = "You don't seem to be authorised to use this module. Please check you are signed into NickServ and try again."
-            if bot.config.status.support_channel is not None:
-                message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
-            return message
+    if cont == 0:
+        usersfile = open(bot.config.status.data_path + 'users.csv', 'r')
+        for line in usersfile:
+            auth = line.split(',')
+            if str(trigger.account) == auth[0]:
+                user = auth[1]
+                sulgroup = auth[2]
+                wiki = [wiki, sulgroup]
+                request = [user, status]
+                cont = 1
+                break
+    if cont == 0:
+        message = "You don't seem to be authorised to use this module. Please check you are signed into NickServ and try again."
+        if bot.config.status.support_channel is not None:
+            message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
+        return message
     if cont == 1:
         wikiurl = 'example.org'
         wikiexists = 0
