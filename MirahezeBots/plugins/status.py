@@ -34,16 +34,16 @@ def configure(config):
 
 def updatestatus(bot, options):
     cont = 0
-        cloakfile = open(bot.config.status.data_path + 'cloaks.csv', 'r')
-        for line in cloakfile:
-            auth = line.split(',')
-            if host[0] == auth[0]:
-                user = host[1]
-                sulgroup = auth[1]
-                wiki = [wiki, sulgroup]
-                request = [user, status]
-                cont = 1
-                break
+    cloakfile = open(bot.config.status.data_path + 'cloaks.csv', 'r')
+    for line in cloakfile:
+        auth = line.split(',')
+        if host[0] == auth[0]:
+            user = host[1]
+            sulgroup = auth[1]
+            wiki = [wiki, sulgroup]
+            request = [user, status]
+            cont = 1
+            break
         if cont == 0:
             usersfile = open(bot.config.status.data_path + 'users.csv', 'r')
             for line in usersfile:
