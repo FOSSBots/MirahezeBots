@@ -41,7 +41,6 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
                 return FARMSYNTAX
             else:
                 return SYNTAX
-            return
         if iswikifarm is False and len(options) < 2:
             return SYNTAX
         elif iswikifarm is True and len(options) < 3:
