@@ -1,4 +1,4 @@
-"""This module contains miraheze specific commands."""
+"""This plugin contains miraheze specific commands."""
 from sopel.module import commands, example, rule
 
 MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL = (
