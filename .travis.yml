@@ -17,9 +17,9 @@ before_script:
 
 script:
     # F401 because some imports aren't directly used but needed for modules and travis doesn't like that
-    - flake8 MirahezeBots/plugins --ignore F401,W503,E722 --max-line-length 265 --exclude=__init__.py
-    - flake8 tests --ignore F401,W503,E722 --max-line-length 265
-    - flake8 MirahezeBots/utils --ignore F401,W503,E722 --max-line-length 265 --exclude=__init__.py
+    - flake8 MirahezeBots/plugins --ignore W503,E722 --max-line-length 265 --exclude=__init__.py
+    - flake8 tests --ignore W503,E722 --max-line-length 265
+    - flake8 MirahezeBots/utils --ignore W503,E722 --max-line-length 265 --exclude=__init__.py
     - pytest tests/test_general.py
     - pytest tests/test_rss.py
     - pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* .
