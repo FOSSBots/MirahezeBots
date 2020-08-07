@@ -1,6 +1,5 @@
 ''' status.py - Mediawiki Status Page Updater '''
 
-import json
 import requests
 import time
 
