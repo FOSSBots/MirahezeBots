@@ -7,7 +7,7 @@ Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3
 This module posts rss feed items to irc channels
 """
 from __future__ import unicode_literals
-from sopel.config.types import StaticSection, ListAttribute, ValidatedAttribute
+from sopel.config.types import StaticSection, ListAttribute
 from sopel.logger import get_logger
 from sopel.module import commands, interval, require_admin, example
 from sopel.tools import SopelMemory
@@ -524,7 +524,7 @@ def _config_save(bot):
         bot.config.save()
         message = MESSAGES['saved_config_to_disk']
         LOGGER.debug(message)
-    except BaseException:
+    except Exception:
         message = MESSAGES['unable_to_save_config_to_disk']
         LOGGER.error(message)
 
@@ -701,7 +701,7 @@ def _db_save_hash_to_database(bot, feedname, hash):
         bot.db.execute(sql_save_hashes, (hash,))
         message = MESSAGES['saved_hash_of_feed_to_sqlite_table'].format(hash, feedname, tablename)
         LOGGER.debug(message)
-    except BaseException:
+    except Exception:
         message = MESSAGES['unable_to_save_hash_of_feed_to_sqlite_table'].format(hash, feedname, tablename)
         LOGGER.error(message)
 
@@ -1555,7 +1555,7 @@ class FeedReader:
         try:
             feed = feedparser.parse(self.url)
             return feed
-        except BaseException:
+        except Exception:
             return dict()
 
     def get_tinyurl(self, url):
@@ -1577,7 +1577,7 @@ class MockFeedReader:
         try:
             feed = feedparser.parse(self.url)
             return feed
-        except BaseException:
+        except Exception:
             return dict()
 
     def get_tinyurl(self, url):
