@@ -29,7 +29,7 @@ def configure(config):
     config.wikimgnt.configure_setting('bot_username', 'What is the username the bot should use to login? (from Special:BotPasswords)')
     config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
-def blockManager(type, sender, account, iswikifarm, domain, acl, username, password):
+def blockManager(type, sender, account, iswikifarm, domain, acl, username, password, trigger):
     FARMSYNTAX = "Syntax: .{} wiki user reason".format(type)
     SYNTAX = "Syntax: .{} user reason".format(type)
     if account in acl:
@@ -43,7 +43,7 @@ def blockManager(type, sender, account, iswikifarm, domain, acl, username, passw
             return
         if iswikifarm is False and len(options) < 2:
             return SYNTAX
-        elif iswikifarmm is True and len(options) < 3:
+        elif iswikifarm is True and len(options) < 3:
             return FARMSYNTAX
         elif iswikifarm is True:
             url = 'https://' + options[0] + '.' + domain
@@ -111,7 +111,7 @@ def deletepage(bot, trigger):
 @example('.block test Zppix vandalism')
 def blockuser(bot, trigger):
     """Block the given user indefinitely (depending on config, on the given wiki)"""
-    replytext = blockManager("block", trigger.nick, trigger.account, bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+    replytext = blockManager("block", trigger.nick, trigger.account, bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password, trigger)
     bot.reply(replytext)
 
 @commands('unblock')
@@ -119,5 +119,5 @@ def blockuser(bot, trigger):
 @example('.unblock test Zppix per appeal')
 def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)"""
-    replytext = blockManager("unblock", trigger.nick, trigger.account, bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+    replytext = blockManager("unblock", trigger.nick, trigger.account, bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password, trigger)
     bot.reply(replytext)
