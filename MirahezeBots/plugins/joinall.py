@@ -1,12 +1,5 @@
 """This module implements .joinall."""
 
-from __future__ import (
-    unicode_literals,
-    absolute_import,
-    print_function,
-    division
-)
-
 from sopel import module
 
 import time
