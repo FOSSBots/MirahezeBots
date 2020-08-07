@@ -1,5 +1,5 @@
 """
-ping.py - Sopel Ping Module.
+ping.py - Sopel Ping Plugin.
 
 Author: Sean B. Palmer, inamidst.com
 About: http://sopel.chat
