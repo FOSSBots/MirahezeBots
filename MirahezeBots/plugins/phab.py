@@ -4,7 +4,6 @@ import json  # FIX THIS
 import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
-import sys
 
 
 class PhabricatorSection(StaticSection):
@@ -54,7 +53,7 @@ def searchphab(bot, channel, task=1):
         bot.say("An error occurred while parsing the result.", channel)
     except IndexError:
         bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
-    except:
+    except Exception:
         bot.say("An unknown error occured.", channel)
     if go == 1:
         params = {
@@ -106,7 +105,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
     try:
         data = result.get("data")
         go = 1
-    except:
+    except Exception:
         bot.say("They are no high priority tasks that I can process, good job!", channel)
         go = 0
     if go == 1:

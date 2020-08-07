@@ -1,6 +1,5 @@
 """This module expands links to various websites"""
-import re
-from sopel.module import rule, commands, example
+from sopel.module import commands, example
 
 
 @commands('github', 'gh')

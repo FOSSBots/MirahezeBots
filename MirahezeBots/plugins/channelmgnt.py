@@ -467,7 +467,6 @@ def topic(bot, trigger):
             return
         channel = trigger.sender.lower()
 
-        narg = 1
         mask = None
         mask = bot.db.get_channel_value(channel, 'topic_mask')
         mask = mask or default_mask(trigger)
@@ -526,7 +525,6 @@ def invite_user(bot, trigger):
     Command to invite users to a room.
     """
     chanops = get_chanops(bot, trigger)
-    nick = trigger.group(2)
     channel = trigger.sender
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
