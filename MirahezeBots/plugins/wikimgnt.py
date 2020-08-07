@@ -48,7 +48,7 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
         elif iswikifarm is True:
             url = 'https://' + options[0] + '.' + domain
             target = options[1]
-            reason = optiond[2]
+            reason = options[2]
         else:
             url = domain
             target = options[0]
