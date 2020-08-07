@@ -4,7 +4,6 @@ import json  # FIX THIS
 import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
-import sys
 
 
 class PhabricatorSection(StaticSection):
