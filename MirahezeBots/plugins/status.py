@@ -54,7 +54,7 @@ def updatestatus(bot, requestdata):
                 cont = 1
                 break
     if cont == 0:
-        message = "You don't seem to be authorised to use this module. Please check you are signed into NickServ and try again."
+        message = "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
         if bot.config.status.support_channel is not None:
             message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
         return message
