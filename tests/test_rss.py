@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from sopel.db import SopelDB
 import MirahezeBots.plugins.rss as rss
-from sopel.test_tools import MockSopel, MockConfig
+from sopel.test_tools import MockSopel
 import hashlib
 import os
 import pytest
