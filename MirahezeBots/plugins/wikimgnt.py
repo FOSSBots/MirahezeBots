@@ -30,6 +30,33 @@ def configure(config):
     config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
 
+def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
+    FARMSYNTAX = "Syntax: .{} wiki user reason".format(type)
+    SYNTAX = "Syntax: .{} user reason".format(type)
+    if sender[1] in acl:
+        try:
+            options = trigger.group(2).split(" ")
+        except Exception:
+            if iswikifarm is True:
+                return FARMSYNTAX
+            else:
+                return SYNTAX
+        if iswikifarm is False and len(options) < 2:
+            return SYNTAX
+        elif iswikifarm is True and len(options) < 3:
+            return FARMSYNTAX
+        elif iswikifarm is True:
+            url = 'https://' + options[0] + '.' + domain
+        else:
+            url = domain
+        target = options[0]
+        reason = options[1]
+        response = mwapi.main(sender[0], target, type, reason, url, logininfo[0], logininfo[1])
+        return response
+    else:
+        return "Sorry: you don't have permission to use this plugin"
+
+
 @commands('log')
 @example('.log restarting sopel')
 def logpage(bot, trigger):
@@ -54,32 +81,29 @@ def logpage(bot, trigger):
 def deletepage(bot, trigger):
     """Delete the given page (depending on config, on the given wiki)"""
     if trigger.account in bot.settings.wikimgnt.wiki_acl:
+        sender = trigger.nick
         try:
             options = trigger.group(2).split(" ")
-            sender = trigger.nick
-            if bot.settings.wikimgnt.wiki_farm is True:
-                if len(options) < 3:
-                    bot.say("Syntax: .deletepage wiki page reason")
-                else:
-                    url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-                    target = options[1]
-                    reason = options[2]
-                    response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
-                    bot.reply(response)
-            else:
-                if len(options) < 2:
-                    bot.say("Syntax: .deletepage page reason")
-                else:
-                    url = bot.settings.wikimgnt.wiki_domain
-                    target = options[0]
-                    reason = options[1]
-                    response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
-                    bot.reply(response)
-        except:
+        except Exception:
             if bot.settings.wikimgnt.wiki_farm is True:
                 bot.say("Syntax: .deletepage wiki page reason")
             else:
                 bot.say("Syntax: .deletepage page reason")
+            return
+        if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
+            bot.say("Syntax: .deletepage page reason")
+            return
+        elif bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
+            bot.say("Syntax: .deletepage wiki page reason")
+            return
+        elif bot.settings.wikimgnt.wiki_farm is True:
+            url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+        else:
+            url = bot.settings.wikimgnt.wiki_domain
+        target = options[0]
+        reason = options[1]
+        response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+        bot.reply(response)
     else:
         bot.reply("Sorry: you don't have permission to use this plugin")
 
@@ -89,35 +113,8 @@ def deletepage(bot, trigger):
 @example('.block test Zppix vandalism')
 def blockuser(bot, trigger):
     """Block the given user indefinitely (depending on config, on the given wiki)"""
-    if trigger.account in bot.settings.wikimgnt.wiki_acl:
-        try:
-            options = trigger.group(2).split(" ")
-            sender = trigger.nick
-            if bot.settings.wikimgnt.wiki_farm is True:
-                if len(options) < 3:
-                    bot.say("Syntax: .block wiki user reason")
-                else:
-                    url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-                    target = options[1]
-                    reason = options[2]
-                    response = mwapi.main(sender, target, 'block', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
-                    bot.reply(response)
-            else:
-                if len(options) < 2:
-                    bot.say("Syntax: .block user reason")
-                else:
-                    url = bot.settings.wikimgnt.wiki_domain
-                    target = options[0]
-                    reason = options[1]
-                    response = mwapi.main(sender, target, 'block', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
-                    bot.reply(response)
-        except:
-            if bot.settings.wikimgnt.wiki_farm is True:
-                bot.say("Syntax: .block wiki user reason")
-            else:
-                bot.say("Syntax: .block user reason")
-    else:
-        bot.reply("Sorry: you don't have permission to use this plugin")
+    replytext = blockManager("block", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+    bot.reply(replytext)
 
 
 @commands('unblock')
@@ -125,32 +122,5 @@ def blockuser(bot, trigger):
 @example('.unblock test Zppix per appeal')
 def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)"""
-    if trigger.account in bot.settings.wikimgnt.wiki_acl:
-        try:
-            options = trigger.group(2).split(" ")
-            sender = trigger.nick
-            if bot.settings.wikimgnt.wiki_farm is True:
-                if len(options) < 3:
-                    bot.say("Syntax: .unblock wiki user reason")
-                else:
-                    url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-                    target = options[1]
-                    reason = options[2]
-                    response = mwapi.main(sender, target, 'unblock', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
-                    bot.reply(response)
-            else:
-                if len(options) < 2:
-                    bot.say("Syntax: .unblock user reason")
-                else:
-                    url = bot.settings.wikimgnt.wiki_domain
-                    target = options[0]
-                    reason = options[1]
-                    response = mwapi.main(sender, target, 'unblock', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
-                    bot.reply(response)
-        except:
-            if bot.settings.wikimgnt.wiki_farm is True:
-                bot.say("Syntax: .block wiki user reason")
-            else:
-                bot.say("Syntax: .block user reason")
-    else:
-        bot.reply("Sorry: you don't have permission to use this plugin")
+    replytext = blockManager("unblock", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+    bot.reply(replytext)
