@@ -1,8 +1,5 @@
 """ The functions in this file are not suitable for non-internal use. They are subject to change without notice and are not yet released. """
 import requests
-import re
-import time
-import random
 
 
 def login(url, session, username='Example', password='password'):
