@@ -1,4 +1,4 @@
-"""This module provides admin list and access level information."""
+"""This plugin provides admin list and access level information."""
 
 from sopel.module import commands
 

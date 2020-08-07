@@ -1,13 +1,13 @@
-"""This module implements .joinall."""
+"""This plugin implements .joinall."""
 
-from sopel import module
+from sopel.module import commands, thread, require_admin
 
 import time
 
 
-@module.require_admin
-@module.commands('joinall')
-@module.thread(True)
+@require_admin
+@commands('joinall')
+@thread(True)
 def handle_joins(bot, trigger):
     """Join some channels."""
     channels = bot.config.core.channels
