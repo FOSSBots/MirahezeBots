@@ -7,8 +7,6 @@ Copyright © 2012, Elad Alfassa <elad@fedoraproject.org>
 Licensed under the Eiffel Forum License 2.
 https://sopel.chat
 """
-from __future__ import unicode_literals, absolute_import, print_function, division
-
 import re
 import time
 import json
