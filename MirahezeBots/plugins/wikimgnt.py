@@ -30,8 +30,8 @@ def configure(config):
     config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
 def blockManager(type, sender, account, iswikifarm, domain, acl, username, password):
-    FARMSYNTAX = "Syntax: .block wiki user reason"
-    SYNTAX = "Syntax: .block user reason"
+    FARMSYNTAX = "Syntax: .{} wiki user reason".format(type)
+    SYNTAX = "Syntax: .{} user reason".format(type)
     if account in acl:
         try:
             options = trigger.group(2).split(" ")
