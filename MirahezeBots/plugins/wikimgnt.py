@@ -47,10 +47,12 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
             return FARMSYNTAX
         elif iswikifarm is True:
             url = 'https://' + options[0] + '.' + domain
+            target = options[1]
+            reason = optiond[2]
         else:
             url = domain
-        target = options[0]
-        reason = options[1]
+            target = options[0]
+            reason = options[1]
         response = mwapi.main(sender[0], target, type, reason, url, logininfo[0], logininfo[1])
         return response
     else:
