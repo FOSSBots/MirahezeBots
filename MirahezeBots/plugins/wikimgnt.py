@@ -54,32 +54,30 @@ def logpage(bot, trigger):
 def deletepage(bot, trigger):
     """Delete the given page (depending on config, on the given wiki)"""
     if trigger.account in bot.settings.wikimgnt.wiki_acl:
+        sender = trigger.nick
         try:
             options = trigger.group(2).split(" ")
-            sender = trigger.nick
-            if bot.settings.wikimgnt.wiki_farm is True:
-                if len(options) < 3:
-                    bot.say("Syntax: .deletepage wiki page reason")
-                else:
-                    url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-                    target = options[1]
-                    reason = options[2]
-                    response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
-                    bot.reply(response)
-            else:
-                if len(options) < 2:
-                    bot.say("Syntax: .deletepage page reason")
-                else:
-                    url = bot.settings.wikimgnt.wiki_domain
-                    target = options[0]
-                    reason = options[1]
-                    response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
-                    bot.reply(response)
         except Exception:
             if bot.settings.wikimgnt.wiki_farm is True:
                 bot.say("Syntax: .deletepage wiki page reason")
+                return
             else:
                 bot.say("Syntax: .deletepage page reason")
+                return
+        if len(options) < 2:
+            bot.say("Syntax: .deletepage page reason")
+            return
+        elif bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
+            bot.say("Syntax: .deletepage wiki page reason")
+            return
+        elif bot.settings.wikimgnt.wiki_farm is True:
+            url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+        else:
+            url = bot.settings.wikimgnt.wiki_domain
+        target = options[0]
+        reason = options[1]
+        response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+        bot.reply(response)
     else:
         bot.reply("Sorry: you don't have permission to use this plugin")
 
