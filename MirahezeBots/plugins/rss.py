@@ -6,7 +6,7 @@ Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3
 
 This module posts rss feed items to irc channels
 """
-from sopel.config.types import StaticSection, ListAttribute, ValidatedAttribute
+from sopel.config.types import StaticSection, ListAttribute
 from sopel.logger import get_logger
 from sopel.module import commands, interval, require_admin, example
 from sopel.tools import SopelMemory
