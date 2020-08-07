@@ -1,10 +1,4 @@
-"""wikimgnt.py - interact with MediaWiki"""
-
-import requests
-import re
-import time
-import random
-import json
+"""wikimgnt.py - interact with Mediawiki API """
 
 from sopel.module import rule, commands, example
 from MirahezeBots.utils import mwapihandler as mwapi
