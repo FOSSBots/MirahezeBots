@@ -99,7 +99,7 @@ def blockuser(bot, trigger):
         if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
             bot.say("Syntax: .block user reason")
             return
-        elif bot.settings.wikimgnt.wiki_farm is True and if len(options) < 3:
+        elif bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
             bot.say("Syntax: .block wiki user reason")
             return
         elif bot.settings.wikimgnt.wiki_farm is True:
