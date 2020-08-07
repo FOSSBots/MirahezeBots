@@ -1,8 +1,5 @@
 ''' status.py - Mediawiki Status Page Updater '''
 
-import requests
-import time
-
 from sopel.module import commands, example
 from sopel.config.types import StaticSection, ValidatedAttribute
 from MirahezeBots.utils import mwapihandler as mwapi
