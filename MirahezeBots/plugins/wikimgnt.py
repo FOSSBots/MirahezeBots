@@ -1,6 +1,6 @@
 """wikimgnt.py - interact with Mediawiki API """
 
-from sopel.module import rule, commands, example
+from sopel.module import commands, example
 from MirahezeBots.utils import mwapihandler as mwapi
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
 
