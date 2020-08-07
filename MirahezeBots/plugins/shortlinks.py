@@ -1,4 +1,4 @@
-"""This module expands links to various websites"""
+"""This plugin expands links to various websites"""
 from sopel.module import commands, example
 
 
