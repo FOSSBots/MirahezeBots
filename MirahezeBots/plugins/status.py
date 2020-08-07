@@ -1,7 +1,6 @@
 from __future__ import unicode_literals, absolute_import, print_function, division
 
 import requests
-import re
 import time
 
 from sopel.module import commands, example
