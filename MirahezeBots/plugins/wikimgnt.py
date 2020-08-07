@@ -75,7 +75,7 @@ def deletepage(bot, trigger):
                     reason = options[1]
                     response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
                     bot.reply(response)
-        except:
+        except Exception:
             if bot.settings.wikimgnt.wiki_farm is True:
                 bot.say("Syntax: .deletepage wiki page reason")
             else:
@@ -111,7 +111,7 @@ def blockuser(bot, trigger):
                     reason = options[1]
                     response = mwapi.main(sender, target, 'block', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
                     bot.reply(response)
-        except:
+        except Exception:
             if bot.settings.wikimgnt.wiki_farm is True:
                 bot.say("Syntax: .block wiki user reason")
             else:
@@ -147,7 +147,7 @@ def unblockuser(bot, trigger):
                     reason = options[1]
                     response = mwapi.main(sender, target, 'unblock', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
                     bot.reply(response)
-        except:
+        except Exception:
             if bot.settings.wikimgnt.wiki_farm is True:
                 bot.say("Syntax: .block wiki user reason")
             else:
