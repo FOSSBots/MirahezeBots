@@ -12,7 +12,7 @@ def login(url, session, username='Example', password='password'):
     try:
         request = session.get(url=url, params=PARAMS_0)
         DATA = request.json()
-    except:
+    except Exception:
         return ["Error", "Unable to conect to wiki"]
 
     LOGIN_TOKEN = DATA['query']['tokens']['logintoken']
