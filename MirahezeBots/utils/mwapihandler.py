@@ -49,7 +49,7 @@ def makeaction(url, session, action, TOKEN, target, performer, reason, content='
         PARAMS = {
             'action': 'edit',
             'title': target,
-            'summary': reason + ' (' + performer + ')',
+            'summary': reason + ' ([[User:' + performer + '|' + performer + ']])',
             'appendtext': '\n* ' + performer + ': ' + reason,
             'token': TOKEN,
             'bot': 'true',
