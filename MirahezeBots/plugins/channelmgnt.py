@@ -197,8 +197,8 @@ def devoice(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-            nick = trigger.group(2)
-            channel = trigger.sender
+        nick = trigger.group(2)
+        channel = trigger.sender
         if not nick:
             bot.write(['MODE', channel, "-v", trigger.nick])
         elif trigger.account in chanops:
