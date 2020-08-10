@@ -25,6 +25,7 @@ class ChannelmgntSection(StaticSection):
 
 def setup(bot):
     bot.config.define_section('channelmgnt', ChannelmgntSection)
+    bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
 
 
 def configure(config):
@@ -55,20 +56,16 @@ def chanopget(channeldata, chanopsjson):
         return chanops
 
 
-def channelparse(chanopsdict=None, channel=None, file=None):
-    if file:
-        chanopsjsontemp = jp.createdict(file)
-    elif chanopsdict:
-        chanopsjsontemp = chanopsdict
-    if channel in chanopsjsontemp.keys():
-        channeldata = chanopsjsontemp[channel]
-        return channeldata, chanopsjsontemp
+def channelparse(channel, cachedjson):
+    if channel in cachedjson.keys():
+        channeldata = cachedjson[channel]
+        return channeldata, cachedjson
     else:
         return False
 
 
 def get_chanops(bot, trigger):
-    channeldata = channelparse(channel=str(trigger.sender), file=bot.settings.channelmgnt.datafile)
+    channeldata = channelparse(channel=str(trigger.sender), cachedjson=bot.memory["channelmgnt"]["jdcache"])
     if not channeldata:
         chanops = False
     else:
