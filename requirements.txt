@@ -1,4 +1,4 @@
-# dependenices used in test ZppixBot
+# dependenices used in test MirahezeBot
 feedparser==5.2.1
 requests==2.24.0
 sopel>=7.0.5,<8
