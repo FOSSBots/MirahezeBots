@@ -3,7 +3,7 @@
 import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
-from json.decode import JSONDecodeError
+from json import JSONDecodeError
 
 
 class PhabricatorSection(StaticSection):
