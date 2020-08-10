@@ -12,7 +12,7 @@ import time
 
 from sopel import formatting
 from sopel.module import (
-    commands, example, priority, OP, require_chanmsg
+    commands, example, priority, OP, require_chanmsg, require_admin
 )
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
@@ -25,6 +25,7 @@ class ChannelmgntSection(StaticSection):
 
 def setup(bot):
     bot.config.define_section('channelmgnt', ChannelmgntSection)
+    bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
 
 
 def configure(config):
@@ -45,7 +46,7 @@ def chanopget(channeldata, chanopsjson):
     chanops = []
     if 'inherits-from' in channeldata.keys():
         for x in channeldata["inherits-from"]:
-            y = channelparse(chanopsdict=chanopsjson, channel=x)
+            y = channelparse(channel=x, cachedjson=chanopsjson)
             chanops = chanops + y[0]["chanops"]
     if 'chanops' in channeldata.keys():
         chanops = chanops + (channeldata["chanops"])
@@ -55,20 +56,16 @@ def chanopget(channeldata, chanopsjson):
         return chanops
 
 
-def channelparse(chanopsdict=None, channel=None, file=None):
-    if file:
-        chanopsjsontemp = jp.createdict(file)
-    elif chanopsdict:
-        chanopsjsontemp = chanopsdict
-    if channel in chanopsjsontemp.keys():
-        channeldata = chanopsjsontemp[channel]
-        return channeldata, chanopsjsontemp
+def channelparse(channel, cachedjson):
+    if channel in cachedjson.keys():
+        channeldata = cachedjson[channel]
+        return channeldata, cachedjson
     else:
         return False
 
 
 def get_chanops(bot, trigger):
-    channeldata = channelparse(channel=str(trigger.sender), file=bot.settings.channelmgnt.datafile)
+    channeldata = channelparse(channel=str(trigger.sender), cachedjson=bot.memory["channelmgnt"]["jdcache"])
     if not channeldata:
         chanops = False
     else:
@@ -532,3 +529,14 @@ def invite_user(bot, trigger):
                 bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+
+
+@require_admin
+@commands('resetchanopcache')
+def reset_chanop_cache(bot, trigger):
+    """
+    Reset the cache of the channel management data file
+    """
+    bot.reply("Refreshing Cache...")
+    bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
+    bot.reply("Cache refreshed")
