@@ -56,7 +56,6 @@ def updatestatus(bot, requestdata):
             message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
         return message
     if cont == 1:
-        wikiurl = 'example.org'
         wikiexists = 0
         file = open(bot.config.status.data_path + 'statuswikis.csv', 'r')
         for line in file:
