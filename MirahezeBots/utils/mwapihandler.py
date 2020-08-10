@@ -39,7 +39,7 @@ def gettoken(url, session, type='csrftoken'):
         request = session.get(url=url, params=PARAMS_2)
         DATA = request.json()
     except Exception:
-        return ["Error", CONNECTERRMSG]
+        return ["Error", "Unable to conect to wiki"]
 
     TOKEN = DATA['query']['tokens'][type]
     return TOKEN
