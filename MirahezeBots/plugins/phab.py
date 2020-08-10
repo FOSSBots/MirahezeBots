@@ -1,10 +1,9 @@
 """phab.by - Phabricator Task Information Plugin"""
 
-import json  # FIX THIS
 import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
-
+from json.decode import JSONDecodeError
 
 class PhabricatorSection(StaticSection):
     host = ValidatedAttribute('host', str)
@@ -65,7 +64,7 @@ def searchphab(bot, channel, task=1):
             data=params)
         try:
             response2 = response2.json()
-        except json.decoder.JSONDecodeError as e:
+        except JSONDecodeError as e:
             bot.say(response2.text, '#ZppixBot-Logs')
             bot.say(str(e), '#ZppixBot-Logs')
         params2 = {
