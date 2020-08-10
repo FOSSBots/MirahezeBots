@@ -5,6 +5,7 @@ from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
 from json.decode import JSONDecodeError
 
+
 class PhabricatorSection(StaticSection):
     host = ValidatedAttribute('host', str)
     api_token = ValidatedAttribute('api_token', str)
