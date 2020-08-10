@@ -543,6 +543,7 @@ def reset_chanop_cache(bot):
     bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
     bot.reply("Cache refreshed")
 
+
 @require_admin(message="Only admins may check cache")
 @commands('checkchanopcache')
 def check_chanop_cache(bot):
