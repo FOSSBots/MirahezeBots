@@ -18,6 +18,7 @@ from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
 from MirahezeBots.utils import jsonparser as jp
 
+
 class ChannelmgntSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
 
@@ -44,7 +45,7 @@ def chanopget(channeldata, chanopsjson):
     chanops = []
     if 'inherits-from' in channeldata.keys():
         for x in channeldata["inherits-from"]:
-            y = channelparse(chanopsjson, x)
+            y = channelparse(chanopsdict=chanopsjson, channel=x)
             chanops = chanops + y[0]["chanops"]
     if 'chanops' in channeldata.keys():
         chanops = chanops + (channeldata["chanops"])
@@ -54,8 +55,11 @@ def chanopget(channeldata, chanopsjson):
         return chanops
 
 
-def channelparse(chanopsjson, channel, file):
-    chanopsjsontemp = jp.createdict(file)
+def channelparse(chanopsdict=None, channel=None, file=None):
+    if file:
+        chanopsjsontemp = jp.createdict(file)
+    elif chanopsdict:
+        chanopsjsontemp = chanopsdict
     if channel in chanopsjsontemp.keys():
         channeldata = chanopsjsontemp[channel]
         return channeldata, chanopsjson
@@ -64,9 +68,7 @@ def channelparse(chanopsjson, channel, file):
 
 
 def get_chanops(bot, trigger):
-    file = bot.settings.channelmgnt.datafile
-    channel = str(trigger.sender)
-    channeldata = channelparse(chanopsjson, channel, file)
+    channeldata = channelparse(channel=str(trigger.sender), file=bot.settings.channelmgnt.datafile)
     if not channeldata:
         chanops = False
     else:
