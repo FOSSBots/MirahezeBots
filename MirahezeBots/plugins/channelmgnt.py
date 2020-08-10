@@ -19,6 +19,7 @@ from sopel.tools import Identifier
 from MirahezeBots.utils import jsonparser as jp
 from sopel.tools import SopelMemory
 
+
 class ChannelmgntSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
 
