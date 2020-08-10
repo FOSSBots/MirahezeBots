@@ -12,7 +12,7 @@ import time
 
 from sopel import formatting
 from sopel.module import (
-    commands, example, priority, OP, require_chanmsg
+    commands, example, priority, OP, require_chanmsg, require_admin
 )
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
@@ -529,3 +529,14 @@ def invite_user(bot, trigger):
                 bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+
+ 
+@require_admin
+@commands('resetchanopcache')
+def reset_chanop_cache(bot, trigger):
+    """
+    Reset the cache of the channel management data file
+    """
+    bot.reply("Refreshing Cache...")
+    bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
+    bot.reply("Cache refreshed")
