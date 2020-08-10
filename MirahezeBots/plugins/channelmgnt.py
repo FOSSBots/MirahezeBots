@@ -46,7 +46,7 @@ def chanopget(channeldata, chanopsjson):
     chanops = []
     if 'inherits-from' in channeldata.keys():
         for x in channeldata["inherits-from"]:
-            y = channelparse(chanopsdict=chanopsjson, channel=x)
+            y = channelparse(channel=x, cachedjson=chanopsjson)
             chanops = chanops + y[0]["chanops"]
     if 'chanops' in channeldata.keys():
         chanops = chanops + (channeldata["chanops"])
