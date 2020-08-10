@@ -446,7 +446,6 @@ def _config_define(bot):
     bot.memory['rss'] = SopelMemory()
     bot.memory['rss']['feeds'] = dict()
     bot.memory['rss']['hashes'] = dict()
-    bot.memory['rss']['formats'] = dict()
     bot.memory['rss']['options'] = dict()
     bot.memory['rss']['formats'] = list()
     bot.memory['rss']['templates'] = dict()
