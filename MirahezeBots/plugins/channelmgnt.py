@@ -533,12 +533,24 @@ def invite_user(bot, trigger):
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
-@require_admin
+@require_admin(message="Only admins may purge cache.")
 @commands('resetchanopcache')
-def reset_chanop_cache(bot, trigger):
+def reset_chanop_cache(bot):
     """
     Reset the cache of the channel management data file
     """
     bot.reply("Refreshing Cache...")
     bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
     bot.reply("Cache refreshed")
+
+@require_admin(message="Only admins may check cache")
+@commands('checkchanopcache')
+def check_chanop_cache(bot):
+    """
+    Validate the cache matches the copy on disk
+    """
+    result = jp.validatecache(bot.settings.channelmgnt.datafile, bot.memory["channelmgnt"]["jdcache"])
+    if result:
+        bot.reply("Cache is correct.")
+    else:
+        bot.reply("Cache does not match on-disk copy")
