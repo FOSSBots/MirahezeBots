@@ -17,7 +17,7 @@ from sopel.module import (
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
 from MirahezeBots.utils import jsonparser as jp
-
+from sopel.tools import SopelMemory
 
 class ChannelmgntSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
@@ -25,6 +25,7 @@ class ChannelmgntSection(StaticSection):
 
 def setup(bot):
     bot.config.define_section('channelmgnt', ChannelmgntSection)
+    bot.memory["channelmgnt"] = SopelMemory()
     bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
 
 
