@@ -62,7 +62,7 @@ def channelparse(chanopsdict=None, channel=None, file=None):
         chanopsjsontemp = chanopsdict
     if channel in chanopsjsontemp.keys():
         channeldata = chanopsjsontemp[channel]
-        return channeldata, chanopsdisct
+        return channeldata, chanopsjsontemp
     else:
         return False
 
