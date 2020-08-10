@@ -4,4 +4,4 @@ import json
 def createdict(filename):
   with open(filename) as jsonfile:
     data = jsonfile.read()
-  return json.dumps(data)
+  return json.loads(data)
