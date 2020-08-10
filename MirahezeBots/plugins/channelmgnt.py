@@ -9,7 +9,6 @@ https://sopel.chat
 """
 import re
 import time
-import json
 
 from sopel import formatting
 from sopel.module import (
@@ -17,6 +16,7 @@ from sopel.module import (
 )
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
+from MirahezeBots.utils import jsonparser as jp
 
 
 class ChannelmgntSection(StaticSection):
@@ -41,19 +41,11 @@ def default_mask(trigger):
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
 
-def fileread(file):
-    print(str(file))
-    channellist = open(str(file), 'r')
-    chanopsjson = channellist.read()
-    channellist.close()
-    return chanopsjson
-
-
 def chanopget(channeldata, chanopsjson):
     chanops = []
     if 'inherits-from' in channeldata.keys():
         for x in channeldata["inherits-from"]:
-            y = channelparse(chanopsjson, x)
+            y = channelparse(chanopsdict=chanopsjson, channel=x)
             chanops = chanops + y[0]["chanops"]
     if 'chanops' in channeldata.keys():
         chanops = chanops + (channeldata["chanops"])
@@ -63,20 +55,20 @@ def chanopget(channeldata, chanopsjson):
         return chanops
 
 
-def channelparse(chanopsjson, channel):
-    chanopsjsontemp = (json.loads(chanopsjson))
+def channelparse(chanopsdict=None, channel=None, file=None):
+    if file:
+        chanopsjsontemp = jp.createdict(file)
+    elif chanopsdict:
+        chanopsjsontemp = chanopsdict
     if channel in chanopsjsontemp.keys():
         channeldata = chanopsjsontemp[channel]
-        return channeldata, chanopsjson
+        return channeldata, chanopsjsontemp
     else:
         return False
 
 
 def get_chanops(bot, trigger):
-    file = bot.settings.channelmgnt.datafile
-    channel = str(trigger.sender)
-    chanopsjson = fileread(file)
-    channeldata = channelparse(chanopsjson, channel)
+    channeldata = channelparse(channel=str(trigger.sender), file=bot.settings.channelmgnt.datafile)
     if not channeldata:
         chanops = False
     else:
