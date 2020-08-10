@@ -9,7 +9,7 @@ def createdict(filename):
 
 def validatecache(filename, dict):
     cached = createdict(filename)
-    if cached = dict:
+    if cached == dict:
         return True
     else:
         return False
