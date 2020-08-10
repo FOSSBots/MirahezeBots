@@ -530,7 +530,7 @@ def invite_user(bot, trigger):
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
- 
+
 @require_admin
 @commands('resetchanopcache')
 def reset_chanop_cache(bot, trigger):
