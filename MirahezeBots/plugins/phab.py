@@ -1,10 +1,9 @@
-"""This module contains commands related to Phabricator."""
+"""phab.by - Phabricator Task Information Plugin"""
 
 import json  # FIX THIS
 import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
-import sys
 
 
 class PhabricatorSection(StaticSection):
@@ -54,7 +53,7 @@ def searchphab(bot, channel, task=1):
         bot.say("An error occurred while parsing the result.", channel)
     except IndexError:
         bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
-    except:
+    except Exception:
         bot.say("An unknown error occured.", channel)
     if go == 1:
         params = {
@@ -106,7 +105,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
     try:
         data = result.get("data")
         go = 1
-    except:
+    except Exception:
         bot.say("They are no high priority tasks that I can process, good job!", channel)
         go = 0
     if go == 1:
@@ -125,17 +124,20 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
-    if trigger.group(2).startswith('T'):
-        task_id = trigger.group(2).split('T')[1]
-    else:
-        task_id = trigger.group(2)
-    searchphab(bot=bot, channel=trigger.sender, task=task_id)
+    try:
+        if trigger.group(2).startswith('T'):
+            task_id = trigger.group(2).split('T')[1]
+        else:
+            task_id = trigger.group(2)
+        searchphab(bot=bot, channel=trigger.sender, task=task_id)
+    except AttributeError:
+        bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
 
 
 @rule('T[1-9][0-9]*')
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
-    task_id = trigger.split('T')[1]
+    task_id = (trigger.match.group(0)).split('T')[1]
     searchphab(bot=bot, channel=trigger.sender, task=task_id)
 
 

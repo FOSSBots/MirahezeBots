@@ -1,13 +1,5 @@
 # dependenices used in test ZppixBot
-certifi
-configparser
-mwclient
-pytz
-PyYAML
-requests
-requests-oauthlib
-sopel
-SQLAlchemy
-update-checker
-xmltodict
-yarl
+feedparser==5.2.1
+requests==2.24.0
+sopel>=7.0.5,<8
+SQLAlchemy==1.3.18

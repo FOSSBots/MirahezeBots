@@ -1,1 +1,0 @@
-"""Sopel modules."""

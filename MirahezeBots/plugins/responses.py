@@ -1,4 +1,4 @@
-"""This module sends responses to frequently posted messages."""
+"""responses.py - like a FAQ bot"""
 
 from sopel.module import commands, example, rate, require_account
 from sopel.config.types import StaticSection, ValidatedAttribute
@@ -25,8 +25,7 @@ def addchan(bot, trigger):
     """Reply to channel request message."""
     admins = ' '.join(map(str, bot.config.core.admin_accounts))
     if bot.config.responses.support_channel is not None:
-        bot.say(("Hey {}, {} would like to have "
-                + "me in their channel: {}").format(admins, trigger.nick, trigger.group(2)),
+        bot.say(("Hey {}, {} would like to have me in their channel: {}").format(admins, trigger.nick, trigger.group(2)),
                 bot.config.responses.support_channel)
         if trigger.sender != bot.config.responses.support_channel:
             bot.reply("Request sent! Action upon the request should be taken shortly. Thank you for using {}!".format(bot.nick))
@@ -55,7 +54,7 @@ def cancel(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def botversion(bot, trigger):
     """List the current version of the bot."""
-    bot.say('The current version of this bot is 7.0 (v7)')
+    bot.say('The current version of this bot is 8.0.3 (v8.0.3)')
 
 
 @commands('source', 'botsource')
@@ -63,4 +62,4 @@ def botversion(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def githubsource(bot, trigger):
     """Give the link to ZppixBot's Github."""
-    bot.reply('My code can be found here: https://github.com/Pix1234/ZppixBot-Source')
+    bot.reply('My code can be found here: https://github.com/MirahezeBots/MirahezeBots')

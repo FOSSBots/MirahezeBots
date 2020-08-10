@@ -1,11 +1,4 @@
-"""This module welcomes users upon joining the channel."""
-
-from __future__ import (
-    unicode_literals,
-    absolute_import,
-    print_function,
-    division
-)
+"""welcome.py - Plugin to welcome users upon joining the channel."""
 
 import os
 import re
