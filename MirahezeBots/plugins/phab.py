@@ -66,8 +66,8 @@ def searchphab(bot, channel, task=1):
         try:
             response2 = response2.json()
         except JSONDecodeError as e:
-            bot.say(response2.text, '#ZppixBot-Logs')
-            bot.say(str(e), '#ZppixBot-Logs')
+            bot.say(response2.text, bot.settings.core.logging_channel)
+            bot.say(str(e), bot.settings.core.logging_channel)
         params2 = {
             'api.token': bot.settings.phabricator.api_token,
             'constraints[phids][0]': result.get("fields").get("authorPHID")
