@@ -3,6 +3,7 @@ import requests
 
 
 def login(url, session, username='Example', password='password'):
+    CONNECTERRMSG = "Unable to conect to wiki"
     PARAMS_0 = {
         'action': 'query',
         'meta': 'tokens',
@@ -13,7 +14,7 @@ def login(url, session, username='Example', password='password'):
         request = session.get(url=url, params=PARAMS_0)
         DATA = request.json()
     except Exception:
-        return ["Error", "Unable to conect to wiki"]
+        return ["Error", CONNECTERRMSG]
 
     LOGIN_TOKEN = DATA['query']['tokens']['logintoken']
 
@@ -27,7 +28,7 @@ def login(url, session, username='Example', password='password'):
     try:
         request = session.post(url, data=PARAMS_1)
     except Exception:
-        return ["Error", "Unable to conect to wiki"]
+        return ["Error", CONNECTERRMSG]
     return ["Success", "Logged in"]
 
 
@@ -38,7 +39,7 @@ def gettoken(url, session, type='csrftoken'):
         request = session.get(url=url, params=PARAMS_2)
         DATA = request.json()
     except Exception:
-        return ["Error", "Unable to conect to wiki"]
+        return ["Error", CONNECTERRMSG]
 
     TOKEN = DATA['query']['tokens'][type]
     return TOKEN
