@@ -26,7 +26,7 @@ def login(url, session, username='Example', password='password'):
         'format': 'json',
     }
     try:
-        request = session.post(url, data=PARAMS_1)
+        session.post(url, data=PARAMS_1)
     except Exception:
         return ["Error", CONNECTERRMSG]
     return ["Success", "Logged in"]
