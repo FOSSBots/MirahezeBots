@@ -10,69 +10,69 @@ import tempfile
 import types
 
 FEED_VALID = '''<?xml version="1.0" encoding="utf-8" ?>
-<rss version="2.0" xml:base="http://www.site1.com/feed" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xml:base="https://www.site1.com/feed" xmlns:dc="https://purl.org/dc/elements/1.1/">
 <channel>
 <title>Site 1 Articles</title>
-<link>http://www.site1.com/feed</link>
+<link>https://www.site1.com/feed</link>
 <description></description>
 <language>en</language>
 <item>
 <title>Title 3</title>
-<link>http://www.site1.com/article3</link>
+<link>https://www.site1.com/article3</link>
 <description>Description of article 3</description>
 <summary>Summary of article 3</summary>
 <author>Author 3</author>
 <pubDate>Sat, 23 Aug 2016 03:30:33 +0000</pubDate>
-<guid isPermaLink="false">3 at http://www.site1.com/</guid>
+<guid isPermaLink="false">3 at https://www.site1.com/</guid>
 </item>
 <item>
 <title>Title 2</title>
-<link>http://www.site1.com/article2</link>
+<link>https://www.site1.com/article2</link>
 <description>Description of article 2</description>
 <summary>Summary of article 2</summary>
 <author>Author 2</author>
 <pubDate>Sat, 22 Aug 2016 02:20:22 +0000</pubDate>
-<guid isPermaLink="false">2 at http://www.site1.com/</guid>
+<guid isPermaLink="false">2 at https://www.site1.com/</guid>
 </item>
 <item>
 <title>Title 1</title>
-<link>http://www.site1.com/article1</link>
+<link>https://www.site1.com/article1</link>
 <description>Description of article 1</description>
 <summary>Summary of article 1</summary>
 <author>Author 1</author>
 <pubDate>Sat, 21 Aug 2016 01:10:11 +0000</pubDate>
-<guid isPermaLink="false">1 at http://www.site1.com/</guid>
+<guid isPermaLink="false">1 at https://www.site1.com/</guid>
 </item>
 </channel>
 </rss>'''
 
 
 FEED_BASIC = '''<?xml version="1.0" encoding="utf-8" ?>
-<rss version="2.0" xml:base="http://www.site1.com/feed" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xml:base="https://www.site1.com/feed" xmlns:dc="https://purl.org/dc/elements/1.1/">
 <channel>
 <title>Site 1 Articles</title>
-<link>http://www.site1.com/feed</link>
+<link>https://www.site1.com/feed</link>
 <item>
 <title>Title 3</title>
-<link>http://www.site1.com/article3</link>
+<link>https://www.site1.com/article3</link>
 </item>
 <item>
 <title>Title 2</title>
-<link>http://www.site1.com/article2</link>
+<link>https://www.site1.com/article2</link>
 </item>
 <item>
 <title>Title 1</title>
-<link>http://www.site1.com/article1</link>
+<link>https://www.site1.com/article1</link>
 </item>
 </channel>
 </rss>'''
 
 
 FEED_INVALID = '''<?xml version="1.0" encoding="utf-8" ?>
-<rss version="2.0" xml:base="http://www.site1.com/feed" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xml:base="https://www.site1.com/feed" xmlns:dc="https://purl.org/dc/elements/1.1/">
 <channel>
 <title>Site 1 Articles</title>
-<link>http://www.site1.com/feed</link>
+<link>https://www.site1.com/feed</link>
 <description></description>
 <language>en</language>
 </channel>
@@ -80,13 +80,13 @@ FEED_INVALID = '''<?xml version="1.0" encoding="utf-8" ?>
 
 
 FEED_ITEM_NEITHER_TITLE_NOR_DESCRIPTION = '''<?xml version="1.0" encoding="utf-8" ?>
-<rss version="2.0" xml:base="http://www.site1.com/feed" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xml:base="https://www.site1.com/feed" xmlns:dc="https://purl.org/dc/elements/1.1/">
 <channel>
 <title>Site</title>
-<link>http://www.site.com/feed</link>
+<link>https://www.site.com/feed</link>
 <description></description>
 <item>
-<link>http://www.site.com/article</link>
+<link>https://www.site.com/article</link>
 </item>
 </channel>
 </rss>'''
@@ -96,14 +96,14 @@ FEED_SPY = '''<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
  <title>News About <![CDATA[S&P Depository Receipts]]></title>
- <link><![CDATA[http://markets.financialcontent.com/stocks/action/rssfeed]]></link>
+ <link><![CDATA[https://markets.financialcontent.com/stocks/action/rssfeed]]></link>
  <description>News About <![CDATA[S&P Depository Receipts]]></description>
  <language>en-us</language>
  <item>
   <title><![CDATA[Deutsche Bank Predicts 10% Pullback in S&P 500]]></title>
-  <link><![CDATA[http://markets.financialcontent.com/stocks/news/read?GUID=32821698&Symbol=SPY]]></link>
+  <link><![CDATA[https://markets.financialcontent.com/stocks/news/read?GUID=32821698&Symbol=SPY]]></link>
   <pubDate><![CDATA[Sun, 11 Sep 2016 07:37:24 -0400]]></pubDate>
-  <guid><![CDATA[http://markets.financialcontent.com/stocks/news/read?GUID=32821698&Symbol=SPY]]></guid>
+  <guid><![CDATA[https://markets.financialcontent.com/stocks/news/read?GUID=32821698&Symbol=SPY]]></guid>
  </item>
 </channel>
 </rss>
@@ -150,14 +150,14 @@ def _fixture_bot_add_data(bot, id, url):
 @pytest.fixture(scope="function")
 def bot(request):
     bot = _fixture_bot_setup(request)
-    bot = _fixture_bot_add_data(bot, '1', 'http://www.site1.com/feed')
+    bot = _fixture_bot_add_data(bot, '1', 'https://www.site1.com/feed')
     return bot
 
 
 @pytest.fixture(scope="function")
 def bot_config_save(request):
     bot = _fixture_bot_setup(request)
-    bot = _fixture_bot_add_data(bot, '1', 'http://www.site1.com/feed')
+    bot = _fixture_bot_add_data(bot, '1', 'https://www.site1.com/feed')
     return bot
 
 
@@ -170,8 +170,8 @@ def bot_basic(request):
 @pytest.fixture(scope="function")
 def bot_rss_list(request):
     bot = _fixture_bot_setup(request)
-    bot = _fixture_bot_add_data(bot, '1', 'http://www.site1.com/feed')
-    bot = _fixture_bot_add_data(bot, '2', 'http://www.site2.com/feed')
+    bot = _fixture_bot_add_data(bot, '1', 'https://www.site1.com/feed')
+    bot = _fixture_bot_add_data(bot, '2', 'https://www.site2.com/feed')
     return bot
 
 
@@ -251,7 +251,7 @@ def test_rss_global_formats_feed(bot):
     bot.output = ''
     args = ['config', 'feeds']
     rss._rss_config(bot, args)
-    expected = '#channel1' + rss.CONFIG_SEPARATOR + 'feed1' + rss.CONFIG_SEPARATOR + 'http://www.site1.com/feed' + rss.CONFIG_SEPARATOR + 'f=apl+atl\n'
+    expected = '#channel1' + rss.CONFIG_SEPARATOR + 'feed1' + rss.CONFIG_SEPARATOR + 'https://www.site1.com/feed' + rss.CONFIG_SEPARATOR + 'f=apl+atl\n'
     assert expected == bot.output
 
 
@@ -259,7 +259,7 @@ def test_rss_global_get_post_feed_items(bot):
     rss._rss(bot, ['add', '#channel', 'feedname', FEED_VALID])
     bot.output = ''
     rss._rss(bot, ['get', 'feedname'])
-    expected = '\x02[feedname]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feedname]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feedname]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'  # noqa: E501
+    expected = '\x02[feedname]\x02 Title 1 \x02→\x02 https://www.site1.com/article1\n\x02[feedname]\x02 Title 2 \x02→\x02 https://www.site1.com/article2\n\x02[feedname]\x02 Title 3 \x02→\x02 https://www.site1.com/article3\n'  # noqa: E501
     assert expected == bot.output
 
 
@@ -282,7 +282,7 @@ def test_rss_global_join(bot):
 
 def test_rss_global_list_feed(bot):
     rss._rss(bot, ['list', 'feed1'])
-    expected = '#channel1 feed1 http://www.site1.com/feed\n'
+    expected = '#channel1 feed1 https://www.site1.com/feed\n'
     assert expected == bot.output
 
 
@@ -303,7 +303,7 @@ def test_rss_global_templates_get(bot):
 
 def test_rss_global_update_update(bot_rss_update):
     rss._rss(bot_rss_update, ['update'])
-    expected = '\x02[feed1]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feed1]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feed1]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'
+    expected = '\x02[feed1]\x02 Title 1 \x02→\x02 https://www.site1.com/article1\n\x02[feed1]\x02 Title 2 \x02→\x02 https://www.site1.com/article2\n\x02[feed1]\x02 Title 3 \x02→\x02 https://www.site1.com/article3\n'
     assert expected == bot_rss_update.output
 
 
@@ -340,7 +340,7 @@ def test_config_concatenate_channels(bot):
 def test_config_concatenate_feeds(bot, feedreader_feed_valid):
     bot.memory['rss']['options']['feed1'] = rss.Options(bot, feedreader_feed_valid, 'f=fy+fty')
     feeds = rss._config_concatenate_feeds(bot)
-    expected = ['#channel1' + rss.CONFIG_SEPARATOR + 'feed1' + rss.CONFIG_SEPARATOR + 'http://www.site1.com/feed' + rss.CONFIG_SEPARATOR + 'f=fy+fty']
+    expected = ['#channel1' + rss.CONFIG_SEPARATOR + 'feed1' + rss.CONFIG_SEPARATOR + 'https://www.site1.com/feed' + rss.CONFIG_SEPARATOR + 'f=fy+fty']
     assert expected == feeds
 
 
@@ -427,7 +427,7 @@ homedir = ''' + bot_config_save.config.homedir + '''
 db_filename = ''' + bot_config_save.db.filename + '''
 channels = #channel1
 [rss]
-feeds = #channel1''' + rss.CONFIG_SEPARATOR + '''feed1''' + rss.CONFIG_SEPARATOR + '''http://www.site1.com/feed''' + rss.CONFIG_SEPARATOR + '''f=fl+ftl;t=t|>>{}<<
+feeds = #channel1''' + rss.CONFIG_SEPARATOR + '''feed1''' + rss.CONFIG_SEPARATOR + '''https://www.site1.com/feed''' + rss.CONFIG_SEPARATOR + '''f=fl+ftl;t=t|>>{}<<
 formats = f=ft+ftpal
 templates = t=t|<<{}>>
 '''
@@ -717,13 +717,13 @@ def test_feed_list_format(bot):
 
 def test_feed_update_messages(bot, feedreader_feed_valid):
     rss._feed_update(bot, feedreader_feed_valid, 'feed1', True)
-    expected = '\x02[feed1]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feed1]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feed1]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'
+    expected = '\x02[feed1]\x02 Title 1 \x02→\x02 https://www.site1.com/article1\n\x02[feed1]\x02 Title 2 \x02→\x02 https://www.site1.com/article2\n\x02[feed1]\x02 Title 3 \x02→\x02 https://www.site1.com/article3\n'
     assert expected == bot.output
 
 
 def test_feed_update_store_hashes(bot, feedreader_feed_valid):
     rss._feed_update(bot, feedreader_feed_valid, 'feed1', True)
-    expected = ['f3ec142344be7e04431001e0dc658ed0', '601daf484a5766ecff6f6d1dc19131dc', '53c674b8916ad03755a6f8b679515b3a']
+    expected = ['9696cda86d9a337b37d1f4540c0f5d82', 'dc3088a287c801eb1087020dafee3d85', 'edc845b416110abf9a800552074cb415']
     hashes = bot.memory['rss']['hashes']['feed1'].get()
     assert expected == hashes
 
@@ -737,7 +737,7 @@ def test_feed_update_no_update(bot, feedreader_feed_valid):
 
 def test_hashes_read(bot, feedreader_feed_valid):
     rss._feed_update(bot, feedreader_feed_valid, 'feed1', True)
-    expected = ['f3ec142344be7e04431001e0dc658ed0', '601daf484a5766ecff6f6d1dc19131dc', '53c674b8916ad03755a6f8b679515b3a']
+    expected = ['9696cda86d9a337b37d1f4540c0f5d82', 'dc3088a287c801eb1087020dafee3d85', 'edc845b416110abf9a800552074cb415']
     bot.memory['rss']['hashes']['feed1'] = rss.RingBuffer(100)
     rss._hashes_read(bot, 'feed1')
     hashes = bot.memory['rss']['hashes']['feed1'].get()
@@ -777,7 +777,7 @@ def test_rss_config_feeds_list(bot):
     bot.output = ''
     args = ['config', 'feeds']
     rss._rss_config(bot, args)
-    expected = '#channel1' + rss.CONFIG_SEPARATOR + 'feed1' + rss.CONFIG_SEPARATOR + 'http://www.site1.com/feed' + rss.CONFIG_SEPARATOR + \
+    expected = '#channel1' + rss.CONFIG_SEPARATOR + 'feed1' + rss.CONFIG_SEPARATOR + 'https://www.site1.com/feed' + rss.CONFIG_SEPARATOR + \
         'f=asl+als,#channel2' + rss.CONFIG_SEPARATOR + 'feed2' + rss.CONFIG_SEPARATOR + FEED_VALID + rss.CONFIG_SEPARATOR + 'f=p+tlpas\n'
     assert expected == bot.output
 
@@ -984,16 +984,16 @@ def test_rss_formats_format_output(bot_rss_update):
     rss._rss_formats(bot_rss_update, ['format', 'feed1', 'f=fadglpst+fadglpst'])
     rss._rss_update(bot_rss_update, ['update'])
     expected = 'f=fadglpst+fadglpst' + '''
-\x02[feed1]\x02 <Author 1> Description of article 1 1 at http://www.site1.com/ \x02→\x02 http://www.site1.com/article1 (2016-08-21 01:10) Description of article 1 Title 1
-\x02[feed1]\x02 <Author 2> Description of article 2 2 at http://www.site1.com/ \x02→\x02 http://www.site1.com/article2 (2016-08-22 02:20) Description of article 2 Title 2
-\x02[feed1]\x02 <Author 3> Description of article 3 3 at http://www.site1.com/ \x02→\x02 http://www.site1.com/article3 (2016-08-23 03:30) Description of article 3 Title 3
+\x02[feed1]\x02 <Author 1> Description of article 1 1 at https://www.site1.com/ \x02→\x02 https://www.site1.com/article1 (2016-08-21 01:10) Description of article 1 Title 1
+\x02[feed1]\x02 <Author 2> Description of article 2 2 at https://www.site1.com/ \x02→\x02 https://www.site1.com/article2 (2016-08-22 02:20) Description of article 2 Title 2
+\x02[feed1]\x02 <Author 3> Description of article 3 3 at https://www.site1.com/ \x02→\x02 https://www.site1.com/article3 (2016-08-23 03:30) Description of article 3 Title 3
 '''
     assert expected == bot_rss_update.output
 
 
 def test_rss_formats_changes_are_saved(bot):
     rss._rss_formats(bot, ['format', 'feed1', 'f=asl+als'])
-    expected = ['#channel1;feed1;http://www.site1.com/feed;f=asl+als']
+    expected = ['#channel1;feed1;https://www.site1.com/feed;f=asl+als']
     assert expected == bot.config.rss.feeds
 
 
@@ -1006,14 +1006,14 @@ def test_rss_get_feed_nonexistent(bot):
 def test_rss_get_post_feed_items(bot):
     rss._feed_add(bot, '#channel', 'feedname', FEED_VALID)
     rss._rss_get(bot, ['get', 'feedname'])
-    expected = '\x02[feedname]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feedname]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feedname]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'  # noqa: E501
+    expected = '\x02[feedname]\x02 Title 1 \x02→\x02 https://www.site1.com/article1\n\x02[feedname]\x02 Title 2 \x02→\x02 https://www.site1.com/article2\n\x02[feedname]\x02 Title 3 \x02→\x02 https://www.site1.com/article3\n'  # noqa: E501
     assert expected == bot.output
 
 
 def test_rss_get_feed_spy(bot):
     rss._feed_add(bot, '#channel', 'SPY', FEED_SPY)
     rss._rss_get(bot, ['get', 'SPY'])
-    expected = '\x02[SPY]\x02 Deutsche Bank Predicts 10% Pullback in S&P 500 \x02→\x02 http://markets.financialcontent.com/stocks/news/read?GUID=32821698&Symbol=SPY\n'
+    expected = '\x02[SPY]\x02 Deutsche Bank Predicts 10% Pullback in S&P 500 \x02→\x02 https://markets.financialcontent.com/stocks/news/read?GUID=32821698&Symbol=SPY\n'
     assert expected == bot.output
 
 
@@ -1070,21 +1070,21 @@ def test_rss_join(bot):
 
 def test_rss_list_all(bot_rss_list):
     rss._rss_list(bot_rss_list, ['list'])
-    expected1 = '#channel1 feed1 http://www.site1.com/feed'
-    expected2 = '#channel2 feed2 http://www.site2.com/feed'
+    expected1 = '#channel1 feed1 https://www.site1.com/feed'
+    expected2 = '#channel2 feed2 https://www.site2.com/feed'
     assert expected1 in bot_rss_list.output
     assert expected2 in bot_rss_list.output
 
 
 def test_rss_list_feed(bot):
     rss._rss_list(bot, ['list', 'feed1'])
-    expected = '#channel1 feed1 http://www.site1.com/feed\n'
+    expected = '#channel1 feed1 https://www.site1.com/feed\n'
     assert expected == bot.output
 
 
 def test_rss_list_channel(bot):
     rss._rss_list(bot, ['list', '#channel1'])
-    expected = '#channel1 feed1 http://www.site1.com/feed\n'
+    expected = '#channel1 feed1 https://www.site1.com/feed\n'
     assert expected == bot.output
 
 
@@ -1131,19 +1131,19 @@ def test_rss_templates_override(bot):
     rss._rss_config(bot, ['config', 'templates', templates_default])
     bot.output = ''
     rss._rss_get(bot, ['get', 'feed'])
-    expected = 'feedauthor:Author 1 addguid:1 at http://www.site1.com/ defaultpublished:2016-08-21 01:10 feedtitle:Title 1\nfeedauthor:Author 2 addguid:2 at http://www.site1.com/ defaultpublished:2016-08-22 02:20 feedtitle:Title 2\nfeedauthor:Author 3 addguid:3 at http://www.site1.com/ defaultpublished:2016-08-23 03:30 feedtitle:Title 3\n'  # noqa: E501
+    expected = 'feedauthor:Author 1 addguid:1 at https://www.site1.com/ defaultpublished:2016-08-21 01:10 feedtitle:Title 1\nfeedauthor:Author 2 addguid:2 at https://www.site1.com/ defaultpublished:2016-08-22 02:20 feedtitle:Title 2\nfeedauthor:Author 3 addguid:3 at https://www.site1.com/ defaultpublished:2016-08-23 03:30 feedtitle:Title 3\n'  # noqa: E501
     assert expected == bot.output
 
 
 def test_rss_templates_changes_are_saved(bot):
     rss._rss_templates(bot, ['format', 'feed1', 't=t|...{}...'])
-    expected = ['#channel1;feed1;http://www.site1.com/feed;t=t|...{}...']
+    expected = ['#channel1;feed1;https://www.site1.com/feed;t=t|...{}...']
     assert expected == bot.config.rss.feeds
 
 
 def test_rss_update_update(bot_rss_update):
     rss._rss_update(bot_rss_update, ['update'])
-    expected = '\x02[feed1]\x02 Title 1 \x02→\x02 http://www.site1.com/article1\n\x02[feed1]\x02 Title 2 \x02→\x02 http://www.site1.com/article2\n\x02[feed1]\x02 Title 3 \x02→\x02 http://www.site1.com/article3\n'
+    expected = '\x02[feed1]\x02 Title 1 \x02→\x02 https://www.site1.com/article1\n\x02[feed1]\x02 Title 2 \x02→\x02 https://www.site1.com/article2\n\x02[feed1]\x02 Title 3 \x02→\x02 https://www.site1.com/article3\n'
     assert expected == bot_rss_update.output
 
 
