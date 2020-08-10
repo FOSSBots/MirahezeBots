@@ -535,7 +535,7 @@ def invite_user(bot, trigger):
 
 @require_admin(message="Only admins may purge cache.")
 @commands('resetchanopcache')
-def reset_chanop_cache(bot):
+def reset_chanop_cache(bot, trigger):
     """
     Reset the cache of the channel management data file
     """
@@ -546,7 +546,7 @@ def reset_chanop_cache(bot):
 
 @require_admin(message="Only admins may check cache")
 @commands('checkchanopcache')
-def check_chanop_cache(bot):
+def check_chanop_cache(bot, trigger):
     """
     Validate the cache matches the copy on disk
     """
