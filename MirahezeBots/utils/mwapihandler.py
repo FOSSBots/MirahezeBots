@@ -45,14 +45,14 @@ def gettoken(url, session, type='csrftoken'):
     return TOKEN
 
 
-def makeaction(url, session, action, TOKEN, target, performer, reason, content=''):
+def makeaction(url, session, action, token, target, performer, reason, content=''):
     if action == 'edit':
         PARAMS = {
             'action': 'edit',
             'title': target,
             'summary': reason + ' (' + performer + ')',
             'appendtext': '\n* ' + performer + ': ' + reason,
-            'token': TOKEN,
+            'token': token,
             'bot': 'true',
             'format': 'json',
         }
@@ -62,7 +62,7 @@ def makeaction(url, session, action, TOKEN, target, performer, reason, content='
             'title': target,
             'summary': reason,
             'text': content,
-            'token': TOKEN,
+            'token': token,
             'bot': 'true',
             'format': 'json',
             'contentmodel': 'wikitext',
@@ -77,7 +77,7 @@ def makeaction(url, session, action, TOKEN, target, performer, reason, content='
             'expiry': 'infinite',
             'reason': 'Blocked by ' + performer + ' for ' + reason,
             'bot': 'false',
-            'token': TOKEN,
+            'token': token,
             'format': 'json',
         }
 
@@ -86,7 +86,7 @@ def makeaction(url, session, action, TOKEN, target, performer, reason, content='
             'action': 'unblock',
             'user': target,
             'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': TOKEN,
+            'token': token,
             'format': 'json',
         }
 
@@ -95,7 +95,7 @@ def makeaction(url, session, action, TOKEN, target, performer, reason, content='
             'action': 'delete',
             'title': target,
             'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': TOKEN,
+            'token': token,
             'format': 'json',
         }
 
