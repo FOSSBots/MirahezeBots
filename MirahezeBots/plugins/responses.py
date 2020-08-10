@@ -61,5 +61,5 @@ def botversion(bot, trigger):
 @example('.source')
 @rate(user=2, channel=1, server=0)
 def githubsource(bot, trigger):
-    """Give the link to ZppixBot's Github."""
+    """Give the link to MirahezeBot's Github."""
     bot.reply('My code can be found here: https://github.com/MirahezeBots/MirahezeBots')
