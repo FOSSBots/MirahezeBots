@@ -184,20 +184,16 @@ def kick(bot, trigger):
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
 
-def makeMask(text):
+def parse_host_mask(text):
     argc = len(text)
     if argc < 2:
         return
     opt = Identifier(text[1])
-    banmask = opt
+    mask = opt
     if not opt.is_nick():
         if argc < 3:
             return
-        banmask = text[2]
-    return configureHostMask(banmask)
-
-
-def configureHostMask(mask):
+        mask = text[2]
     if mask == '*!*@*':
         return mask
     if re.match('^[^.@!/]+$', mask) is not None:
@@ -232,7 +228,7 @@ def ban(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        mask = makeMask(trigger.group().split())
+        mask = parse_host_mask(trigger.group().split())
         if mask == '':
             return
         if trigger.account in chanops:
@@ -255,7 +251,7 @@ def unban(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        mask = makeMask(trigger.group().split())
+        mask = parse_host_mask(trigger.group().split())
         if mask == '':
             return
         if trigger.account in chanops:
@@ -278,7 +274,7 @@ def quiet(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        mask = makeMask(trigger.group().split())
+        mask = parse_host_mask(trigger.group().split())
         if mask == '':
             return
         if trigger.account in chanops:
@@ -301,7 +297,7 @@ def unquiet(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        mask = makeMask(trigger.group().split())
+        mask = parse_host_mask(trigger.group().split())
         if mask == '':
             return
         if trigger.account in chanops:
