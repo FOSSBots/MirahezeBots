@@ -186,7 +186,7 @@ def kick(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 def parse_host_mask(text):
@@ -298,7 +298,7 @@ def kickban(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_chanmsg
@@ -338,7 +338,7 @@ def topic(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_chanmsg
@@ -355,7 +355,7 @@ def set_mask(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_chanmsg
@@ -389,7 +389,7 @@ def invite_user(bot, trigger):
             else:
                 bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_admin(message="Only admins may purge cache.")
