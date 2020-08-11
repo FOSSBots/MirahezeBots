@@ -103,7 +103,7 @@ def chanmode(bot, trigger):
     """
     Command to change channel mode.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -138,7 +138,7 @@ def deop(bot, trigger):
     """
     Command to deop users in a room. If no nick is given, Sopel will deop the nick who sent the command.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -163,7 +163,7 @@ def voice(bot, trigger):
     """
     Command to voice users in a room. If no nick is given, Sopel will voice the nick who sent the command.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -188,7 +188,7 @@ def devoice(bot, trigger):
     """
     Command to devoice users in a room. If no nick is given, the nick who sent the command will be devoiced.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -212,7 +212,7 @@ def devoice(bot, trigger):
 @example('.kick Zppix')
 def kick(bot, trigger):
     """Kick a user from the channel."""
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -270,7 +270,7 @@ def configureHostMask(mask):
 def ban(bot, trigger):
     """Ban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -305,7 +305,7 @@ def ban(bot, trigger):
 def unban(bot, trigger):
     """Unban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -340,7 +340,7 @@ def unban(bot, trigger):
 def quiet(bot, trigger):
     """Quiet a user. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -375,7 +375,7 @@ def quiet(bot, trigger):
 def unquiet(bot, trigger):
     """Unquiet a user. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -411,7 +411,7 @@ def unquiet(bot, trigger):
 def kickban(bot, trigger):
     """Kick and ban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -454,7 +454,7 @@ def kickban(bot, trigger):
 def topic(bot, trigger):
     """Change the channel topic. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -494,7 +494,7 @@ def topic(bot, trigger):
 def set_mask(bot, trigger):
     """Set the topic mask to use for the current channel. Within the topic mask, {} is used to allow substituting in chunks of text. This mask is used when running the 'topic' command.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if trigger.account in chanops:
             bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
@@ -521,7 +521,7 @@ def invite_user(bot, trigger):
     """
     Command to invite users to a room.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     channel = trigger.sender
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
