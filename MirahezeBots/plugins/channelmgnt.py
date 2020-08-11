@@ -138,22 +138,7 @@ def deop(bot, trigger):
     """
     Command to deop users in a room. If no nick is given, Sopel will deop the nick who sent the command.
     """
-    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        nick = trigger.group(2)
-        channel = trigger.sender
-        if not nick:
-            bot.write(['MODE', channel, "-o", trigger.nick])
-        elif trigger.account in chanops:
-            bot.write(['MODE', channel, "-o", nick])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '-o')
 
 
 @require_chanmsg
@@ -163,22 +148,7 @@ def voice(bot, trigger):
     """
     Command to voice users in a room. If no nick is given, Sopel will voice the nick who sent the command.
     """
-    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        nick = trigger.group(2)
-        channel = trigger.sender
-        if not nick:
-            nick = trigger.nick
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, "+v", nick])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '+v')
 
 
 @require_chanmsg
@@ -188,22 +158,7 @@ def devoice(bot, trigger):
     """
     Command to devoice users in a room. If no nick is given, the nick who sent the command will be devoiced.
     """
-    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        nick = trigger.group(2)
-        channel = trigger.sender
-        if not nick:
-            bot.write(['MODE', channel, "-v", trigger.nick])
-        elif trigger.account in chanops:
-            bot.write(['MODE', channel, "-v", nick])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '-v')
 
 
 @require_chanmsg
