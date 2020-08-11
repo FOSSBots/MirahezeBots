@@ -228,7 +228,7 @@ def parse_host_mask(text):
 def ban(bot, trigger):
     """Ban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    makemodechange(bot, trigger, '+b'isbqmode=True)
+    makemodechange(bot, trigger, '+b', isbqmode=True)
 
 
 @require_chanmsg
@@ -237,7 +237,7 @@ def ban(bot, trigger):
 def unban(bot, trigger):
     """Unban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    makemodechange(bot, trigger, '-b'isbqmode=True)
+    makemodechange(bot, trigger, '-b', isbqmode=True)
 
 
 @require_chanmsg
@@ -246,7 +246,7 @@ def unban(bot, trigger):
 def quiet(bot, trigger):
     """Quiet a user. The bot must be a channel operator for this command to work.
     """
-    makemodechange(bot, trigger, '+q'isbqmode=True)
+    makemodechange(bot, trigger, '+q', isbqmode=True)
 
 
 @require_chanmsg
@@ -255,7 +255,7 @@ def quiet(bot, trigger):
 def unquiet(bot, trigger):
     """Unquiet a user. The bot must be a channel operator for this command to work.
     """
-    makemodechange(bot, trigger, '-q'isbqmode=True)
+    makemodechange(bot, trigger, '-q, 'isbqmode=True)
 
 
 @require_chanmsg
