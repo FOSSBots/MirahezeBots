@@ -340,7 +340,7 @@ def kickban(bot, trigger):
             mask = text[3] if any([s in text[3] for s in "!@*"]) else ''
             reasonidx = 4 if mask != '' else 3
         reason = ' '.join(text[reasonidx:])
-        mask = configureHostMask(mask)
+        mask = parse_host_mask(trigger.group().split())
         if mask == '':
             mask = nick + '!*@*'
         if trigger.account in chanops:
