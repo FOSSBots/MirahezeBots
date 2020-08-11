@@ -126,7 +126,7 @@ def deop(bot, trigger):
     """
     Command to deop users in a room. If no nick is given, Sopel will deop the nick who sent the command.
     """
-    makemodechange(bot, trigger, '-o'), isusermode=True
+    makemodechange(bot, trigger, '-o', isusermode=True)
 
 
 @require_chanmsg
