@@ -234,7 +234,7 @@ def ban(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-       mask = makeMask(trigger.group().split())
+        mask = makeMask(trigger.group().split())
         if mask == '':
             return
         if trigger.account in chanops:
