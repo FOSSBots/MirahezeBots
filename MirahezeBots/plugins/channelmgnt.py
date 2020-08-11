@@ -255,7 +255,7 @@ def quiet(bot, trigger):
 def unquiet(bot, trigger):
     """Unquiet a user. The bot must be a channel operator for this command to work.
     """
-    makemodechange(bot, trigger, '-q, 'isbqmode=True)
+    makemodechange(bot, trigger, '-q', isbqmode=True)
 
 
 @require_chanmsg
