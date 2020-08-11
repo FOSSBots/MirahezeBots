@@ -24,6 +24,7 @@ class ChannelmgntSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
     support_channel = ValidatedAttribute('support_channel', str)
 
+
 def setup(bot):
     bot.config.define_section('channelmgnt', ChannelmgntSection)
     bot.memory["channelmgnt"] = SopelMemory()
@@ -34,6 +35,7 @@ def configure(config):
     config.define_section('channelmgnt', ChannelmgntSection, validate=False)
     config.channelmgnt.configure_setting('datafile', 'Where is the datafile for channelmgnt?')
     config.channelmgnt.configure_setting('support_channel', 'What channel should users ask for help in?')
+
 
 def default_mask(trigger):
     welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
@@ -92,8 +94,8 @@ def makemodechange(bot, trigger, mode):
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
-    
-    
+
+
 @require_chanmsg
 @commands('chanmode')
 @example('.chanmode +mz')
