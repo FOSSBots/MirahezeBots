@@ -77,7 +77,7 @@ def get_chanops(channel, cachedjson):
     return chanops
 
 
-def makemodechange(bot, trigger, mode, isusermode=False):
+def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
     chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
@@ -86,11 +86,17 @@ def makemodechange(bot, trigger, mode, isusermode=False):
             time.sleep(1)
         nick = trigger.group(2)
         channel = trigger.sender
-        if not nick:
-            nick = trigger.nick
         if trigger.account in chanops:
-            if isusermode:
+            if isusermode and not nick:
+                bot.write(['MODE', channel, mode, trigger.nick])
+            elif isusermode:
                 bot.write(['MODE', channel, mode, nick])
+            elif isbqmode:
+                mask = parse_host_mask(trigger.group().split())
+                if mask == '':
+                    return
+                else:
+                    bot.write(['MODE', trigger.sender, mode, mask])
             else:
                 bot.write(['MODE', channel, mode])
         else:
@@ -222,21 +228,7 @@ def parse_host_mask(text):
 def ban(bot, trigger):
     """Ban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        mask = parse_host_mask(trigger.group().split())
-        if mask == '':
-            return
-        if trigger.account in chanops:
-            bot.write(['MODE', trigger.sender, '+b', mask])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+    makemodechange(bot, trigger, '+b'isbqmode=True)
 
 
 @require_chanmsg
@@ -245,21 +237,7 @@ def ban(bot, trigger):
 def unban(bot, trigger):
     """Unban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        mask = parse_host_mask(trigger.group().split())
-        if mask == '':
-            return
-        if trigger.account in chanops:
-            bot.write(['MODE', trigger.sender, '-b', mask])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+    makemodechange(bot, trigger, '-b'isbqmode=True)
 
 
 @require_chanmsg
@@ -268,21 +246,7 @@ def unban(bot, trigger):
 def quiet(bot, trigger):
     """Quiet a user. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        mask = parse_host_mask(trigger.group().split())
-        if mask == '':
-            return
-        if trigger.account in chanops:
-            bot.write(['MODE', trigger.sender, '+q', mask])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+    makemodechange(bot, trigger, '+q'isbqmode=True)
 
 
 @require_chanmsg
@@ -291,21 +255,7 @@ def quiet(bot, trigger):
 def unquiet(bot, trigger):
     """Unquiet a user. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        mask = parse_host_mask(trigger.group().split())
-        if mask == '':
-            return
-        if trigger.account in chanops:
-            bot.write(['MODE', trigger.sender, '-q', mask])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+    makemodechange(bot, trigger, '-q'isbqmode=True)
 
 
 @require_chanmsg
