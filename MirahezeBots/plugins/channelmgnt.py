@@ -22,7 +22,7 @@ from sopel.tools import SopelMemory
 
 class ChannelmgntSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
-
+    support_channel = ValidatedAttribute('support_channel', str)
 
 def setup(bot):
     bot.config.define_section('channelmgnt', ChannelmgntSection)
@@ -33,7 +33,7 @@ def setup(bot):
 def configure(config):
     config.define_section('channelmgnt', ChannelmgntSection, validate=False)
     config.channelmgnt.configure_setting('datafile', 'Where is the datafile for channelmgnt?')
-
+    config.channelmgnt.configure_setting('support_channel', 'What channel should users ask for help in?')
 
 def default_mask(trigger):
     welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
@@ -66,8 +66,8 @@ def channelparse(channel, cachedjson):
         return False
 
 
-def get_chanops(bot, trigger):
-    channeldata = channelparse(channel=str(trigger.sender), cachedjson=bot.memory["channelmgnt"]["jdcache"])
+def get_chanops(channel, cachedjson):
+    channeldata = channelparse(channel=channel, cachedjson=cachedjson)
     if not channeldata:
         chanops = False
     else:
@@ -75,6 +75,25 @@ def get_chanops(bot, trigger):
     return chanops
 
 
+def makemodechange(bot, trigger, mode):
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
+    if chanops:
+        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
+            bot.say('Please wait...')
+            bot.say('op ' + trigger.sender, 'ChanServ')
+            time.sleep(1)
+        nick = trigger.group(2)
+        channel = trigger.sender
+        if not nick:
+            nick = trigger.nick
+        if trigger.account in chanops:
+            bot.write(['MODE', channel, mode, nick])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
+    else:
+        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    
+    
 @require_chanmsg
 @commands('chanmode')
 @example('.chanmode +mz')
@@ -107,22 +126,7 @@ def op(bot, trigger):
     """
     Command to op users in a room. If no nick is given, Sopel will op the nick who sent the command.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        nick = trigger.group(2)
-        channel = trigger.sender
-        if not nick:
-            nick = trigger.nick
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, "+o", nick])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '+o')
 
 
 @require_chanmsg
