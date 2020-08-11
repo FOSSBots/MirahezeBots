@@ -102,7 +102,7 @@ def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_chanmsg
