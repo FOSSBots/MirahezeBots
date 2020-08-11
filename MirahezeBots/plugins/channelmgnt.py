@@ -183,6 +183,20 @@ def kick(bot, trigger):
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
+def makeMask(text):
+    argc = len(text)
+    if argc < 2:
+        return
+    opt = Identifier(text[1])
+    banmask = opt
+    channel = trigger.sender
+    if not opt.is_nick():
+        if argc < 3:
+            return
+        channel = opt
+        banmask = text[2]
+    banmask = configureHostMask(banmask)
+    return banmask
 
 def configureHostMask(mask):
     if mask == '*!*@*':
@@ -219,23 +233,11 @@ def ban(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        text = trigger.group().split()
-        argc = len(text)
-        if argc < 2:
-            return
-        opt = Identifier(text[1])
-        banmask = opt
-        channel = trigger.sender
-        if not opt.is_nick():
-            if argc < 3:
-                return
-            channel = opt
-            banmask = text[2]
-        banmask = configureHostMask(banmask)
-        if banmask == '':
+       mask = makeMask(trigger.group().split())
+        if mask == '':
             return
         if trigger.account in chanops:
-            bot.write(['MODE', channel, '+b', banmask])
+            bot.write(['MODE', channel, '+b', mask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
@@ -254,23 +256,11 @@ def unban(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        text = trigger.group().split()
-        argc = len(text)
-        if argc < 2:
-            return
-        opt = Identifier(text[1])
-        banmask = opt
-        channel = trigger.sender
-        if not opt.is_nick():
-            if argc < 3:
-                return
-            channel = opt
-            banmask = text[2]
-        banmask = configureHostMask(banmask)
-        if banmask == '':
+        mask = makeMask(trigger.group().split())
+        if mask == '':
             return
         if trigger.account in chanops:
-            bot.write(['MODE', channel, '-b', banmask])
+            bot.write(['MODE', channel, '-b', mask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
@@ -289,23 +279,11 @@ def quiet(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        text = trigger.group().split()
-        argc = len(text)
-        if argc < 2:
-            return
-        opt = Identifier(text[1])
-        quietmask = opt
-        channel = trigger.sender
-        if not opt.is_nick():
-            if argc < 3:
-                return
-            quietmask = text[2]
-            channel = opt
-        quietmask = configureHostMask(quietmask)
-        if quietmask == '':
+        mask = makeMask(trigger.group().split())
+        if mask == '':
             return
         if trigger.account in chanops:
-            bot.write(['MODE', channel, '+q', quietmask])
+            bot.write(['MODE', channel, '+q', mask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
@@ -324,23 +302,11 @@ def unquiet(bot, trigger):
             bot.say('Please wait...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        text = trigger.group().split()
-        argc = len(text)
-        if argc < 2:
-            return
-        opt = Identifier(text[1])
-        quietmask = opt
-        channel = trigger.sender
-        if not opt.is_nick():
-            if argc < 3:
-                return
-            quietmask = text[2]
-            channel = opt
-        quietmask = configureHostMask(quietmask)
-        if quietmask == '':
+        mask = makeMask(trigger.group().split())
+        if mask == '':
             return
         if trigger.account in chanops:
-            bot.write(['MODE', channel, '-q', quietmask])
+            bot.write(['MODE', channel, '-q', mask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
