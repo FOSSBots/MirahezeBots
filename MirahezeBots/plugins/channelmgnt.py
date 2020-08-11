@@ -97,7 +97,7 @@ def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
             else:
                 bot.write(['MODE', trigger.sender, mode, mask])
         elif trigger.account in chanops:
-                bot.write(['MODE', channel, mode])
+            bot.write(['MODE', channel, mode])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
