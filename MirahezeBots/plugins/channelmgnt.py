@@ -89,15 +89,15 @@ def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
         if trigger.account in chanops:
             if isusermode and not nick:
                 bot.write(['MODE', channel, mode, trigger.nick])
-            elif isusermode:
+            elif isusermode and trigger.account in chanops:
                 bot.write(['MODE', channel, mode, nick])
-            elif isbqmode:
+            elif isbqmode and trigger.account in chanops:
                 mask = parse_host_mask(trigger.group().split())
                 if mask == '':
                     return
                 else:
                     bot.write(['MODE', trigger.sender, mode, mask])
-            else:
+            elif trigger.account in chanops:
                 bot.write(['MODE', channel, mode])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
