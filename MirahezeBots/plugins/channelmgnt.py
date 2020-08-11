@@ -77,7 +77,7 @@ def get_chanops(channel, cachedjson):
     return chanops
 
 
-def makemodechange(bot, trigger, mode):
+def makemodechange(bot, trigger, mode, isusermode=False):
     chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
@@ -89,7 +89,10 @@ def makemodechange(bot, trigger, mode):
         if not nick:
             nick = trigger.nick
         if trigger.account in chanops:
-            bot.write(['MODE', channel, mode, nick])
+            if isusermode:
+                bot.write(['MODE', channel, mode, nick])
+            else:
+                bot.write(['MODE', channel, mode])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
@@ -103,22 +106,7 @@ def chanmode(bot, trigger):
     """
     Command to change channel mode.
     """
-    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        modes = trigger.group(2)
-        channel = trigger.sender
-        if not modes:
-            bot.reply('Please specify what mode(s) to set')
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, modes])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, trigger.group(2), isusermode=False)
 
 
 @require_chanmsg
@@ -128,7 +116,7 @@ def op(bot, trigger):
     """
     Command to op users in a room. If no nick is given, Sopel will op the nick who sent the command.
     """
-    makemodechange(bot, trigger, '+o')
+    makemodechange(bot, trigger, '+o', isusermode=True)
 
 
 @require_chanmsg
@@ -138,7 +126,7 @@ def deop(bot, trigger):
     """
     Command to deop users in a room. If no nick is given, Sopel will deop the nick who sent the command.
     """
-    makemodechange(bot, trigger, '-o')
+    makemodechange(bot, trigger, '-o'), isusermode=True
 
 
 @require_chanmsg
@@ -148,7 +136,7 @@ def voice(bot, trigger):
     """
     Command to voice users in a room. If no nick is given, Sopel will voice the nick who sent the command.
     """
-    makemodechange(bot, trigger, '+v')
+    makemodechange(bot, trigger, '+v', isusermode=True)
 
 
 @require_chanmsg
@@ -158,7 +146,7 @@ def devoice(bot, trigger):
     """
     Command to devoice users in a room. If no nick is given, the nick who sent the command will be devoiced.
     """
-    makemodechange(bot, trigger, '-v')
+    makemodechange(bot, trigger, '-v', isusermode=True)
 
 
 @require_chanmsg
