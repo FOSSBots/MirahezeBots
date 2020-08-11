@@ -96,7 +96,7 @@ def makemodechange(bot, trigger, mode, isusermode=False):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_chanmsg
@@ -181,7 +181,7 @@ def kick(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 def parse_host_mask(text):
@@ -236,7 +236,7 @@ def ban(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_chanmsg
@@ -259,7 +259,7 @@ def unban(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_chanmsg
@@ -282,7 +282,7 @@ def quiet(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_chanmsg
@@ -305,7 +305,7 @@ def unquiet(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_chanmsg
@@ -349,7 +349,7 @@ def kickban(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_chanmsg
@@ -389,7 +389,7 @@ def topic(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_chanmsg
@@ -406,7 +406,7 @@ def set_mask(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_chanmsg
@@ -440,7 +440,7 @@ def invite_user(bot, trigger):
             else:
                 bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}').format(bot.settings.channelmgnt.support_channel)
 
 
 @require_admin(message="Only admins may purge cache.")
