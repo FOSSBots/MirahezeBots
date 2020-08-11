@@ -190,11 +190,9 @@ def makeMask(text):
         return
     opt = Identifier(text[1])
     banmask = opt
-    channel = trigger.sender
     if not opt.is_nick():
         if argc < 3:
             return
-        channel = opt
         banmask = text[2]
     return configureHostMask(banmask)
 
@@ -238,7 +236,7 @@ def ban(bot, trigger):
         if mask == '':
             return
         if trigger.account in chanops:
-            bot.write(['MODE', channel, '+b', mask])
+            bot.write(['MODE', trigger.sender, '+b', mask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
@@ -261,7 +259,7 @@ def unban(bot, trigger):
         if mask == '':
             return
         if trigger.account in chanops:
-            bot.write(['MODE', channel, '-b', mask])
+            bot.write(['MODE', trigger.sender, '-b', mask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
@@ -284,7 +282,7 @@ def quiet(bot, trigger):
         if mask == '':
             return
         if trigger.account in chanops:
-            bot.write(['MODE', channel, '+q', mask])
+            bot.write(['MODE', trigger.sender, '+q', mask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
@@ -307,7 +305,7 @@ def unquiet(bot, trigger):
         if mask == '':
             return
         if trigger.account in chanops:
-            bot.write(['MODE', channel, '-q', mask])
+            bot.write(['MODE', trigger.sender, '-q', mask])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
