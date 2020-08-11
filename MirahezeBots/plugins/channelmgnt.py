@@ -183,6 +183,7 @@ def kick(bot, trigger):
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
 
+
 def makeMask(text):
     argc = len(text)
     if argc < 2:
@@ -195,8 +196,8 @@ def makeMask(text):
             return
         channel = opt
         banmask = text[2]
-    banmask = configureHostMask(banmask)
-    return banmask
+    return configureHostMask(banmask)
+
 
 def configureHostMask(mask):
     if mask == '*!*@*':
