@@ -81,25 +81,21 @@ def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
     chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
+            bot.say('Attempting to OP...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        nick = trigger.group(2)
-        channel = trigger.sender
+         
         if isusermode and not nick:
-            bot.write(['MODE', channel, mode, trigger.nick])
+            bot.write(['MODE', trigger.sender, mode, trigger.nick])
         elif isusermode and trigger.account in chanops:
-            bot.write(['MODE', channel, mode, nick])
+            bot.write(['MODE', trigger.sender, mode, trigger.group(2)])
         elif isbqmode and trigger.account in chanops:
-            mask = parse_host_mask(trigger.group().split())
-            if mask == '':
-                return
-            else:
-                bot.write(['MODE', trigger.sender, mode, mask])
+            bot.write(['MODE', trigger.sender, mode, parse_host_mask(trigger.group().split())])
         elif trigger.account in chanops:
-            bot.write(['MODE', channel, mode])
+            bot.write(['MODE', trigger.sender, mode])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
+            
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
