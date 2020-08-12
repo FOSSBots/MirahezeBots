@@ -39,8 +39,8 @@ def updatestatus(bot, requestdata):
     else:
         return "Wiki could not be found"
     if requestdata[0] in acldata["users"].keys():
-        if sulgroup in acldata["users"][requestdata[0]].keys():
-            request = [acldata["users"][requestdata[0]][sulgroup], requestdata[3]]
+        if sulgroup in acldata["users"][requestdata[0]]["groups"].keys():
+            request = [acldata["users"][requestdata[0]]["groups"][sulgroup], requestdata[3]]
         else:
             return "Data not found for SULGROUP {} in {} - Keys were: {}".format(sulgroup, requestdata[0], acldata["users"][requestdata[0]].keys())
     elif requestdata[1][0] in acldata["sulgroups"][sulgroup]["cloaks"]:
