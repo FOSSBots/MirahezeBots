@@ -1,15 +1,17 @@
 ''' status.py - Mediawiki Status Page Updater '''
 
-from sopel.module import commands, example
+from sopel.module import commands, example, require_admin
 from sopel.config.types import StaticSection, ValidatedAttribute
 from MirahezeBots.utils import mwapihandler as mwapi
+from MirahezeBots.utils import jsonparser as jp
+from sopel.tools import SopelMemory
 
 
 pages = ''
 
 
 class StatusSection(StaticSection):
-    data_path = ValidatedAttribute('data_path', str)
+    datafile = ValidatedAttribute('datafile', str)
     bot_username = ValidatedAttribute('bot_username', str)
     bot_password = ValidatedAttribute('bot_password', str)
     support_channel = ValidatedAttribute('support_channel', str)
@@ -17,60 +19,38 @@ class StatusSection(StaticSection):
 
 def setup(bot):
     bot.config.define_section('status', StatusSection)
+    bot.memory["status"] = SopelMemory()
+    bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
 
 
 def configure(config):
     config.define_section('status', StatusSection, validate=False)
-    config.status.configure_setting('data_path', 'What is the path to the statusbot data files?')
+    config.status.configure_setting('datafile', 'What is the status data file?')
     config.status.configure_setting('bot_username', 'What is the statusbot username? (from Special:BotPasswords)')
     config.status.configure_setting('bot_password', "What is the statusbot accounts's bot password? (from Special:BotPasswords)")
     config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
 
 def updatestatus(bot, requestdata):
-    cont = 0
-    cloakfile = open(bot.config.status.data_path + 'cloaks.csv', 'r')
-    for line in cloakfile:
-        auth = line.split(',')
-        if requestdata[1][0] == auth[0]:
-            user = requestdata[1][1]
-            sulgroup = auth[1]
-            wiki = [requestdata[2], sulgroup]
-            request = [user, requestdata[3]]
-            cont = 1
-            break
-    if cont == 0:
-        usersfile = open(bot.config.status.data_path + 'users.csv', 'r')
-        for line in usersfile:
-            auth = line.split(',')
-            if requestdata[1][0] == auth[0]:
-                user = auth[1]
-                sulgroup = auth[2]
-                wiki = [requestdata[2], sulgroup]
-                request = [user, requestdata[3]]
-                cont = 1
-                break
-    if cont == 0:
+    acldata = bot.memory["status"]["jdcache"]
+    if requestdata[2] in acldata["wikis"].keys():
+        wikiurl = str("https://" + acldata["wikis"][requestdata[2]]["url"] + "/w/api.php")
+        sulgroup = acldata["wikis"][requestdata[2]]["sulgroup"]
+    else:
+        return "Wiki could not be found"
+    if requestdata[0] in acldata["users"].keys():
+        if sulgroup in acldata["users"][requestdata[0]].keys():
+            request = [acldata["users"][requestdata[0]][sulgroup], requestdata[3]]
+    elif requestdata[1][0] in acldata["sulgorups"][sulgroup]["cloaks"]:
+        request = [requestdata[0][1], requestdata[3]]
+    else:
         message = "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
         if bot.config.status.support_channel is not None:
             message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
         return message
-    if cont == 1:
-        wikiexists = 0
-        file = open(bot.config.status.data_path + 'statuswikis.csv', 'r')
-        for line in file:
-            data = line.split(',')
-            if data[1] == wiki[0]:
-                wikiexists = 1
-            if data[1] == wiki[0] and wiki[1] == data[2]:
-                wikiurl = "https://" + str(data[0]) + "/w/api.php"
-                content = mwapi.main(performer=request[0], target=str("User:" + (str(request[0]) + "/Status")),
-                                     action="create", reason=str("Updating status to " + str(request[1]) + " per " + str(request[0])), url=wikiurl, username=bot.settings.status.bot_username, password=bot.settings.status.bot_password, content=str(request[1]))
-                return content
-        if cont == 1 and wikiexists == 1:
-            return "I couldn't authentice you for that wiki."
-        elif wikiexists == 0:
-            return "I don't recongise that wiki."
+    content = mwapi.main(performer=request[0], target=str("User:" + (str(request[0]) + "/Status")), action="create",
+                         reason=str("Updating status to " + str(request[1]) + " per " + str(request[0])), url=wikiurl, username=bot.settings.status.bot_username, password=bot.settings.status.bot_password, content=str(request[1]))
+    return content
 
 
 @commands('status')
@@ -110,3 +90,27 @@ def status(bot, trigger):
             bot.reply("Success")
         else:
             bot.reply(str(response))
+
+
+@require_admin(message="Only admins may purge cache.")
+@commands('resetstatuscache')
+def reset_status_cache(bot, trigger):
+    """
+    Reset the cache of the channel management data file
+    """
+    bot.reply("Refreshing Cache...")
+    bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
+    bot.reply("Cache refreshed")
+
+
+@require_admin(message="Only admins may check cache")
+@commands('checkstatuscache')
+def check_status_cache(bot, trigger):
+    """
+    Validate the cache matches the copy on disk
+    """
+    result = jp.validatecache(bot.settings.status.datafile, bot.memory["status"]["jdcache"])
+    if result:
+        bot.reply("Cache is correct.")
+    else:
+        bot.reply("Cache does not match on-disk copy")
