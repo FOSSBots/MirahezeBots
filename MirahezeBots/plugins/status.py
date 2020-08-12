@@ -41,7 +41,7 @@ def updatestatus(bot, requestdata):
     if requestdata[0] in acldata["users"].keys():
         if sulgroup in acldata["users"][requestdata[0]].keys():
             request = [acldata["users"][requestdata[0]][sulgroup], requestdata[3]]
-    elif requestdata[1][0] in acldata["sulgrups"][sulgroup]["cloaks"]:
+    elif requestdata[1][0] in acldata["sulgroups"][sulgroup]["cloaks"]:
         request = [requestdata[0][1], requestdata[3]]
     else:
         message = "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
