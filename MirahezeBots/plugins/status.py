@@ -1,6 +1,6 @@
 ''' status.py - Mediawiki Status Page Updater '''
 
-from sopel.module import commands, example
+from sopel.module import commands, example, require_admin
 from sopel.config.types import StaticSection, ValidatedAttribute
 from MirahezeBots.utils import mwapihandler as mwapi
 from MirahezeBots.utils import jsonparser as jp
@@ -37,7 +37,7 @@ def updatestatus(bot, requestdata):
     if requestdata[2] in acldata["wikis"].keys():
         wikiurl = str("https://" + acldata["wikis"][requestdata[2]]["url"] + "/w/api.php")
         sulgroup = acldata["wikis"][requestdata[2]]["sulgroup"]
-    else:   
+    else:
         return "Wiki could not be found"
     if requestdata[0] in acldata["users"].keys():
         if sulgroup in acldata["users"][requestdata[0]].keys():
@@ -90,7 +90,7 @@ def status(bot, trigger):
         if response == "create request sent. You may want to check the create log to be sure that it worked.":
             bot.reply("Success")
         else:
-            bot.reply((str(response))
+            bot.reply(str(response))
 
     
 @require_admin(message="Only admins may purge cache.")
