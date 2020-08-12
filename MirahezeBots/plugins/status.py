@@ -20,7 +20,8 @@ class StatusSection(StaticSection):
 def setup(bot):
     bot.config.define_section('status', StatusSection)
     bot.memory["status"] = SopelMemory()
-    bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)    
+    bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
+
 
 def configure(config):
     config.define_section('status', StatusSection, validate=False)
@@ -36,7 +37,7 @@ def updatestatus(bot, requestdata):
     if requestdata[2] in acldata["wikis"].keys():
         wikiurl = str("https://" + acldata["wikis"][requestdata[2]]["url"] + "/w/api.php")
         sulgroup = acldata["wikis"][requestdata[2]]["sulgroup"]
-     else:   
+    else:   
         return "Wiki could not be found"
     if requestdata[0] in acldata["users"].keys():
         if sulgroup in acldata["users"][requestdata[0]].keys():
