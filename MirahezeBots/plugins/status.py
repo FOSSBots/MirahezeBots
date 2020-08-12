@@ -4,6 +4,7 @@ from sopel.module import commands, example
 from sopel.config.types import StaticSection, ValidatedAttribute
 from MirahezeBots.utils import mwapihandler as mwapi
 from MirahezeBots.utils import jsonparser as jp
+from sopel.tools import SopelMemory
 
 
 pages = ''
@@ -36,18 +37,17 @@ def updatestatus(bot, requestdata):
         wikiurl = str("https://" + acldata["wikis"][requestdata[2]]["url"] + "/w/api.php")
         sulgroup = acldata["wikis"][requestdata[2]]["sulgroup"]
      else:   
-        return ["Error", "Wiki could not be found"]
+        return "Wiki could not be found"
     if requestdata[0] in acldata["users"].keys():
         if sulgroup in acldata["users"][requestdata[0]].keys():
             request = [acldata["users"][requestdata[0]][sulgroup], requestdata[3]]
-            authed = 1
-    elif requestdata[1][0] in acldata[sulgroup][cloaks].keys():
+    elif requestdata[1][0] in acldata[sulgroup]["cloaks"].keys():
         request = [requestdata[0][1], requestdata[3]]
     else:
         message = "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
         if bot.config.status.support_channel is not None:
             message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
-        return ["Error", message]
+        return message
     content = mwapi.main(performer=request[0], target=str("User:" + (str(request[0]) + "/Status")), action="create", 
                          reason=str("Updating status to " + str(request[1]) + " per " + str(request[0])), url=wikiurl, username=bot.settings.status.bot_username, password=bot.settings.status.bot_password, content=str(request[1]))
     return content
@@ -89,7 +89,7 @@ def status(bot, trigger):
         if response == "create request sent. You may want to check the create log to be sure that it worked.":
             bot.reply("Success")
         else:
-            bot.reply(str(response))
+            bot.reply((str(response))
 
     
 @require_admin(message="Only admins may purge cache.")
