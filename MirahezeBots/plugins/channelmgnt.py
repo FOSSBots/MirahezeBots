@@ -84,7 +84,7 @@ def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
             bot.say('Attempting to OP...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-         
+
         if isusermode and not trigger.nick:
             bot.write(['MODE', trigger.sender, mode, trigger.nick])
         elif isusermode and trigger.account in chanops:
@@ -95,7 +95,7 @@ def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
             bot.write(['MODE', trigger.sender, mode])
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
-            
+
     else:
         bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
