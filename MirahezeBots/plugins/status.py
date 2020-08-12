@@ -32,7 +32,6 @@ def configure(config):
 
 
 def updatestatus(bot, requestdata):
-    cont = 0
     acldata = bot.memory["status"]["jdcache"]
     if requestdata[2] in acldata["wikis"].keys():
         wikiurl = str("https://" + acldata["wikis"][requestdata[2]]["url"] + "/w/api.php")
@@ -49,7 +48,7 @@ def updatestatus(bot, requestdata):
         if bot.config.status.support_channel is not None:
             message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
         return message
-    content = mwapi.main(performer=request[0], target=str("User:" + (str(request[0]) + "/Status")), action="create", 
+    content = mwapi.main(performer=request[0], target=str("User:" + (str(request[0]) + "/Status")), action="create",
                          reason=str("Updating status to " + str(request[1]) + " per " + str(request[0])), url=wikiurl, username=bot.settings.status.bot_username, password=bot.settings.status.bot_password, content=str(request[1]))
     return content
 
@@ -92,7 +91,7 @@ def status(bot, trigger):
         else:
             bot.reply(str(response))
 
-    
+
 @require_admin(message="Only admins may purge cache.")
 @commands('resetstatuscache')
 def reset_status_cache(bot, trigger):
