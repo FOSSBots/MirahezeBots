@@ -84,11 +84,10 @@ def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
             bot.say('Attempting to OP...')
             bot.say('op ' + trigger.sender, 'ChanServ')
             time.sleep(1)
-        nick = trigger.group(2)
-        if isusermode and not nick:
+        if isusermode and not trigger.group(2):
             bot.write(['MODE', trigger.sender, mode, trigger.nick])
         elif isusermode and trigger.account in chanops:
-            bot.write(['MODE', trigger.sender, mode, nick])
+            bot.write(['MODE', trigger.sender, mode, trigger.group(2)])
         elif isbqmode and trigger.account in chanops:
             bot.write(['MODE', trigger.sender, mode, parse_host_mask(trigger.group().split())])
         elif trigger.account in chanops:
