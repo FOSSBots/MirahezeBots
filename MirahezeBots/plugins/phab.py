@@ -4,9 +4,9 @@ import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
 from json import JSONDecodeError
-from sopel import plugins
+from sopel.tools import get_logger
 from sopel.config import ConfigurationError
-LOGGER = plugins.get_logger('phab')
+LOGGER = get_logger('phab')
 
 
 class PhabricatorSection(StaticSection):
