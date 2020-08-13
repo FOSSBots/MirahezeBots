@@ -4,8 +4,9 @@ import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
 from json import JSONDecodeError
-from sopel.tools import get_logger
+from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
+from MirahezeBots.utils import jsonparser as jp
 LOGGER = get_logger('phab')
 
 
@@ -22,9 +23,9 @@ def setup(bot):
     bot.memory["phab"] = SopelMemory()
     bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phab.datafile)
     if bot.settings.phabricator.host and bot.settings.phabricator.datafile:
-        raise sopel.config.ConfigurationError("Use of host and datafile together is not supported")
+        raise ConfigurationError("Use of host and datafile together is not supported")
     elif bot.settings.phabricator.host:
-        LOGGER.WARN("Use of the host option was deceprated in 9.0.0 and will be removed in 10.0.0")
+        LOGGER.warn("Use of the host option was deceprated in 9.0.0 and will be removed in 10.0.0")
 
 def configure(config):
     config.define_section('phabricator', PhabricatorSection, validate=False)
