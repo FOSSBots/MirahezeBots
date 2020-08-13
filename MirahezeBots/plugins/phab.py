@@ -1,7 +1,7 @@
 """phab.by - Phabricator Task Information Plugin"""
 
 import requests  # FIX THIS
-from sopel.module import commands, example, interval, rule
+from sopel.module import commands, example, interval, rule, require_admin
 from sopel.config.types import StaticSection, ValidatedAttribute
 from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
@@ -18,6 +18,7 @@ class PhabricatorSection(StaticSection):
     highpri_channel = ValidatedAttribute('highpri_channel', str)
     datafile = ValidatedAttribute('datafile', str)
 
+
 def setup(bot):
     bot.config.define_section('phabricator', PhabricatorSection)
     bot.memory["phab"] = SopelMemory()
@@ -26,6 +27,7 @@ def setup(bot):
         raise ConfigurationError("Use of host and datafile together is not supported")
     elif bot.settings.phabricator.host:
         LOGGER.warn("Use of the host option was deceprated in 9.0.0 and will be removed in 10.0.0")
+
 
 def configure(config):
     config.define_section('phabricator', PhabricatorSection, validate=False)
