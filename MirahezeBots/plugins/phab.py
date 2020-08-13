@@ -21,12 +21,13 @@ class PhabricatorSection(StaticSection):
 
 def setup(bot):
     bot.config.define_section('phabricator', PhabricatorSection)
-    bot.memory["phab"] = SopelMemory()
-    bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phab.datafile)
     if bot.settings.phabricator.host and bot.settings.phabricator.datafile:
         raise ConfigurationError("Use of host and datafile together is not supported")
     elif bot.settings.phabricator.host:
         LOGGER.warn("Use of the host option was deceprated in 9.0.0 and will be removed in 10.0.0")
+    elif bot.settings.phabricator.datafile:
+        bot.memory["phab"] = SopelMemory()
+        bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
 
 
 def configure(config):
@@ -198,7 +199,7 @@ def reset_phab_cache(bot, trigger):
     Reset the cache of the channel management data file
     """
     bot.reply("Refreshing Cache...")
-    bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phab.datafile)
+    bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
     bot.reply("Cache refreshed")
 
 
@@ -208,7 +209,7 @@ def check_phab_cache(bot, trigger):
     """
     Validate the cache matches the copy on disk
     """
-    result = jp.validatecache(bot.settings.phab.datafile, bot.memory["phab"]["jdcache"])
+    result = jp.validatecache(bot.settings.phabricator.datafile, bot.memory["phab"]["jdcache"])
     if result:
         bot.reply("Cache is correct.")
     else:
