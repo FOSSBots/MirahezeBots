@@ -55,13 +55,13 @@ def searchphab(bot, channel, task=1):
         apikey = bot.settings.phabricator.api_token[0]
     elif bot.settings.phabricator.datafile:
         if channel in bot.memory["phab"]["jdcache"]:
-            host = bot.memory["phab"]["jdcache"][channel]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][host]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[arraypos]
+            host = bot.memory["phab"]["jdcache"][str(channel)]["host"]
+            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
+            apikey = bot.settings.phabricator.api_token[int(arraypos)]
         else:
             host = bot.memory["phab"]["jdcache"]["default"]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][host]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[arraypos]
+            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
+            apikey = bot.settings.phabricator.api_token[int(arraypos)]
 
     data = {
         'api.token': apikey,
@@ -125,14 +125,15 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         querykey = bot.settings.phabricator.querykey[0]
     elif bot.settings.phabricator.datafile:
         if channel in bot.memory["phab"]["jdcache"]:
-            host = bot.memory["phab"]["jdcache"][channel]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][host]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[arraypos]
+            host = bot.memory["phab"]["jdcache"][str(channel)]["host"]
+            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
+            apikey = bot.settings.phabricator.api_token[int(arraypos)]
+            querykey = bot.settings.phabricator.querykey[int(arraypos)]
         else:
             host = bot.memory["phab"]["jdcache"]["default"]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][host]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[arraypos]
-            querykey = bot.settings.phabricator.querykey[arraypos]
+            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
+            apikey = bot.settings.phabricator.api_token[int(arraypos)]
+            querykey = bot.settings.phabricator.querykey[int(arraypos)]
     data = {
         'api.token': apikey,
         'queryKey': querykey,  # mFzMevK.KRMZ for mhphab
