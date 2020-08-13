@@ -76,7 +76,7 @@ def searchphab(bot, channel, task=1):
         result = response.get("result").get("data")[0]
         go = 1
     except AttributeError as e:
-        bot.say("An error occurred while parsing the result: {}".format(e), channel)
+        bot.say("An error occurred while parsing the result: {}@{}".format(e, response.content), channel)
     except IndexError:
         bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
     except Exception:
