@@ -51,7 +51,7 @@ priotasks_notify = []
 
 def searchphab(bot, channel, task=1):
     if bot.settings.phabricator.host:
-        host = 'https://{0}/api/'.format(bot.settings.phabricator.host)
+        host = 'https://{0}/api'.format(bot.settings.phabricator.host)
         apikey = bot.settings.phabricator.api_token[0]
     elif bot.settings.phabricator.datafile:
         if channel in bot.memory["phab"]["jdcache"]:
@@ -75,8 +75,8 @@ def searchphab(bot, channel, task=1):
     try:
         result = response.get("result").get("data")[0]
         go = 1
-    except AttributeError:
-        bot.say("An error occurred while parsing the result.", channel)
+    except AttributeError as e:
+        bot.say("An error occurred while parsing the result: {}".format(e), channel)
     except IndexError:
         bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
     except Exception:
@@ -120,7 +120,7 @@ def searchphab(bot, channel, task=1):
 
 def gethighpri(limit=True, channel='#miraheze', bot=None):
     if bot.settings.phabricator.host:
-        host = '{0}/'.format(bot.settings.phabricator.host)
+        host = 'https://{0}/api'.format(bot.settings.phabricator.host)
         apikey = bot.settings.phabricator.api_token[0]
     elif bot.settings.phabricator.datafile:
         if channel in bot.memory["phab"]["jdcache"]:
