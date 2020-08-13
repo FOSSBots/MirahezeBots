@@ -61,7 +61,7 @@ def searchphab(bot, channel, task=1):
             host = bot.memory["phab"]["jdcache"]["default"]["host"]
             arraypos = int(bot.memory["phab"]["jdcache"][host]["arraypos"])
             apikey = bot.settings.phabricator.api_token[arraypos]
-        
+ 
     data = {
         'api.token': apikey,
         'constraints[ids][0]': task
@@ -119,7 +119,7 @@ def searchphab(bot, channel, task=1):
 
 def gethighpri(limit=True, channel='#miraheze', bot=None):
     if bot.settings.phabricator.host:
-        host = '{0}/'.format(host)
+        host = '{0}/'.format(bot.settings.phabricator.host)
         apikey = bot.settings.phabricator.api_token[0]
     elif bot.settings.phabricator.datafile:
         if channel in bot.memory["phab"]["jdcache"]:
