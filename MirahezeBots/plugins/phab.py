@@ -4,6 +4,9 @@ import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule
 from sopel.config.types import StaticSection, ValidatedAttribute
 from json import JSONDecodeError
+from sopel import plugins
+from sopel.config import ConfigurationError
+LOGGER = plugins.get_logger('phab')
 
 
 class PhabricatorSection(StaticSection):
@@ -12,11 +15,16 @@ class PhabricatorSection(StaticSection):
     querykey = ValidatedAttribute('querykey', str)
     highpri_notify = ValidatedAttribute('highpri_notify', bool)
     highpri_channel = ValidatedAttribute('highpri_channel', str)
-
+    datafile = ValidatedAttribute('datafile', str)
 
 def setup(bot):
     bot.config.define_section('phabricator', PhabricatorSection)
-
+    bot.memory["phab"] = SopelMemory()
+    bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phab.datafile)
+    if bot.settings.phabricator.host and bot.settings.phabricator.datafile:
+        raise sopel.config.ConfigurationError("Use of host and datafile together is not supported")
+    elif bot.settings.phabricator.host:
+        LOGGER.WARN("Use of the host option was deceprated in 9.0.0 and will be removed in 10.0.0")
 
 def configure(config):
     config.define_section('phabricator', PhabricatorSection, validate=False)
@@ -26,6 +34,7 @@ def configure(config):
     config.phabricator.configure_setting('highpri_notify', 'Would you like to enable automatic notification of high priority tasks? (true/false)')
     config.phabricator.configure_setting('highpri_channel',
                                          'If you enabled high priority notifications, what channel would you like them sent to? (notifications will be sent once every week.')
+    config.phabricator.configure_setting('datafile', 'File to read from to get channel specific data from')
 
 
 BOLD = '\x02'
@@ -152,3 +161,27 @@ def high_priority_tasks_notification(bot):
 @example('.highpri')
 def forcehighpri(bot, trigger):
     gethighpri(limit=False, channel=trigger.sender, bot=bot)
+
+
+@require_admin(message="Only admins may purge cache.")
+@commands('resetphabcache')
+def reset_phab_cache(bot, trigger):
+    """
+    Reset the cache of the channel management data file
+    """
+    bot.reply("Refreshing Cache...")
+    bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phab.datafile)
+    bot.reply("Cache refreshed")
+
+
+@require_admin(message="Only admins may check cache")
+@commands('checkphabcache')
+def check_phab_cache(bot, trigger):
+    """
+    Validate the cache matches the copy on disk
+    """
+    result = jp.validatecache(bot.settings.phab.datafile, bot.memory["phab"]["jdcache"])
+    if result:
+        bot.reply("Cache is correct.")
+    else:
+        bot.reply("Cache does not match on-disk copy")
