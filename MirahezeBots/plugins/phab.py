@@ -61,7 +61,7 @@ def searchphab(bot, channel, task=1):
             host = bot.memory["phab"]["jdcache"]["default"]["host"]
             arraypos = int(bot.memory["phab"]["jdcache"][host]["arraypos"])
             apikey = bot.settings.phabricator.api_token[arraypos]
- 
+
     data = {
         'api.token': apikey,
         'constraints[ids][0]': task
