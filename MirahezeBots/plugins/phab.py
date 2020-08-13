@@ -2,7 +2,7 @@
 
 import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule, require_admin
-from sopel.config.types import StaticSection, ValidatedAttribute
+from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
 from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
@@ -12,8 +12,8 @@ LOGGER = get_logger('phabricator')
 
 class PhabricatorSection(StaticSection):
     host = ValidatedAttribute('host', str)
-    api_token = ValidatedAttribute('api_token', str)
-    querykey = ValidatedAttribute('querykey', str)
+    api_token = ListAttribute('api_token', str)
+    querykey = ListAttribute('querykey', str)
     highpri_notify = ValidatedAttribute('highpri_notify', bool)
     highpri_channel = ValidatedAttribute('highpri_channel', str)
     datafile = ValidatedAttribute('datafile', str)
@@ -122,6 +122,7 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
     if bot.settings.phabricator.host:
         host = 'https://{0}/api'.format(bot.settings.phabricator.host)
         apikey = bot.settings.phabricator.api_token[0]
+        querykey = bot.settings.phabricator.querykey[0]
     elif bot.settings.phabricator.datafile:
         if channel in bot.memory["phab"]["jdcache"]:
             host = bot.memory["phab"]["jdcache"][channel]["host"]
