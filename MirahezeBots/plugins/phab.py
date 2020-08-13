@@ -7,7 +7,7 @@ from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
 from MirahezeBots.utils import jsonparser as jp
-from urlparse import urlparse
+from urllib.parse import urlparse
 LOGGER = get_logger('phabricator')
 
 
