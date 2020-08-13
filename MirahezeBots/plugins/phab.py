@@ -7,6 +7,7 @@ from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
 from MirahezeBots.utils import jsonparser as jp
+from urlparse import urlparse
 LOGGER = get_logger('phabricator')
 
 
@@ -109,7 +110,7 @@ def searchphab(bot, channel, task=1):
         author = response3.get("result").get("data")[0].get("fields").get("username")
         priority = result.get("fields").get("priority").get("name")
         status = result.get("fields").get("status").get("name")
-        output = 'https://phabricator.miraheze.org/T{0} - '.format(str(result["id"]))
+        output = '{0}/T{1} - '.format("https://" + str(urlparse(host).netloc), str(result["id"]))
         output = '{0}{2}{1}{2}, '.format(output, str(result.get('fields').get('name')), BOLD)
         output = output + 'authored by {1}{0}{1}, '.format(author, BOLD)
         output = output + 'assigned to {1}{0}{1}, '.format(owner, BOLD)
