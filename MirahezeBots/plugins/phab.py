@@ -7,7 +7,7 @@ from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
 from MirahezeBots.utils import jsonparser as jp
-LOGGER = get_logger('phabricator')
+LOGGER = get_logger('phab')
 
 
 class PhabricatorSection(StaticSection):
