@@ -75,23 +75,23 @@ def block_manager(type, sender, siteinfo, logininfo, trigger, acl=False):
     try:
         options = trigger.group(2).split(" ")
     except Exception:
-        if iswikifarm is True:
+        if siteinfo[2] is True:
             return FARMSYNTAX
         else:
             return SYNTAX
-    if iswikifarm is False and len(options) < 2:
+    if siteinfo[2] is False and len(options) < 2:
         return SYNTAX
-    elif iswikifarm is True and len(options) < 3:
+    elif siteinfo[2] is True and len(options) < 3:
         return FARMSYNTAX
-    elif iswikifarm is True:
-        url = 'https://' + options[0] + '.' + domain
+    elif siteinfo[2] is True:
+        url = 'https://' + options[0] + '.' + siteinfo[0]
         target = options[1]
         reason = options[2]
         requestdata = [trigger.account, options[1]]
-        if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
+        if check_access(siteinfo[1], requestdata) is not True:
             return "Sorry, you don't have permissions to use this plugin on that wiki"
     else:
-        url = domain
+        url = siteinfo[0]
         target = options[0]
         reason = options[1]
         if trigger.account not in acl:
@@ -178,11 +178,11 @@ def deletepage(bot, trigger):
 @example('.block test Zppix vandalism')
 def blockuser(bot, trigger):
     """Block the given user indefinitely (depending on config, on the given wiki)"""
-    siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory["wikimgnt"]["jdcache"]]
+    siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory["wikimgnt"]["jdcache"], bot.settings.wikimgnt.wiki_farm]
     if bot.settings.wikimgnt.wiki_acl:
-        replytext = block_manager("block", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger, bot.settings.wikimgnt.wiki_acl)
+        replytext = block_manager("block", [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger, bot.settings.wikimgnt.wiki_acl)
     else:
-        replytext = block_manager("block", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+        replytext = block_manager("block", [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
 
 
@@ -191,11 +191,11 @@ def blockuser(bot, trigger):
 @example('.unblock test Zppix per appeal')
 def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)"""
-    siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory["wikimgnt"]["jdcache"]]
+    siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory["wikimgnt"]["jdcache"], bot.settings.wikimgnt.wiki_farm]
     if bot.settings.wikimgnt.wiki_acl:
-        replytext = block_manager("unblock", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password, ], trigger, bot.settings.wikimgnt.wiki_acl)
+        replytext = block_manager("unblock", [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password, ], trigger, bot.settings.wikimgnt.wiki_acl)
     else:
-        replytext = block_manager("unblock", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+        replytext = block_manager("unblock", [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
 
 
