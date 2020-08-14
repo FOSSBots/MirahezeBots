@@ -90,7 +90,7 @@ def block_manager(type, sender, siteinfo, logininfo, trigger, acl=None):
         requestdata = [trigger.account, options[1]]
         if check_access(siteinfo[1], requestdata) is not True:
             return ACLERROR
-    elif siteinfo[2] is False:
+    else:
         url = siteinfo[0]
         target = options[0]
         reason = options[1]
@@ -153,7 +153,7 @@ def deletepage(bot, trigger):
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
             bot.reply(ACLERROR)
         url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-    elif bot.settings.wikimgnt.wiki_farm is False:
+    else:
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply(ACLERROR)
         url = bot.settings.wikimgnt.wiki_domain
