@@ -3,11 +3,13 @@
 from sopel.module import commands, example, require_admin
 from MirahezeBots.utils import mwapihandler as mwapi
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
-from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
 from MirahezeBots.utils import jsonparser as jp
 LOGGER = get_logger('wikimgnt')
+
+
+aclerror = "Sorry, you don't have permissions to use this plugin on that wiki"
 
 
 class WikimgntSection(StaticSection):
@@ -89,13 +91,13 @@ def block_manager(type, sender, siteinfo, logininfo, trigger, acl=False):
         reason = options[2]
         requestdata = [trigger.account, options[1]]
         if check_access(siteinfo[1], requestdata) is not True:
-            return "Sorry, you don't have permissions to use this plugin on that wiki"
+            return aclerror
     else:
         url = siteinfo[0]
         target = options[0]
         reason = options[1]
         if trigger.account not in acl:
-            return "Sorry, you don't have permissions to use this plugin on that wiki"
+            return aclerror
     response = mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
     return response
 
@@ -121,16 +123,15 @@ def logpage(bot, trigger):
         message = options[1]
         target = get_logpage(options[0], bot.memory["wikimgnt"]["jdcache"])
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
-            bot.reply("Sorry, you don't have permissions to use this plugin on that wiki")
+            bot.reply(aclerror)
     else:
         url = bot.settings.wikimgnt.wiki_domain
         message = options[0]
         target = bot.settings.wikimgnt.log_page
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
-            bot.reply("Sorry, you don't have permissions to use this plugin on that wiki")
+            bot.reply(aclerror)
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say("Syntax: .log wiki message")
-        return
     else:
         response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
         bot.reply(response)
@@ -150,23 +151,21 @@ def deletepage(bot, trigger):
         else:
             bot.say("Syntax: .deletepage page reason")
         return
-    if bot.settings.wiki_farm is True:
+    if bot.settings.wikimgnt.wiki_farm is True:
         requestdata = [trigger.account, options[1]]
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
-            bot.reply("Sorry, you don't have permissions to use this plugin on that wiki")
+            bot.reply(aclerror)
+        url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
     else:
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
-            bot.reply("Sorry, you don't have permissions to use this plugin on that wiki")
+            bot.reply(aclerror)
+        url = bot.settings.wikimgnt.wiki_domain
     if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
         bot.say("Syntax: .deletepage page reason")
         return
     elif bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say("Syntax: .deletepage wiki page reason")
         return
-    elif bot.settings.wikimgnt.wiki_farm is True:
-        url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
-    else:
-        url = bot.settings.wikimgnt.wiki_domain
     target = options[0]
     reason = options[1]
     response = mwapi.main(sender, target, 'delete', reason, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
