@@ -17,27 +17,21 @@ USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
 CHANNEL_RE = re.compile(r'#[A-Za-z0-9#\-]+$')
 
 
-def send_welcome(bot, trigger):
-    user = trigger.nick
-    if trigger.sender == '#miraheze' and user[:4] != 'Not-':
+def send_welcome(nick, chan):
+    if chan == '#miraheze' and nick[:4] != 'Not-':
         message = ("Hello {}! If you have any questions, feel free to ask "
-                   "and someone should answer soon.").format(trigger.nick)
-    elif trigger.sender == '#miraheze-cvt':
+                   "and someone should answer soon.").format(nick)
+    elif chan == '#miraheze-cvt':
         message = ("Welcome {}. If you need to report spam or abuse,"
                    " please feel free to notify"
                    " any of the voiced (+v) users,"
                    " if it contains personal information you can pm them,"
                    " or email us"
-                   " at cvt [at] miraheze.org").format(trigger.nick)
+                   " at cvt [at] miraheze.org").format(nick)
     else:
-        return
-    if trigger.account == '*':
-        bot.known_users_list[trigger.sender].append(trigger.nick)
-    else:
-        bot.known_users_list[trigger.sender].append(trigger.account)
-    bot.say(message)
-    save_known_users_list(get_filename(bot), bot.known_users_list)
-
+        message = None
+	
+	return message
 
 def get_filename(bot):
     """Get name of file used to store known users list."""
@@ -91,11 +85,18 @@ def welcome_user(bot, trigger):
         bot.known_users_list[trigger.sender] = []
     if trigger.account == '*':
         if trigger.nick not in bot.known_users_list[trigger.sender]:
-            send_welcome(bot, trigger)
+			bot.known_users_list[trigger.sender].append(trigger.nick)
+			welcome = send_welcome(trigger.nick, trigger.sender)
+			if welcome is not None:
+				bot.say(welcome)
     else:
         if trigger.account not in bot.known_users_list[trigger.sender] and trigger.nick not in bot.known_users_list[trigger.sender]:
-            send_welcome(bot, trigger)
-
+			bot.known_users_list[trigger.sender].append(trigger.account)
+            welcome = send_welcome(trigger.nick, trigger.sender)
+			if welcome is not None:
+				bot.say(welcome)
+	
+	save_known_users_list(get_filename(bot), bot.known_users_list)
 
 @commands('add_known', 'adduser')
 @example('.add_known Zppix #miraheze or .adduser Zppix #miraheze')
