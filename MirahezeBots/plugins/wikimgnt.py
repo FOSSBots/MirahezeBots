@@ -87,7 +87,7 @@ def block_manager(type, sender, siteinfo, logininfo, trigger, acl=None):
         url = 'https://' + options[0] + '.' + siteinfo[0]
         target = options[1]
         reason = options[2]
-        requestdata = [trigger.account, options[1]]
+        requestdata = [trigger.account, options[0]]
         if check_access(siteinfo[1], requestdata) is not True:
             return ACLERROR
     elif siteinfo[2] is False:
@@ -151,24 +151,26 @@ def deletepage(bot, trigger):
             bot.say("Syntax: .deletepage page reason")
         return
     if bot.settings.wikimgnt.wiki_farm is True:
-        requestdata = [trigger.account, options[1]]
+        requestdata = [trigger.account, options[0]]
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
             bot.reply(ACLERROR)
             return
         url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
+        target = options[1]
+        reason = options[2]
     elif bot.settings.wikimgnt.wiki_farm is False:
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply(ACLERROR)
             return
         url = bot.settings.wikimgnt.wiki_domain
+        target = options[0]
+        reason = options[1]
     if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
         bot.say("Syntax: .deletepage page reason")
         return
     elif bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say("Syntax: .deletepage wiki page reason")
         return
-    target = options[0]
-    reason = options[1]
     response = mwapi.main(sender, target, 'delete', reason, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
     bot.reply(response)
 
