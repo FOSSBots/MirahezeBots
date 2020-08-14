@@ -114,7 +114,6 @@ def logpage(bot, trigger):
             bot.say("Syntax: .log wiki message")
             return
     sender = trigger.nick
-    requestdata = [trigger.account, options[0]]
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 2:
         bot.say("Syntax: .log wiki message")
         return
@@ -122,6 +121,7 @@ def logpage(bot, trigger):
         url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
         message = options[1]
         target = get_logpage(options[0], bot.memory["wikimgnt"]["jdcache"])
+        requestdata = [trigger.account, options[0]]
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
             bot.reply(ACLERROR)
             return
