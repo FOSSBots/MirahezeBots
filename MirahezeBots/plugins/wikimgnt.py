@@ -127,7 +127,7 @@ def logpage(bot, trigger):
         target = bot.settings.wikimgnt.log_page
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply(ACLERROR)
-    if bot.settings.wikimgnt.wiki_farm is True and len(options) < 2:
+    if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say("Syntax: .log wiki message")
     else:
         response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
