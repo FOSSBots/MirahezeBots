@@ -131,7 +131,6 @@ def logpage(bot, trigger):
             return
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 2:
         bot.say("Syntax: .log wiki message")
-        return
     else:
         response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
         bot.reply(response)
