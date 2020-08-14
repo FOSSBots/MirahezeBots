@@ -59,7 +59,7 @@ def get_logpage(wiki, jsondata):
 
 
 def check_access(acldata, requestdata,):
-    if requestdata[2] in acldata["wikis"].keys():
+    if requestdata[1] in acldata["wikis"].keys():
         sulgroup = acldata["wikis"][requestdata[2]]["sulgroup"]
     else:
         return "Wiki could not be found"
