@@ -53,7 +53,7 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
             url = domain
             target = options[0]
             reason = options[1]
-        response = mwapi.main(sender[0], target, type, reason, url, logininfo[0], logininfo[1])
+        response = mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
         return response
     else:
         return "Sorry: you don't have permission to use this plugin"
@@ -71,7 +71,7 @@ def logpage(bot, trigger):
             bot.say("Syntax: .log message")
         else:
             message = trigger.group(2)
-            response = mwapi.main(sender, target, 'edit', message, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+            response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
             bot.reply(response)
     else:
         bot.reply("Sorry: you don't have permission to use this plugin")
@@ -104,7 +104,7 @@ def deletepage(bot, trigger):
             url = bot.settings.wikimgnt.wiki_domain
         target = options[0]
         reason = options[1]
-        response = mwapi.main(sender, target, 'delete', reason, url, bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password)
+        response = mwapi.main(sender, target, 'delete', reason, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
         bot.reply(response)
     else:
         bot.reply("Sorry: you don't have permission to use this plugin")
