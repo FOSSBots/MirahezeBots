@@ -31,8 +31,7 @@ def configure(config):
     config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
 
-def updatestatus(bot, requestdata):
-    acldata = bot.memory["status"]["jdcache"]
+def updatestatus(requestdata, authinfo, acldata, supportchan):
     if requestdata[2] in acldata["wikis"].keys():
         wikiurl = str("https://" + acldata["wikis"][requestdata[2]]["url"] + "/w/api.php")
         sulgroup = acldata["wikis"][requestdata[2]]["sulgroup"]
@@ -47,11 +46,11 @@ def updatestatus(bot, requestdata):
         request = [requestdata[1][1], requestdata[3]]
     else:
         message = "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
-        if bot.config.status.support_channel is not None:
-            message = message + " If this persists, ask for help in {}".format(bot.config.status.support_channel)
+        if supportchan is not None:
+            message = message + " If this persists, ask for help in {}".format(supportchan)
         return message
     content = mwapi.main(performer=request[0], target=str("User:" + (str(request[0]) + "/Status")), action="create",
-                         reason=str("Updating status to " + str(request[1]) + " per " + str(request[0])), url=wikiurl, username=bot.settings.status.bot_username, password=bot.settings.status.bot_password, content=str(request[1]))
+                         reason=str("Updating status to " + str(request[1]) + " per " + str(request[0])), url=wikiurl, username=authinfo[0], password=authinfo[1], content=str(request[1]))
     return content
 
 
@@ -87,7 +86,7 @@ def status(bot, trigger):
         cont = 0
     if cont == 1:
         requestdata = [str(trigger.account), host, wiki, str(status)]
-        response = updatestatus(bot, requestdata)
+        response = updatestatus(bot, requestdata, [bot.settings.status.bot_username, bot.settings.status.bot_password], bot.memory["status"]["jdcache"], bot.settings.status.support_channel)
         if response == "create request sent. You may want to check the create log to be sure that it worked.":
             bot.reply("Success")
         else:
