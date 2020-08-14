@@ -116,7 +116,6 @@ def logpage(bot, trigger):
             bot.say("Syntax: .log wiki message")
             return
     sender = trigger.nick
-    target = bot.settings.wikimgnt.log_page
     requestdata = [trigger.account, options[1]]
     if bot.settings.wikimgnt.wiki_farm is True:
         url = options[0] + bot.settings.wikimgnt.wiki_domain
