@@ -1,11 +1,4 @@
-"""This module contains miraheze specific commands."""
-from __future__ import (
-    unicode_literals,
-    absolute_import,
-    print_function,
-    division
-)
-
+"""This plugin contains miraheze specific commands."""
 from sopel.module import commands, example, rule
 
 MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL = (
