@@ -48,9 +48,9 @@ def configure(config):
     config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
 
-def getLogPage(wiki, jsondata)
-     if wiki in acldata["wikis"].keys():
-        return acldata["wikis"][requestdata[2]]["log_page"]
+def getLogPage(wiki, jsondata):
+    if wiki in acldata["wikis"].keys():
+       return acldata["wikis"][requestdata[2]]["log_page"]
 
 
 def checkAccess(acldata, requestdata,):
@@ -67,7 +67,8 @@ def checkAccess(acldata, requestdata,):
         return True
     else:
         return False
-        
+
+
 def blockManager(type, sender, iswikifarm, domain, acl=False, logininfo, trigger):
     FARMSYNTAX = "Syntax: .{} wiki user reason".format(type)
     SYNTAX = "Syntax: .{} user reason".format(type)
@@ -93,7 +94,7 @@ def blockManager(type, sender, iswikifarm, domain, acl=False, logininfo, trigger
         url = domain
         target = options[0]
         reason = options[1]
-        if not trigger.account in acl:
+        if trigger.account not in acl:
             return "Sorry, you don't have permissions to use this module on that wiki"
     response = mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
     return response
@@ -105,7 +106,7 @@ def logpage(bot, trigger):
     """Log given message to configured page"""
     try:
         options = trigger.group(2).split(" ")
-    except:
+    except Exception:
         if bot.settings.wikimgnt.wiki_farm is False:
             bot.say("Syntax: .log message")
             return
@@ -125,7 +126,7 @@ def logpage(bot, trigger):
         url = bot.settings.wikimgnt.wiki_domain
         message = options[0]
         target = bot.settings.wikimgnt.log_page
-        if not trigger.account in bot.settings.wikimgnt.wiki_acl:
+        if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply("Sorry, you don't have permissions to use this module on that wiki")
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say("Syntax: .log wiki message")
@@ -154,7 +155,7 @@ def deletepage(bot, trigger):
         if checkAccess(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
             bot.reply("Sorry, you don't have permissions to use this module on that wiki")
     else:
-        if not trigger.account in bot.settings.wikimgnt.wiki_acl:
+        if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply("Sorry, you don't have permissions to use this module on that wiki")
     if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
         bot.say("Syntax: .deletepage page reason")
