@@ -86,7 +86,7 @@ def status(bot, trigger):
         cont = 0
     if cont == 1:
         requestdata = [str(trigger.account), host, wiki, str(status)]
-        response = updatestatus(bot, requestdata, [bot.settings.status.bot_username, bot.settings.status.bot_password], bot.memory["status"]["jdcache"], bot.settings.status.support_channel)
+        response = updatestatus(requestdata, [bot.settings.status.bot_username, bot.settings.status.bot_password], bot.memory["status"]["jdcache"], bot.settings.status.support_channel)
         if response == "create request sent. You may want to check the create log to be sure that it worked.":
             bot.reply("Success")
         else:
