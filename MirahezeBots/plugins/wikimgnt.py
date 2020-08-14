@@ -71,7 +71,7 @@ def check_access(acldata, requestdata,):
         return False
 
 
-def block_manager(type, sender, siteinfo, logininfo, trigger, acl=False):
+def block_manager(type, sender, siteinfo, logininfo, trigger, acl=None):
     FARMSYNTAX = "Syntax: .{} wiki user reason".format(type)
     SYNTAX = "Syntax: .{} user reason".format(type)
     try:
