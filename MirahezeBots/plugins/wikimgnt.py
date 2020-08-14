@@ -49,8 +49,8 @@ def configure(config):
 
 
 def getLogPage(wiki, jsondata):
-    if wiki in acldata["wikis"].keys():
-       return acldata["wikis"][requestdata[2]]["log_page"]
+    if wiki in jsondata["wikis"].keys():
+       return jsondata["wikis"][wiki]["log_page"]
 
 
 def checkAccess(acldata, requestdata,):
@@ -69,7 +69,7 @@ def checkAccess(acldata, requestdata,):
         return False
 
 
-def blockManager(type, sender, iswikifarm, domain, acl=False, logininfo, trigger):
+def blockManager(type, sender, iswikifarm, domain, logininfo, trigger, acl=False):
     FARMSYNTAX = "Syntax: .{} wiki user reason".format(type)
     SYNTAX = "Syntax: .{} user reason".format(type)
     try:
@@ -89,13 +89,13 @@ def blockManager(type, sender, iswikifarm, domain, acl=False, logininfo, trigger
         reason = options[2]
         requestdata = [trigger.account, options[1]]
         if checkAccess(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
-            return "Sorry, you don't have permissions to use this module on that wiki"
+            return "Sorry, you don't have permissions to use this plugin on that wiki"
     else:
         url = domain
         target = options[0]
         reason = options[1]
         if trigger.account not in acl:
-            return "Sorry, you don't have permissions to use this module on that wiki"
+            return "Sorry, you don't have permissions to use this plugin on that wiki"
     response = mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
     return response
 
@@ -121,13 +121,13 @@ def logpage(bot, trigger):
         message = options[1]
         target = getLogPage(options[0], bot.memory["wikimgnt"]["jdcache"])
         if checkAccess(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
-            bot.reply("Sorry, you don't have permissions to use this module on that wiki")
+            bot.reply("Sorry, you don't have permissions to use this plugin on that wiki")
     else:
         url = bot.settings.wikimgnt.wiki_domain
         message = options[0]
         target = bot.settings.wikimgnt.log_page
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
-            bot.reply("Sorry, you don't have permissions to use this module on that wiki")
+            bot.reply("Sorry, you don't have permissions to use this plugin on that wiki")
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say("Syntax: .log wiki message")
         return
@@ -153,10 +153,10 @@ def deletepage(bot, trigger):
     if bot.settings.wiki_farm is True:
         requestdata = [trigger.account, options[1]]
         if checkAccess(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
-            bot.reply("Sorry, you don't have permissions to use this module on that wiki")
+            bot.reply("Sorry, you don't have permissions to use this plugin on that wiki")
     else:
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
-            bot.reply("Sorry, you don't have permissions to use this module on that wiki")
+            bot.reply("Sorry, you don't have permissions to use this plugin on that wiki")
     if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
         bot.say("Syntax: .deletepage page reason")
         return
@@ -179,7 +179,7 @@ def deletepage(bot, trigger):
 def blockuser(bot, trigger):
     """Block the given user indefinitely (depending on config, on the given wiki)"""
     if bot.settings.wikimgnt.wiki_acl:
-        replytext = blockManager("block", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+        replytext = blockManager("block", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger, bot.settings.wikimgnt.wiki_acl)
     else:
         replytext = blockManager("block", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
@@ -191,7 +191,7 @@ def blockuser(bot, trigger):
 def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)"""
     if bot.settings.wikimgnt.wiki_acl:
-        replytext = blockManager("unblock", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+        replytext = blockManager("unblock", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password, ], trigger, bot.settings.wikimgnt.wiki_acl)
     else:
         replytext = blockManager("unblock", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
