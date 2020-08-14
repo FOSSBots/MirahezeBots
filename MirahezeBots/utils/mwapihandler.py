@@ -45,14 +45,14 @@ def gettoken(url, session, type='csrftoken'):
     return TOKEN
 
 
-def makeaction(url, session, action, token, target, performer, reason, content=''):
+def makeaction(requestinfo, action, target, performer, reason, content=''):
     if action == 'edit':
         PARAMS = {
             'action': 'edit',
             'title': target,
             'summary': reason + ' (' + performer + ')',
             'appendtext': '\n* ' + performer + ': ' + reason,
-            'token': token,
+            'token': requestinfo[2],
             'bot': 'true',
             'format': 'json',
         }
@@ -62,7 +62,7 @@ def makeaction(url, session, action, token, target, performer, reason, content='
             'title': target,
             'summary': reason,
             'text': content,
-            'token': token,
+            'token': requestinfo[2],
             'bot': 'true',
             'format': 'json',
             'contentmodel': 'wikitext',
@@ -77,7 +77,7 @@ def makeaction(url, session, action, token, target, performer, reason, content='
             'expiry': 'infinite',
             'reason': 'Blocked by ' + performer + ' for ' + reason,
             'bot': 'false',
-            'token': token,
+            'token': requestinfo[2],
             'format': 'json',
         }
 
@@ -86,7 +86,7 @@ def makeaction(url, session, action, token, target, performer, reason, content='
             'action': 'unblock',
             'user': target,
             'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': token,
+            'token': requestinfo[2],
             'format': 'json',
         }
 
@@ -95,12 +95,12 @@ def makeaction(url, session, action, token, target, performer, reason, content='
             'action': 'delete',
             'title': target,
             'reason': 'Requested by ' + performer + ' Reason: ' + reason,
-            'token': token,
+            'token': requestinfo[2],
             'format': 'json',
         }
 
     try:
-        request = session.post(url, data=PARAMS)
+        request = requestinfo[1].post(requestinfo[0], data=PARAMS)
         DATA = request.json()
         if DATA.get("error") is not None:
             return ["MWError", (DATA.get("error").get("info"))]
@@ -110,9 +110,9 @@ def makeaction(url, session, action, token, target, performer, reason, content='
         return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
 
 
-def main(performer, target, action, reason, url, username, password, content=False):
+def main(performer, target, action, reason, url, authinfo, content=False):
     session = requests.Session()
-    lg = login(url, session, username, password)
+    lg = login(url, session, authinfo[0], authinfo[1])
     if lg[0] == "Error":
         return lg[1]
     else:
@@ -121,7 +121,7 @@ def main(performer, target, action, reason, url, username, password, content=Fal
             return TOKEN[1]
         else:
             if content:
-                act = makeaction(url, session, action, TOKEN, target, performer, reason, content)
+                act = makeaction([url, session, TOKEN], action, target, performer, reason, content)
             else:
-                act = makeaction(url, session, action, TOKEN, target, performer, reason)
+                act = makeaction([url, session, TOKEN], action, target, performer, reason)
             return act[1]
