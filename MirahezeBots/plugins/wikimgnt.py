@@ -15,7 +15,7 @@ ACLERROR = "Sorry, you don't have permissions to use this plugin on that wiki"
 class WikimgntSection(StaticSection):
     log_page = ValidatedAttribute('log_page', str)
     wiki_acl = ListAttribute('wiki_acl')
-    datafile = ValidatedAttribute('datafile', str)
+    datafile = ValidatedAttribute('datafile', bool)
     wiki_farm = ValidatedAttribute('wiki_farm', bool)
     wiki_domain = ValidatedAttribute('wiki_domain', str)
     bot_username = ValidatedAttribute('bot_username', str)
@@ -202,7 +202,7 @@ def unblockuser(bot, trigger):
 
 @require_admin(message="Only admins may purge cache.")
 @commands('resetwikimgntcache')
-def reset_wikimgnt_cache(bot, trigger):
+def reset_status_cache(bot, trigger):
     """
     Reset the cache of the wiki management data file
     """
@@ -213,7 +213,7 @@ def reset_wikimgnt_cache(bot, trigger):
 
 @require_admin(message="Only admins may check cache")
 @commands('checkwikimgntcache')
-def check_wikimgnt_cache(bot, trigger):
+def check_status_cache(bot, trigger):
     """
     Validate the cache matches the copy on disk
     """
