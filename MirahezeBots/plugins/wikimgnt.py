@@ -121,12 +121,14 @@ def logpage(bot, trigger):
         target = get_logpage(options[0], bot.memory["wikimgnt"]["jdcache"])
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
             bot.reply(ACLERROR)
+            return
     else:
         url = bot.settings.wikimgnt.wiki_domain
         message = options[0]
         target = bot.settings.wikimgnt.log_page
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply(ACLERROR)
+            return
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 2:
         bot.say("Syntax: .log wiki message")
     else:
@@ -152,10 +154,12 @@ def deletepage(bot, trigger):
         requestdata = [trigger.account, options[1]]
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
             bot.reply(ACLERROR)
+            return
         url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
     elif bot.settings.wikimgnt.wiki_farm is False:
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply(ACLERROR)
+            return
         url = bot.settings.wikimgnt.wiki_domain
     if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
         bot.say("Syntax: .deletepage page reason")
