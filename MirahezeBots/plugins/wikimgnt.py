@@ -9,7 +9,7 @@ from MirahezeBots.utils import jsonparser as jp
 LOGGER = get_logger('wikimgnt')
 
 
-aclerror = "Sorry, you don't have permissions to use this plugin on that wiki"
+ACLERROR = "Sorry, you don't have permissions to use this plugin on that wiki"
 
 
 class WikimgntSection(StaticSection):
@@ -91,13 +91,13 @@ def block_manager(type, sender, siteinfo, logininfo, trigger, acl=False):
         reason = options[2]
         requestdata = [trigger.account, options[1]]
         if check_access(siteinfo[1], requestdata) is not True:
-            return aclerror
+            return ACLERROR
     else:
         url = siteinfo[0]
         target = options[0]
         reason = options[1]
         if trigger.account not in acl:
-            return aclerror
+            return ACLERROR
     response = mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
     return response
 
@@ -123,13 +123,13 @@ def logpage(bot, trigger):
         message = options[1]
         target = get_logpage(options[0], bot.memory["wikimgnt"]["jdcache"])
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
-            bot.reply(aclerror)
+            bot.reply(ACLERROR)
     else:
         url = bot.settings.wikimgnt.wiki_domain
         message = options[0]
         target = bot.settings.wikimgnt.log_page
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
-            bot.reply(aclerror)
+            bot.reply(ACLERROR)
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say("Syntax: .log wiki message")
     else:
@@ -154,11 +154,11 @@ def deletepage(bot, trigger):
     if bot.settings.wikimgnt.wiki_farm is True:
         requestdata = [trigger.account, options[1]]
         if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
-            bot.reply(aclerror)
+            bot.reply(ACLERROR)
         url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
     else:
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
-            bot.reply(aclerror)
+            bot.reply(ACLERROR)
         url = bot.settings.wikimgnt.wiki_domain
     if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
         bot.say("Syntax: .deletepage page reason")
