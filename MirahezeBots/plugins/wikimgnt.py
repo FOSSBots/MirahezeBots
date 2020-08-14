@@ -36,7 +36,7 @@ def setup(bot):
         raise ConfigurationError("For single wikis, log_page must be defined")
     elif bot.settings.wikimgnt.datafile:
         bot.memory["wikimgnt"] = SopelMemory()
-        bot.memory["wikimgnt"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
+        bot.memory["wikimgnt"]["jdcache"] = jp.createdict(bot.settings.wikimgnt.datafile)
 
 
 def configure(config):
