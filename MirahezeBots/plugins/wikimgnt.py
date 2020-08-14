@@ -115,10 +115,7 @@ def logpage(bot, trigger):
             return
     sender = trigger.nick
     requestdata = [trigger.account, options[0]]
-    if bot.settings.wikimgnt.wiki_farm is True and len(options) < 2:
-        bot.say("Syntax: .log wiki message")
-        return
-    elif bot.settings.wikimgnt.wiki_farm is True:
+    if bot.settings.wikimgnt.wiki_farm is True:
         url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
         message = options[1]
         target = get_logpage(options[0], bot.memory["wikimgnt"]["jdcache"])
@@ -132,6 +129,9 @@ def logpage(bot, trigger):
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply(ACLERROR)
             return
+    if bot.settings.wikimgnt.wiki_farm is True and len(options) < 2:
+        bot.say("Syntax: .log wiki message")
+        return
     else:
         response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
         bot.reply(response)
