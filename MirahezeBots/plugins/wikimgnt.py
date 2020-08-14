@@ -132,9 +132,8 @@ def logpage(bot, trigger):
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply(ACLERROR)
             return
-    else:
-        response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
-        bot.reply(response)
+    response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
+    bot.reply(response)
 
 
 @commands('deletepage')
