@@ -1,16 +1,9 @@
 """
-ping.py - Sopel Ping Module.
+ping.py - Sopel Ping Plugin.
 
 Author: Sean B. Palmer, inamidst.com
 About: http://sopel.chat
 """
-
-from __future__ import (
-    unicode_literals,
-    absolute_import,
-    print_function,
-    division
-)
 
 from sopel.module import commands
 

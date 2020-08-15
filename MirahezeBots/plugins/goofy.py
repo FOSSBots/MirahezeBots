@@ -1,10 +1,10 @@
 """ Some commands for just goofing around and having fun """
 
-from sopel import module
+from sopel.module import commands, example
 
 
-@module.example('.coffee MirahezeBot')
-@module.commands('coffee')
+@example('.coffee MirahezeBot')
+@commands('coffee')
 def coffee(bot, trigger):
     """
     Makes me give the specified nick a coffee.
@@ -15,8 +15,8 @@ def coffee(bot, trigger):
         bot.action("gives %s a nice warm cup of coffee." % (trigger.group(2)), trigger.sender)
 
 
-@module.example('.hug MirahezeBot')
-@module.commands('hug')
+@example('.hug MirahezeBot')
+@commands('hug')
 def hug(bot, trigger):
     """
     Makes me give the specified nick a hug.
@@ -27,8 +27,8 @@ def hug(bot, trigger):
         bot.action("gives %s a great big bear hug." % (trigger.group(2)), trigger.sender)
 
 
-@module.example('.burger MirahezeBot')
-@module.commands('burger')
+@example('.burger MirahezeBot')
+@commands('burger')
 def burger(bot, trigger):
     """
     Makes me give the specified nick a burger.
@@ -39,8 +39,8 @@ def burger(bot, trigger):
         bot.action("gives %s a freshly cooked cheeseburger." % (trigger.group(2)), trigger.sender)
 
 
-@module.example('.present MirahezeBot')
-@module.commands('present')
+@example('.present MirahezeBot')
+@commands('present')
 def present(bot, trigger):
     """
     Makes me give the specified nick a present.
@@ -51,8 +51,8 @@ def present(bot, trigger):
         bot.action("gives %s a present." % (trigger.group(2)), trigger.sender)
 
 
-@module.example('.hotchoc MirahezeBot')
-@module.commands('hotchoc', 'hotchocolate')
+@example('.hotchoc MirahezeBot')
+@commands('hotchoc', 'hotchocolate')
 def hotchoc(bot, trigger):
     """
     Makes me give the specified nick a hot chocolate.
