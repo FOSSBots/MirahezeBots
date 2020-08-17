@@ -7,4 +7,4 @@ PATH = '../MirahezeBots/MirahezeBots/tests'
 
 
 def test_create_dict():
-    assert dict == jp.createdict(os.path.join(PATH, 'test_json.json'))
+    assert DICT == jp.createdict(os.path.join(PATH, 'test_json.json'))
