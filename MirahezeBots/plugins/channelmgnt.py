@@ -7,31 +7,34 @@ Copyright © 2012, Elad Alfassa <elad@fedoraproject.org>
 Licensed under the Eiffel Forum License 2.
 https://sopel.chat
 """
-from __future__ import unicode_literals, absolute_import, print_function, division
-
 import re
 import time
-import json
 
 from sopel import formatting
 from sopel.module import (
-    commands, example, priority, OP, require_chanmsg
+    commands, example, priority, OP, require_chanmsg, require_admin
 )
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
+from MirahezeBots.utils import jsonparser as jp
+from sopel.tools import SopelMemory
 
 
 class ChannelmgntSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
+    support_channel = ValidatedAttribute('support_channel', str)
 
 
 def setup(bot):
     bot.config.define_section('channelmgnt', ChannelmgntSection)
+    bot.memory["channelmgnt"] = SopelMemory()
+    bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
 
 
 def configure(config):
     config.define_section('channelmgnt', ChannelmgntSection, validate=False)
     config.channelmgnt.configure_setting('datafile', 'Where is the datafile for channelmgnt?')
+    config.channelmgnt.configure_setting('support_channel', 'What channel should users ask for help in?')
 
 
 def default_mask(trigger):
@@ -43,19 +46,11 @@ def default_mask(trigger):
     return '{} {} {} {}'.format(welcome, chan, topic_, arg)
 
 
-def fileread(file):
-    print(str(file))
-    channellist = open(str(file), 'r')
-    chanopsjson = channellist.read()
-    channellist.close()
-    return chanopsjson
-
-
 def chanopget(channeldata, chanopsjson):
     chanops = []
     if 'inherits-from' in channeldata.keys():
         for x in channeldata["inherits-from"]:
-            y = channelparse(chanopsjson, x)
+            y = channelparse(channel=x, cachedjson=chanopsjson)
             chanops = chanops + y[0]["chanops"]
     if 'chanops' in channeldata.keys():
         chanops = chanops + (channeldata["chanops"])
@@ -65,25 +60,43 @@ def chanopget(channeldata, chanopsjson):
         return chanops
 
 
-def channelparse(chanopsjson, channel):
-    chanopsjsontemp = (json.loads(chanopsjson))
-    if channel in chanopsjsontemp.keys():
-        channeldata = chanopsjsontemp[channel]
-        return channeldata, chanopsjson
+def channelparse(channel, cachedjson):
+    if channel in cachedjson.keys():
+        channeldata = cachedjson[channel]
+        return channeldata, cachedjson
     else:
         return False
 
 
-def get_chanops(bot, trigger):
-    file = bot.settings.channelmgnt.datafile
-    channel = str(trigger.sender)
-    chanopsjson = fileread(file)
-    channeldata = channelparse(chanopsjson, channel)
+def get_chanops(channel, cachedjson):
+    channeldata = channelparse(channel=channel, cachedjson=cachedjson)
     if not channeldata:
         chanops = False
     else:
         chanops = chanopget(channeldata[0], channeldata[1])
     return chanops
+
+
+def makemodechange(bot, trigger, mode, isusermode=False, isbqmode=False):
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
+    if chanops:
+        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
+            bot.say('Attempting to OP...')
+            bot.say('op ' + trigger.sender, 'ChanServ')
+            time.sleep(1)
+        if isusermode and not trigger.group(2):
+            bot.write(['MODE', trigger.sender, mode, trigger.nick])
+        elif isusermode and trigger.account in chanops:
+            bot.write(['MODE', trigger.sender, mode, trigger.group(2)])
+        elif isbqmode and trigger.account in chanops:
+            bot.write(['MODE', trigger.sender, mode, parse_host_mask(trigger.group().split())])
+        elif trigger.account in chanops:
+            bot.write(['MODE', trigger.sender, mode])
+        else:
+            bot.reply('Access Denied. If in error, please contact the channel founder.')
+
+    else:
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_chanmsg
@@ -93,22 +106,7 @@ def chanmode(bot, trigger):
     """
     Command to change channel mode.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        modes = trigger.group(2)
-        channel = trigger.sender
-        if not modes:
-            bot.reply('Please specify what mode(s) to set')
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, modes])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, trigger.group(2), isusermode=False)
 
 
 @require_chanmsg
@@ -118,22 +116,7 @@ def op(bot, trigger):
     """
     Command to op users in a room. If no nick is given, Sopel will op the nick who sent the command.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        nick = trigger.group(2)
-        channel = trigger.sender
-        if not nick:
-            nick = trigger.nick
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, "+o", nick])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '+o', isusermode=True)
 
 
 @require_chanmsg
@@ -143,22 +126,7 @@ def deop(bot, trigger):
     """
     Command to deop users in a room. If no nick is given, Sopel will deop the nick who sent the command.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        nick = trigger.group(2)
-        channel = trigger.sender
-        if not nick:
-            bot.write(['MODE', channel, "-o", trigger.nick])
-        elif trigger.account in chanops:
-            bot.write(['MODE', channel, "-o", nick])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '-o', isusermode=True)
 
 
 @require_chanmsg
@@ -168,22 +136,7 @@ def voice(bot, trigger):
     """
     Command to voice users in a room. If no nick is given, Sopel will voice the nick who sent the command.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        nick = trigger.group(2)
-        channel = trigger.sender
-        if not nick:
-            nick = trigger.nick
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, "+v", nick])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '+v', isusermode=True)
 
 
 @require_chanmsg
@@ -193,22 +146,7 @@ def devoice(bot, trigger):
     """
     Command to devoice users in a room. If no nick is given, the nick who sent the command will be devoiced.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-            nick = trigger.group(2)
-            channel = trigger.sender
-        if not nick:
-            bot.write(['MODE', channel, "-v", trigger.nick])
-        elif trigger.account in chanops:
-            bot.write(['MODE', channel, "-v", nick])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '-v', isusermode=True)
 
 
 @require_chanmsg
@@ -217,7 +155,7 @@ def devoice(bot, trigger):
 @example('.kick Zppix')
 def kick(bot, trigger):
     """Kick a user from the channel."""
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -243,10 +181,19 @@ def kick(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
-def configureHostMask(mask):
+def parse_host_mask(text):
+    argc = len(text)
+    if argc < 2:
+        return
+    opt = Identifier(text[1])
+    mask = opt
+    if not opt.is_nick():
+        if argc < 3:
+            return
+        mask = text[2]
     if mask == '*!*@*':
         return mask
     if re.match('^[^.@!/]+$', mask) is not None:
@@ -275,33 +222,7 @@ def configureHostMask(mask):
 def ban(bot, trigger):
     """Ban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        text = trigger.group().split()
-        argc = len(text)
-        if argc < 2:
-            return
-        opt = Identifier(text[1])
-        banmask = opt
-        channel = trigger.sender
-        if not opt.is_nick():
-            if argc < 3:
-                return
-            channel = opt
-            banmask = text[2]
-        banmask = configureHostMask(banmask)
-        if banmask == '':
-            return
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, '+b', banmask])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '+b', isbqmode=True)
 
 
 @require_chanmsg
@@ -310,33 +231,7 @@ def ban(bot, trigger):
 def unban(bot, trigger):
     """Unban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        text = trigger.group().split()
-        argc = len(text)
-        if argc < 2:
-            return
-        opt = Identifier(text[1])
-        banmask = opt
-        channel = trigger.sender
-        if not opt.is_nick():
-            if argc < 3:
-                return
-            channel = opt
-            banmask = text[2]
-        banmask = configureHostMask(banmask)
-        if banmask == '':
-            return
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, '-b', banmask])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '-b', isbqmode=True)
 
 
 @require_chanmsg
@@ -345,33 +240,7 @@ def unban(bot, trigger):
 def quiet(bot, trigger):
     """Quiet a user. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        text = trigger.group().split()
-        argc = len(text)
-        if argc < 2:
-            return
-        opt = Identifier(text[1])
-        quietmask = opt
-        channel = trigger.sender
-        if not opt.is_nick():
-            if argc < 3:
-                return
-            quietmask = text[2]
-            channel = opt
-        quietmask = configureHostMask(quietmask)
-        if quietmask == '':
-            return
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, '+q', quietmask])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '+q', isbqmode=True)
 
 
 @require_chanmsg
@@ -380,33 +249,7 @@ def quiet(bot, trigger):
 def unquiet(bot, trigger):
     """Unquiet a user. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
-    if chanops:
-        if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
-            bot.say('Please wait...')
-            bot.say('op ' + trigger.sender, 'ChanServ')
-            time.sleep(1)
-        text = trigger.group().split()
-        argc = len(text)
-        if argc < 2:
-            return
-        opt = Identifier(text[1])
-        quietmask = opt
-        channel = trigger.sender
-        if not opt.is_nick():
-            if argc < 3:
-                return
-            quietmask = text[2]
-            channel = opt
-        quietmask = configureHostMask(quietmask)
-        if quietmask == '':
-            return
-        if trigger.account in chanops:
-            bot.write(['MODE', channel, '-q', quietmask])
-        else:
-            bot.reply('Access Denied. If in error, please contact the channel founder.')
-    else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+    makemodechange(bot, trigger, '-q', isbqmode=True)
 
 
 @require_chanmsg
@@ -416,7 +259,7 @@ def unquiet(bot, trigger):
 def kickban(bot, trigger):
     """Kick and ban a user from the channel. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -441,7 +284,7 @@ def kickban(bot, trigger):
             mask = text[3] if any([s in text[3] for s in "!@*"]) else ''
             reasonidx = 4 if mask != '' else 3
         reason = ' '.join(text[reasonidx:])
-        mask = configureHostMask(mask)
+        mask = parse_host_mask(trigger.group().split())
         if mask == '':
             mask = nick + '!*@*'
         if trigger.account in chanops:
@@ -450,7 +293,7 @@ def kickban(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_chanmsg
@@ -459,7 +302,7 @@ def kickban(bot, trigger):
 def topic(bot, trigger):
     """Change the channel topic. The bot must be a channel operator for this command to work.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
             bot.say('Please wait...')
@@ -469,7 +312,6 @@ def topic(bot, trigger):
             return
         channel = trigger.sender.lower()
 
-        narg = 1
         mask = None
         mask = bot.db.get_channel_value(channel, 'topic_mask')
         mask = mask or default_mask(trigger)
@@ -491,7 +333,7 @@ def topic(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_chanmsg
@@ -500,7 +342,7 @@ def topic(bot, trigger):
 def set_mask(bot, trigger):
     """Set the topic mask to use for the current channel. Within the topic mask, {} is used to allow substituting in chunks of text. This mask is used when running the 'topic' command.
     """
-    chanops = get_chanops(bot, trigger)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     if chanops:
         if trigger.account in chanops:
             bot.db.set_channel_value(trigger.sender, 'topic_mask', trigger.group(2))
@@ -508,7 +350,7 @@ def set_mask(bot, trigger):
         else:
             bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
 
 
 @require_chanmsg
@@ -527,8 +369,7 @@ def invite_user(bot, trigger):
     """
     Command to invite users to a room.
     """
-    chanops = get_chanops(bot, trigger)
-    nick = trigger.group(2)
+    chanops = get_chanops(str(trigger.sender), bot.memory["channelmgnt"]["jdcache"])
     channel = trigger.sender
     if chanops:
         if bot.channels[trigger.sender].privileges[bot.nick] < OP and trigger.account in chanops:
@@ -543,4 +384,28 @@ def invite_user(bot, trigger):
             else:
                 bot.reply('Access Denied. If in error, please contact the channel founder.')
     else:
-        bot.reply('No ChanOps Found. Please ask for assistance in #miraheze-bots')
+        bot.reply('No ChanOps Found. Please ask for assistance in {}'.format(bot.settings.channelmgnt.support_channel))
+
+
+@require_admin(message="Only admins may purge cache.")
+@commands('resetchanopcache')
+def reset_chanop_cache(bot, trigger):
+    """
+    Reset the cache of the channel management data file
+    """
+    bot.reply("Refreshing Cache...")
+    bot.memory["channelmgnt"]["jdcache"] = jp.createdict(bot.settings.channelmgnt.datafile)
+    bot.reply("Cache refreshed")
+
+
+@require_admin(message="Only admins may check cache")
+@commands('checkchanopcache')
+def check_chanop_cache(bot, trigger):
+    """
+    Validate the cache matches the copy on disk
+    """
+    result = jp.validatecache(bot.settings.channelmgnt.datafile, bot.memory["channelmgnt"]["jdcache"])
+    if result:
+        bot.reply("Cache is correct.")
+    else:
+        bot.reply("Cache does not match on-disk copy")

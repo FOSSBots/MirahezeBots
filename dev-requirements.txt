@@ -2,5 +2,6 @@
 vcrpy==4.1.0
 six==1.15.0
 pip-check-reqs==2.1.1
-setuptools==49.2.1
+setuptools==49.6.0
 pytest==6.0.1
+flake8==3.8.3

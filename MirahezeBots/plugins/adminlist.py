@@ -1,11 +1,4 @@
-"""This module provides admin list and access level information."""
-
-from __future__ import (
-    unicode_literals,
-    absolute_import,
-    print_function,
-    division
-)
+"""This plugin provides admin list and access level information."""
 
 from sopel.module import commands
 

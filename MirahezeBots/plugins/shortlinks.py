@@ -1,8 +1,5 @@
-"""This module expands links to various websites"""
-from __future__ import unicode_literals, absolute_import, print_function, division
-
-import re
-from sopel.module import rule, commands, example
+"""This plugin expands links to various websites"""
+from sopel.module import commands, example
 
 
 @commands('github', 'gh')
