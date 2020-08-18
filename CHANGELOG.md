@@ -13,13 +13,14 @@ Please see below for changes to MirahezeBot-Plugins
 ## Requirements
 - mwclient no longer required
 - Setuptools bumped from 49.5.0 to 49.6.0
+- flake8 is now required for developers
+- SQLAchemy is now at 1.3.19
 ## Plugins
 - all: removed future imports
 - channelmgnt: switched to caching the json config
 - channelmgnt: introduced a makemodechange system
 - channelmgnt: added support_channel config
 - status: replaced mwclient with a new util script, introduced cached json config, renamed other config
-- wikimgnt: New plugin
 - phab: Introduced channel specific configuration
 
 
