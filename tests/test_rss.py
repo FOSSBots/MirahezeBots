@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import MirahezeBots.plugins.rss as rss
+from sopel.tools import SopelMemory
 import hashlib
 import pytest
 
@@ -123,14 +124,18 @@ def mockbot(tmpconfig, botfactory):
 
 
 def _fixture_bot_add_data(mockbot, id, url):
-    bot.memory['rss']['feeds']['feed' + id] = {'channel': '#channel' + id, 'name': 'feed' + id, 'url': url}
-    bot.memory['rss']['hashes']['feed' + id] = rss.RingBuffer(100)
+    mockbot.memory = SopelMemory()
+    mockbot.memory['rss'] = SopelMemory()
+    mockbot.memory['rss']['feeds'] = SopelMemory()
+    mockbot.memory['rss']['hashes'] = SopelMemory()
+    mockbot.memory['rss']['feeds']['feed' + id] = {'channel': '#channel' + id, 'name': 'feed' + id, 'url': url}
+    mockbot.memory['rss']['hashes']['feed' + id] = rss.RingBuffer(100)
     feedreader = rss.MockFeedReader(FEED_VALID)
     bot.memory['rss']['options']['feed' + id] = rss.Options(mockbot, feedreader)
     sql_create_table = 'CREATE TABLE ' + rss._digest_tablename('feed' + id) + ' (id INTEGER PRIMARY KEY, hash VARCHAR(32) UNIQUE)'
     bot.db.execute(sql_create_table)
     bot.config.core.channels = ['#channel' + id]
-    return bot
+    return mockbot
 
 
 @pytest.fixture(scope="function")
@@ -153,7 +158,7 @@ def bot_rss_list(request):
 
 
 @pytest.fixture(scope="function")
-def bot_rss_update(request):
+def mockbot_rss_update(request):
     bot = _fixture_bot_add_data(mockbot, '1', FEED_VALID)
     return bot
 
@@ -280,7 +285,7 @@ def test_rss_global_templates_get(mockbot):
 def test_rss_global_update_update(mockbot_rss_update):
     rss._rss(mockbot_rss_update, ['update'])
     expected = '\x02[feed1]\x02 Title 1 \x02→\x02 https://www.site1.com/article1\n\x02[feed1]\x02 Title 2 \x02→\x02 https://www.site1.com/article2\n\x02[feed1]\x02 Title 3 \x02→\x02 https://www.site1.com/article3\n'
-    assert expected == bot_rss_update.output
+    assert expected == mockbot_rss_update.output
 
 
 # def test_config_define_sopelmemory():
@@ -964,7 +969,7 @@ def test_rss_formats_format_output(mockbot_rss_update):
 \x02[feed1]\x02 <Author 2> Description of article 2 2 at https://www.site1.com/ \x02→\x02 https://www.site1.com/article2 (2016-08-22 02:20) Description of article 2 Title 2
 \x02[feed1]\x02 <Author 3> Description of article 3 3 at https://www.site1.com/ \x02→\x02 https://www.site1.com/article3 (2016-08-23 03:30) Description of article 3 Title 3
 '''
-    assert expected == bot_rss_update.output
+    assert expected == mockbot_rss_update.output
 
 
 def test_rss_formats_changes_are_saved(mockbot):
@@ -1120,7 +1125,7 @@ def test_rss_templates_changes_are_saved(mockbot):
 def test_rss_update_update(mockbot_rss_update):
     rss._rss_update(mockbot_rss_update, ['update'])
     expected = '\x02[feed1]\x02 Title 1 \x02→\x02 https://www.site1.com/article1\n\x02[feed1]\x02 Title 2 \x02→\x02 https://www.site1.com/article2\n\x02[feed1]\x02 Title 3 \x02→\x02 https://www.site1.com/article3\n'
-    assert expected == bot_rss_update.output
+    assert expected == mockbot_rss_update.output
 
 
 def test_rss_update_no_update(mockbot_rss_update):
