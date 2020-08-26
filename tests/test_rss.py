@@ -109,7 +109,8 @@ FEED_SPY = '''<?xml version="1.0" encoding="UTF-8"?>
 </rss>
 '''
 
-def _fixture_bot_setup(botfactory, configfactory =, request):
+
+def _fixture_bot_setup(botfactory, configfactory, request):
     settings = configfactory('')
     bot = botfactory.preloaded(settings, ['rss'])
     bot.config.core.db_filename = tempfile.mkstemp()[1]
