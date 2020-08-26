@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 from sopel.db import SopelDB
 import MirahezeBots.plugins.rss as rss
-from sopel.test_tools import MockSopel
 import hashlib
 import os
 import pytest
@@ -109,10 +108,9 @@ FEED_SPY = '''<?xml version="1.0" encoding="UTF-8"?>
 </rss>
 '''
 
-
 def _fixture_bot_setup(request):
-    bot = MockSopel('Sopel')
-    bot = rss._config_define(bot)
+    settings = configfactory('')
+    bot = botfactory.preloaded(settings, ['rss'])
     bot.config.core.db_filename = tempfile.mkstemp()[1]
     bot.db = SopelDB(bot.config)
     bot.output = ''
