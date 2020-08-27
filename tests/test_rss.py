@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import MirahezeBots.plugins.rss as rss
 from sopel.tools import SopelMemory
+# from sopel.db import SopelDB
 import hashlib
 import pytest
 
@@ -128,13 +129,15 @@ def _fixture_bot_add_data(mockbot, id, url):
     mockbot.memory['rss'] = SopelMemory()
     mockbot.memory['rss']['feeds'] = SopelMemory()
     mockbot.memory['rss']['hashes'] = SopelMemory()
+    mockbot.memory['rss']['options'] = SopelMemory()
+    # mockbot.db = SopelDB(mockbot)
     mockbot.memory['rss']['feeds']['feed' + id] = {'channel': '#channel' + id, 'name': 'feed' + id, 'url': url}
     mockbot.memory['rss']['hashes']['feed' + id] = rss.RingBuffer(100)
     feedreader = rss.MockFeedReader(FEED_VALID)
-    bot.memory['rss']['options']['feed' + id] = rss.Options(mockbot, feedreader)
-    sql_create_table = 'CREATE TABLE ' + rss._digest_tablename('feed' + id) + ' (id INTEGER PRIMARY KEY, hash VARCHAR(32) UNIQUE)'
-    bot.db.execute(sql_create_table)
-    bot.config.core.channels = ['#channel' + id]
+    mockbot.memory['rss']['options']['feed' + id] = rss.Options(mockbot, feedreader)
+    # sql_create_table = 'CREATE TABLE ' + rss._digest_tablename('feed' + id) + ' (id INTEGER PRIMARY KEY, hash VARCHAR(32) UNIQUE)'
+    # bot.db.execute(sql_create_table)
+    # bot.config.core.channels = ['#channel' + id]
     return mockbot
 
 
@@ -151,7 +154,7 @@ def bot_config_save(request):
 
 
 @pytest.fixture(scope="function")
-def bot_rss_list(request):
+def mockbot_rss_list(request):
     bot = _fixture_bot_add_data(mockbot, '1', 'https://www.site1.com/feed')
     bot = _fixture_bot_add_data(mockbot, '2', 'https://www.site2.com/feed')
     return bot
@@ -1053,8 +1056,8 @@ def test_rss_list_all(mockbot_rss_list):
     rss._rss_list(mockbot_rss_list, ['list'])
     expected1 = '#channel1 feed1 https://www.site1.com/feed'
     expected2 = '#channel2 feed2 https://www.site2.com/feed'
-    assert expected1 in bot_rss_list.output
-    assert expected2 in bot_rss_list.output
+    assert expected1 in mockbot_rss_list.output
+    assert expected2 in mockbot_rss_list.output
 
 
 def test_rss_list_feed(mockbot):
