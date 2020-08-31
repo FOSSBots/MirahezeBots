@@ -4,6 +4,7 @@ python:
   - "3.7" # Our instance, supported until at least 2023-06-27 upstream.
   - "3.8" # latest python version
   - "3.8-dev"  # 3.8 development branch
+  - "nightly" # nightly python build
 dist: xenial
 os: linux
 
