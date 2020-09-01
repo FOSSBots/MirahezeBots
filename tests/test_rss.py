@@ -129,11 +129,6 @@ def mockbot(tmpconfig, botfactory):
     mockbot.memory['rss']['formats'] = list()
     mockbot.memory['rss']['templates'] = dict()
     # mockbot.db = SopelDB(mockbot)
-    line = ':Test!test@example.com PRIVMSG #channel :hello'
-    pretrigger = trigger.PreTrigger(mockbot.nick, line)
-    rule_trigger = trigger.Trigger(
-        mockbot.settings, pretrigger, account=None)
-    wrapper = bot.SopelWrapper(mockbot, rule_trigger)
     return mockbot
 
 
