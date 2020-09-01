@@ -121,16 +121,17 @@ def tmpconfig(configfactory):
 
 @pytest.fixture
 def mockbot(tmpconfig, botfactory):
-    return botfactory.preloaded(tmpconfig, preloads=['rss'])
-
-
-def _fixture_bot_add_data(mockbot, id, url):
+    mockbot = botfactory.preloaded(tmpconfig, preloads=['rss'])
     mockbot.memory = SopelMemory()
     mockbot.memory['rss'] = SopelMemory()
     mockbot.memory['rss']['feeds'] = SopelMemory()
     mockbot.memory['rss']['hashes'] = SopelMemory()
     mockbot.memory['rss']['options'] = SopelMemory()
     # mockbot.db = SopelDB(mockbot)
+    return mockbot
+
+
+def _fixture_bot_add_data(mockbot, id, url):
     mockbot.memory['rss']['feeds']['feed' + id] = {'channel': '#channel' + id, 'name': 'feed' + id, 'url': url}
     mockbot.memory['rss']['hashes']['feed' + id] = rss.RingBuffer(100)
     feedreader = rss.MockFeedReader(FEED_VALID)
