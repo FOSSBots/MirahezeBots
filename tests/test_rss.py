@@ -213,7 +213,7 @@ def test_rss_global_config_templates(mockbot, triggerfactory):
     wrapper = make_wrapper_mock(mockbot, triggerfactory, "PRIVMSG #channel .rss config templates")
     rss._rss(wrapper, ['config', 'templates'])
     expected = 't=a|<{}>;t=d|{};t=f|%16[{}]%16;t=g|{};t=l|%16→%16 {};'
-    expected += 't=p|({});t=s|{};t=t|{};t=y|%16→%16 {}\n'
+    expected += 't=p|({});t=s|{};t=t|{};t=y|%16→%16 {}'
     expected += rss._config_templates_example(mockbot) + '\n'
     assert rawlist("PRIVMSG #channel :" + expected) == wrapper.backend.message_sent
 
