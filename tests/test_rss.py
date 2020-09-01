@@ -217,15 +217,17 @@ def test_rss_global_config_templates(mockbot, triggerfactory):
     assert expected == wrapper.backend.message_sent
 
 
-def test_rss_global_feed_add(mockbot):
-    rss._rss(mockbot, ['add', '#channel', 'feedname', FEED_VALID])
-    assert rss._feed_exists(mockbot, 'feedname')
+def test_rss_global_feed_add(mockbot, triggerfactory):
+    wrapper = make_wrapper_mock(mockbot, triggerfactory, "PRIVMSG #channel .rss add #channel feedname")
+    rss._rss(wrapper, ['add', '#channel', 'feedname', FEED_VALID])
+    assert rss._feed_exists(wrapper, 'feedname')
 
 
-def test_rss_global_feed_delete(mockbot):
-    rss._rss(mockbot, ['add', '#channel', 'feedname', FEED_VALID])
-    rss._rss(mockbot, ['del', 'feedname'])
-    assert rss._feed_exists(mockbot, 'feedname') is False
+def test_rss_global_feed_delete(mockbot, triggerfactory):
+    wrapper = make_wrapper_mock(mockbot, triggerfactory, "PRIVMSG #channel .rss")
+    rss._rss(wrapper, ['add', '#channel', 'feedname', FEED_VALID])
+    rss._rss(wrapper, ['del', 'feedname'])
+    assert rss._feed_exists(wrapper, 'feedname') is False
 
 
 def test_rss_global_fields_get(mockbot):
