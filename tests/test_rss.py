@@ -202,19 +202,20 @@ def test_rss_global_too_few_parameters(mockbot, triggerfactory):
     assert expected == wrapper.backend.message_sent
 
 
-def test_rss_global_color(mockbot):
+def test_rss_global_color(mockbot, triggerfactory):
     wrapper = make_wrapper_mock(mockbot, triggerfactory, "PRIVMSG #channel .rss colors")
     rss._rss(wrapper, ['colors'])
     expected = rawlist("PRIVMSG #channel : \x0301,00 00: white \x0f\x0300,01 01: black \x0f\x0300,02 02: blue \x0f\x0300,03 03: green \x0f\x0301,04 04: red \x0f\x0300,05 05: brown \x0f\x0300,06 06: purple \x0f\x0301,07 07: orange \x0f\x0301,08 08: yellow \x0f\x0301,09 09: lime \x0f\x0300,10 10: cyan \x0f\x0301,11 11: aqua \x0f\x0301,12 12: azure \x0f\x0301,13 13: pink \x0f\x0300,14 14: grey \x0f\x0301,15 15: silver \x0f\x0300,01 16: \x02bold\x02 \x0f\x0301,00 17: \x1ditalic\x1d \x0f\x0300,01 18: \x1funderline\x1f \x0f\n'")   # noqa: E501
     assert expected == wrapper.backend.message_sent
 
 
-def test_rss_global_config_templates(mockbot):
-    rss._rss(mockbot, ['config', 'templates'])
+def test_rss_global_config_templates(mockbot, triggerfactory):
+    wrapper = make_wrapper_mock(mockbot, triggerfactory, "PRIVMSG #channel .rss config templates")
+    rss._rss(wrapper, ['config', 'templates'])
     expected = 't=a|<{}>;t=d|{};t=f|%16[{}]%16;t=g|{};t=l|%16→%16 {};'
     expected += 't=p|({});t=s|{};t=t|{};t=y|%16→%16 {}\n'
     expected += rss._config_templates_example(mockbot) + '\n'
-    assert expected == bot.output
+    assert rawlist("PRIVMSG #channel :" + expected) == wrapper.backend.message_sent
 
 
 def test_rss_global_feed_add(mockbot):
