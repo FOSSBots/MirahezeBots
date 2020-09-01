@@ -122,11 +122,12 @@ def tmpconfig(configfactory):
 @pytest.fixture
 def mockbot(tmpconfig, botfactory):
     mockbot = botfactory.preloaded(tmpconfig, preloads=['rss'])
-    mockbot.memory = SopelMemory()
     mockbot.memory['rss'] = SopelMemory()
-    mockbot.memory['rss']['feeds'] = SopelMemory()
-    mockbot.memory['rss']['hashes'] = SopelMemory()
-    mockbot.memory['rss']['options'] = SopelMemory()
+    mockbot.memory['rss']['feeds'] = dict()
+    mockbot.memory['rss']['hashes'] = dict()
+    mockbot.memory['rss']['options'] = dict()
+    mockbot.memory['rss']['formats'] = list()
+    mockbot.memory['rss']['templates'] = dict()
     # mockbot.db = SopelDB(mockbot)
     return mockbot
 
@@ -143,26 +144,26 @@ def _fixture_bot_add_data(mockbot, id, url):
 
 
 @pytest.fixture(scope="function")
-def bot(request):
+def bot(request, mockbot):
     bot = _fixture_bot_add_data(mockbot, '1', 'https://www.site1.com/feed')
     return bot
 
 
 @pytest.fixture(scope="function")
-def bot_config_save(request):
+def bot_config_save(request, mockbot):
     bot = _fixture_bot_add_data(mockbot, '1', 'https://www.site1.com/feed')
     return bot
 
 
 @pytest.fixture(scope="function")
-def mockbot_rss_list(request):
+def mockbot_rss_list(request, mockbot):
     bot = _fixture_bot_add_data(mockbot, '1', 'https://www.site1.com/feed')
     bot = _fixture_bot_add_data(mockbot, '2', 'https://www.site2.com/feed')
     return bot
 
 
 @pytest.fixture(scope="function")
-def mockbot_rss_update(request):
+def mockbot_rss_update(request, mockbot):
     bot = _fixture_bot_add_data(mockbot, '1', FEED_VALID)
     return bot
 
