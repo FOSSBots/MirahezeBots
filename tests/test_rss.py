@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import MirahezeBots.plugins.rss as rss
 from sopel.tools import SopelMemory
+from sopel.tests import rawlist
 # from sopel.db import SopelDB
 import hashlib
 import pytest
@@ -190,8 +191,8 @@ def make_wrapper_mock(mockbot, triggerfactory, line):
 def test_rss_global_too_many_parameters(mockbot, triggerfactory):
     wrapper = make_wrapper_mock(mockbot, triggerfactory, "PRIVMSG #channel .rss add #channel feedname {} f=fl+ftl fifth_argument".format(FEED_VALID))
     rss._rss(wrapper, ['add', '#channel', 'feedname', FEED_VALID, 'f=fl+ftl', 'fifth_argument'])
-    expected = rss.COMMANDS['add']['synopsis'].format(mockbot.config.core.prefix) + '\n'
-    assert expected == wrapper.output
+    expected = rawlist("PRIVMSG #channel :" + rss.COMMANDS['add']['synopsis'].format(mockbot.config.core.prefix))
+    assert expected == wrapper.backend.message_sent
 
 
 def test_rss_global_too_few_parameters(mockbot):
