@@ -195,10 +195,11 @@ def test_rss_global_too_many_parameters(mockbot, triggerfactory):
     assert expected == wrapper.backend.message_sent
 
 
-def test_rss_global_too_few_parameters(mockbot):
-    rss._rss(mockbot, ['add', '#channel', 'feedname'])
-    expected = rss.COMMANDS['add']['synopsis'].format(mockbot.config.core.prefix) + '\n'
-    assert expected == bot.output
+def test_rss_global_too_few_parameters(mockbot, triggerfactory):
+    wrapper = make_wrapper_mock(mockbot, triggerfactory, "PRIVMSG #channel .rss add #channel feedname")
+    rss._rss(wrapper, ['add', '#channel', 'feedname'])
+    expected = rawlist("PRIVMSG #channel :" + rss.COMMANDS['add']['synopsis'].format(mockbot.config.core.prefix))
+    assert expected == wrapper.backend.message_sent
 
 
 def test_rss_global_color(mockbot):
