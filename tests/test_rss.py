@@ -182,11 +182,16 @@ def feedreader_feed_invalid():
 def feedreader_feed_item_neither_title_nor_description():
     return rss.MockFeedReader(FEED_ITEM_NEITHER_TITLE_NOR_DESCRIPTION)
 
+def make_wrapper_mock(mockbot, triggerfactory, line):
+    wrapper = triggerfactory.wrapper(mockbot, line)
+    return wrapper
 
-def test_rss_global_too_many_parameters(mockbot):
-    rss._rss(mockbot, ['add', '#channel', 'feedname', FEED_VALID, 'f=fl+ftl', 'fifth_argument'])
+
+def test_rss_global_too_many_parameters(mockbot, triggerfactory):
+    wrapper = make_wrapper_mock(mockbot, triggerfactory, "PRIVMSG #channel .rss add #channel feedname {} f=fl+ftl fifth_argument".format(FEED_VALID))
+    rss._rss(wrapper, ['add', '#channel', 'feedname', FEED_VALID, 'f=fl+ftl', 'fifth_argument'])
     expected = rss.COMMANDS['add']['synopsis'].format(mockbot.config.core.prefix) + '\n'
-    assert expected == bot.output
+    assert expected == wrapper.output
 
 
 def test_rss_global_too_few_parameters(mockbot):
