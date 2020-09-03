@@ -112,6 +112,11 @@ TMP_CONFIG = """
 owner = testnick
 nick = TestBot
 enable = coretasks, rss
+channels = #channel1
+[rss]
+feeds = #channel1''' + rss.CONFIG_SEPARATOR + '''feed1''' + rss.CONFIG_SEPARATOR + '''https://www.site1.com/feed''' + rss.CONFIG_SEPARATOR + '''f=fl+ftl;t=t|>>{}<<
+formats = f=ft+ftpal
+templates = t=t|<<{}>>
 """
 
 
