@@ -3,7 +3,9 @@ python:
   - "3.6" # Supported until at least 2021-12-23 upstream, never ran by us.
   - "3.7" # Our instance, supported until at least 2023-06-27 upstream.
   - "3.8" # latest python version
-  - "3.8-dev"  # 3.8 development branch
+  - "3.8-dev"  # 3.8 development branch - remove by end of 2020
+  - "3.9" # python 3.9 - support TBD
+  - "3.9-dev" # 3.9 development branch
 dist: xenial
 os: linux
 
