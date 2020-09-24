@@ -6,7 +6,7 @@ from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
 from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
-import MirahezeBots-jsonparser as jp
+from MirahezeBots-jsonparser import jsonparser as jp
 from urllib.parse import urlparse
 LOGGER = get_logger('phabricator')
 
