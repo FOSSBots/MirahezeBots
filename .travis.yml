@@ -14,7 +14,7 @@ install:
 before_script:
     - python --version
     - sopel --version
-    - pip show MirahezeBot-Plugins
+    - pip show MirahezeBot_Plugins
 
 script:
     - flake8 MirahezeBots/plugins --max-line-length 265 --exclude=__init__.py
