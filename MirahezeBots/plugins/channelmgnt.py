@@ -16,7 +16,7 @@ from sopel.module import (
 )
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.tools import Identifier
-import MirahezeBots-jsonparser as jp
+from MirahezeBots-jsonparser import jsonparser as jp
 from sopel.tools import SopelMemory
 
 
