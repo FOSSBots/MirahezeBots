@@ -1,4 +1,4 @@
-import MirahezeBots-jsonparser as jp
+from MirahezeBots-jsonparser import jsonparser as jp
 
 
 DICT = {'#miraheze-cvt-private': {'inherits-from': ['#miraheze-cvt']}, '#miraheze-cvt': {'chanops': ['NDKilla', 'Voidwalker', 'Reception123', 'The_Pionner', 'JohnLewis', 'Zppix']}}
