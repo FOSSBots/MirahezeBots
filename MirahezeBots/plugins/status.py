@@ -3,7 +3,7 @@
 from sopel.module import commands, example, require_admin
 from sopel.config.types import StaticSection, ValidatedAttribute
 from MirahezeBots.utils import mwapihandler as mwapi
-import MirahezeBots-jsonparser as jp
+from MirahezeBots-jsonparser import jsonparser as jp
 from sopel.tools import SopelMemory
 
 
