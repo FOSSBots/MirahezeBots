@@ -3,4 +3,4 @@ vcrpy==4.1.0
 pip-check-reqs==2.1.1
 setuptools==50.3.0
 pytest==6.1.0
-flake8==3.8.3
+flake8==3.8.4
