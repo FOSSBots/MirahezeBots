@@ -1,6 +1,9 @@
-# dependenices used in test MirahezeBot
+# dependenices used in MirahezeBot
 feedparser==6.0.1
-MirahezeBots-jsonparser==1.0.0
 requests==2.24.0
 sopel>=7.0.5,<8
 SQLAlchemy==1.3.19
+# shared util scripts
+MirahezeBots-jsonparser==1.0.0
+# code migrated to own repo awaiting bundle switch
+sopel-plugins.adminlist==1.0.2
