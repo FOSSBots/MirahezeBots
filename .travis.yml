@@ -24,7 +24,7 @@ script:
     - pytest tests/test_rss.py
     - pytest tests/test_json.py
     - pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* .
-    - pip-extra-reqs --ignore-module=sopel-plugins.* .
+    - pip-extra-reqs --ignore-module=sopel-plugins-adminlist .
     - pip check
 
 after_script:
