@@ -5,8 +5,12 @@ python:
   - "3.8" # latest python version
   - "3.8-dev"  # 3.8 development branch - remove by end of 2020
   - "3.9-dev" # 3.9 development branch
-dist: xenial
 os: linux
+dist: focal
+group: edge
+arch: arm64-graviton2
+virt: lxd
+cache: pip
 
 install:
     - pip install -r dev-requirements.txt
