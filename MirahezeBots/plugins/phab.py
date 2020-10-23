@@ -5,15 +5,11 @@ from MirahezeBots.utils import phabsearch
 
 
 def setup(bot):
+    global PHAB_SETTINGS
     PHAB_SETTINGS = bot.memory["settings"]["phab"]
 
 
-BOLD = '\x02'
-HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
 HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
-MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
-startup_tasks_notifications = False
-priotasks_notify = []
 
 
 @commands('task')
@@ -40,10 +36,10 @@ def phabtask2(bot, trigger):
 def high_priority_tasks_notification(bot):
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
-        bot.say(phabsearch.gethighpri(PHAB_SETTINGS[trigger.sender]), trigger.sender)
+        bot.say(phabsearch.gethighpri(PHAB_SETTINGS["fixme"]), "#fixme")
 
 
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
-    bot.say(gethighpri(PHAB_SETTINGS[trigger.sender], limit=False), trigger.sender) # will need changing
+    bot.say(gethighpri(PHAB_SETTINGS[trigger.sender], limit=False), trigger.sender)  # will need changing
