@@ -1,9 +1,9 @@
 import requests
 
 
-def searchphab(channel, task=1, PHAB_SETTINGS):
-    host = PHAB_SETTINGS[channel]["phab-active-url"]
-    apikey = PHAB_SETTINGS[channel]["phab-active-api_token"]
+def searchphab(PHAB_SETTINGS, task=1):
+    host = PHAB_SETTINGS["phab-active-url"]
+    apikey = PHAB_SETTINGS["phab-active-api_token"]
 
     data = {
         'api.token': apikey,
@@ -60,9 +60,9 @@ def searchphab(channel, task=1, PHAB_SETTINGS):
         return output
 
 
-def gethighpri(limit=True, channel='#miraheze', bot=None):
-    host = PHAB_SETTINGS[channel]["phab-active-url"]
-    apikey = PHAB_SETTINGS[channel]["phab-active-api_token"]
+def gethighpri(limit=True):
+    host = PHAB_SETTINGS["phab-active-url"]
+    apikey = PHAB_SETTINGS["phab-active-api_token"]
     data = {
         'api.token': apikey,
         'queryKey': querykey,  # mFzMevK.KRMZ for mhphab
