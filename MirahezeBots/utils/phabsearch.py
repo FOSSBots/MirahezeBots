@@ -35,7 +35,6 @@ def searchphab(PHAB_SETTINGS, task=1):
             response2 = response2.json()
         except JSONDecodeError as e:
             raise Exception("Encountered {} on: {}").format(str(e), response2.text)
-            bot.say(str(e), bot.settings.core.logging_channel)
         params2 = {
             'api.token': apikey,
             'constraints[phids][0]': result.get("fields").get("authorPHID")
@@ -87,6 +86,6 @@ def gethighpri(limit=True):
                 return "They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host)
                 break
             else:
-                result.append(searchphab(channel=channel, task=currdata.get("id")))
+                result.append(searchphab(PHAB_SETTINGS, task=currdata.get("id")))
                 x = x + 1
         return result
