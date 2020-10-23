@@ -7,8 +7,10 @@ from json import JSONDecodeError
 from urllib.parse import urlparse
 from MirahezeBots-Plugins.utils import phabsearch
 
+
 def setup(bot):
     PHAB_SETTINGS = bot.memory["settings"]["phab"]
+
 
 BOLD = '\x02'
 HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
@@ -16,6 +18,7 @@ HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
 startup_tasks_notifications = False
 priotasks_notify = []
+
 
 @commands('task')
 @example('.task 1')
@@ -48,4 +51,3 @@ def high_priority_tasks_notification(bot):
 @example('.highpri')
 def forcehighpri(bot, trigger):
     gethighpri(limit=False, channel=trigger.sender, bot=bot)
-
