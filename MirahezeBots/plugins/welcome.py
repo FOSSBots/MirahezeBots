@@ -28,15 +28,9 @@ def send_welcome(nick, chan):
     return message
 
 
-def get_filename(bot):
-    """Get name of file used to store known users list."""
-    name = '{}-{}.known_users.db'.format(bot.nick, bot.config.core.host)
-    return os.path.join(bot.config.core.homedir, name)
-
-
 def setup(bot):
     """Do required setup for this module."""
-    bot.known_users_filename = get_filename(bot)
+    bot.known_users_filename = os.path.join(bot.config.core.homedir, '{}-{}.known_users.db'.format(bot.nick, bot.config.core.host))
     bot.known_users_list = load_known_users_list(bot.known_users_filename)
 
 
@@ -91,7 +85,7 @@ def welcome_user(bot, trigger):
             if welcome is not None:
                 bot.say(welcome)
 
-    save_known_users_list(get_filename(bot), bot.known_users_list)
+    save_known_users_list(bot.known_users_filename, bot.known_users_list)
 
 
 @commands('add_known', 'adduser')
@@ -128,7 +122,7 @@ def add_known_user(bot, trigger):
         return
 
     bot.known_users_list[channel].append(username)
-    save_known_users_list(get_filename(bot), bot.known_users_list)
+    save_known_users_list(bot.known_users_filename, bot.known_users_list)
     bot.say('Okay, {} is now added to known users list of channel {}'.format(
         username, channel
     ))
