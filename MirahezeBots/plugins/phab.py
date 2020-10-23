@@ -1,10 +1,6 @@
 """phab.by - Phabricator Task Information Plugin"""
 
-import requests  # FIX THIS
-from sopel.module import commands, example, interval, rule, require_admin
-from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
-from json import JSONDecodeError
-from urllib.parse import urlparse
+from sopel.module import commands, example, interval, rule
 from MirahezeBots.utils import phabsearch
 
 
