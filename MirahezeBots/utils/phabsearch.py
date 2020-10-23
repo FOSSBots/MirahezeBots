@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 
 import requests
 
+
 BOLD = '\x02'
 def searchphab(PHAB_SETTINGS, task=1):
     host = PHAB_SETTINGS["phab-active-url"]
