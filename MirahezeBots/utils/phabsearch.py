@@ -1,6 +1,8 @@
 import requests
+from urllib.parse import urlparse
+from json import JSONDecodeError
 
-
+BOLD = '\x02'
 def searchphab(PHAB_SETTINGS, task=1):
     host = PHAB_SETTINGS["phab-active-url"]
     apikey = PHAB_SETTINGS["phab-active-api_token"]
@@ -59,12 +61,12 @@ def searchphab(PHAB_SETTINGS, task=1):
         return output
 
 
-def gethighpri(limit=True):
+def dophabsearch(PHAB_SETTINGS, limit=True, querykey='open'):
     host = PHAB_SETTINGS["phab-active-url"]
     apikey = PHAB_SETTINGS["phab-active-api_token"]
     data = {
         'api.token': apikey,
-        'queryKey': querykey,  # mFzMevK.KRMZ for mhphab
+        'queryKey': querykey,
     }
     response = requests.post(
         url='{0}/maniphest.search'.format(host),
@@ -75,7 +77,7 @@ def gethighpri(limit=True):
         data = result.get("data")
         go = 1
     except Exception:
-        return "There are no high priority tasks that I can process, good job!"
+        return "There are no tasks matching your search that I can process, good job!"
         go = 0
     if go == 1:
         x = 0
