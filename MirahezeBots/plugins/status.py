@@ -1,11 +1,11 @@
 ''' status.py - Mediawiki Status Page Updater '''
 
-from sopel.module import commands, example, require_admin
-from sopel.config.types import StaticSection, ValidatedAttribute
-from MirahezeBots.utils import mwapihandler as mwapi
 from MirahezeBots_jsonparser import jsonparser as jp
+from sopel.config.types import StaticSection, ValidatedAttribute
+from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory
 
+from MirahezeBots.utils import mwapihandler as mwapi
 
 pages = ''
 

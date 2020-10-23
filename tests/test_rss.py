@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from sopel.db import SopelDB
-import MirahezeBots.plugins.rss as rss
-from sopel.test_tools import MockSopel
+
 import hashlib
 import os
-import pytest
 import tempfile
 import types
+
+import pytest
+from sopel.db import SopelDB
+from sopel.test_tools import MockSopel
+
+import MirahezeBots.plugins.rss as rss
 
 FEED_VALID = '''<?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xml:base="https://www.site1.com/feed" xmlns:dc="https://purl.org/dc/elements/1.1/">

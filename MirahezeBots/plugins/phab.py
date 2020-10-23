@@ -1,6 +1,7 @@
 """phab.by - Phabricator Task Information Plugin"""
 
 from sopel.module import commands, example, interval, rule
+
 from MirahezeBots.utils import phabsearch
 
 

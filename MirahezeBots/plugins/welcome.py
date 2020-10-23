@@ -1,9 +1,10 @@
 """welcome.py - Plugin to welcome users upon joining the channel."""
 
+import codecs
 import os
 import re
-import codecs
-from sopel.module import rule, event, commands, example
+
+from sopel.module import commands, event, example, rule
 
 DEFAULT_CHANNEL = '#miraheze'
 USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
