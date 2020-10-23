@@ -82,7 +82,6 @@ def dophabsearch(PHAB_SETTINGS, limit=True, querykey='open'):
         go = 1
     except Exception:
         return "There are no tasks matching your search that I can process, good job!"
-        go = 0
     if go == 1:
         x = 0
         result = []
@@ -90,7 +89,6 @@ def dophabsearch(PHAB_SETTINGS, limit=True, querykey='open'):
             currdata = data[x]
             if x > 5 and limit:
                 return "They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host)
-                break
             else:
                 result.append(searchphab(PHAB_SETTINGS, task=currdata.get("id")))
                 x = x + 1
