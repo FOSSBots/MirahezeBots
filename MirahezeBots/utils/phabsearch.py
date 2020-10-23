@@ -1,6 +1,7 @@
-import requests
-from urllib.parse import urlparse
 from json import JSONDecodeError
+from urllib.parse import urlparse
+
+import requests
 
 BOLD = '\x02'
 def searchphab(PHAB_SETTINGS, task=1):
