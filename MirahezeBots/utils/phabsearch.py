@@ -1,5 +1,5 @@
 def searchphab(channel, task=1):
-    host = PHAB_SETTINGS[channel]["phab-active-url"]:
+    host = PHAB_SETTINGS[channel]["phab-active-url"]
     apikey = PHAB_SETTINGS[channel]["phab-active-api_token"]
 
     data = {
@@ -58,7 +58,7 @@ def searchphab(channel, task=1):
 
 
 def gethighpri(limit=True, channel='#miraheze', bot=None):
-    host = PHAB_SETTINGS[channel]["phab-active-url"]:
+    host = PHAB_SETTINGS[channel]["phab-active-url"]
     apikey = PHAB_SETTINGS[channel]["phab-active-api_token"]
     data = {
         'api.token': apikey,
