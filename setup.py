@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-import warnings
+import sys
 
 with open('README.md') as readme_file:
     readme = readme_file.read()
@@ -12,7 +12,7 @@ with open('requirements.txt') as requirements_file:
 with open('dev-requirements.txt') as dev_requirements_file:
     dev_requirements = [req for req in dev_requirements_file.readlines()]
 
-warnings.warn("Warning: Plugins are being split out over time. Please ensure you check what is being installed as you upgrade and keep split plugins up to date. The way you upgrade may change in future releases.", FutureWarning)
+print("Warning: Plugins are being split out over time. Please ensure you check what is being installed as you upgrade and keep split plugins up to date. The way you upgrade may change in future releases.", file=sys.stderr)
 setup(
     name='MirahezeBot_Plugins',
     version='9.0.2',
