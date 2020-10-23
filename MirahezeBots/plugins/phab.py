@@ -24,7 +24,7 @@ def phabtask(bot, trigger):
             task_id = trigger.group(2).split('T')[1]
         else:
             task_id = trigger.group(2)
-        phabsearch.searchphab(bot=bot, channel=trigger.sender, task=task_id)
+        bot.say(phabsearch.searchphab(PHAB_SETTINGS[trigger.sender], task=task_id), trigger.sender)
     except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
 
@@ -33,17 +33,17 @@ def phabtask(bot, trigger):
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
-    phabsearch.searchphab(bot=bot, channel=trigger.sender, task=task_id)
+    bot.say(phabsearch.searchphab(PHAB_SETTINGS[trigger.sender], task=task_id), trigger.sender)
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
-        phabsearch.gethighpri(channel=bot.settings.phabricator.highpri_channel, bot=bot)
+        bot.say(phabsearch.gethighpri(PHAB_SETTINGS[trigger.sender]), trigger.sender)
 
 
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
-    gethighpri(limit=False, channel=trigger.sender, bot=bot)
+    bot.say(gethighpri(PHAB_SETTINGS[trigger.sender], limit=False), trigger.sender) # will need changing
