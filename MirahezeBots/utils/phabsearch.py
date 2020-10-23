@@ -1,0 +1,87 @@
+def searchphab(channel, task=1):
+    host = PHAB_SETTINGS[channel]["phab-active-url"]:
+    apikey = PHAB_SETTINGS[channel]["phab-active-api_token"]
+
+    data = {
+        'api.token': apikey,
+        'constraints[ids][0]': task
+    }
+    response = requests.post(
+        url='{0}/maniphest.search'.format(host),
+        data=data)
+    response = response.json()
+    go = 0
+    try:
+        result = response.get("result").get("data")[0]
+        go = 1
+    except AttributeError:
+        bot.say("An error occurred while parsing the result. ", channel)
+    except IndexError:
+        bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
+    except Exception:
+        bot.say("An unknown error occured.", channel)
+    if go == 1:
+        params = {
+            'api.token': apikey,
+            'constraints[phids][0]': result.get("fields").get("ownerPHID")
+        }
+        response2 = requests.post(
+            url='{0}/user.search'.format(host),
+            data=params)
+        try:
+            response2 = response2.json()
+        except JSONDecodeError as e:
+            bot.say(response2.text, bot.settings.core.logging_channel)
+            bot.say(str(e), bot.settings.core.logging_channel)
+        params2 = {
+            'api.token': apikey,
+            'constraints[phids][0]': result.get("fields").get("authorPHID")
+        }
+        response3 = requests.post(
+            url='{0}/user.search'.format(host),
+            data=params2)
+        response3 = response3.json()
+        if result.get("fields").get("ownerPHID") is None:
+            owner = None
+        else:
+            owner = response2.get("result").get("data")[0].get("fields").get("username")
+        author = response3.get("result").get("data")[0].get("fields").get("username")
+        priority = result.get("fields").get("priority").get("name")
+        status = result.get("fields").get("status").get("name")
+        output = '{0}/T{1} - '.format("https://" + str(urlparse(host).netloc), str(result["id"]))
+        output = '{0}{2}{1}{2}, '.format(output, str(result.get('fields').get('name')), BOLD)
+        output = output + 'authored by {1}{0}{1}, '.format(author, BOLD)
+        output = output + 'assigned to {1}{0}{1}, '.format(owner, BOLD)
+        output = output + 'Priority: {1}{0}{1}, '.format(priority, BOLD)
+        output = output + 'Status: {1}{0}{1}'.format(status, BOLD)
+        bot.say(output, channel)
+
+
+def gethighpri(limit=True, channel='#miraheze', bot=None):
+    host = PHAB_SETTINGS[channel]["phab-active-url"]:
+    apikey = PHAB_SETTINGS[channel]["phab-active-api_token"]
+    data = {
+        'api.token': apikey,
+        'queryKey': querykey,  # mFzMevK.KRMZ for mhphab
+    }
+    response = requests.post(
+        url='{0}/maniphest.search'.format(host),
+        data=data)
+    response = response.json()
+    result = response.get("result")
+    try:
+        data = result.get("data")
+        go = 1
+    except Exception:
+        bot.say("They are no high priority tasks that I can process, good job!", channel)
+        go = 0
+    if go == 1:
+        x = 0
+        while x < len(data):
+            currdata = data[x]
+            if x > 5 and limit:
+                bot.say("They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host), channel)
+                break
+            else:
+                searchphab(bot=bot, channel=channel, task=currdata.get("id"))
+                x = x + 1
