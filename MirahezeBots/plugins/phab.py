@@ -43,4 +43,4 @@ def high_priority_tasks_notification(bot):
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
-    bot.say(gethighpri(PHAB_SETTINGS[trigger.sender], limit=False), trigger.sender)  # will need changing
+    bot.say(phabsearch.gethighpri(PHAB_SETTINGS[trigger.sender], limit=False), trigger.sender)  # will need changing
