@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def main():
     file = input("Full path to the deletion list: ")
     with open(file, 'r') as f: # ensure the file is open and closed properly

@@ -1,7 +1,7 @@
 """responses.py - like a FAQ bot"""
 
-from sopel.module import commands, example, rate, require_account
 from sopel.config.types import StaticSection, ValidatedAttribute
+from sopel.module import commands, example, rate, require_account
 
 
 class ResponsesSection(StaticSection):
