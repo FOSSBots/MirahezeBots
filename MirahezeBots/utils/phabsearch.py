@@ -1,4 +1,7 @@
-def searchphab(channel, task=1):
+import requests
+
+
+def searchphab(channel, task=1, PHAB_SETTINGS):
     host = PHAB_SETTINGS[channel]["phab-active-url"]
     apikey = PHAB_SETTINGS[channel]["phab-active-api_token"]
 
@@ -15,11 +18,11 @@ def searchphab(channel, task=1):
         result = response.get("result").get("data")[0]
         go = 1
     except AttributeError:
-        bot.say("An error occurred while parsing the result. ", channel)
+        return "An error occurred while parsing the result."
     except IndexError:
-        bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
+        return "Sorry, but I couldn't find information for the task you searched."
     except Exception:
-        bot.say("An unknown error occured.", channel)
+        raise Exception("An unknown error occured.")
     if go == 1:
         params = {
             'api.token': apikey,
@@ -31,7 +34,7 @@ def searchphab(channel, task=1):
         try:
             response2 = response2.json()
         except JSONDecodeError as e:
-            bot.say(response2.text, bot.settings.core.logging_channel)
+            raise Exception("Encountered {} on: {}").format(str(e), response2.text)
             bot.say(str(e), bot.settings.core.logging_channel)
         params2 = {
             'api.token': apikey,
@@ -54,7 +57,7 @@ def searchphab(channel, task=1):
         output = output + 'assigned to {1}{0}{1}, '.format(owner, BOLD)
         output = output + 'Priority: {1}{0}{1}, '.format(priority, BOLD)
         output = output + 'Status: {1}{0}{1}'.format(status, BOLD)
-        bot.say(output, channel)
+        return output
 
 
 def gethighpri(limit=True, channel='#miraheze', bot=None):
@@ -73,15 +76,17 @@ def gethighpri(limit=True, channel='#miraheze', bot=None):
         data = result.get("data")
         go = 1
     except Exception:
-        bot.say("They are no high priority tasks that I can process, good job!", channel)
+        return "There are no high priority tasks that I can process, good job!"
         go = 0
     if go == 1:
         x = 0
+        result = []
         while x < len(data):
             currdata = data[x]
             if x > 5 and limit:
-                bot.say("They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host), channel)
+                return "They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host)
                 break
             else:
-                searchphab(bot=bot, channel=channel, task=currdata.get("id"))
+                result.append(searchphab(channel=channel, task=currdata.get("id")))
                 x = x + 1
+        return result
