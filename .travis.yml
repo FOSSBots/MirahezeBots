@@ -33,6 +33,7 @@ script:
 
 after_script:
     - pip freeze
+    - pipdeptree
 
 deploy:
   provider: pypi
