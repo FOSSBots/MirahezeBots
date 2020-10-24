@@ -2,6 +2,8 @@ from __future__ import print_function
 
 from setuptools import find_packages, setup
 
+from MirahezeBots.version import VERSION
+
 with open('README.md') as readme_file:
     readme = readme_file.read()
 
@@ -16,7 +18,7 @@ with open('dev-requirements.txt') as dev_requirements_file:
 
 setup(
     name='MirahezeBot_Plugins',
-    version='9.0.2',
+    version=VERSION,
     description='Sopel Plugins for Miraheze Bots',
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',  # This is important!
