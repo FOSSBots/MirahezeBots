@@ -3,6 +3,8 @@
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, rate, require_account
 
+from MirahezeBots.version import VERSION, SHORTVERSION
+
 
 class ResponsesSection(StaticSection):
     support_channel = ValidatedAttribute('support_channel', str)
@@ -54,7 +56,7 @@ def cancel(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def botversion(bot, trigger):
     """List the current version of the bot."""
-    bot.say('The current version of this bot is 9.0.2 (v9)')
+    bot.say('The current version of this bot is {} ({})'.format(VERSION, SHORTVERSION))
 
 
 @commands('source', 'botsource')
