@@ -48,6 +48,7 @@ class PluginValues(Base):
 
 class Welcome(Base):
     __tablename__ = 'welcome'
+    welcome_id = Column(Integer, primary_key=True)
     nick_id = Column(Integer)
     account = Column(String)
     channel = Column(String)
