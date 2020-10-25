@@ -83,7 +83,7 @@ def dophabsearch(PHAB_SETTINGS, limit=True, querykey='open'):
     while x < len(data):
         currdata = data[x]
         if x > 5 and limit:
-             return "They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host)
+            return "They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host)
         else:
             result.append(searchphab(PHAB_SETTINGS, task=currdata.get("id")))
             x = x + 1
