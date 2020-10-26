@@ -6,6 +6,7 @@ python:
   - "3.8-dev"  # 3.8 development branch - remove after 2021-03-22
   - "3.9" # latest- support until 2025-10-05
   - "3.9-dev" # 3.9 development branch - remove by 2022
+  - "3.10-dev" # 3.10 development branch - support until 2023?
 os: linux
 dist: focal
 group: edge
