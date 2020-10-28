@@ -9,3 +9,4 @@ MirahezeBots-jsonparser==1.0.0
 sopel-plugins.adminlist==1.0.3
 sopel-plugins.channelmgnt==1.0.3
 sopel-plugins.pingpong==1.0.1
+sopel-plugins.joinall==1.0.0
