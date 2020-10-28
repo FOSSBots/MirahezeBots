@@ -1,0 +1,4 @@
+requiredChecks:
+  - travis-ci
+  - sonarcloud
+  - lgtm-com
