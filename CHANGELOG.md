@@ -2,6 +2,10 @@
 **Changelog**
 
 Please see below for changes to MirahezeBot-Plugins
+# Version 9.0.3
+- Fixed an issue affecting new installs due to a transient dependancy
+# Version 9.0.2
+## Security fixes
 # Version 9.0.0
 ## Miscellaneous
 - travis: changed test configuration
