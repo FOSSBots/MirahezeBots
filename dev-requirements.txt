@@ -7,4 +7,3 @@ flake8==3.8.4
 pipdeptree==1.0.0
 importlib-metadata>=1
 keyring==21.5.0
-
