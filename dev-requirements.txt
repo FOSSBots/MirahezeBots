@@ -1,5 +1,4 @@
 # Development requirements
-vcrpy==4.1.1
 pip-check-reqs==2.1.1
 setuptools==50.3.2
 pytest==6.1.2
