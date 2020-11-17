@@ -6,16 +6,17 @@ Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3
 
 This module posts rss feed items to irc channels
 """
-from sopel.config.types import StaticSection, ListAttribute
-from sopel.logger import get_logger
-from sopel.module import commands, interval, require_admin, example
-from sopel.tools import SopelMemory
-import feedparser
 import hashlib
 import shlex
 import time
 import urllib.parse
 import urllib.request
+
+import feedparser
+from sopel.config.types import ListAttribute, StaticSection
+from sopel.logger import get_logger
+from sopel.module import commands, example, interval, require_admin
+from sopel.tools import SopelMemory
 
 LOGGER = get_logger(__name__)
 
