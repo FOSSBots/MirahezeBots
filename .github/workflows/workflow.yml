@@ -1,0 +1,31 @@
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.6', '3.7', '3.8', '3.8-dev', '3.9', '3.9-dev']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Python ${{ matrix.python }} 
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }} 
+      - name: Test
+        run: bash ci/all.sh
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.7']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy
+        uses: casperdcl/deploy-pypi@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        with:
+          password: ${{ secrets.pypi_token }}
+          build: true
