@@ -1,4 +1,4 @@
 requiredChecks:
-  - travis-ci
-  - sonarcloud
+  - github-actions
+  - github-code-scanning
   - lgtm-com
