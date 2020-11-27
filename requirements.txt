@@ -7,6 +7,6 @@ SQLAlchemy>=1.3.20,<1.4.0
 MirahezeBots-jsonparser>=1.0.0,<2.0.0
 # code migrated to own repo awaiting bundle switch
 sopel-plugins.adminlist>=1.0.4
-sopel-plugins.channelmgnt>=1.0.3
+sopel-plugins.channelmgnt>=1.0.4
 sopel-plugins.pingpong>=1.0.3
-sopel-plugins.joinall>=1.0.0
+sopel-plugins.joinall>=1.0.1
