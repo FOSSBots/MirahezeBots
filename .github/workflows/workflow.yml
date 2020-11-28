@@ -65,7 +65,7 @@ jobs:
           --outdir dist/
           .
       - name: Publish to PyPi
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release'
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.pypi_token }}
