@@ -4,9 +4,9 @@ requests>=2.25.0,<2.26.0
 sopel>=7.0.7,<8
 SQLAlchemy>=1.3.20,<1.4.0
 # shared util scripts
-MirahezeBots-jsonparser>=1.0.1,<2.0.0
+MirahezeBots-jsonparser>=1.0.2,<2.0.0
 # code migrated to own repo awaiting bundle switch
-sopel-plugins.adminlist>=1.0.4
-sopel-plugins.channelmgnt>=1.0.5
-sopel-plugins.pingpong>=1.0.3
-sopel-plugins.joinall>=1.0.1
+sopel-plugins.adminlist>=1.0.5
+sopel-plugins.channelmgnt>=1.0.6
+sopel-plugins.pingpong>=1.0.4
+sopel-plugins.joinall>=1.0.2
