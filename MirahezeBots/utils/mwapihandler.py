@@ -105,7 +105,7 @@ def makeaction(requestinfo, action, target, performer, reason, content=''):
         if DATA.get("error") is not None:
             return ["MWError", (DATA.get("error").get("info"))]
         else:
-            return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
+            return ["Success", ("{0} request sent. You may want to check the {0} log to be sure that it worked.").format(action)]
     except Exception:
         return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
 
