@@ -2,6 +2,24 @@
 **Changelog**
 
 Please see below for changes to MirahezeBot-Plugins
+# Version 9.1.0
+- CI: Migrate to GitHub-Actions
+- CI: Support Python 3.9, Windows and MacOS
+- dbclean: style changes
+- example-db: rename
+- adminlist: split to own package
+- joinall: split to own package
+- phab: use new jsonparser
+- pingpong: split to own package
+- responses: style changes and switch to VERSION keyword
+- rss: style changes
+- status: style changes & new jsonparser
+- welcome: style changes and remove get_filename, replace with bot.known_users_filename
+- jsonparser: split to own package
+- version: introduce VERSION, VERSIONARRAY and SHORTVERSION keywords
+- Security: Drop support for Sopel 7.0.5 & 7.0.6
+- requirements: update some and slacken others
+- build: style changes
 # Version 9.0.3
 - Fixed an issue affecting new installs due to a transient dependancy
 # Version 9.0.2
