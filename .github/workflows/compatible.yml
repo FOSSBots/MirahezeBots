@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python: ['3.6', '3.7', '3.8', '3.8-dev', '3.9', '3.9-dev', '3.10-dev']
+        python: ['3.6', '3.7', '3.8', '3.8-dev', '3.9', '3.9-dev']
         os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
     steps:
       - uses: actions/checkout@v2
@@ -25,11 +25,11 @@ jobs:
       - name: Show python version and show package
         run: |
           python --version
+          sopel --version
           pip show MirahezeBot-Plugins
       - name: Check compatibility
         run: |
           pip check
-          sopel --version
       - name: Run pip freeze and pipdeptree
         run: |
           pip freeze
