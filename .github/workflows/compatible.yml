@@ -29,6 +29,7 @@ jobs:
       - name: Check compatibility
         run: |
           pip check
+          sopel --version
       - name: Run pip freeze and pipdeptree
         run: |
           pip freeze
