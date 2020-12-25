@@ -9,4 +9,3 @@ sopel-modules.github==0.4.0
 sopel-modules.wolfram==0.5.0
 sopel-modules.urban==1.1.0
 pipdeptree==2.0.0
-wheel>=0.36.2,<0.37.0
