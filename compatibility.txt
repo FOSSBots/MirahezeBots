@@ -6,3 +6,4 @@ sopel-modules.youtube==0.4.0
 sopel-modules.stocks==1.1.2
 sopel-modules.chanlogs==0.2.1
 pipdeptree==2.0.0
+wheel>=0.36.2,<0.37.0
