@@ -6,3 +6,4 @@ flake8==3.8.4
 pipdeptree==2.0.0
 wheel>=0.36.2,<0.37.0
 packaging>=20.8
+Sphinx==3.4.1
