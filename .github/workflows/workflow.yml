@@ -55,7 +55,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r dev-requirements.txt
       - name: Build a binary wheel and a source tarball
-        run: build --sdist --wheel --outdir dist .
+        run: pyproject-build --sdist --wheel --outdir dist .
       - name: Publish to PyPi
         if: github.event_name == 'push' && github.ref == 'refs/heads/release'
         uses: pypa/gh-action-pypi-publish@master
