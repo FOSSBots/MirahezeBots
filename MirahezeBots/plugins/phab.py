@@ -1,6 +1,5 @@
 """phab.by - Phabricator Task Information Plugin"""
 
-import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule, require_admin
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
 from sopel.tools import get_logger, SopelMemory
