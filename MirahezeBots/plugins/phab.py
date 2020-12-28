@@ -2,10 +2,8 @@
 
 from sopel.module import commands, example, interval, rule, require_admin
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
-from sopel.tools import get_logger, SopelMemory
-from sopel.config import ConfigurationError
+from sopel.tools import SopelMemory
 from MirahezeBots_jsonparser import jsonparser as jp
-LOGGER = get_logger('phabricator')
 
 
 class PhabricatorSection(StaticSection):
@@ -19,13 +17,8 @@ class PhabricatorSection(StaticSection):
 
 def setup(bot):
     bot.config.define_section('phabricator', PhabricatorSection)
-    if bot.settings.phabricator.host and bot.settings.phabricator.datafile:
-        raise ConfigurationError("Use of host and datafile together is not supported")
-    elif bot.settings.phabricator.host:
-        LOGGER.warn("Use of the host option was deceprated in 9.0.0 and will be removed in 10.0.0")
-    elif bot.settings.phabricator.datafile:
-        bot.memory["phab"] = SopelMemory()
-        bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
+    bot.memory["phab"] = SopelMemory()
+    bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
 
 
 def configure(config):
