@@ -3,11 +3,9 @@
 import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule, require_admin
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
-from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
 from MirahezeBots_jsonparser import jsonparser as jp
-from urllib.parse import urlparse
 LOGGER = get_logger('phabricator')
 
 
