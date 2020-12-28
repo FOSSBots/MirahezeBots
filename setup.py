@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from setuptools import find_packages, setup
 
 from MirahezeBots.version import VERSION
