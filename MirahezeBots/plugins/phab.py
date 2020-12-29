@@ -50,15 +50,15 @@ priotasks_notify = []
 def get_host_and_api_or_query_key(channel, cache, keys):
     """Get hostname,apikey and querykey for instance."""
     if channel in cache:
-            host = cache[str(channel)]["host"]
-            arraypos = int(cache[str(host)]["arraypos"])
-            apikey = keys[0][int(arraypos)]
-            querykey = keys[1][int(arraypos)]
+        host = cache[str(channel)]["host"]
+        arraypos = int(cache[str(host)]["arraypos"])
+        apikey = keys[0][int(arraypos)]
+        querykey = keys[1][int(arraypos)]
     else:
-            host = cache["default"]["host"]
-            arraypos = int(cache[str(host)]["arraypos"])
-            apikey = keys[0][int(arraypos)]
-            querykey = keys[1][int(arraypos)]
+        host = cache["default"]["host"]
+        arraypos = int(cache[str(host)]["arraypos"])
+        apikey = keys[0][int(arraypos)]
+        querykey = keys[1][int(arraypos)]
     return host, apikey, querykey
 
 
