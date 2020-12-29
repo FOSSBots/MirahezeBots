@@ -1,4 +1,4 @@
-"""Cleans up a list of users from sopel database."""
+"""Remove a list of users from sopel database."""
 import sqlite3
 
 

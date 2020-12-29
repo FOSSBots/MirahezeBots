@@ -9,7 +9,7 @@ Base = declarative_base()
 
 class NickNames(Base):
     """Model for 'nicknames' table."""
- 
+
     __tablename__ = 'nicknames'
     plugin = Column(String, primary_key=True)
     key = Column(String, primary_key=True)

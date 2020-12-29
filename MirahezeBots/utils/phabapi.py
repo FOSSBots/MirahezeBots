@@ -1,9 +1,9 @@
 """Phabricator API intercation utility."""
 
 from json import JSONDecodeError
+from urllib.parse import urlparse
 
 from requests import post
-from urllib.parse import urlparse
 
 
 BOLD = '\x02'

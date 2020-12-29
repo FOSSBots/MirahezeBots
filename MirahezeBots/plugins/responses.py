@@ -8,11 +8,12 @@ from sopel.module import commands, example, rate, require_account
 
 class ResponsesSection(StaticSection):
     """Create configuration for Sopel."""
+
     support_channel = ValidatedAttribute('support_channel', str)
 
 
 def setup(bot):
-    """Setup the config section."""
+    """Set up the config section."""
     bot.config.define_section('responses', ResponsesSection)
 
 

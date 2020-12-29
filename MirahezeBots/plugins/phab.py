@@ -10,7 +10,8 @@ from sopel.tools import SopelMemory
 
 
 class PhabricatorSection(StaticSection):
-    """Create configuration for Sopel."""
+    """Set up configuration for Sopel."""
+
     host = ValidatedAttribute('host', str)
     api_token = ListAttribute('api_token', str)
     querykey = ListAttribute('querykey', str)
@@ -20,7 +21,7 @@ class PhabricatorSection(StaticSection):
 
 
 def setup(bot):
-    """Setup the config section & memory."""
+    """Create the config section & memory."""
     bot.config.define_section('phabricator', PhabricatorSection)
     bot.memory["phab"] = SopelMemory()
     bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
@@ -78,13 +79,13 @@ def high_priority_tasks_notification(bot):
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
-   """Send full list of high priority tasks."""
-   phabapi.dophabsearch(limit=False, channel=trigger.sender, bot=bot)
+    """Send full list of high priority tasks."""
+    phabapi.dophabsearch(limit=False, channel=trigger.sender, bot=bot)
 
 
 @require_admin(message="Only admins may purge cache.")
 @commands('resetphabcache')
-def reset_phab_cache(bot, trigger):
+def reset_phab_cache(bot, trigger):  # noqa: U100
     """Reset the cache of the channel management data file."""
     bot.reply("Refreshing Cache...")
     bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
@@ -93,8 +94,8 @@ def reset_phab_cache(bot, trigger):
 
 @require_admin(message="Only admins may check cache")
 @commands('checkphabcache')
-def check_phab_cache(bot, trigger):
-    """Validate the cache matches the copy on disk. """
+def check_phab_cache(bot, trigger):  # noqa: U100
+    """Validate the cache matches the copy on disk."""
     result = jp.validatecache(bot.settings.phabricator.datafile, bot.memory["phab"]["jdcache"])
     if result:
         bot.reply("Cache is correct.")

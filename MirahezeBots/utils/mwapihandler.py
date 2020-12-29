@@ -48,7 +48,7 @@ def gettoken(url, session, type='csrftoken'):
 
 
 def makeaction(requestinfo, action, target, performer, reason, content=''):
-    """Perform an action via the ACTIONS API.""""
+    """Perform an action via the ACTIONS API."""
     if action == 'edit':
         PARAMS = {
             'action': 'edit',

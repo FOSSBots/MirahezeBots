@@ -14,6 +14,7 @@ pages = ''
 
 class StatusSection(StaticSection):
     """Create configuration for Sopel."""
+
     datafile = ValidatedAttribute('datafile', str)
     bot_username = ValidatedAttribute('bot_username', str)
     bot_password = ValidatedAttribute('bot_password', str)
@@ -21,7 +22,7 @@ class StatusSection(StaticSection):
 
 
 def setup(bot):
-    """Setup the config section & memory."""
+    """Set up the config section & memory."""
     bot.config.define_section('status', StatusSection)
     bot.memory["status"] = SopelMemory()
     bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
