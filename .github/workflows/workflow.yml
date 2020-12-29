@@ -33,10 +33,8 @@ jobs:
           pip show MirahezeBot-Plugins
       - name: Run tests
         run: |
-          flake8 MirahezeBots/plugins --max-line-length 265 --exclude=__init__.py
-          flake8 tests --max-line-length 265
-          flake8 MirahezeBots/utils --max-line-length 265 --exclude=__init__.py
-          pytest tests/test_general.py
+          flake8 . --max-line-length 265 --exclude=*/__init__.py
+          pytest .
           pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-file=tests/*
           pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall .
           pip check
