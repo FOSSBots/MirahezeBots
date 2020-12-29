@@ -1,4 +1,4 @@
-''' status.py - Mediawiki Status Page Updater '''
+"""status.py - Mediawiki Status Page Updater"""
 
 from MirahezeBots_jsonparser import jsonparser as jp
 from sopel.config.types import StaticSection, ValidatedAttribute
