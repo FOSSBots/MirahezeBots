@@ -7,14 +7,17 @@ from sopel.module import commands, example, rate, require_account
 
 
 class ResponsesSection(StaticSection):
+    """Create configuration for Sopel."""
     support_channel = ValidatedAttribute('support_channel', str)
 
 
 def setup(bot):
+    """Setup the config section."""
     bot.config.define_section('responses', ResponsesSection)
 
 
 def configure(config):
+    """Set up the configuration options."""
     config.define_section('responses', ResponsesSection, validate=False)
     config.responses.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
