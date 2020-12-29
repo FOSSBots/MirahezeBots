@@ -47,7 +47,8 @@ startup_tasks_notifications = False
 priotasks_notify = []
 
 
-def get_host_and_api_or_query_key(cache, keys):
+def get_host_and_api_or_query_key(channel, cache, keys):
+    """Get hostname,apikey and querykey for instance."""
     if channel in cache:
             host = cache[str(channel)]["host"]
             arraypos = int(cache[str(host)]["arraypos"])
@@ -70,7 +71,7 @@ def phabtask(bot, trigger):
             task_id = trigger.group(2).split('T')[1]
         else:
             task_id = trigger.group(2)
-        info = get_host_and_api_key(bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+        info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
         phabapi.gettaskinfo(info[0], info[1], task=task_id)
     except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
@@ -80,7 +81,7 @@ def phabtask(bot, trigger):
 def phabtask2(bot, trigger):  # noqa: U100
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
-    info = get_host_and_api_key(bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+    info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
     phabapi.gettaskinfo(info[0], info[1], task=task_id)
 
 
@@ -89,7 +90,7 @@ def high_priority_tasks_notification(bot):
     """Send regular update on high priority tasks."""
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
-        info = get_host_and_api_key(bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+        info = get_host_and_api_or_query_key(bot.settings.phabricator.highpri_channel, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
         phabapi.dophabsearch(info[0], info[1], info[2])
 
 
@@ -97,7 +98,7 @@ def high_priority_tasks_notification(bot):
 @example('.highpri')
 def forcehighpri(bot, trigger):
     """Send full list of high priority tasks."""
-    info = get_host_and_api_key(bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+    info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
     phabapi.dophabsearch(info[0], info[1], info[2], limit=False)
 
 
