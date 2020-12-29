@@ -1,5 +1,6 @@
 """phab.by - Phabricator Task Information Plugin."""
 
+from MirahezeBots.utils import phabapi
 from MirahezeBots_jsonparser import jsonparser as jp
 
 from sopel.module import commands, example, interval, rule, require_admin
@@ -49,7 +50,7 @@ def phabtask(bot, trigger):
             task_id = trigger.group(2).split('T')[1]
         else:
             task_id = trigger.group(2)
-        searchphab(bot=bot, channel=trigger.sender, task=task_id)
+        phabapi.gettaskinfo(task=task_id)
     except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
 
@@ -58,20 +59,20 @@ def phabtask(bot, trigger):
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
-    searchphab(bot=bot, channel=trigger.sender, task=task_id)
+    phabapi.gettaskinfo(task=task_id)
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
-        gethighpri(channel=bot.settings.phabricator.highpri_channel, bot=bot)
+        phabapi.dophabsearch(channel=bot.settings.phabricator.highpri_channel, bot=bot)
 
 
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
-    gethighpri(limit=False, channel=trigger.sender, bot=bot)
+   phabapi.dophabsearch(limit=False, channel=trigger.sender, bot=bot)
 
 
 @require_admin(message="Only admins may purge cache.")
