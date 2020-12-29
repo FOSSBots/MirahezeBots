@@ -1,16 +1,10 @@
-"""phab.by - Phabricator Task Information Plugin"""
+"""phab.by - Phabricator Task Information Plugin."""
 
-from json import JSONDecodeError
-from urllib.parse import urlparse
-
-import requests  # FIX THIS
 from MirahezeBots_jsonparser import jsonparser as jp
-from sopel.config import ConfigurationError
-from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
-from sopel.module import commands, example, interval, require_admin, rule
-from sopel.tools import SopelMemory, get_logger
 
-LOGGER = get_logger('phabricator')
+from sopel.module import commands, example, interval, rule, require_admin
+from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
+from sopel.tools import SopelMemory
 
 
 class PhabricatorSection(StaticSection):
@@ -24,13 +18,8 @@ class PhabricatorSection(StaticSection):
 
 def setup(bot):
     bot.config.define_section('phabricator', PhabricatorSection)
-    if bot.settings.phabricator.host and bot.settings.phabricator.datafile:
-        raise ConfigurationError("Use of host and datafile together is not supported")
-    elif bot.settings.phabricator.host:
-        LOGGER.warn("Use of the host option was deceprated in 9.0.0 and will be removed in 10.0.0")
-    elif bot.settings.phabricator.datafile:
-        bot.memory["phab"] = SopelMemory()
-        bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
+    bot.memory["phab"] = SopelMemory()
+    bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
 
 
 def configure(config):
@@ -50,118 +39,6 @@ HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
 MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
 startup_tasks_notifications = False
 priotasks_notify = []
-
-
-def searchphab(bot, channel, task=1):
-    if bot.settings.phabricator.host:
-        host = 'https://{0}/api'.format(bot.settings.phabricator.host)
-        apikey = bot.settings.phabricator.api_token[0]
-    elif bot.settings.phabricator.datafile:
-        if channel in bot.memory["phab"]["jdcache"]:
-            host = bot.memory["phab"]["jdcache"][str(channel)]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[int(arraypos)]
-        else:
-            host = bot.memory["phab"]["jdcache"]["default"]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[int(arraypos)]
-
-    data = {
-        'api.token': apikey,
-        'constraints[ids][0]': task
-    }
-    response = requests.post(
-        url='{0}/maniphest.search'.format(host),
-        data=data)
-    response = response.json()
-    go = 0
-    try:
-        result = response.get("result").get("data")[0]
-        go = 1
-    except AttributeError:
-        bot.say("An error occurred while parsing the result. ", channel)
-    except IndexError:
-        bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
-    except Exception:
-        bot.say("An unknown error occured.", channel)
-    if go == 1:
-        params = {
-            'api.token': apikey,
-            'constraints[phids][0]': result.get("fields").get("ownerPHID")
-        }
-        response2 = requests.post(
-            url='{0}/user.search'.format(host),
-            data=params)
-        try:
-            response2 = response2.json()
-        except JSONDecodeError as e:
-            bot.say(response2.text, bot.settings.core.logging_channel)
-            bot.say(str(e), bot.settings.core.logging_channel)
-        params2 = {
-            'api.token': apikey,
-            'constraints[phids][0]': result.get("fields").get("authorPHID")
-        }
-        response3 = requests.post(
-            url='{0}/user.search'.format(host),
-            data=params2)
-        response3 = response3.json()
-        if result.get("fields").get("ownerPHID") is None:
-            owner = None
-        else:
-            owner = response2.get("result").get("data")[0].get("fields").get("username")
-        author = response3.get("result").get("data")[0].get("fields").get("username")
-        priority = result.get("fields").get("priority").get("name")
-        status = result.get("fields").get("status").get("name")
-        output = '{0}/T{1} - '.format("https://" + str(urlparse(host).netloc), str(result["id"]))
-        output = '{0}{2}{1}{2}, '.format(output, str(result.get('fields').get('name')), BOLD)
-        output = output + 'authored by {1}{0}{1}, '.format(author, BOLD)
-        output = output + 'assigned to {1}{0}{1}, '.format(owner, BOLD)
-        output = output + 'Priority: {1}{0}{1}, '.format(priority, BOLD)
-        output = output + 'Status: {1}{0}{1}'.format(status, BOLD)
-        bot.say(output, channel)
-
-
-def gethighpri(limit=True, channel='#miraheze', bot=None):
-    if bot.settings.phabricator.host:
-        host = 'https://{0}/api'.format(bot.settings.phabricator.host)
-        apikey = bot.settings.phabricator.api_token[0]
-        querykey = bot.settings.phabricator.querykey[0]
-    elif bot.settings.phabricator.datafile:
-        if channel in bot.memory["phab"]["jdcache"]:
-            host = bot.memory["phab"]["jdcache"][str(channel)]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[int(arraypos)]
-            querykey = bot.settings.phabricator.querykey[int(arraypos)]
-        else:
-            host = bot.memory["phab"]["jdcache"]["default"]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[int(arraypos)]
-            querykey = bot.settings.phabricator.querykey[int(arraypos)]
-    data = {
-        'api.token': apikey,
-        'queryKey': querykey,  # mFzMevK.KRMZ for mhphab
-    }
-    response = requests.post(
-        url='{0}/maniphest.search'.format(host),
-        data=data)
-    response = response.json()
-    result = response.get("result")
-    try:
-        data = result.get("data")
-        go = 1
-    except Exception:
-        bot.say("They are no high priority tasks that I can process, good job!", channel)
-        go = 0
-    if go == 1:
-        x = 0
-        while x < len(data):
-            currdata = data[x]
-            if x > 5 and limit:
-                bot.say("They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host), channel)
-                break
-            else:
-                searchphab(bot=bot, channel=channel, task=currdata.get("id"))
-                x = x + 1
 
 
 @commands('task')
