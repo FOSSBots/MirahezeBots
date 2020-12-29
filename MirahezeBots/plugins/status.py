@@ -4,6 +4,7 @@ from MirahezeBots_jsonparser import jsonparser as jp
 
 from MirahezeBots.utils import mwapihandler as mwapi
 
+
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory
