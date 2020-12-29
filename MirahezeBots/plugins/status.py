@@ -96,10 +96,8 @@ def status(bot, trigger):
 
 @require_admin(message="Only admins may purge cache.")
 @commands('resetstatuscache')
-def reset_status_cache(bot, trigger):
-    """
-    Reset the cache of the channel management data file
-    """
+def reset_status_cache(bot, trigger):  # noqa: U100
+    """Reset the cache of the channel management data file."""
     bot.reply("Refreshing Cache...")
     bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
     bot.reply("Cache refreshed")
@@ -107,10 +105,8 @@ def reset_status_cache(bot, trigger):
 
 @require_admin(message="Only admins may check cache")
 @commands('checkstatuscache')
-def check_status_cache(bot, trigger):
-    """
-    Validate the cache matches the copy on disk
-    """
+def check_status_cache(bot, trigger):  # noqa: U100
+    """Validate the cache matches the copy on disk."""
     result = jp.validatecache(bot.settings.status.datafile, bot.memory["status"]["jdcache"])
     if result:
         bot.reply("Cache is correct.")
