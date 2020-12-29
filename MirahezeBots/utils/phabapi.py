@@ -5,8 +5,12 @@ from json import JSONDecodeError
 from requests import post
 from urllib.parse import urlparse
 
+
+BOLD = '\x02'
+
+
 def gettaskinfo(host, apikey, task=1):
-    """Get's information on a specific task"""
+    """Get information on a specific task."""
     data = {
         'api.token': apikey,
         'constraints[ids][0]': task
@@ -58,8 +62,8 @@ def gettaskinfo(host, apikey, task=1):
     return output
 
 
-def dophabsearch(host, apikey, limit=True):
-    """Performs a maniphest search."""
+def dophabsearch(host, apikey, querykey, limit=True):
+    """Perform a maniphest search."""
     data = {
         'api.token': apikey,
         'queryKey': querykey,
