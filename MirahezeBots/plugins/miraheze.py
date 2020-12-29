@@ -40,6 +40,6 @@ def miraheze_gethelp(bot, trigger):
 
 
 @commands('discord')
-def miraheze_discord(bot, trigger):
+def miraheze_discord(bot, trigger):  # noqa: U100
     """Displays discord information for Miraheze."""
     bot.reply('You can join discord by going to, https://discord.is/miraheze!')

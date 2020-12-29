@@ -1,9 +1,10 @@
-"""phab.by - Phabricator Task Information Plugin"""
+"""phab.by - Phabricator Task Information Plugin."""
+
+from MirahezeBots_jsonparser import jsonparser as jp
 
 from sopel.module import commands, example, interval, rule, require_admin
 from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
 from sopel.tools import SopelMemory
-from MirahezeBots_jsonparser import jsonparser as jp
 
 
 class PhabricatorSection(StaticSection):

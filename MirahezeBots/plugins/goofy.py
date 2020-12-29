@@ -1,4 +1,4 @@
-""" Some commands for just goofing around and having fun """
+"""Some commands for just goofing around and having fun."""
 
 from sopel.module import commands, example
 
@@ -6,9 +6,7 @@ from sopel.module import commands, example
 @example('.coffee MirahezeBot')
 @commands('coffee')
 def coffee(bot, trigger):
-    """
-    Makes me give the specified nick a coffee.
-    """
+    """Makes me give the specified nick a coffee."""
     if trigger.group(2) is None:
         bot.reply("To whom should I give this cup of coffee?")
     else:
@@ -18,9 +16,7 @@ def coffee(bot, trigger):
 @example('.hug MirahezeBot')
 @commands('hug')
 def hug(bot, trigger):
-    """
-    Makes me give the specified nick a hug.
-    """
+    """Makes me give the specified nick a hug."""
     if trigger.group(2) is None:
         bot.reply("To whom should I give this hug?")
     else:
@@ -30,9 +26,7 @@ def hug(bot, trigger):
 @example('.burger MirahezeBot')
 @commands('burger')
 def burger(bot, trigger):
-    """
-    Makes me give the specified nick a burger.
-    """
+    """Makes me give the specified nick a burger."""
     if trigger.group(2) is None:
         bot.reply("To whom should I give this cheeseburger?")
     else:
@@ -42,9 +36,7 @@ def burger(bot, trigger):
 @example('.present MirahezeBot')
 @commands('present')
 def present(bot, trigger):
-    """
-    Makes me give the specified nick a present.
-    """
+    """Makes me give the specified nick a present."""
     if trigger.group(2) is None:
         bot.reply("To whom should I give this present?")
     else:
@@ -54,9 +46,7 @@ def present(bot, trigger):
 @example('.hotchoc MirahezeBot')
 @commands('hotchoc', 'hotchocolate')
 def hotchoc(bot, trigger):
-    """
-    Makes me give the specified nick a hot chocolate.
-    """
+    """Makes me give the specified nick a hot chocolate."""
     if trigger.group(2) is None:
         bot.reply("To whom should I give this hot chocolate?")
     else:
