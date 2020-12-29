@@ -1,6 +1,7 @@
 """phab.by - Phabricator Task Information Plugin."""
 
 from MirahezeBots.utils import phabapi
+
 from MirahezeBots_jsonparser import jsonparser as jp
 
 from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
@@ -9,6 +10,7 @@ from sopel.tools import SopelMemory
 
 
 class PhabricatorSection(StaticSection):
+    """Create configuration for Sopel."""
     host = ValidatedAttribute('host', str)
     api_token = ListAttribute('api_token', str)
     querykey = ListAttribute('querykey', str)
@@ -18,12 +20,14 @@ class PhabricatorSection(StaticSection):
 
 
 def setup(bot):
+    """Setup the config section & memory."""
     bot.config.define_section('phabricator', PhabricatorSection)
     bot.memory["phab"] = SopelMemory()
     bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
 
 
 def configure(config):
+    """Set up the configuration options."""
     config.define_section('phabricator', PhabricatorSection, validate=False)
     config.phabricator.configure_setting('host', 'What is the URL of your Phabricator installation?')
     config.phabricator.configure_setting('api_token', 'Please enter a Phabricator API token.')
@@ -45,6 +49,7 @@ priotasks_notify = []
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
+    """Get information on a phabricator task."""
     try:
         if trigger.group(2).startswith('T'):
             task_id = trigger.group(2).split('T')[1]
@@ -56,7 +61,7 @@ def phabtask(bot, trigger):
 
 
 @rule('T[1-9][0-9]*')
-def phabtask2(bot, trigger):
+def phabtask2(bot, trigger):  # noqa: U100
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
     phabapi.gettaskinfo(task=task_id)
@@ -64,6 +69,7 @@ def phabtask2(bot, trigger):
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
+    """Send regular update on high priority tasks."""
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
         phabapi.dophabsearch(channel=bot.settings.phabricator.highpri_channel, bot=bot)
@@ -72,15 +78,14 @@ def high_priority_tasks_notification(bot):
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
+   """Send full list of high priority tasks."""
    phabapi.dophabsearch(limit=False, channel=trigger.sender, bot=bot)
 
 
 @require_admin(message="Only admins may purge cache.")
 @commands('resetphabcache')
 def reset_phab_cache(bot, trigger):
-    """
-    Reset the cache of the channel management data file
-    """
+    """Reset the cache of the channel management data file."""
     bot.reply("Refreshing Cache...")
     bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
     bot.reply("Cache refreshed")
@@ -89,9 +94,7 @@ def reset_phab_cache(bot, trigger):
 @require_admin(message="Only admins may check cache")
 @commands('checkphabcache')
 def check_phab_cache(bot, trigger):
-    """
-    Validate the cache matches the copy on disk
-    """
+    """Validate the cache matches the copy on disk. """
     result = jp.validatecache(bot.settings.phabricator.datafile, bot.memory["phab"]["jdcache"])
     if result:
         bot.reply("Cache is correct.")
