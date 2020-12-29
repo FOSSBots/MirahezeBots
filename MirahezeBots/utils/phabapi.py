@@ -1,7 +1,8 @@
 """Phabricator API intercation utility."""
 
-from requests import post
 from json import JSONDecodeError
+
+from requests import post
 from urllib.parse import urlparse
 
 def gettaskinfo(host, apikey, task=1):
