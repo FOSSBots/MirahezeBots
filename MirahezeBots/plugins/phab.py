@@ -78,7 +78,7 @@ def phabtask(bot, trigger):
 
 
 @rule('T[1-9][0-9]*')
-def phabtask2(bot, trigger):  # noqa: U100
+def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
     info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
