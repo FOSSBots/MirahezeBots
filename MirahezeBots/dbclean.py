@@ -1,7 +1,9 @@
+"""Database cleaner for sopel."""
 import sqlite3
 
 
 def main():
+    """Main method for the cli script."""
     file = input("Full path to the deletion list: ")
     with open(file, 'r') as f:  # ensure the file is open and closed properly
         users = f.readlines()
