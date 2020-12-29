@@ -1,6 +1,6 @@
 # Development requirements
 pip-check-reqs==2.1.1
-setuptools==51.1.0
+setuptools==51.1.1
 pytest==6.2.1
 flake8==3.8.4
 pipdeptree==2.0.0
