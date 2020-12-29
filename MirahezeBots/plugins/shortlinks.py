@@ -5,7 +5,7 @@ from sopel.module import commands, example
 @commands('github', 'gh')
 @example('.github user')
 def ghuser(bot, trigger):
-    """Expands a link to github."""
+    """Expand a link to github."""
     try:
         bot.say("https://github.com/" + trigger.group(2))
     except TypeError:
@@ -15,7 +15,7 @@ def ghuser(bot, trigger):
 @commands('redditu')
 @example('.redditu example')
 def redditu(bot, trigger):
-    """Expands a link to reddit/u."""
+    """Expand a link to reddit/u."""
     try:
         bot.say("https://reddit.com/u/" + trigger.group(2))
     except TypeError:
@@ -25,7 +25,7 @@ def redditu(bot, trigger):
 @commands('subred')
 @example('.subred example')
 def redditr(bot, trigger):
-    """Expands a link to reddit/r."""
+    """Expand a link to reddit/r."""
     try:
         bot.say("https://reddit.com/r/" + trigger.group(2))
     except TypeError:
@@ -35,7 +35,7 @@ def redditr(bot, trigger):
 @commands('wmca')
 @example('.wmca example')
 def wmca(bot, trigger):
-    """Expands a link to Wikimedia CentralAuth."""
+    """Expand a link to Wikimedia CentralAuth."""
     try:
         target = trigger.group(2).replace(" ", "_")
         bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + target)
@@ -46,7 +46,7 @@ def wmca(bot, trigger):
 @commands('mhca')
 @example('.mhca example')
 def mhca(bot, trigger):
-    """Expands a link to Miraheze Central Auth."""
+    """Expand a link to Miraheze Central Auth."""
     try:
         target = trigger.group(2).replace(" ", "_")
         bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + target)
@@ -57,7 +57,7 @@ def mhca(bot, trigger):
 @commands('tw')
 @example('.tw user')
 def twlink(bot, trigger):
-    """Expands a link to Twitter."""
+    """Expand a link to Twitter."""
     try:
         bot.say("https://twitter.com/" + trigger.group(2))
     except TypeError:
@@ -67,7 +67,7 @@ def twlink(bot, trigger):
 @commands('mh')
 @example('.mh wiki page')
 def mhwiki(bot, trigger):
-    """Expands a link to Miraheze wikis."""
+    """Expand a link to Miraheze wikis."""
     try:
         options = trigger.group(2).split(" ", 1)
         if len(options) == 1:
