@@ -79,6 +79,6 @@ def dophabsearch(host, apikey, limit=True):
         if x > 5 and limit:
             return  # fix
         else:
-            searchphab.append(gettaskinfo(bot=bot, channel=channel, task=currdata.get("id")))
+            searchphab.append(gettaskinfo(host, apikey, task=currdata.get("id")))
             x = x + 1
     return searchphab
