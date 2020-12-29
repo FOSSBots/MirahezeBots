@@ -1,7 +1,6 @@
 """status.py - Mediawiki Status Page Updater."""
 
 from MirahezeBots_jsonparser import jsonparser as jp
-
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory
