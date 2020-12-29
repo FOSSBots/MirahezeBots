@@ -14,7 +14,7 @@ sys.path.append(PATH)
 
 
 def test_db_schema_is_same():
-    """confirms database matches as expected."""
+    """Confirms database matches as expected."""
     original, new = set(), set()  # noqa: F841
     with sqlite3.connect(os.path.join(PATH, 'example.db')) as conn:
         conn.text_factory = str
