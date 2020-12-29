@@ -33,7 +33,7 @@ jobs:
           flake8 tests --max-line-length 265
           flake8 MirahezeBots/utils --max-line-length 265 --exclude=__init__.py
           pytest tests/test_general.py
-          pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-module=sqlachemy
+          pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-dist=sqlachemy
           pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall .
           pip check
       - name: Run pip freeze and pipdeptree
