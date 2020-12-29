@@ -1,3 +1,4 @@
+"""SQL models for sopel database."""
 import sys
 
 from sqlalchemy import Column, Integer, String, create_engine
@@ -7,6 +8,7 @@ Base = declarative_base()
 
 
 class NickNames(Base):
+    """Model for 'nicknames' table."""
     __tablename__ = 'nicknames'
     plugin = Column(String, primary_key=True)
     key = Column(String, primary_key=True)
@@ -17,6 +19,7 @@ class NickNames(Base):
 
 
 class NickValues(Base):
+    """Model for 'nick_values' table."""
     __tablename__ = 'nick_values'
     nick_id = Column(Integer, primary_key=True)
     key = Column(String, primary_key=True)
@@ -27,6 +30,7 @@ class NickValues(Base):
 
 
 class ChannelValues(Base):
+    """Model for 'channel_values' table."""
     __tablename__ = 'channel_values'
     channel = Column(String, primary_key=True)
     key = Column(String, primary_key=True)
@@ -37,6 +41,7 @@ class ChannelValues(Base):
 
 
 class PluginValues(Base):
+    """Model for 'plugin_values' table."""
     __tablename__ = 'plugin_values'
     plugin = Column(String, primary_key=True)
     key = Column(String, primary_key=True)
@@ -47,6 +52,7 @@ class PluginValues(Base):
 
 
 class Welcome(Base):
+    """Model for 'welcome' table."""
     __tablename__ = 'welcome'
     welcome_id = Column(Integer, primary_key=True)
     nick_id = Column(Integer)
