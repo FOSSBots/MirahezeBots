@@ -1,4 +1,4 @@
-"General tests for all MHB plugins."""
+"""General tests for all MHB plugins."""
 import os
 import re
 import sqlite3
