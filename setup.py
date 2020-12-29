@@ -1,6 +1,6 @@
-from setuptools import find_packages, setup
-
 from MirahezeBots.version import VERSION
+
+from setuptools import find_packages, setup
 
 with open('README.md') as readme_file:
     readme = readme_file.read()
