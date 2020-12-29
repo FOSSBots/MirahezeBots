@@ -47,6 +47,20 @@ startup_tasks_notifications = False
 priotasks_notify = []
 
 
+def get_host_and_api_or_query_key(cache, keys):
+    if channel in cache:
+            host = cache[str(channel)]["host"]
+            arraypos = int(cache[str(host)]["arraypos"])
+            apikey = keys[0][int(arraypos)]
+            querykey = keys[1][int(arraypos)]
+    else:
+            host = cache["default"]["host"]
+            arraypos = int(cache[str(host)]["arraypos"])
+            apikey = keys[0][int(arraypos)]
+            querykey = keys[1][int(arraypos)]
+    return host, apikey, querykey
+
+
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
@@ -56,7 +70,8 @@ def phabtask(bot, trigger):
             task_id = trigger.group(2).split('T')[1]
         else:
             task_id = trigger.group(2)
-        phabapi.gettaskinfo(task=task_id)
+        info = get_host_and_api_key(bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+        phabapi.gettaskinfo(info[0], info[1], task=task_id)
     except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
 
@@ -65,7 +80,8 @@ def phabtask(bot, trigger):
 def phabtask2(bot, trigger):  # noqa: U100
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
-    phabapi.gettaskinfo(task=task_id)
+    info = get_host_and_api_key(bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+    phabapi.gettaskinfo(info[0], info[1], task=task_id)
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
@@ -73,14 +89,16 @@ def high_priority_tasks_notification(bot):
     """Send regular update on high priority tasks."""
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
-        phabapi.dophabsearch(channel=bot.settings.phabricator.highpri_channel, bot=bot)
+        info = get_host_and_api_key(bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+        phabapi.dophabsearch(info[0], info[1], info[2])
 
 
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
     """Send full list of high priority tasks."""
-    phabapi.dophabsearch(limit=False, channel=trigger.sender, bot=bot)
+    info = get_host_and_api_key(bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+    phabapi.dophabsearch(info[0], info[1], info[2], limit=False)
 
 
 @require_admin(message="Only admins may purge cache.")
