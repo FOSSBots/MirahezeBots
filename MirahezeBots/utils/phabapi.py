@@ -1,5 +1,8 @@
 """Phabricator API intercation utility."""
 
+from requests import post
+from json import JSONDecodeError
+from urllib.parse import urlparse
 
 def gettaskinfo(host, apikey, task=1):
     """Get's information on a specific task"""
@@ -7,7 +10,7 @@ def gettaskinfo(host, apikey, task=1):
         'api.token': apikey,
         'constraints[ids][0]': task
     }
-    response = requests.post(
+    response = post(
         url='{0}/maniphest.search'.format(host),
         data=data)
     response = response.json()
@@ -23,7 +26,7 @@ def gettaskinfo(host, apikey, task=1):
         'api.token': apikey,
         'constraints[phids][0]': result.get("fields").get("ownerPHID")
     }
-    response2 = requests.post(
+    response2 = post(
         url='{0}/user.search'.format(host),
         data=params)
     try:
@@ -34,7 +37,7 @@ def gettaskinfo(host, apikey, task=1):
         'api.token': apikey,
         'constraints[phids][0]': result.get("fields").get("authorPHID")
     }
-    response3 = requests.post(
+    response3 = post(
         url='{0}/user.search'.format(host),
         data=params2)
     response3 = response3.json()
@@ -60,7 +63,7 @@ def dophabsearch(host, apikey, limit=True):
         'api.token': apikey,
         'queryKey': querykey,
     }
-    response = requests.post(
+    response = post(
         url='{0}/maniphest.search'.format(host),
         data=data)
     response = response.json()
@@ -70,10 +73,12 @@ def dophabsearch(host, apikey, limit=True):
     except Exception:
         return None
     x = 0
+    searchphab = []
     while x < len(data):
         currdata = data[x]
         if x > 5 and limit:
             return  # fix
         else:
-            searchphab(bot=bot, channel=channel, task=currdata.get("id"))
+            searchphab.append(bot=bot, channel=channel, task=currdata.get("id"))
             x = x + 1
+    return searchphab
