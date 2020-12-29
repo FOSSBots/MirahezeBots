@@ -37,7 +37,7 @@ def gettaskinfo(host, apikey, task=1):
     try:
         response2 = response2.json()
     except JSONDecodeError as e:
-        raise JSONDecodeError("Encountered {0} on {1}".format(e, response2.text))
+        raise ValueError("Encountered {0} on {1}".format(e, response2.text))
     params2 = {
         'api.token': apikey,
         'constraints[phids][0]': result.get("fields").get("authorPHID")
