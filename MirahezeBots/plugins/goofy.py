@@ -1,4 +1,4 @@
-"""Some commands for just goofing around and having fun"""
+"""Some commands for just goofing around and having fun."""
 
 from sopel.module import commands, example
 
