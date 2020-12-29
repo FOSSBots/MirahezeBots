@@ -2,8 +2,8 @@
 
 from MirahezeBots_jsonparser import jsonparser as jp
 
-from sopel.module import commands, example, interval, rule, require_admin
-from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
+from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
+from sopel.module import commands, example, interval, require_admin, rule
 from sopel.tools import SopelMemory
 
 

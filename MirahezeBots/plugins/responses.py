@@ -1,4 +1,4 @@
-"""responses.py - like a FAQ bot"""
+"""responses.py - like a FAQ bot."""
 
 from MirahezeBots.version import SHORTVERSION, VERSION
 
