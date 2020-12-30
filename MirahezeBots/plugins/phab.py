@@ -1,17 +1,17 @@
-"""phab.by - Phabricator Task Information Plugin"""
+"""phab.by - Phabricator Task Information Plugin."""
 
-import requests  # FIX THIS
-from sopel.module import commands, example, interval, rule, require_admin
-from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
-from json import JSONDecodeError
-from sopel.tools import get_logger, SopelMemory
-from sopel.config import ConfigurationError
+from MirahezeBots.utils import phabapi
+
 from MirahezeBots_jsonparser import jsonparser as jp
-from urllib.parse import urlparse
-LOGGER = get_logger('phabricator')
+
+from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
+from sopel.module import commands, example, interval, require_admin, rule
+from sopel.tools import SopelMemory
 
 
 class PhabricatorSection(StaticSection):
+    """Set up configuration for Sopel."""
+
     host = ValidatedAttribute('host', str)
     api_token = ListAttribute('api_token', str)
     querykey = ListAttribute('querykey', str)
@@ -21,17 +21,14 @@ class PhabricatorSection(StaticSection):
 
 
 def setup(bot):
+    """Create the config section & memory."""
     bot.config.define_section('phabricator', PhabricatorSection)
-    if bot.settings.phabricator.host and bot.settings.phabricator.datafile:
-        raise ConfigurationError("Use of host and datafile together is not supported")
-    elif bot.settings.phabricator.host:
-        LOGGER.warn("Use of the host option was deceprated in 9.0.0 and will be removed in 10.0.0")
-    elif bot.settings.phabricator.datafile:
-        bot.memory["phab"] = SopelMemory()
-        bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
+    bot.memory["phab"] = SopelMemory()
+    bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
 
 
 def configure(config):
+    """Set up the configuration options."""
     config.define_section('phabricator', PhabricatorSection, validate=False)
     config.phabricator.configure_setting('host', 'What is the URL of your Phabricator installation?')
     config.phabricator.configure_setting('api_token', 'Please enter a Phabricator API token.')
@@ -50,127 +47,32 @@ startup_tasks_notifications = False
 priotasks_notify = []
 
 
-def searchphab(bot, channel, task=1):
-    if bot.settings.phabricator.host:
-        host = 'https://{0}/api'.format(bot.settings.phabricator.host)
-        apikey = bot.settings.phabricator.api_token[0]
-    elif bot.settings.phabricator.datafile:
-        if channel in bot.memory["phab"]["jdcache"]:
-            host = bot.memory["phab"]["jdcache"][str(channel)]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[int(arraypos)]
-        else:
-            host = bot.memory["phab"]["jdcache"]["default"]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[int(arraypos)]
-
-    data = {
-        'api.token': apikey,
-        'constraints[ids][0]': task
-    }
-    response = requests.post(
-        url='{0}/maniphest.search'.format(host),
-        data=data)
-    response = response.json()
-    go = 0
-    try:
-        result = response.get("result").get("data")[0]
-        go = 1
-    except AttributeError:
-        bot.say("An error occurred while parsing the result. ", channel)
-    except IndexError:
-        bot.say("Sorry, but I couldn't find information for the task you searched.", channel)
-    except Exception:
-        bot.say("An unknown error occured.", channel)
-    if go == 1:
-        params = {
-            'api.token': apikey,
-            'constraints[phids][0]': result.get("fields").get("ownerPHID")
-        }
-        response2 = requests.post(
-            url='{0}/user.search'.format(host),
-            data=params)
-        try:
-            response2 = response2.json()
-        except JSONDecodeError as e:
-            bot.say(response2.text, bot.settings.core.logging_channel)
-            bot.say(str(e), bot.settings.core.logging_channel)
-        params2 = {
-            'api.token': apikey,
-            'constraints[phids][0]': result.get("fields").get("authorPHID")
-        }
-        response3 = requests.post(
-            url='{0}/user.search'.format(host),
-            data=params2)
-        response3 = response3.json()
-        if result.get("fields").get("ownerPHID") is None:
-            owner = None
-        else:
-            owner = response2.get("result").get("data")[0].get("fields").get("username")
-        author = response3.get("result").get("data")[0].get("fields").get("username")
-        priority = result.get("fields").get("priority").get("name")
-        status = result.get("fields").get("status").get("name")
-        output = '{0}/T{1} - '.format("https://" + str(urlparse(host).netloc), str(result["id"]))
-        output = '{0}{2}{1}{2}, '.format(output, str(result.get('fields').get('name')), BOLD)
-        output = output + 'authored by {1}{0}{1}, '.format(author, BOLD)
-        output = output + 'assigned to {1}{0}{1}, '.format(owner, BOLD)
-        output = output + 'Priority: {1}{0}{1}, '.format(priority, BOLD)
-        output = output + 'Status: {1}{0}{1}'.format(status, BOLD)
-        bot.say(output, channel)
-
-
-def gethighpri(limit=True, channel='#miraheze', bot=None):
-    if bot.settings.phabricator.host:
-        host = 'https://{0}/api'.format(bot.settings.phabricator.host)
-        apikey = bot.settings.phabricator.api_token[0]
-        querykey = bot.settings.phabricator.querykey[0]
-    elif bot.settings.phabricator.datafile:
-        if channel in bot.memory["phab"]["jdcache"]:
-            host = bot.memory["phab"]["jdcache"][str(channel)]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[int(arraypos)]
-            querykey = bot.settings.phabricator.querykey[int(arraypos)]
-        else:
-            host = bot.memory["phab"]["jdcache"]["default"]["host"]
-            arraypos = int(bot.memory["phab"]["jdcache"][str(host)]["arraypos"])
-            apikey = bot.settings.phabricator.api_token[int(arraypos)]
-            querykey = bot.settings.phabricator.querykey[int(arraypos)]
-    data = {
-        'api.token': apikey,
-        'queryKey': querykey,  # mFzMevK.KRMZ for mhphab
-    }
-    response = requests.post(
-        url='{0}/maniphest.search'.format(host),
-        data=data)
-    response = response.json()
-    result = response.get("result")
-    try:
-        data = result.get("data")
-        go = 1
-    except Exception:
-        bot.say("They are no high priority tasks that I can process, good job!", channel)
-        go = 0
-    if go == 1:
-        x = 0
-        while x < len(data):
-            currdata = data[x]
-            if x > 5 and limit:
-                bot.say("They are more than 5 tasks. Please see {0} for the rest or use .highpri".format(host), channel)
-                break
-            else:
-                searchphab(bot=bot, channel=channel, task=currdata.get("id"))
-                x = x + 1
+def get_host_and_api_or_query_key(channel, cache, keys):
+    """Get hostname,apikey and querykey for instance."""
+    if channel in cache:
+        host = cache[str(channel)]["host"]
+        arraypos = int(cache[str(host)]["arraypos"])
+        apikey = keys[0][int(arraypos)]
+        querykey = keys[1][int(arraypos)]
+    else:
+        host = cache["default"]["host"]
+        arraypos = int(cache[str(host)]["arraypos"])
+        apikey = keys[0][int(arraypos)]
+        querykey = keys[1][int(arraypos)]
+    return host, apikey, querykey
 
 
 @commands('task')
 @example('.task 1')
 def phabtask(bot, trigger):
+    """Get information on a phabricator task."""
     try:
         if trigger.group(2).startswith('T'):
             task_id = trigger.group(2).split('T')[1]
         else:
             task_id = trigger.group(2)
-        searchphab(bot=bot, channel=trigger.sender, task=task_id)
+        info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+        bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id))
     except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
 
@@ -179,28 +81,42 @@ def phabtask(bot, trigger):
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
-    searchphab(bot=bot, channel=trigger.sender, task=task_id)
+    info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+    bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id))
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
 def high_priority_tasks_notification(bot):
+    """Send regular update on high priority tasks."""
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
-        gethighpri(channel=bot.settings.phabricator.highpri_channel, bot=bot)
+        info = get_host_and_api_or_query_key(bot.settings.phabricator.highpri_channel, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+        result = phabapi.dophabsearch(info[0], info[1], info[2])
+        if result:
+            bot.say("Your weekly high priority task update:", bot.settings.phabricator.highpri_channel)
+            for task in result:
+                bot.say(task, bot.settings.phabricator.highpri_channel)
+        else:
+            bot.say("High priority task update: Tasks exceeded limit or could not be found. Use \".highpri\"", bot.settings.phabricator.highpri_channel)
 
 
 @commands('highpri')
 @example('.highpri')
 def forcehighpri(bot, trigger):
-    gethighpri(limit=False, channel=trigger.sender, bot=bot)
+    """Send full list of high priority tasks."""
+    info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+    result = phabapi.dophabsearch(info[0], info[1], info[2], limit=False)
+    if result:
+        for task in result:
+            bot.say(task, trigger.sender)
+    else:
+        bot.say("No tasks have high priority that I can see", trigger.sender)
 
 
 @require_admin(message="Only admins may purge cache.")
 @commands('resetphabcache')
-def reset_phab_cache(bot, trigger):
-    """
-    Reset the cache of the channel management data file
-    """
+def reset_phab_cache(bot, trigger):  # noqa: U100
+    """Reset the cache of the channel management data file."""
     bot.reply("Refreshing Cache...")
     bot.memory["phab"]["jdcache"] = jp.createdict(bot.settings.phabricator.datafile)
     bot.reply("Cache refreshed")
@@ -208,10 +124,8 @@ def reset_phab_cache(bot, trigger):
 
 @require_admin(message="Only admins may check cache")
 @commands('checkphabcache')
-def check_phab_cache(bot, trigger):
-    """
-    Validate the cache matches the copy on disk
-    """
+def check_phab_cache(bot, trigger):  # noqa: U100
+    """Validate the cache matches the copy on disk."""
     result = jp.validatecache(bot.settings.phabricator.datafile, bot.memory["phab"]["jdcache"])
     if result:
         bot.reply("Cache is correct.")
