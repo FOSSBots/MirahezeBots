@@ -39,14 +39,6 @@ def configure(config):
     config.phabricator.configure_setting('datafile', 'File to read from to get channel specific data from')
 
 
-BOLD = '\x02'
-HIGHPRIO_NOTIF_TASKS_PER_PAGE = 5
-HIGHPRIO_TASKS_NOTIFICATION_INTERVAL = 7 * 24 * 60 * 60  # every week
-MESSAGES_INTERVAL = 2  # seconds (to avoid excess flood)
-startup_tasks_notifications = False
-priotasks_notify = []
-
-
 def get_host_and_api_or_query_key(channel, cache, keys):
     """Get hostname,apikey and querykey for instance."""
     if channel in cache:
@@ -85,7 +77,7 @@ def phabtask2(bot, trigger):
     bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id))
 
 
-@interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
+@interval(604800)  # every week
 def high_priority_tasks_notification(bot):
     """Send regular update on high priority tasks."""
     if bot.settings.phabricator.highpri_notify is True:
