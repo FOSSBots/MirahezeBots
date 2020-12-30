@@ -1,9 +1,11 @@
+"""General tests for all MHB plugins."""
 import os
 import re
 import sqlite3
 import sys
 
 import models
+
 from sqlalchemy import create_engine
 
 PATH = '../MirahezeBots/MirahezeBots'
@@ -12,6 +14,7 @@ sys.path.append(PATH)
 
 
 def test_db_schema_is_same():
+    """Confirms database matches as expected."""
     original, new = set(), set()  # noqa: F841
     with sqlite3.connect(os.path.join(PATH, 'example.db')) as conn:
         conn.text_factory = str
@@ -29,6 +32,7 @@ def test_db_schema_is_same():
 
 
 def test_line_length():
+    """Checks line length."""
     MAX_LENGTH = 265 + 1
     for top, dirs, files in os.walk(PLUGINPATH):
         for filen in files:
@@ -40,12 +44,8 @@ def test_line_length():
                     assert len(line.strip()) < MAX_LENGTH, 'length of line #{0} exceeds limit'.format(line_number)
 
 
-def future_test_db_cleanup():
-    engine = create_engine('sqlite:///{0}'.format(os.path.join(PATH, "..", "hasan2.db")))
-    models.Base.metadata.create_all(bind=engine)
-
-
 def test_no_get_on_lists():
+    """Checks for misuse of .get() on lists."""
     reg = r'get\([0-9]'
     for top, dirs, files in os.walk(PLUGINPATH):
         for filen in files:

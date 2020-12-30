@@ -1,8 +1,9 @@
-""" The functions in this file are not suitable for non-internal use. They are subject to change without notice and are not yet released. """
+"""The functions in this file are not suitable for non-internal use. They are subject to change without notice and are not yet released."""
 import requests
 
 
 def login(url, session, username, password):
+    """Login to MediaWiki API using bot password system."""
     CONNECTERRMSG = "Unable to conect to wiki"
     PARAMS_0 = {
         'action': 'query',
@@ -33,6 +34,7 @@ def login(url, session, username, password):
 
 
 def gettoken(url, session, type='csrftoken'):
+    """Get a token from the meta::tokens api."""
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
 
     try:
@@ -46,6 +48,7 @@ def gettoken(url, session, type='csrftoken'):
 
 
 def makeaction(requestinfo, action, target, performer, reason, content=''):
+    """Perform an action via the ACTIONS API."""
     if action == 'edit':
         PARAMS = {
             'action': 'edit',
@@ -111,6 +114,7 @@ def makeaction(requestinfo, action, target, performer, reason, content=''):
 
 
 def main(performer, target, action, reason, url, authinfo, content=False):
+    """Execute a full API Sequence."""
     session = requests.Session()
     lg = login(url, session, authinfo[0], authinfo[1])
     if lg[0] == "Error":

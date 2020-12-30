@@ -1,6 +1,7 @@
-from setuptools import find_packages, setup
-
+"""Controls the setup of the package by setuptools/pip."""
 from MirahezeBots.version import VERSION
+
+from setuptools import find_packages, setup
 
 with open('README.md') as readme_file:
     readme = readme_file.read()
