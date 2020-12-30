@@ -35,6 +35,7 @@ jobs:
         run: |
           flake8 . --max-line-length 265 --exclude=*/__init__.py
           pytest .
+          bandit MirahezeBots -r
           pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-file=tests/*
           pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall .
           pip check
