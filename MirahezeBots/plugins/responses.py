@@ -1,18 +1,24 @@
-"""responses.py - like a FAQ bot"""
+"""responses.py - like a FAQ bot."""
+
+from MirahezeBots.version import SHORTVERSION, VERSION
 
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, rate, require_account
 
 
 class ResponsesSection(StaticSection):
+    """Create configuration for Sopel."""
+
     support_channel = ValidatedAttribute('support_channel', str)
 
 
 def setup(bot):
+    """Set up the config section."""
     bot.config.define_section('responses', ResponsesSection)
 
 
 def configure(config):
+    """Set up the configuration options."""
     config.define_section('responses', ResponsesSection, validate=False)
     config.responses.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
@@ -52,14 +58,14 @@ def cancel(bot, trigger):
 @commands('botversion', 'bv')
 @example('.botversion')
 @rate(user=2, channel=1, server=0)
-def botversion(bot, trigger):
+def botversion(bot, trigger):  # noqa: U100
     """List the current version of the bot."""
-    bot.say('The current version of this bot is 9.0.2 (v9)')
+    bot.say('The current version of this bot is {} ({})'.format(VERSION, SHORTVERSION))
 
 
 @commands('source', 'botsource')
 @example('.source')
 @rate(user=2, channel=1, server=0)
-def githubsource(bot, trigger):
+def githubsource(bot, trigger):  # noqa: U100
     """Give the link to MirahezeBot's Github."""
     bot.reply('My code can be found here: https://github.com/MirahezeBots/MirahezeBots')

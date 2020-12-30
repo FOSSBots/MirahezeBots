@@ -1,4 +1,5 @@
-from __future__ import print_function
+"""Controls the setup of the package by setuptools/pip."""
+from MirahezeBots.version import VERSION
 
 from setuptools import find_packages, setup
 
@@ -16,7 +17,7 @@ with open('dev-requirements.txt') as dev_requirements_file:
 
 setup(
     name='MirahezeBot_Plugins',
-    version='9.0.2',
+    version=VERSION,
     description='Sopel Plugins for Miraheze Bots',
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',  # This is important!

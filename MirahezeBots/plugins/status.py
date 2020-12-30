@@ -1,16 +1,20 @@
-''' status.py - Mediawiki Status Page Updater '''
+"""status.py - Mediawiki Status Page Updater."""
+
+from MirahezeBots.utils import mwapihandler as mwapi
 
 from MirahezeBots_jsonparser import jsonparser as jp
+
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory
 
-from MirahezeBots.utils import mwapihandler as mwapi
 
 pages = ''
 
 
 class StatusSection(StaticSection):
+    """Create configuration for Sopel."""
+
     datafile = ValidatedAttribute('datafile', str)
     bot_username = ValidatedAttribute('bot_username', str)
     bot_password = ValidatedAttribute('bot_password', str)
@@ -18,12 +22,14 @@ class StatusSection(StaticSection):
 
 
 def setup(bot):
+    """Set up the config section & memory."""
     bot.config.define_section('status', StatusSection)
     bot.memory["status"] = SopelMemory()
     bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
 
 
 def configure(config):
+    """Set up the configuration options."""
     config.define_section('status', StatusSection, validate=False)
     config.status.configure_setting('datafile', 'What is the status data file?')
     config.status.configure_setting('bot_username', 'What is the statusbot username? (from Special:BotPasswords)')
@@ -32,6 +38,7 @@ def configure(config):
 
 
 def updatestatus(requestdata, authinfo, acldata, supportchan):
+    """Update the /Status page of a user."""
     if requestdata[2] in acldata["wikis"].keys():
         wikiurl = str("https://" + acldata["wikis"][requestdata[2]]["url"] + "/w/api.php")
         sulgroup = acldata["wikis"][requestdata[2]]["sulgroup"]
@@ -57,7 +64,7 @@ def updatestatus(requestdata, authinfo, acldata, supportchan):
 @commands('status')
 @example('.status mhtest offline')
 def status(bot, trigger):
-    """Update's the /Status subpage of Special:MyPage on the indicated wiki"""
+    """Update the /Status subpage of Special:MyPage on the indicated wiki."""
     options = []
     try:
         options = trigger.group(2).split(" ")
@@ -95,10 +102,8 @@ def status(bot, trigger):
 
 @require_admin(message="Only admins may purge cache.")
 @commands('resetstatuscache')
-def reset_status_cache(bot, trigger):
-    """
-    Reset the cache of the channel management data file
-    """
+def reset_status_cache(bot, trigger):  # noqa: U100
+    """Reset the cache of the channel management data file."""
     bot.reply("Refreshing Cache...")
     bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
     bot.reply("Cache refreshed")
@@ -106,10 +111,8 @@ def reset_status_cache(bot, trigger):
 
 @require_admin(message="Only admins may check cache")
 @commands('checkstatuscache')
-def check_status_cache(bot, trigger):
-    """
-    Validate the cache matches the copy on disk
-    """
+def check_status_cache(bot, trigger):  # noqa: U100
+    """Validate the cache matches the copy on disk."""
     result = jp.validatecache(bot.settings.status.datafile, bot.memory["status"]["jdcache"])
     if result:
         bot.reply("Cache is correct.")

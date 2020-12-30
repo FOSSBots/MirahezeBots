@@ -1,8 +1,9 @@
-""" The functions in this file are not suitable for non-internal use. They are subject to change without notice and are not yet released. """
+"""The functions in this file are not suitable for non-internal use. They are subject to change without notice and are not yet released."""
 import requests
 
 
-def login(url, session, username='Example', password='password'):
+def login(url, session, username, password):
+    """Login to MediaWiki API using bot password system."""
     CONNECTERRMSG = "Unable to conect to wiki"
     PARAMS_0 = {
         'action': 'query',
@@ -33,6 +34,7 @@ def login(url, session, username='Example', password='password'):
 
 
 def gettoken(url, session, type='csrftoken'):
+    """Get a token from the meta::tokens api."""
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
 
     try:
@@ -46,6 +48,7 @@ def gettoken(url, session, type='csrftoken'):
 
 
 def makeaction(requestinfo, action, target, performer, reason, content=''):
+    """Perform an action via the ACTIONS API."""
     if action == 'edit':
         PARAMS = {
             'action': 'edit',
@@ -105,12 +108,13 @@ def makeaction(requestinfo, action, target, performer, reason, content=''):
         if DATA.get("error") is not None:
             return ["MWError", (DATA.get("error").get("info"))]
         else:
-            return ["Success", ("{} request sent. You may want to check the {} log to be sure that it worked.").format(action, action)]
+            return ["Success", ("{0} request sent. You may want to check the {0} log to be sure that it worked.").format(action)]
     except Exception:
         return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
 
 
 def main(performer, target, action, reason, url, authinfo, content=False):
+    """Execute a full API Sequence."""
     session = requests.Session()
     lg = login(url, session, authinfo[0], authinfo[1])
     if lg[0] == "Error":
