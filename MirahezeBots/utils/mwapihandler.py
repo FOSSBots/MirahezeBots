@@ -2,7 +2,7 @@
 import requests
 
 
-def login(url, session, username='Example', password='password'):
+def login(url, session, username, password):
     """Login to MediaWiki API using bot password system."""
     CONNECTERRMSG = "Unable to conect to wiki"
     PARAMS_0 = {
