@@ -112,6 +112,7 @@ def forcehighpri(bot, trigger):
     else:
         bot.say("No tasks have high priority that I can see", trigger.sender)
 
+
 @require_admin(message="Only admins may purge cache.")
 @commands('resetphabcache')
 def reset_phab_cache(bot, trigger):  # noqa: U100
