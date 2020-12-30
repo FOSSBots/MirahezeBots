@@ -2,7 +2,7 @@
 import requests
 
 
-def login(url, session, username='Example', password='password'):
+def login(url, session, username, password):
     CONNECTERRMSG = "Unable to conect to wiki"
     PARAMS_0 = {
         'action': 'query',
