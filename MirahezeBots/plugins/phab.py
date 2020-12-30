@@ -72,7 +72,7 @@ def phabtask(bot, trigger):
         else:
             task_id = trigger.group(2)
         info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
-        phabapi.gettaskinfo(info[0], info[1], task=task_id)
+        bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id))
     except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
 
@@ -82,7 +82,7 @@ def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
     info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
-    phabapi.gettaskinfo(info[0], info[1], task=task_id)
+    bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id))
 
 
 @interval(HIGHPRIO_TASKS_NOTIFICATION_INTERVAL)
@@ -91,7 +91,13 @@ def high_priority_tasks_notification(bot):
     if bot.settings.phabricator.highpri_notify is True:
         """Send high priority tasks notifications."""
         info = get_host_and_api_or_query_key(bot.settings.phabricator.highpri_channel, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
-        phabapi.dophabsearch(info[0], info[1], info[2])
+        result = phabapi.dophabsearch(info[0], info[1], info[2])
+        if result:
+            bot.say("Your weekly high priority task update:", bot.settings.phabricator.highpri_channel)
+            for task in result:
+                bot.say(task, bot.settings.phabricator.highpri_channel)
+        else:
+            bot.say("High priority task update: Tasks exceeded limit or could not be found. Use \".highpri\"", bot.settings.phabricator.highpri_channel)
 
 
 @commands('highpri')
@@ -99,8 +105,12 @@ def high_priority_tasks_notification(bot):
 def forcehighpri(bot, trigger):
     """Send full list of high priority tasks."""
     info = get_host_and_api_or_query_key(trigger.sender, bot.memory["phab"]["jdcache"], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
-    phabapi.dophabsearch(info[0], info[1], info[2], limit=False)
-
+    result = phabapi.dophabsearch(info[0], info[1], info[2], limit=False)
+    if result:
+        for task in result:
+            bot.say(task, trigger.sender)
+    else:
+        bot.say("No tasks have high priority that I can see", trigger.sender)
 
 @require_admin(message="Only admins may purge cache.")
 @commands('resetphabcache')
