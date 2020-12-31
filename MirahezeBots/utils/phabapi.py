@@ -58,8 +58,8 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
             url='{0}/user.search'.format(host),
             data=params2)
         uninstall_cache()
-       response3 = response3.json()
-       author = response3.get("result").get("data")[0].get("fields").get("username")
+        response3 = response3.json()
+        author = response3.get("result").get("data")[0].get("fields").get("username")
     priority = result.get("fields").get("priority").get("name")
     status = result.get("fields").get("status").get("name")
     output = '{0}/T{1} - '.format("https://" + str(urlparse(host).netloc), str(result["id"]))
