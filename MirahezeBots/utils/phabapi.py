@@ -3,19 +3,19 @@
 from json import JSONDecodeError
 from urllib.parse import urlparse
 
-from requests import post
+from requests import Session
 
 
 BOLD = '\x02'
 
 
-def gettaskinfo(host, apikey, task=1):
+def gettaskinfo(host, apikey, task=1, session=Session()):
     """Get information on a specific task."""
     data = {
         'api.token': apikey,
         'constraints[ids][0]': task
     }
-    response = post(
+    response = session.post(
         url='{0}/maniphest.search'.format(host),
         data=data)
     response = response.json()
@@ -64,11 +64,12 @@ def gettaskinfo(host, apikey, task=1):
 
 def dophabsearch(host, apikey, querykey, limit=True):
     """Perform a maniphest search."""
+    session = Session()
     data = {
         'api.token': apikey,
         'queryKey': querykey,
     }
-    response = post(
+    response = session.post(
         url='{0}/maniphest.search'.format(host),
         data=data)
     response = response.json()
@@ -84,6 +85,6 @@ def dophabsearch(host, apikey, querykey, limit=True):
         if x > 5 and limit:
             return  # fix
         else:
-            searchphab.append(gettaskinfo(host, apikey, task=currdata.get("id")))
+            searchphab.append(gettaskinfo(host, apikey, task=currdata.get("id"), session=session))
             x = x + 1
     return searchphab
