@@ -29,32 +29,37 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         return "Sorry, but I couldn't find information for the task you searched."
     except Exception:
         return "An unknown error occured."
-    params = {
-        'api.token': apikey,
-        'constraints[phids][0]': result.get("fields").get("ownerPHID")
-    }
-    install_cache('phab_user_cache', expire_after=2628002)  # a month
-    response2 = session.post(
-        url='{0}/user.search'.format(host),
-        data=params)
-    try:
-        response2 = response2.json()
-    except JSONDecodeError as e:
-        raise ValueError("Encountered {0} on {1}".format(e, response2.text))
-    params2 = {
-        'api.token': apikey,
-        'constraints[phids][0]': result.get("fields").get("authorPHID")
-    }
-    response3 = session.post(
-        url='{0}/user.search'.format(host),
-        data=params2)
-    uninstall_cache()
-    response3 = response3.json()
-    if result.get("fields").get("ownerPHID") is None:
-        owner = None
-    else:
+    install_cache('phab_user_cache', expire_after=2628002, allowable_methods=('POST'))  # a month
+    ownerPHID = result.get("fields").get("ownerPHID")
+    authorPHID = result.get("fields").get("authorPHID")
+    if ownerPHID is not None:
+        params = {
+            'api.token': apikey,
+            'constraints[phids][0]': ownerPHID
+        }
+        response2 = session.post(
+            url='{0}/user.search'.format(host),
+            data=params)
+        try:
+           response2 = response2.json()
+        except JSONDecodeError as e:
+            raise ValueError("Encountered {0} on {1}".format(e, response2.text))
         owner = response2.get("result").get("data")[0].get("fields").get("username")
-    author = response3.get("result").get("data")[0].get("fields").get("username")
+    elif ownerPHID is None:
+        owner = None
+    if ownerPHID == authorPHID:
+        author = owner
+    else:
+        params2 = {
+        'api.token': apikey,
+        'constraints[phids][0]': authorPHID
+        }
+        response3 = session.post(
+            url='{0}/user.search'.format(host),
+            data=params2)
+        uninstall_cache()
+       response3 = response3.json()
+       author = response3.get("result").get("data")[0].get("fields").get("username")
     priority = result.get("fields").get("priority").get("name")
     status = result.get("fields").get("status").get("name")
     output = '{0}/T{1} - '.format("https://" + str(urlparse(host).netloc), str(result["id"]))
