@@ -4,6 +4,7 @@ from json import JSONDecodeError
 from urllib.parse import urlparse
 
 from requests import Session
+from requests_cache import install_cache, uninstall_cache
 
 
 BOLD = '\x02'
@@ -31,7 +32,8 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         'api.token': apikey,
         'constraints[phids][0]': result.get("fields").get("ownerPHID")
     }
-    response2 = post(
+    install_cache('phab_user_cache', expire_after=2628002)  # a month
+    response2 = session.post(
         url='{0}/user.search'.format(host),
         data=params)
     try:
@@ -42,9 +44,10 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         'api.token': apikey,
         'constraints[phids][0]': result.get("fields").get("authorPHID")
     }
-    response3 = post(
+    response3 = session.post(
         url='{0}/user.search'.format(host),
         data=params2)
+    uninstall_cache()
     response3 = response3.json()
     if result.get("fields").get("ownerPHID") is None:
         owner = None
