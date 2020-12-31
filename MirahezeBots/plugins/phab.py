@@ -12,9 +12,7 @@ from sopel.tools import SopelMemory
 class PhabricatorSection(StaticSection):
     """Set up configuration for Sopel."""
 
-    host = ValidatedAttribute('host', str)
     api_token = ListAttribute('api_token', str)
-    querykey = ListAttribute('querykey', str)
     highpri_notify = ValidatedAttribute('highpri_notify', bool)
     highpri_channel = ValidatedAttribute('highpri_channel', str)
     datafile = ValidatedAttribute('datafile', str)
@@ -30,9 +28,7 @@ def setup(bot):
 def configure(config):
     """Set up the configuration options."""
     config.define_section('phabricator', PhabricatorSection, validate=False)
-    config.phabricator.configure_setting('host', 'What is the URL of your Phabricator installation?')
     config.phabricator.configure_setting('api_token', 'Please enter a Phabricator API token.')
-    config.phabricator.configure_setting('querykey', 'Please enter a Phabricator query key.')
     config.phabricator.configure_setting('highpri_notify', 'Would you like to enable automatic notification of high priority tasks? (true/false)')
     config.phabricator.configure_setting('highpri_channel',
                                          'If you enabled high priority notifications, what channel would you like them sent to? (notifications will be sent once every week.')
