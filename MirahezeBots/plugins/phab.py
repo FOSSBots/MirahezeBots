@@ -11,7 +11,8 @@ from sopel.tools import SopelMemory
 
 class PhabricatorSection(StaticSection):
     """Set up configuration for Sopel."""
-
+    
+    querykey = ListAttribute('querykey', str)
     api_token = ListAttribute('api_token', str)
     highpri_notify = ValidatedAttribute('highpri_notify', bool)
     highpri_channel = ValidatedAttribute('highpri_channel', str)
@@ -33,6 +34,7 @@ def configure(config):
     config.phabricator.configure_setting('highpri_channel',
                                          'If you enabled high priority notifications, what channel would you like them sent to? (notifications will be sent once every week.')
     config.phabricator.configure_setting('datafile', 'File to read from to get channel specific data from')
+    config.phabricator.configure_setting('querykey', 'Please enter a Phabricator query key.')
 
 
 def get_host_and_api_or_query_key(channel, cache, keys):
