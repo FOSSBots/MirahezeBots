@@ -51,8 +51,8 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         author = owner
     else:
         params2 = {
-        'api.token': apikey,
-        'constraints[phids][0]': authorPHID
+            'api.token': apikey,
+            'constraints[phids][0]': authorPHID
         }
         response3 = session.post(
             url='{0}/user.search'.format(host),
