@@ -41,7 +41,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
             url='{0}/user.search'.format(host),
             data=params)
         try:
-           response2 = response2.json()
+            response2 = response2.json()
         except JSONDecodeError as e:
             raise ValueError("Encountered {0} on {1}".format(e, response2.text))
         owner = response2.get("result").get("data")[0].get("fields").get("username")
