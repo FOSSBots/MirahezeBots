@@ -11,7 +11,7 @@ from sopel.tools import SopelMemory
 
 class PhabricatorSection(StaticSection):
     """Set up configuration for Sopel."""
-    
+
     querykey = ListAttribute('querykey', str)
     api_token = ListAttribute('api_token', str)
     highpri_notify = ValidatedAttribute('highpri_notify', bool)
