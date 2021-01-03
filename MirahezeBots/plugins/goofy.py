@@ -1,6 +1,6 @@
 """Some commands for just goofing around and having fun."""
 
-from sopel.module import commands, example
+from sopel.plugin import commands, example
 
 
 @example('.coffee MirahezeBot')
