@@ -1,5 +1,5 @@
 """This plugin contains miraheze specific commands."""
-from sopel.module import commands, example, rule
+from sopel.plugin import commands, example, rule
 
 MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL = (
     'Miraheze is a non-profit wikifarm running MediaWiki. If you would like '
