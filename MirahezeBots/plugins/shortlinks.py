@@ -1,5 +1,5 @@
 """This plugin expands links to various websites."""
-from sopel.module import commands, example
+from sopel.plugin import commands, example
 
 
 @commands('github', 'gh')
