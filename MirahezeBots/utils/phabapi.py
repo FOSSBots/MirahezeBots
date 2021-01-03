@@ -71,9 +71,8 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
     return output
 
 
-def dophabsearch(host, apikey, querykey, limit=True):
+def dophabsearch(host, apikey, querykey, limit=True, session=Session()):
     """Perform a maniphest search."""
-    session = Session()
     data = {
         'api.token': apikey,
         'queryKey': querykey,
