@@ -93,7 +93,6 @@ def dophabsearch(host, apikey, querykey, limit=True):
         currdata = data[x]
         if x > 5 and limit:
             return  # fix
-        else:
-            searchphab.append(gettaskinfo(host, apikey, task=currdata.get("id"), session=session))
-            x = x + 1
+        searchphab.append(gettaskinfo(host, apikey, task=currdata.get("id"), session=session))
+        x = x + 1
     return searchphab
