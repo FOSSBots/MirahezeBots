@@ -56,9 +56,8 @@ def updatestatus(requestdata, authinfo, acldata, supportchan):
         if supportchan is not None:
             message = message + " If this persists, ask for help in {}".format(supportchan)
         return message
-    content = mwapi.main(performer=request[0], target=str("User:" + (str(request[0]) + "/Status")), action="create",
+    return mwapi.main(performer=request[0], target=str("User:" + (str(request[0]) + "/Status")), action="create",
                          reason=str("Updating status to " + str(request[1]) + " per " + str(request[0])), url=wikiurl, authinfo=[authinfo[0], authinfo[1]], content=str(request[1]))
-    return content
 
 
 @commands('status')
