@@ -79,6 +79,5 @@ if __name__ == '__main__':
     try:
         engine = create_engine('sqlite:///{0}'.format(sys.argv[1]), echo=True)
     except IndexError:
-        print('argument not provided')
         engine = create_engine('sqlite:///example-model.db', echo=True)
     Base.metadata.create_all(engine)
