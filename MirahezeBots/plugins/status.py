@@ -53,7 +53,7 @@ def updatestatus(requestdata, authinfo, acldata, supportchan):
         request = [requestdata[1][1], requestdata[3]]
     else:
         if supportchan is None:
-            return  "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
+            return "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
         return "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again. If this persists, ask for help in {supportchan}"
     return mwapi.main(
         performer=request[0],
@@ -62,7 +62,7 @@ def updatestatus(requestdata, authinfo, acldata, supportchan):
         reason=str("Updating status to " + str(request[1]) + " per " + str(request[0])),
         url=wikiurl,
         authinfo=[authinfo[0], authinfo[1]],
-        content=str(request[1])
+        content=str(request[1]),
         )
 
 
