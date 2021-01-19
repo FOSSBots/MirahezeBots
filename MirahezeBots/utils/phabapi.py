@@ -15,7 +15,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
     """Get information on a specific task."""
     data = {
         'api.token': apikey,
-        'constraints[ids][0]': task
+        'constraints[ids][0]': task,
     }
     response = session.post(
         url='{0}/maniphest.search'.format(host),
@@ -35,7 +35,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
     if ownerPHID is not None:
         params = {
             'api.token': apikey,
-            'constraints[phids][0]': ownerPHID
+            'constraints[phids][0]': ownerPHID,
         }
         response2 = session.post(
             url='{0}/user.search'.format(host),
@@ -52,7 +52,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
     else:
         params2 = {
             'api.token': apikey,
-            'constraints[phids][0]': authorPHID
+            'constraints[phids][0]': authorPHID,
         }
         response3 = session.post(
             url='{0}/user.search'.format(host),
