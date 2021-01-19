@@ -33,7 +33,7 @@ def login(url, session, username, password):
     return ["Success", "Logged in"]
 
 
-def gettoken(url, session, type='csrftoken'):
+def gettoken(url, session, token='csrftoken'):
     """Get a token from the meta::tokens api."""
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
 
@@ -43,7 +43,7 @@ def gettoken(url, session, type='csrftoken'):
     except Exception:
         return ["Error", "Unable to conect to wiki"]
 
-    TOKEN = DATA['query']['tokens'][type]
+    TOKEN = DATA['query']['tokens'][token]
     return TOKEN
 
 
@@ -118,11 +118,9 @@ def main(performer, target, action, reason, url, authinfo, content=False):
     lg = login(url, session, authinfo[0], authinfo[1])
     if lg[0] == "Error":
         return lg[1]
-    TOKEN = gettoken(url, session, type='csrftoken')
+    TOKEN = gettoken(url, session, token='csrftoken')
     if TOKEN[0] == "Error":
         return TOKEN[1]
     if content:
-        act = makeaction([url, session, TOKEN], action, target, performer, reason, content)
-    else:
-        act = makeaction([url, session, TOKEN], action, target, performer, reason)
-    return act[1]
+        return makeaction([url, session, TOKEN], action, target, performer, reason, content)[1]
+    return makeaction([url, session, TOKEN], action, target, performer, reason)[1]

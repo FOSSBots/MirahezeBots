@@ -10,7 +10,7 @@ def coffee(bot, trigger):
     if trigger.group(2) is None:
         bot.reply("To whom should I give this cup of coffee?")
     else:
-        bot.action("gives %s a nice warm cup of coffee." % (trigger.group(2)), trigger.sender)
+        bot.action(f"gives {trigger.group(2)} a nice warm cup of coffee.", trigger.sender)
 
 
 @example('.hug MirahezeBot')
@@ -20,7 +20,7 @@ def hug(bot, trigger):
     if trigger.group(2) is None:
         bot.reply("To whom should I give this hug?")
     else:
-        bot.action("gives %s a great big bear hug." % (trigger.group(2)), trigger.sender)
+        bot.action(f"gives {trigger.group(2)} a great big bear hug.", trigger.sender)
 
 
 @example('.burger MirahezeBot')
@@ -30,7 +30,7 @@ def burger(bot, trigger):
     if trigger.group(2) is None:
         bot.reply("To whom should I give this cheeseburger?")
     else:
-        bot.action("gives %s a freshly cooked cheeseburger." % (trigger.group(2)), trigger.sender)
+        bot.action(f"gives {trigger.group(2)} a freshly cooked cheeseburger.", trigger.sender)
 
 
 @example('.present MirahezeBot')
@@ -40,7 +40,7 @@ def present(bot, trigger):
     if trigger.group(2) is None:
         bot.reply("To whom should I give this present?")
     else:
-        bot.action("gives %s a present." % (trigger.group(2)), trigger.sender)
+        bot.action(f"gives {trigger.group(2)} a present.", trigger.sender)
 
 
 @example('.hotchoc MirahezeBot')
@@ -50,4 +50,4 @@ def hotchoc(bot, trigger):
     if trigger.group(2) is None:
         bot.reply("To whom should I give this hot chocolate?")
     else:
-        bot.action("gives %s a warm, velvety salted caramel hot chocolate with cream and marhsmellows." % (trigger.group(2)), trigger.sender)
+        bot.action(f"gives {trigger.group(2)} a warm, velvety salted caramel hot chocolate with cream and marhsmellows.", trigger.sender)

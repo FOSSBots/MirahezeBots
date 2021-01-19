@@ -31,8 +31,7 @@ def addchan(bot, trigger):
     """Reply to channel request message."""
     admins = ' '.join(map(str, bot.config.core.admin_accounts))
     if bot.config.responses.support_channel is not None:
-        bot.say(("Hey {}, {} would like to have me in their channel: {}").format(admins, trigger.nick, trigger.group(2)),
-                bot.config.responses.support_channel)
+        bot.say(f"Hey {admins}, {trigger.nick} would like to have me in their channel: {trigger.group(2)}"), bot.config.responses.support_channel)
         if trigger.sender != bot.config.responses.support_channel:
             bot.reply("Request sent! Action upon the request should be taken shortly. Thank you for using {}!".format(bot.nick))
 
