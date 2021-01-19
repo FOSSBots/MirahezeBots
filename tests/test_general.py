@@ -19,7 +19,7 @@ def test_db_schema_is_same():
     with sqlite3.connect(os.path.join(PATH, 'example.db')) as conn:
         conn.text_factory = str
         res = conn.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        [original.add(tbl[0]) for tbl in res if tbl[0] != nick_ids and not tbl[0] != sqlite_sequence]
+        [original.add(tbl[0]) for tbl in res if tbl[0] != 'nick_ids' and tbl[0] != 'sqlite_sequence']
     try:
         os.unlink(os.path.join(PATH, "example-model.db"))
     except FileNotFoundError:
