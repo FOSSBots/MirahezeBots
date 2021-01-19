@@ -15,7 +15,7 @@ def send_welcome(nick, chan):
     """Find the message to be sent."""
     if chan == '#miraheze' and nick[:4] != 'Not-':
         return f"Hello {nick}! If you have any questions, feel free to ask and someone should answer soon."
-    elif chan == '#miraheze-cvt':
+    if chan == '#miraheze-cvt':
        return f"Welcome {nick}. If you need to report spam or abuse," +
                    " please feel free to notify" +
                    " any of the voiced (+v) users," +
