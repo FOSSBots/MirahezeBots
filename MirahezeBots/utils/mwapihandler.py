@@ -107,8 +107,7 @@ def makeaction(requestinfo, action, target, performer, reason, content=''):
         DATA = request.json()
         if DATA.get("error") is not None:
             return ["MWError", (DATA.get("error").get("info"))]
-        else:
-            return ["Success", ("{0} request sent. You may want to check the {0} log to be sure that it worked.").format(action)]
+        return ["Success", ("{0} request sent. You may want to check the {0} log to be sure that it worked.").format(action)]
     except Exception:
         return ["Fatal", ("An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?").format(action)]
 
@@ -119,13 +118,11 @@ def main(performer, target, action, reason, url, authinfo, content=False):
     lg = login(url, session, authinfo[0], authinfo[1])
     if lg[0] == "Error":
         return lg[1]
+    TOKEN = gettoken(url, session, type='csrftoken')
+    if TOKEN[0] == "Error":
+        return TOKEN[1]
+    if content:
+        act = makeaction([url, session, TOKEN], action, target, performer, reason, content)
     else:
-        TOKEN = gettoken(url, session, type='csrftoken')
-        if TOKEN[0] == "Error":
-            return TOKEN[1]
-        else:
-            if content:
-                act = makeaction([url, session, TOKEN], action, target, performer, reason, content)
-            else:
-                act = makeaction([url, session, TOKEN], action, target, performer, reason)
-            return act[1]
+        act = makeaction([url, session, TOKEN], action, target, performer, reason)
+    return act[1]
