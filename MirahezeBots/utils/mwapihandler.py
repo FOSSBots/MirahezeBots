@@ -108,9 +108,9 @@ def makeaction(requestinfo, action, target, performer, reason, content=''):
         DATA = request.json()
         if DATA.get('error') is not None:
             return ['MWError', (DATA.get('error').get('info'))]
-        return ['Success', ('{0} request sent. You may want to check the {0} log to be sure that it worked.').format(action)]
+        return ['Success', f'{action} request sent. You may want to check the {action} log to be sure that it worked.']
     except Exception:
-        return ['Fatal', ('An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {} rights on that wiki?').format(action)]
+        return ['Fatal', f'An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {action} rights on that wiki?']
 
 
 def main(performer, target, action, reason, url, authinfo, content=False):
