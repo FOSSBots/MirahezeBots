@@ -38,6 +38,6 @@ def test_no_get_on_lists():
         for filen in files:
             if not filen.endswith('.py'):
                 continue
-            with open(os.path.join(PLUGINPATH, filen)) as python_source:		
+            with open(os.path.join(PLUGINPATH, filen)) as python_source:
                 src = python_source.read()
                 assert not re.search(reg, src)
