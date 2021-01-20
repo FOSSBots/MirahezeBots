@@ -103,7 +103,7 @@ def forcehighpri(bot, trigger):
         bot.say('No tasks have high priority that I can see', trigger.sender)
 
 
-@require_admin(message="Only admins may purge cache.")
+@require_admin(message='Only admins may purge cache.')
 @commands('resetphabcache')
 def reset_phab_cache(bot, trigger):  # noqa: U100
     """Reset the cache of the channel management data file."""
@@ -112,7 +112,7 @@ def reset_phab_cache(bot, trigger):  # noqa: U100
     bot.reply('Cache refreshed')
 
 
-@require_admin(message="Only admins may check cache")
+@require_admin(message='Only admins may check cache')
 @commands('checkphabcache')
 def check_phab_cache(bot, trigger):  # noqa: U100
     """Validate the cache matches the copy on disk."""
