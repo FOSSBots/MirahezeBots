@@ -68,7 +68,7 @@ def updatestatus(requestdata, authinfo, acldata, supportchan):
 
 @commands('status')
 @example('.status mhtest offline')
-def status(bot, trigger):
+def changestatus(bot, trigger):
     """Update the /Status subpage of Special:MyPage on the indicated wiki."""
     options = []
     try:
