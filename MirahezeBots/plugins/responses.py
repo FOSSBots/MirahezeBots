@@ -31,10 +31,9 @@ def addchan(bot, trigger):
     """Reply to channel request message."""
     admins = ' '.join(map(str, bot.config.core.admin_accounts))
     if bot.config.responses.support_channel is not None:
-        bot.say(("Hey {}, {} would like to have me in their channel: {}").format(admins, trigger.nick, trigger.group(2)),
-                bot.config.responses.support_channel)
+        bot.say(f'Hey {admins}, {trigger.nick} would like to have me in their channel: {trigger.group(2)}', bot.config.responses.support_channel)
         if trigger.sender != bot.config.responses.support_channel:
-            bot.reply("Request sent! Action upon the request should be taken shortly. Thank you for using {}!".format(bot.nick))
+            bot.reply(f'Request sent! Action upon the request should be taken shortly. Thank you for using {bot.nick}!')
 
 
 @commands('gj', 'gw')
@@ -42,7 +41,7 @@ def addchan(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def gj(bot, trigger):
     """Tell the user that they are doing good work."""
-    bot.say(("You're doing good work, {}!").format(trigger.group(2)))
+    bot.say(f"You're doing good work, {trigger.nick}!")
 
 
 @commands('cancelreminder')
@@ -51,8 +50,7 @@ def gj(bot, trigger):
 def cancel(bot, trigger):
     """Cancel reminder."""
     admins = ' '.join(map(str, bot.config.core.admin_accounts))
-    bot.reply(('Pinging {} to cancel '
-               '{}\'s reminder.').format(admins, trigger.nick))
+    bot.reply(f"Pinging {admins} to cancel {trigger.nicks}'s reminder.")
 
 
 @commands('botversion', 'bv')
@@ -60,7 +58,7 @@ def cancel(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def botversion(bot, trigger):  # noqa: U100
     """List the current version of the bot."""
-    bot.say('The current version of this bot is {} ({})'.format(VERSION, SHORTVERSION))
+    bot.reply(f'The current version of this bot is {VERSION} ({SHORTVERSION})')
 
 
 @commands('source', 'botsource')
