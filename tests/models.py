@@ -17,7 +17,7 @@ class NickNames(Base):
 
     def __str__(self):
         """Return main output."""
-        return '%s <%s, %s>' % (self.__tablename__, self.key, self.value,)
+        return f'{self.__tablename__} <{self.key}, {self.value}>'
 
 
 class NickValues(Base):
@@ -77,8 +77,7 @@ class Welcome(Base):
 
 if __name__ == '__main__':
     try:
-        engine = create_engine('sqlite:///{0}'.format(sys.argv[1]), echo=True)
+        engine = create_engine(f'sqlite:///{sys.argv[1]}', echo=True)
     except IndexError:
-        print('argument not provided')
         engine = create_engine('sqlite:///example-model.db', echo=True)
     Base.metadata.create_all(engine)
