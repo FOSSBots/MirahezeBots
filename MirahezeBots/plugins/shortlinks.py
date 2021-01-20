@@ -27,7 +27,7 @@ def redditu(bot, trigger):
 def redditr(bot, trigger):
     """Expand a link to reddit/r."""
     try:
-        bot.say(f'https://reddit.com/r/{trigger.group(2)}")
+        bot.say(f'https://reddit.com/r/{trigger.group(2)}')
     except TypeError:
         bot.say('Syntax: .subred example', trigger.sender)
 
@@ -37,7 +37,7 @@ def redditr(bot, trigger):
 def wmca(bot, trigger):
     """Expand a link to Wikimedia CentralAuth."""
     try:
-        target = trigger.group(2).replace(" ", "_")
+        target = trigger.group(2).replace(' ', '_')
         bot.say(f'https://meta.wikimedia.org/wiki/Special:CentralAuth/{target}')
     except AttributeError:
         bot.say('Syntax: .wmca example', trigger.sender)
@@ -48,7 +48,7 @@ def wmca(bot, trigger):
 def mhca(bot, trigger):
     """Expand a link to Miraheze Central Auth."""
     try:
-        target = trigger.group(2).replace(" ", "_")
+        target = trigger.group(2).replace(' ', '_')
         bot.say(f'https://meta.miraheze.org/wiki/Special:CentralAuth/{target}')
     except AttributeError:
         bot.say('Syntax: .mhca example', trigger.sender)
@@ -69,15 +69,15 @@ def twlink(bot, trigger):
 def mhwiki(bot, trigger):
     """Expand a link to Miraheze wikis."""
     try:
-        options = trigger.group(2).split(" ", 1)
+        options = trigger.group(2).split(' ', 1)
         if len(options) == 1:
             page = options[0]
-            page = page.replace(" ", "_")
+            page = page.replace(' ', '_')
             bot.say(f'https://meta.miraheze.org/wiki/{page}')
         elif len(options) == 2:
             wiki = options[0]
             page = options[1]
-            page = page.replace(" ", "_")
+            page = page.replace(' ', '_')
             bot.say(f'https://{wiki}.miraheze.org/wiki/{page}')
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
