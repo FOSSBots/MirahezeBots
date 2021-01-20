@@ -2,3 +2,4 @@
 max-line-length = 175
 exclude = */__init__.py
 extend-ignore = SFS301
+per-file-ignores = 'MirahezeBots/utils/phabapi.py:SFS201'
