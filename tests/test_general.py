@@ -24,9 +24,9 @@ def test_db_schema_is_same():
             if tbl[0] != 'nick_ids' and tbl[0] != 'sqlite_sequence':
                 original.add(tbl[0])
     with suppress(FileNotFoundError):
-        os.unlink(os.path.join(PATH, "example-model.db"))
+        os.unlink(os.path.join(PATH, 'example-model.db'))
 
-    engine = create_engine('sqlite:///{0}'.format(os.path.join(PATH, "..", "example-model.db")))
+    engine = create_engine('sqlite:///{0}'.format(os.path.join(PATH, '..', 'example-model.db')))
     models.Base.metadata.create_all(bind=engine)
     assert original == set(engine.table_names())
 
