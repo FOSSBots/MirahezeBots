@@ -22,16 +22,16 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         data=data)
     response = response.json()
     try:
-        result = response.get("result").get("data")[0]
+        result = response.get('result').get('data')[0]
     except AttributeError:
-        return "An error occurred while parsing the result. "
+        return 'An error occurred while parsing the result.'
     except IndexError:
         return "Sorry, but I couldn't find information for the task you searched."
     except Exception:
-        return "An unknown error occured."
+        return 'An unknown error occured.'
     install_cache('phab_user_cache', expire_after=2628002, allowable_methods=('POST'))  # a month
-    ownerPHID = result.get("fields").get("ownerPHID")
-    authorPHID = result.get("fields").get("authorPHID")
+    ownerPHID = result.get('fields').get('ownerPHID')
+    authorPHID = result.get('fields').get('authorPHID')
     if ownerPHID is not None:
         params = {
             'api.token': apikey,
@@ -43,8 +43,8 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         try:
             response2 = response2.json()
         except JSONDecodeError as e:
-            raise ValueError("Encountered {0} on {1}".format(e, response2.text))
-        owner = response2.get("result").get("data")[0].get("fields").get("username")
+            raise ValueError('Encountered {0} on {1}'.format(e, response2.text))
+        owner = response2.get('result').get('data')[0].get('fields').get('username')
     elif ownerPHID is None:
         owner = None
     if ownerPHID == authorPHID:
@@ -59,10 +59,10 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
             data=params2)
         uninstall_cache()
         response3 = response3.json()
-        author = response3.get("result").get("data")[0].get("fields").get("username")
-    priority = result.get("fields").get("priority").get("name")
-    status = result.get("fields").get("status").get("name")
-    output = '{0}/T{1} - '.format("https://" + str(urlparse(host).netloc), str(result["id"]))
+        author = response3.get('result').get('data')[0].get('fields').get('username')
+    priority = result.get('fields').get('priority').get('name')
+    status = result.get('fields').get('status').get('name')
+    output = '{0}/T{1} - '.format('https://' + str(urlparse(host).netloc), str(result['id']))
     output = '{0}{2}{1}{2}, '.format(output, str(result.get('fields').get('name')), BOLD)
     output = output + 'authored by {1}{0}{1}, '.format(author, BOLD)
     output = output + 'assigned to {1}{0}{1}, '.format(owner, BOLD)
@@ -82,9 +82,9 @@ def dophabsearch(host, apikey, querykey, limit=True):
         url='{0}/maniphest.search'.format(host),
         data=data)
     response = response.json()
-    result = response.get("result")
+    result = response.get('result')
     try:
-        data = result.get("data")
+        data = result.get('data')
     except Exception:
         return None
     x = 0
@@ -92,7 +92,7 @@ def dophabsearch(host, apikey, querykey, limit=True):
     while x < len(data):
         currdata = data[x]
         if x > 5 and limit:
-            return ["Limit exceeded. Please perform this search directly on phab."]
-        searchphab.append(gettaskinfo(host, apikey, task=currdata.get("id"), session=session))
+            return ['Limit exceeded. Please perform this search directly on phab.']
+        searchphab.append(gettaskinfo(host, apikey, task=currdata.get('id'), session=session))
         x = x + 1
     return searchphab
