@@ -17,7 +17,7 @@ class NickNames(Base):
 
     def __str__(self):
         """Return main output."""
-        return '%s <%s, %s>' % (self.__tablename__, self.key, self.value)
+        return f'{self.__tablename__} <{self.key}, {self.value}>'
 
 
 class NickValues(Base):
