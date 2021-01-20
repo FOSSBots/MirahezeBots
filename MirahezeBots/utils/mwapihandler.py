@@ -33,7 +33,7 @@ def login(url, session, username, password):
     return ["Success", "Logged in"]
 
 
-def gettoken(url, session, token='csrftoken'):
+def gettoken(url, session, tokentype='csrftoken'):
     """Get a token from the meta::tokens api."""
     PARAMS_2 = {'action': 'query', 'meta': 'tokens', 'format': 'json'}
 
@@ -117,7 +117,7 @@ def main(performer, target, action, reason, url, authinfo, content=False):
     lg = login(url, session, authinfo[0], authinfo[1])
     if lg[0] == "Error":
         return lg[1]
-    TOKEN = gettoken(url, session, token='csrftoken')
+    TOKEN = gettoken(url, session, tokentype='csrftoken')
     if TOKEN[0] == "Error":
         return TOKEN[1]
     if content:
