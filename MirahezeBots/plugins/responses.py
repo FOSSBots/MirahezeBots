@@ -41,7 +41,7 @@ def addchan(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def gj(bot, trigger):
     """Tell the user that they are doing good work."""
-    bot.say(("You're doing good work, {}!").format(trigger.group(2)))
+    bot.say(f"You're doing good work, {trigger.nick}!")
 
 
 @commands('cancelreminder')
