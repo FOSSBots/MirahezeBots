@@ -1,5 +1,8 @@
 on:
   push:
+    branches:
+      - dev
+      - release
   pull_request:
 
 jobs:
