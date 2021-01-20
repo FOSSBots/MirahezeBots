@@ -68,7 +68,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
     output = output + 'assigned to {1}{0}{1}, '.format(owner, BOLD)
     output = output + 'Priority: {1}{0}{1}, '.format(priority, BOLD)
     output = output + 'Status: {1}{0}{1}'.format(status, BOLD)
-    return output
+    return output  # noqa: R504
 
 
 def dophabsearch(host, apikey, querykey, limit=True):
