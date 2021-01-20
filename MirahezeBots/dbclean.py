@@ -4,10 +4,10 @@ import sqlite3
 
 def main():
     """Attempt the actual function for the cli script."""
-    file = input("Full path to the deletion list: ")
+    file = input('Full path to the deletion list: ')
     with open(file, 'r') as f:  # ensure the file is open and closed properly
         users = f.readlines()
-    database = input("Full path to database: ")
+    database = input('Full path to database: ')
     with sqlite3.connect(database) as conn:
         curs = conn.cursor()
         for user in users:
