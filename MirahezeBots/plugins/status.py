@@ -9,29 +9,32 @@ from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory
 
 
+pages = ''
+
+
 class StatusSection(StaticSection):
     """Create configuration for Sopel."""
 
-    datafile = ValidatedAttribute("datafile", str)
-    bot_username = ValidatedAttribute("bot_username", str)
-    bot_password = ValidatedAttribute("bot_password", str)
-    support_channel = ValidatedAttribute("support_channel", str)
+    datafile = ValidatedAttribute('datafile', str)
+    bot_username = ValidatedAttribute('bot_username', str)
+    bot_password = ValidatedAttribute('bot_password', str)
+    support_channel = ValidatedAttribute('support_channel', str)
 
 
 def setup(bot):
     """Set up the config section & memory."""
-    bot.config.define_section("status", StatusSection)
+    bot.config.define_section('status', StatusSection)
     bot.memory["status"] = SopelMemory()
     bot.memory["status"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
 
 
 def configure(config):
     """Set up the configuration options."""
-    config.define_section("status", StatusSection, validate=False)
-    config.status.configure_setting("datafile", "What is the status data file?")
-    config.status.configure_setting("bot_username", "What is the statusbot username? (from Special:BotPasswords)")
-    config.status.configure_setting("bot_password", "What is the statusbot accounts's bot password? (from Special:BotPasswords)")
-    config.status.configure_setting("support_channel", "Specify a support IRC channel (leave blank for none).")
+    config.define_section('status', StatusSection, validate=False)
+    config.status.configure_setting('datafile', 'What is the status data file?')
+    config.status.configure_setting('bot_username', 'What is the statusbot username? (from Special:BotPasswords)')
+    config.status.configure_setting('bot_password', "What is the statusbot accounts's bot password? (from Special:BotPasswords)")
+    config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
 
 
 def updatestatus(requestdata, authinfo, acldata, supportchan):
@@ -63,8 +66,8 @@ def updatestatus(requestdata, authinfo, acldata, supportchan):
         )
 
 
-@commands("status")
-@example(".status mhtest offline")
+@commands('status')
+@example('.status mhtest offline')
 def status(bot, trigger):
     """Update the /Status subpage of Special:MyPage on the indicated wiki."""
     options = []
@@ -74,12 +77,12 @@ def status(bot, trigger):
             wiki = options[0]
             status = options[1]
             host = trigger.host
-            host = host.split("/")
+            host = host.split('/')
             cont = 1
         elif len(options) > 2:
             wiki = options[0]
             host = trigger.host
-            host = host.split("/")
+            host = host.split('/')
             status = options[1]
             x = 2
             while x < len(options):
@@ -108,7 +111,7 @@ def status(bot, trigger):
 
 
 @require_admin(message="Only admins may purge cache.")
-@commands("resetstatuscache")
+@commands('resetstatuscache')
 def reset_status_cache(bot, trigger):  # noqa: U100
     """Reset the cache of the channel management data file."""
     bot.reply("Refreshing Cache...")
@@ -117,7 +120,7 @@ def reset_status_cache(bot, trigger):  # noqa: U100
 
 
 @require_admin(message="Only admins may check cache")
-@commands("checkstatuscache")
+@commands('checkstatuscache')
 def check_status_cache(bot, trigger):  # noqa: U100
     """Validate the cache matches the copy on disk."""
     result = jp.validatecache(bot.settings.status.datafile, bot.memory["status"]["jdcache"])
