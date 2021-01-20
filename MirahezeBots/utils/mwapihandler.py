@@ -43,7 +43,7 @@ def gettoken(url, session, tokentype='csrftoken'):
     except Exception:
         return ["Error", "Unable to conect to wiki"]
 
-    return DATA['query']['tokens'][token]
+    return DATA['query']['tokens'][tokentype]
 
 
 def makeaction(requestinfo, action, target, performer, reason, content=''):
