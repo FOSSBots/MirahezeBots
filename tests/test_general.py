@@ -34,10 +34,10 @@ def test_db_schema_is_same():
 def test_no_get_on_lists():
     """Checks for misuse of .get() on lists."""
     reg = r'get\([0-9]'
-    for top, dirs, files in os.walk(PLUGINPATH):	
-        for filen in files:	
-            if not filen.endswith('.py'):	
-                continue	
+    for top, dirs, files in os.walk(PLUGINPATH):
+        for filen in files:
+            if not filen.endswith('.py'):
+                continue
             with open(os.path.join(PLUGINPATH, filen)) as python_source:		
                 src = python_source.read()
                 assert not re.search(reg, src)
