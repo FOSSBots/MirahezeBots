@@ -48,7 +48,7 @@ def updatestatus(requestdata, authinfo, acldata, supportchan):
         if sulgroup in acldata['users'][requestdata[0]]['groups'].keys():
             request = [acldata['users'][requestdata[0]]['groups'][sulgroup], requestdata[3]]
         else:
-            return 'Data not found for SULGROUP {} in {} - Keys were: {}'.format(sulgroup, requestdata[0], acldata['users'][requestdata[0]].keys())
+            return f"Data not found for SULGROUP {sulgroup} in {requestdata[0]} - Keys were: {acldata['users'][requestdata[0]].keys()}"
     elif requestdata[1][0] in acldata['sulgroups'][sulgroup]['cloaks']:
         request = [requestdata[1][1], requestdata[3]]
     else:
@@ -94,7 +94,7 @@ def changestatus(bot, trigger):
             cont = 0
     except AttributeError as e:
         bot.reply('Syntax: .status wikicode new-status')
-        bot.say('AttributeError: {} from Status plugin in {}'.format(e, trigger.sender), bot.config.core.logging_channel)
+        bot.say(f'AttributeError: {e} from Status plugin in {trigger.sender}', bot.config.core.logging_channel)
         cont = 0
     if cont == 1:
         requestdata = [str(trigger.account), host, wiki, str(status)]

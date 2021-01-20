@@ -18,7 +18,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         'constraints[ids][0]': task,
     }
     response = session.post(
-        url='{0}/maniphest.search'.format(host),
+        url=f'{host}/maniphest.search',
         data=data)
     response = response.json()
     try:
@@ -38,12 +38,12 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
             'constraints[phids][0]': ownerPHID,
         }
         response2 = session.post(
-            url='{0}/user.search'.format(host),
+            url=f'{host}/user.search',
             data=params)
         try:
             response2 = response2.json()
         except JSONDecodeError as e:
-            raise ValueError('Encountered {0} on {1}'.format(e, response2.text))
+            raise ValueError(f'Encountered {e} on {response2.text}')
         owner = response2.get('result').get('data')[0].get('fields').get('username')
     elif ownerPHID is None:
         owner = None
@@ -55,14 +55,14 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
             'constraints[phids][0]': authorPHID,
         }
         response3 = session.post(
-            url='{0}/user.search'.format(host),
+            url=f'{host}/user.search',
             data=params2)
         uninstall_cache()
         response3 = response3.json()
         author = response3.get('result').get('data')[0].get('fields').get('username')
     priority = result.get('fields').get('priority').get('name')
     status = result.get('fields').get('status').get('name')
-    output = '{0}/T{1} - '.format('https://' + str(urlparse(host).netloc), str(result['id']))
+    output = f"{'https://' + str(urlparse(host).netloc)}/T{str(result['id'])} - "
     output = '{0}{2}{1}{2}, '.format(output, str(result.get('fields').get('name')), BOLD)
     output = output + 'authored by {1}{0}{1}, '.format(author, BOLD)
     output = output + 'assigned to {1}{0}{1}, '.format(owner, BOLD)
@@ -79,7 +79,7 @@ def dophabsearch(host, apikey, querykey, limit=True):
         'queryKey': querykey,
     }
     response = session.post(
-        url='{0}/maniphest.search'.format(host),
+        url=f'{host}/maniphest.search',
         data=data)
     response = response.json()
     result = response.get('result')

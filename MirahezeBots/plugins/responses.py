@@ -33,7 +33,7 @@ def addchan(bot, trigger):
     if bot.config.responses.support_channel is not None:
         bot.say(f'Hey {admins}, {trigger.nick} would like to have me in their channel: {trigger.group(2)}', bot.config.responses.support_channel)
         if trigger.sender != bot.config.responses.support_channel:
-            bot.reply('Request sent! Action upon the request should be taken shortly. Thank you for using {}!'.format(bot.nick))
+            bot.reply(f'Request sent! Action upon the request should be taken shortly. Thank you for using {bot.nick}!')
 
 
 @commands('gj', 'gw')

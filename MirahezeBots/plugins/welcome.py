@@ -22,7 +22,7 @@ def send_welcome(nick, chan):
 
 def setup(bot):
     """Do required setup for this module."""
-    bot.known_users_filename = os.path.join(bot.config.core.homedir, '{}-{}.known_users.db'.format(bot.nick, bot.config.core.host))
+    bot.known_users_filename = os.path.join(bot.config.core.homedir, f'{bot.nick}-{bot.config.core.host}.known_users.db')
     bot.known_users_list = load_known_users_list(bot.known_users_filename)
 
 
@@ -51,7 +51,7 @@ def save_known_users_list(filename, known_users_list):
     f = codecs.open(filename, 'w', encoding='utf-8')
     for channel in known_users_list:
         for user in known_users_list[channel]:
-            f.write('{}\t{}\n'.format(channel, user))
+            f.write(f'{channel}\t{user}\n')
     f.close()
 
 
@@ -97,24 +97,20 @@ def add_known_user(bot, trigger):
         channel = DEFAULT_CHANNEL
 
     if not USERNAME_RE.match(username):
-        bot.reply('Invalid username: {}'.format(username))
+        bot.reply(f'Invalid username: {username}')
         return
 
     if not CHANNEL_RE.match(channel):
-        bot.reply('Invalid channel name: {}'.format(channel))
+        bot.reply(f'Invalid channel name: {channel}')
         return
 
     if channel not in bot.known_users_list:
         bot.known_users_list[channel] = []
 
     if username in bot.known_users_list[channel]:
-        bot.say('{} is already added to known users list of channel {}'.format(
-            username, channel,
-        ))
+        bot.say(f'{username} is already added to known users list of channel {channel}')
         return
 
     bot.known_users_list[channel].append(username)
     save_known_users_list(bot.known_users_filename, bot.known_users_list)
-    bot.say('Okay, {} is now added to known users list of channel {}'.format(
-        username, channel,
-    ))
+    bot.say(f'Okay, {username} is now added to known users list of channel {channel}')
