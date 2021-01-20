@@ -2,9 +2,11 @@
 import requests
 
 
+CONNECTERRMSG = 'Unable to conect to wiki'
+
+
 def login(url, session, username, password):
     """Login to MediaWiki API using bot password system."""
-    CONNECTERRMSG = 'Unable to conect to wiki'
     PARAMS_0 = {
         'action': 'query',
         'meta': 'tokens',
@@ -58,7 +60,7 @@ def makeaction(requestinfo, action, target, performer, reason, content=''):
             'bot': 'true',
             'format': 'json',
         }
-    elif action == "create":
+    elif action == 'create':
         PARAMS = {
             'action': 'edit',
             'title': target,
