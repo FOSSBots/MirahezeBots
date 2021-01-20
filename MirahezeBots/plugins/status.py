@@ -39,8 +39,8 @@ def configure(config):
 
 def updatestatus(requestdata, authinfo, acldata, supportchan):
     """Update the /Status page of a user."""
-    if requestdata[2] in acldata["wikis"].keys():
-        wikiurl = str("https://" + acldata["wikis"][requestdata[2]]["url"] + "/w/api.php")
+    if requestdata[2] in acldata['wikis'].keys():
+        wikiurl = str('https://' + acldata['wikis'][requestdata[2]]['url'] + '/w/api.php')
         sulgroup = acldata['wikis'][requestdata[2]]['sulgroup']
     else:
         return 'Wiki could not be found'
