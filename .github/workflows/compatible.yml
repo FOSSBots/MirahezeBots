@@ -1,3 +1,4 @@
+name: 'Compatibility Checks'
 on:
   push:
     branches:
