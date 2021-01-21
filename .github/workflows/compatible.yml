@@ -8,6 +8,7 @@ on:
 
 jobs:
   check:
+    name: Check Compatibility for Python ${{ matrix.python }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
