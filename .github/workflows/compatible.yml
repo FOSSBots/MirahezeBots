@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Python ${{ matrix.python }} Compatibility Checks on ${{ matrix.os }}
+      - name: Setup Python ${{ matrix.python }} on ${{ matrix.os }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }} 
