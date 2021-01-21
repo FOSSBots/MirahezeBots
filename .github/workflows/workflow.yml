@@ -1,3 +1,4 @@
+name: 'Main CI Build'
 on:
   push:
     branches:
