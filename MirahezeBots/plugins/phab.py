@@ -82,7 +82,6 @@ def phabtask2(bot, trigger):
 def high_priority_tasks_notification(bot):
     """Send regular update on high priority tasks."""
     if bot.settings.phabricator.highpri_notify is True:
-        """Send high priority tasks notifications."""
         info = get_host_and_api_or_query_key(bot.settings.phabricator.highpri_channel, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])  # noqa: E501
         result = phabapi.dophabsearch(info[0], info[1], info[2], session=bot.memory['phab']['session'])
         if result:
