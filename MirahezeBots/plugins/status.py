@@ -4,11 +4,12 @@ from MirahezeBots.utils import mwapihandler as mwapi
 
 from MirahezeBots_jsonparser import jsonparser as jp
 
+from requests import Session
+
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory
 
-from requests import Session
 
 pages = ''
 
@@ -28,7 +29,6 @@ def setup(bot):
     bot.memory['status'] = SopelMemory()
     bot.memory['status']['jdcache'] = jp.createdict(bot.settings.status.datafile)
     bot.memory['status']['session'] = Session()
-
 
 
 def configure(config):
