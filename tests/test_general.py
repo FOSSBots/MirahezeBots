@@ -34,7 +34,7 @@ def test_db_schema_is_same():
 def test_no_get_on_lists():
     """Checks for misuse of .get() on lists."""
     reg = r'get\([0-9]'
-    for top, dirs, files in os.walk(PLUGINPATH):
+    for files in os.walk(PLUGINPATH)[2]:
         for filen in files:
             if not filen.endswith('.py'):
                 continue
