@@ -31,7 +31,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r dev-requirements.txt
           pyproject-build --wheel --outdir dist .
-          find dist -name "*.whl" | xargs pip3 install
+          pip install dist\*.whl
       - name: Show python version and show package
         run: |
           python --version
