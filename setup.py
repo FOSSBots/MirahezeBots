@@ -24,6 +24,7 @@ setup(
     author='MirahezeBot Contributors',
     author_email='bots@miraheze.org',
     maintainer='MirahezeBots',
+    maintainer_email='bots@miraheze.org',
     url='https://github.com/MirahezeBots/MirahezeBots',
     packages=find_packages('.'),
     include_package_data=True,
