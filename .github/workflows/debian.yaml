@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Setup Python ${{ matrix.python }} on ${{ matrix.os }}
+      - name: Setup Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }} 
@@ -42,7 +42,9 @@ jobs:
       - name: List installed packages (I)
         run: pip freeze
       - name: Reset pip
-        run: pip freeze | xargs pip uninstall -y
+        run: |
+          pip uninstall -y MirahezeBot-Plugins
+          pip freeze | xargs pip uninstall -y
       - name: List installed packages (II)
         run: pip freeze
       - name: show directory contents
