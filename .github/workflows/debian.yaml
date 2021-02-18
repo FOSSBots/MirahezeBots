@@ -28,7 +28,7 @@ jobs:
       - name: Install packages
         run: |
           python -m pip install --upgrade pip
-          sudo apt install debhelper dh-virtualenv python3-setuptools
+          sudo apt install debhelper dh-virtualenv python3-setuptools lintian
           pip install -r dev-requirements.txt
           pyproject-build --wheel --outdir dist .
           find dist -name "*.whl" | xargs pip3 install
@@ -45,4 +45,6 @@ jobs:
           pip freeze | xargs pip uninstall -y
       - name: show debs
         run: ls /home/runner/work/MirahezeBots/
+      - name: lintian
+        run: find /home/runner/work/MirahezeBots/ -name mirahezebot-plugins_*.deb | xargs lintian
         
