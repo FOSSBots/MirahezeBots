@@ -2,3 +2,4 @@ mirahezebot-plugins: dir-or-file-in-opt
 mirahezebot-plugins: script-not-executable
 mirahezebot-plugins: wrong-path-for-interpreter
 mirahezebot-plugins: python-script-but-no-python-dep
+mirahezebot-plugins: binary-or-shlib-defines-rpath
