@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         python: ['3.6', '3.7', '3.8', '3.8-dev', '3.9', '3.9-dev', '3.10-dev']
-        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
+        os: ['ubuntu-latest', 'macos-latest']
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.8.0
@@ -43,7 +43,7 @@ jobs:
           pytest .
           bandit MirahezeBots -r
           pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-file=tests/*
-          pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall .
+          pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall --ignore-requirement=wheel .
           pip check
       - name: Run pip freeze and pipdeptree
         run: |
