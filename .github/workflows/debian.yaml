@@ -27,7 +27,7 @@ jobs:
           python-version: ${{ matrix.python }} 
       - name: Install packages
         run: |
-          python -m pip install --upgrade pip make-deb
+          python -m pip install --upgrade pip
           sudo apt install dh-virtualenv
           pip install -r dev-requirements.txt
       - name: Show python version and show package
@@ -36,5 +36,4 @@ jobs:
           pip --version
       - name: Create package
         run: |
-          make-deb
           dpkg-buildpackage -us -uc

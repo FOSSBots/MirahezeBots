@@ -1,0 +1,12 @@
+Source: MirahezeBot_Plugins
+Section: python
+Priority: extra
+Maintainer: MirahezeBots <bots@miraheze.org>
+Build-Depends: debhelper (>= 9), python, dh-virtualenv (>= 0.7)
+Standards-Version: 3.9.5
+
+Package: MirahezeBot_Plugins
+Architecture: any
+Pre-Depends: dpkg (>= 1.16.1), python3-minimal , ${misc:Pre-Depends}
+Depends: ${python:Depends}, ${misc:Depends}
+Description: Sopel Plugins for Miraheze Bots
