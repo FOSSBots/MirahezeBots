@@ -39,14 +39,10 @@ jobs:
       - name: Create package
         run: |
           dpkg-buildpackage -us -uc
-      - name: List installed packages (I)
-        run: pip freeze
       - name: Reset pip
         run: |
           pip uninstall -y MirahezeBot-Plugins
           pip freeze | xargs pip uninstall -y
-      - name: List installed packages (II)
-        run: pip freeze
-      - name: where is the deb
-        run: sudo find / -name "mirahezebot-plugins_9.1.0_*.deb"
+      - name: show debs
+        run: ls /home/runner/work/MirahezeBots/
         
