@@ -48,5 +48,5 @@ jobs:
       - name: List installed packages (II)
         run: pip freeze
       - name: show directory contents
-        run: ls
+        run: ls -R
         
