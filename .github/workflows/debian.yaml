@@ -28,8 +28,10 @@ jobs:
       - name: Install packages
         run: |
           python -m pip install --upgrade pip
-          sudo apt install dh-virtualenv
+          sudo apt install debhelper dh-virtualenv
           pip install -r dev-requirements.txt
+          pyproject-build --wheel --outdir dist .
+          find dist -name "*.whl" | xargs pip3 install
       - name: Show python version and show package
         run: |
           python --version
