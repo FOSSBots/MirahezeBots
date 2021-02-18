@@ -1,9 +1,9 @@
 Source: mirahezebot-plugins
 Section: python
-Priority: extra
+Priority: optional
 Maintainer: MirahezeBots <bots@miraheze.org>
 Build-Depends: debhelper (>= 9), python3, dh-virtualenv (>= 1.0),
-    python3-setuptools, python3-pip, python3-dev, libffi-dev
+    python3-setuptools, python3-pip, python3-dev, libffi-dev, libc
 Standards-Version: 3.9.5
 
 Package: mirahezebot-plugins
