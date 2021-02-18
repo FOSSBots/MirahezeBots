@@ -48,5 +48,5 @@ jobs:
       - name: List installed packages (II)
         run: pip freeze
       - name: where is the deb
-        run: find / -name "mirahezebot-plugins_9.1.0_*.deb"
+        run: sudo find / -name "mirahezebot-plugins_9.1.0_*.deb"
         
