@@ -39,3 +39,12 @@ jobs:
       - name: Create package
         run: |
           dpkg-buildpackage -us -uc
+      - name: List installed packages (I)
+        run: pip freeze
+      - name: Reset pip
+        run: pip freeze | xargs pip uninstall -y
+      - name: List installed packages (II)
+        run: pip freeze
+      - name: show directory contents
+        run: ls
+        
