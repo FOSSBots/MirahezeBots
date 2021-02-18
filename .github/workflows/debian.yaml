@@ -28,7 +28,7 @@ jobs:
       - name: Install packages
         run: |
           python -m pip install --upgrade pip
-          sudo apt install debhelper dh-virtualenv python3-setuptools lintian
+          sudo apt install debhelper dh-virtualenv python3-setuptools lintian libc
           pip install -r dev-requirements.txt
           pyproject-build --wheel --outdir dist .
           find dist -name "*.whl" | xargs pip3 install
