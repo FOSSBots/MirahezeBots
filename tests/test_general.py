@@ -5,7 +5,7 @@ import sqlite3
 import sys
 from contextlib import suppress
 
-import models
+from tests import models
 
 from sqlalchemy import create_engine
 
