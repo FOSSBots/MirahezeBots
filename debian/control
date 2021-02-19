@@ -5,10 +5,10 @@ Maintainer: MirahezeBots <bots@miraheze.org>
 Build-Depends: debhelper (>= 9), python3,
     python3-setuptools, python3-pip, python3-dev, libffi-dev, libc6
 Standards-Version: 3.9.5
+X-Python-Version: >=3.6
 
 Package: mirahezebot-plugins
 Architecture: any
 Pre-Depends: dpkg (>= 1.16.1),  python3 (>= 3.5) , ${misc:Pre-Depends}
 Depends: ${python:Depends}, ${misc:Depends}
 Description: Sopel Plugins for Miraheze Bots
-X-Python-Versions: >=3.6
