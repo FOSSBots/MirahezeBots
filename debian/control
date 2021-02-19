@@ -11,3 +11,4 @@ Architecture: any
 Pre-Depends: dpkg (>= 1.16.1),  python3 (>= 3.5) , ${misc:Pre-Depends}
 Depends: ${python:Depends}, ${misc:Depends}
 Description: Sopel Plugins for Miraheze Bots
+X-Python-Versions: >=3.6
