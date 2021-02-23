@@ -36,7 +36,7 @@ def configure(config):
 
 
 def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
-     """Carry out an on-wiki block."""
+    """Carry out an on-wiki block."""
     FARMSYNTAX = f'Syntax: .{type} wiki user reason'
     SYNTAX = f'Syntax: .{type} user reason'
     if sender[1] in acl:
