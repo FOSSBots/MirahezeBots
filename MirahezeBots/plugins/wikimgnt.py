@@ -132,5 +132,5 @@ def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)."""
     replytext = blockManager('unblock', [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm,
                              bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl,
-                             [bot.settings.wikimgnt.bot_username,bot.settings.wikimgnt.bot_password], trigger)
+                             [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
