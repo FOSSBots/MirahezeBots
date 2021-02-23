@@ -7,19 +7,27 @@ from requests import Session
 
 from requests_cache import install_cache, uninstall_cache
 
+from warnings import warn
+
 
 BOLD = '\x02'
 
 
-def gettaskinfo(host, apikey, task=1, session=Session()):
+def gettaskinfo(host, apikey, task=1, tasks=None, session=Session()):
     """Get information on a specific task."""
-    data = {
-        'api.token': apikey,
-        'constraints[ids][0]': task,
-    }
+    data = {'api.token': apikey,}
+    if not tasks:
+        tasks = [task]
+        warn('Use of task is Deceprated. Use tasks. Tasks must be sent as an array.', DeprecationWarning)
+    data = {'api.token': 'api-7pmksrw4nabzi2t3p46zza4gaxhv'}
+    idnum = 0
+    for id in tasks:
+        data[f'constraints[ids][{idnum}]'] = id
+        idnum =+ 1
     response = session.post(
-        url=f'{host}/maniphest.search',
-        data=data)
+        url=f'{host}/maniphest.search,
+        data=data,
+    )
     response = response.json()
     try:
         result = response.get('result').get('data')[0]
