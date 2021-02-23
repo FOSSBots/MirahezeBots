@@ -2,11 +2,12 @@
 
 from MirahezeBots.utils import mwapihandler as mwapi
 
-from sopel.module import commands, example
 from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
+from sopel.module import commands, example
 
 
 class WikimgntSection(StaticSection):
+    """Configuration class for wikimgnt."""
     log_wiki_url = ValidatedAttribute('log_wiki_url', str)
     log_page = ValidatedAttribute('log_page', str)
     wiki_acl = ListAttribute('wiki_acl')
@@ -17,26 +18,30 @@ class WikimgntSection(StaticSection):
 
 
 def setup(bot):
+    """Set up the plugin config."""
     bot.config.define_section('wikimgnt', WikimgntSection)
 
 
 def configure(config):
+    """Define sopel config wizzard questions."""
     config.define_section('wikimgnt', WikimgntSection, validate=False)
     config.wikimgnt.configure_setting('log_wiki_url', 'What is the URL of the wiki that you would like .log messages to go to? Please specify the URL to that wikis api.php.')
     config.wikimgnt.configure_setting('log_page', 'What page on that wiki would like .log messages to go to? Instead of a space, type a _ please.')
     config.wikimgnt.configure_setting('wiki_acl', 'Please enter NickServ accounts that are allowed to use the commands in this plugin. (No spaces)')
     config.wikimgnt.configure_setting('wiki_farm', 'Are you using this for a wiki farm? (true/false)')
-    config.wikimgnt.configure_setting('wiki_domain', 'If you said true to the previous question then What the domain name of your wiki farm? Please specify  the URL to api.php without a subdomain. If you said false, please specify the URL of your wikis api.php.')
+    config.wikimgnt.configure_setting('wiki_domain', 'If you said true to the previous question then What the domain name of your wiki farm?'
+                                      'Please specify the URL to api.php without a subdomain. If you said false, please specify the URL of your wikis api.php.')
     config.wikimgnt.configure_setting('bot_username', 'What is the username the bot should use to login? (from Special:BotPasswords)')
     config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
 
 def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
-    FARMSYNTAX = "Syntax: .{} wiki user reason".format(type)
-    SYNTAX = "Syntax: .{} user reason".format(type)
+     """Carry out an on-wiki block."""
+    FARMSYNTAX = f'Syntax: .{type} wiki user reason'
+    SYNTAX = f'Syntax: .{type} user reason'
     if sender[1] in acl:
         try:
-            options = trigger.group(2).split(" ")
+            options = trigger.group(2).split(' ')
         except Exception:
             if iswikifarm is True:
                 return FARMSYNTAX
@@ -53,8 +58,7 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
             url = domain
             target = options[0]
             reason = options[1]
-        response = mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
-        return response
+        return mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
     return "Sorry: you don't have permission to use this plugin"
 
 
