@@ -8,7 +8,7 @@ from sopel.module import commands, example
 
 class WikimgntSection(StaticSection):
     """Configuration class for wikimgnt."""
-    
+
     log_wiki_url = ValidatedAttribute('log_wiki_url', str)
     log_page = ValidatedAttribute('log_page', str)
     wiki_acl = ListAttribute('wiki_acl')
@@ -36,10 +36,10 @@ def configure(config):
     config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
 
-def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
+def blockManager(actiontype, sender, iswikifarm, domain, acl, logininfo, trigger):
     """Carry out an on-wiki block."""
-    FARMSYNTAX = f'Syntax: .{type} wiki user reason'
-    SYNTAX = f'Syntax: .{type} user reason'
+    FARMSYNTAX = f'Syntax: .{actiontype} wiki user reason'
+    SYNTAX = f'Syntax: .{actiontype} user reason'
     if sender[1] in acl:
         try:
             options = trigger.group(2).split(' ')
@@ -59,7 +59,7 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
             url = domain
             target = options[0]
             reason = options[1]
-        return mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
+        return mwapi.main(sender[0], target, actiontype, reason, url, [logininfo[0], logininfo[1]])
     return "Sorry: you don't have permission to use this plugin"
 
 
@@ -119,7 +119,9 @@ def deletepage(bot, trigger):
 @example('.block test Zppix vandalism')
 def blockuser(bot, trigger):
     """Block the given user indefinitely (depending on config, on the given wiki)."""
-    replytext = blockManager('block', [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+    replytext = blockManager('block', [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm,
+                             bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl,
+                             [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
 
 
@@ -128,5 +130,7 @@ def blockuser(bot, trigger):
 @example('.unblock test Zppix per appeal')
 def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)."""
-    replytext = blockManager('unblock', [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+    replytext = blockManager('unblock', [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm,
+                             bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl,
+                             [bot.settings.wikimgnt.bot_username,bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
