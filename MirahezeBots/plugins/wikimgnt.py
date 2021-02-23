@@ -39,13 +39,12 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
         except Exception:
             if iswikifarm is True:
                 return FARMSYNTAX
-            else:
-                return SYNTAX
+            return SYNTAX
         if iswikifarm is False and len(options) < 2:
             return SYNTAX
-        elif iswikifarm is True and len(options) < 3:
+        if iswikifarm is True and len(options) < 3:
             return FARMSYNTAX
-        elif iswikifarm is True:
+        if iswikifarm is True:
             url = 'https://' + options[0] + '.' + domain
             target = options[1]
             reason = options[2]
@@ -55,8 +54,7 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
             reason = options[1]
         response = mwapi.main(sender[0], target, type, reason, url, [logininfo[0], logininfo[1]])
         return response
-    else:
-        return "Sorry: you don't have permission to use this plugin"
+    return "Sorry: you don't have permission to use this plugin"
 
 
 @commands('log')
@@ -95,10 +93,10 @@ def deletepage(bot, trigger):
         if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
             bot.say("Syntax: .deletepage page reason")
             return
-        elif bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
+        if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
             bot.say("Syntax: .deletepage wiki page reason")
             return
-        elif bot.settings.wikimgnt.wiki_farm is True:
+        if bot.settings.wikimgnt.wiki_farm is True:
             url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
         else:
             url = bot.settings.wikimgnt.wiki_domain
