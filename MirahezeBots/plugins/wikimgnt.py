@@ -3,8 +3,8 @@
 from MirahezeBots.utils import jsonparser as jp
 from MirahezeBots.utils import mwapihandler as mwapi
 
-from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
 from sopel.config import ConfigurationError
+from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
 from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory, get_logger
 LOGGER = get_logger('wikimgnt')
@@ -57,24 +57,21 @@ def configure(config):
 
 
 def get_logpage(wiki, jsondata):
+    """Get logpage from the json."""
     if wiki in jsondata['wikis']:
         return jsondata['wikis'][wiki]['log_page']
-
+    return None
 
 def check_access(acldata, requestdata):
+    """Check a users access for a wiki"""
     if requestdata[2] in acldata['wikis']:
         sulgroup = acldata['wikis'][requestdata[2]]['sulgroup']
     else:
         return 'Wiki could not be found'
     if requestdata[0] in acldata['users']:
-        if sulgroup in acldata['users'][requestdata[0]]['groups']:
-            return True
-        else:
-            return False
-    elif requestdata[1][0] in acldata['sulgroups'][sulgroup]["cloaks"]:
-        return True
+        return sulgroup in acldata['users'][requestdata[0]]['groups']
     else:
-        return False
+        return requestdata[1][0] in acldata['sulgroups'][sulgroup]['cloaks']
 
 
 def block_manager(actiontype, sender, siteinfo, logininfo, trigger, acl=None):
@@ -198,7 +195,7 @@ def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)."""
     siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory['wikimgnt']['jdcache'], bot.settings.wikimgnt.wiki_farm]
     if bot.settings.wikimgnt.wiki_acl:
-        replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password ],
+        replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password],
                                   trigger, bot.settings.wikimgnt.wiki_acl)
     else:
         replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
@@ -207,7 +204,7 @@ def unblockuser(bot, trigger):
 
 @require_admin(message='Only admins may purge cache.')
 @commands('resetwikimgntcache')
-def reset_status_cache(bot): # noqa: U100
+def reset_status_cache(bot):  # noqa: U100
     """Reset the cache of the wiki management data file."""
     bot.reply('Refreshing Cache...')
     bot.memory['wikimgnt']['jdcache'] = jp.createdict(bot.settings.wikimgnt.datafile)
@@ -216,7 +213,7 @@ def reset_status_cache(bot): # noqa: U100
 
 @require_admin(message='Only admins may check cache')
 @commands('checkwikimgntcache')
-def check_status_cache(bot, trigger): # noqa: U100
+def check_status_cache(bot, trigger):  # noqa: U100
     """Validate the cache matches the copy on disk."""
     result = jp.validatecache(bot.settings.wikimgnt.datafile, bot.memory['wikimgnt']['jdcache'])
     if result:
