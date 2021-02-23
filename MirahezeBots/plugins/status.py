@@ -4,8 +4,6 @@ from MirahezeBots.utils import mwapihandler as mwapi
 
 from MirahezeBots_jsonparser import jsonparser as jp
 
-from requests import Session
-
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory
@@ -28,7 +26,6 @@ def setup(bot):
     bot.config.define_section('status', StatusSection)
     bot.memory['status'] = SopelMemory()
     bot.memory['status']['jdcache'] = jp.createdict(bot.settings.status.datafile)
-    bot.memory['status']['session'] = Session()
 
 
 def configure(config):
@@ -107,7 +104,7 @@ def changestatus(bot, trigger):
             [bot.settings.status.bot_username, bot.settings.status.bot_password],
             bot.memory['status']['jdcache'],
             bot.settings.status.support_channel,
-            bot.memory['status']['session'],
+            bot.memory['shared']['session'],
             )
         if response == 'create request sent. You may want to check the create log to be sure that it worked.':
             bot.reply('Success')
