@@ -35,7 +35,7 @@ def setup(bot):
     if bot.settings.wikimgnt.wiki_acl and bot.settings.wikimgnt.wiki_farm is True:
         raise ConfigurationError('For wikifarms you must use datafile')
     if bot.settings.wikimgnt.wiki_farm is True and bot.settings.wikimgnt.log_page:
-        LOGGER.warn('For wikifarms, log_page does not need to be defined in the config')
+        LOGGER.warning('For wikifarms, log_page does not need to be defined in the config')
     elif bot.settings.wikimgnt.wiki_farm is False and bot.settings.wikimgnt.log_page is None:
         raise ConfigurationError('For single wikis, log_page must be defined')
     elif bot.settings.wikimgnt.datafile:
