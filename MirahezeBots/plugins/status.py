@@ -42,13 +42,13 @@ def configure(config):
 
 def updatestatus(requestdata, authinfo, acldata, supportchan, session):
     """Update the /Status page of a user."""
-    if requestdata[2] in acldata['wikis'].keys():
+    if requestdata[2] in acldata['wikis']:
         wikiurl = str('https://' + acldata['wikis'][requestdata[2]]['url'] + '/w/api.php')
         sulgroup = acldata['wikis'][requestdata[2]]['sulgroup']
     else:
         return 'Wiki could not be found'
-    if requestdata[0] in acldata['users'].keys():
-        if sulgroup in acldata['users'][requestdata[0]]['groups'].keys():
+    if requestdata[0] in acldata['users']:
+        if sulgroup in acldata['users'][requestdata[0]]['groups']:
             request = [acldata['users'][requestdata[0]]['groups'][sulgroup], requestdata[3]]
         else:
             return f"Data not found for SULGROUP {sulgroup} in {requestdata[0]} - Keys were: {acldata['users'][requestdata[0]].keys()}"
