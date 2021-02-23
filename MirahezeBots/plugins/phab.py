@@ -4,8 +4,6 @@ from MirahezeBots.utils import phabapi
 
 from MirahezeBots_jsonparser import jsonparser as jp
 
-from requests import Session
-
 from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
 from sopel.module import commands, example, interval, require_admin, rule
 from sopel.tools import SopelMemory
