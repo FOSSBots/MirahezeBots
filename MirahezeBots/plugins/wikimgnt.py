@@ -62,8 +62,9 @@ def get_logpage(wiki, jsondata):
         return jsondata['wikis'][wiki]['log_page']
     return None
 
+
 def check_access(acldata, requestdata):
-    """Check a users access for a wiki"""
+    """Check a users access for a wiki."""
     if requestdata[2] in acldata['wikis']:
         sulgroup = acldata['wikis'][requestdata[2]]['sulgroup']
     else:
