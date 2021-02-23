@@ -1,8 +1,9 @@
-"""wikimgnt.py - interact with Mediawiki API """
+"""wikimgnt.py - interact with Mediawiki API."""
+
+from MirahezeBots.utils import mwapihandler as mwapi
 
 from sopel.module import commands, example
-from MirahezeBots.utils import mwapihandler as mwapi
-from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
+from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
 
 
 class WikimgntSection(StaticSection):
