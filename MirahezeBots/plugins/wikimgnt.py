@@ -4,9 +4,9 @@ from MirahezeBots.utils import jsonparser as jp
 from MirahezeBots.utils import mwapihandler as mwapi
 
 from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
-from sopel.module import commands, example, require_admin
 from sopel.config import ConfigurationError
-from sopel.tools import get_logger, SopelMemory
+from sopel.module import commands, example, require_admin
+from sopel.tools import SopelMemory, get_logger
 LOGGER = get_logger('wikimgnt')
 
 
@@ -29,18 +29,18 @@ def setup(bot):
     """Set up the plugin config."""
     bot.config.define_section('wikimgnt', WikimgntSection)
     if bot.settings.wikimgnt.datafile and bot.settings.wikimgnt.wiki_acl:
-        raise ConfigurationError("Use of wiki_acl and datafile together is not supported")
+        raise ConfigurationError('Use of wiki_acl and datafile together is not supported')
     elif bot.settings.wikimgnt.datafile and bot.settings.wikimgnt.wiki_farm is False:
-        raise ConfigurationError("For single wikis you must use wiki_acl")
+        raise ConfigurationError('For single wikis you must use wiki_acl')
     elif bot.settings.wikimgnt.wiki_acl and bot.settings.wikimgnt.wiki_farm is True:
-        raise ConfigurationError("For wikifarms you must use datafile")
+        raise ConfigurationError('For wikifarms you must use datafile')
     elif bot.settings.wikimgnt.wiki_farm is True and bot.settings.wikimgnt.log_page:
-        LOGGER.warn("For wikifarms, log_page does not need to be defined in the config")
+        LOGGER.warn('For wikifarms, log_page does not need to be defined in the config')
     elif bot.settings.wikimgnt.wiki_farm is False and bot.settings.wikimgnt.log_page is None:
-        raise ConfigurationError("For single wikis, log_page must be defined")
+        raise ConfigurationError('For single wikis, log_page must be defined')
     elif bot.settings.wikimgnt.datafile:
-        bot.memory["wikimgnt"] = SopelMemory()
-        bot.memory["wikimgnt"]["jdcache"] = jp.createdict(bot.settings.status.datafile)
+        bot.memory['wikimgnt'] = SopelMemory()
+        bot.memory['wikimgnt']['jdcache'] = jp.createdict(bot.settings.status.datafile)
 
 
 def configure(config):
@@ -57,21 +57,21 @@ def configure(config):
 
 
 def get_logpage(wiki, jsondata):
-    if wiki in jsondata["wikis"].keys():
-        return jsondata["wikis"][wiki]["log_page"]
+    if wiki in jsondata['wikis']:
+        return jsondata['wikis'][wiki]['log_page']
 
 
-def check_access(acldata, requestdata,):
-    if requestdata[2] in acldata["wikis"].keys():
-        sulgroup = acldata["wikis"][requestdata[2]]["sulgroup"]
+def check_access(acldata, requestdata):
+    if requestdata[2] in acldata['wikis']:
+        sulgroup = acldata['wikis'][requestdata[2]]['sulgroup']
     else:
-        return "Wiki could not be found"
-    if requestdata[0] in acldata["users"].keys():
-        if sulgroup in acldata["users"][requestdata[0]]["groups"].keys():
+        return 'Wiki could not be found'
+    if requestdata[0] in acldata['users']:
+        if sulgroup in acldata['users'][requestdata[0]]['groups']:
             return True
         else:
             return False
-    elif requestdata[1][0] in acldata["sulgroups"][sulgroup]["cloaks"]:
+    elif requestdata[1][0] in acldata['sulgroups'][sulgroup]["cloaks"]:
         return True
     else:
         return False
@@ -113,21 +113,21 @@ def block_manager(actiontype, sender, siteinfo, logininfo, trigger, acl=None):
 def logpage(bot, trigger):
     """Log given message to configured page."""
     try:
-        options = trigger.group(2).split(" ")
+        options = trigger.group(2).split(' ')
     except Exception:
         if bot.settings.wikimgnt.wiki_farm is False:
-            bot.say("Syntax: .log message")
+            bot.say('Syntax: .log message')
             return
         elif bot.settings.wikimgnt.wiki_farm is True:
-            bot.say("Syntax: .log wiki message")
+            bot.say('Syntax: .log wiki message')
             return
     sender = trigger.nick
     requestdata = [trigger.account, options[1]]
     if bot.settings.wikimgnt.wiki_farm is True:
         url = options[0] + bot.settings.wikimgnt.wiki_domain
         message = options[1]
-        target = get_logpage(options[0], bot.memory["wikimgnt"]["jdcache"])
-        if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
+        target = get_logpage(options[0], bot.memory['wikimgnt']['jdcache'])
+        if check_access(bot.memory['wikimgnt']['jdcache'], requestdata) is not True:
             bot.reply(ACLERROR)
     else:
         url = bot.settings.wikimgnt.wiki_domain
@@ -136,7 +136,7 @@ def logpage(bot, trigger):
         if trigger.account not in bot.settings.wikimgnt.wiki_acl:
             bot.reply(ACLERROR)
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
-        bot.say("Syntax: .log wiki message")
+        bot.say('Syntax: .log wiki message')
     else:
         response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
         bot.reply(response)
@@ -149,16 +149,16 @@ def deletepage(bot, trigger):
     """Delete the given page (depending on config, on the given wiki)."""
     sender = trigger.nick
     try:
-        options = trigger.group(2).split(" ")
+        options = trigger.group(2).split(' ')
     except Exception:
         if bot.settings.wikimgnt.wiki_farm is True:
-            bot.say("Syntax: .deletepage wiki page reason")
+            bot.say('Syntax: .deletepage wiki page reason')
         else:
-            bot.say("Syntax: .deletepage page reason")
+            bot.say('Syntax: .deletepage page reason')
         return
     if bot.settings.wikimgnt.wiki_farm is True:
         requestdata = [trigger.account, options[1]]
-        if check_access(bot.memory["wikimgnt"]["jdcache"], requestdata) is not True:
+        if check_access(bot.memory['wikimgnt']['jdcache'], requestdata) is not True:
             bot.reply(ACLERROR)
         url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
     else:
@@ -166,10 +166,10 @@ def deletepage(bot, trigger):
             bot.reply(ACLERROR)
         url = bot.settings.wikimgnt.wiki_domain
     if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
-        bot.say("Syntax: .deletepage page reason")
+        bot.say('Syntax: .deletepage page reason')
         return
     elif bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
-        bot.say("Syntax: .deletepage wiki page reason")
+        bot.say('Syntax: .deletepage wiki page reason')
         return
     target = options[0]
     reason = options[1]
@@ -182,12 +182,12 @@ def deletepage(bot, trigger):
 @example('.block test Zppix vandalism')
 def blockuser(bot, trigger):
     """Block the given user indefinitely (depending on config, on the given wiki)."""
-    siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory["wikimgnt"]["jdcache"], bot.settings.wikimgnt.wiki_farm]
+    siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory['wikimgnt']['jdcache'], bot.settings.wikimgnt.wiki_farm]
     if bot.settings.wikimgnt.wiki_acl:
-        replytext = block_manager("block", [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password],
+        replytext = block_manager('block', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password],
                                   trigger, bot.settings.wikimgnt.wiki_acl)
     else:
-        replytext = block_manager("block", [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+        replytext = block_manager('block', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
 
 
@@ -196,30 +196,30 @@ def blockuser(bot, trigger):
 @example('.unblock test Zppix per appeal')
 def unblockuser(bot, trigger):
     """Unblock the given user (depending on config, on the given wiki)."""
-    siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory["wikimgnt"]["jdcache"], bot.settings.wikimgnt.wiki_farm]
+    siteinfo = [bot.settings.wikimgnt.wiki_domain, bot.memory['wikimgnt']['jdcache'], bot.settings.wikimgnt.wiki_farm]
     if bot.settings.wikimgnt.wiki_acl:
-        replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password, ],
+        replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password ],
                                   trigger, bot.settings.wikimgnt.wiki_acl)
     else:
-        replytext = block_manager("unblock", [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+        replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
 
 
-@require_admin(message="Only admins may purge cache.")
+@require_admin(message='Only admins may purge cache.')
 @commands('resetwikimgntcache')
-def reset_status_cache(bot, trigger):
+def reset_status_cache(bot): # noqa: U100
     """Reset the cache of the wiki management data file."""
-    bot.reply("Refreshing Cache...")
-    bot.memory["wikimgnt"]["jdcache"] = jp.createdict(bot.settings.wikimgnt.datafile)
-    bot.reply("Cache refreshed")
+    bot.reply('Refreshing Cache...')
+    bot.memory['wikimgnt']['jdcache'] = jp.createdict(bot.settings.wikimgnt.datafile)
+    bot.reply('Cache refreshed')
 
 
-@require_admin(message="Only admins may check cache")
+@require_admin(message='Only admins may check cache')
 @commands('checkwikimgntcache')
-def check_status_cache(bot, trigger):
+def check_status_cache(bot, trigger): # noqa: U100
     """Validate the cache matches the copy on disk."""
-    result = jp.validatecache(bot.settings.wikimgnt.datafile, bot.memory["wikimgnt"]["jdcache"])
+    result = jp.validatecache(bot.settings.wikimgnt.datafile, bot.memory['wikimgnt']['jdcache'])
     if result:
-        bot.reply("Cache is correct.")
+        bot.reply('Cache is correct.')
     else:
-        bot.reply("Cache does not match on-disk copy")
+        bot.reply('Cache does not match on-disk copy')
