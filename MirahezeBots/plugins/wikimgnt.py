@@ -8,6 +8,7 @@ from sopel.module import commands, example
 
 class WikimgntSection(StaticSection):
     """Configuration class for wikimgnt."""
+    
     log_wiki_url = ValidatedAttribute('log_wiki_url', str)
     log_page = ValidatedAttribute('log_page', str)
     wiki_acl = ListAttribute('wiki_acl')
@@ -65,13 +66,13 @@ def blockManager(type, sender, iswikifarm, domain, acl, logininfo, trigger):
 @commands('log')
 @example('.log restarting sopel')
 def logpage(bot, trigger):
-    """Log given message to configured page"""
+    """Log given message to configured page."""
     if trigger.account in bot.settings.wikimgnt.wiki_acl:
         sender = trigger.nick
         url = bot.settings.wikimgnt.log_wiki_url
         target = bot.settings.wikimgnt.log_page
         if trigger.group(2) is None:
-            bot.say("Syntax: .log message")
+            bot.say('Syntax: .log message')
         else:
             message = trigger.group(2)
             response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
@@ -84,22 +85,22 @@ def logpage(bot, trigger):
 @example('.deletepage Test_page vandalism')
 @example('.deletepage test Test_page vandalism')
 def deletepage(bot, trigger):
-    """Delete the given page (depending on config, on the given wiki)"""
+    """Delete the given page (depending on config, on the given wiki)."""
     if trigger.account in bot.settings.wikimgnt.wiki_acl:
         sender = trigger.nick
         try:
-            options = trigger.group(2).split(" ")
+            options = trigger.group(2).split(' ')
         except Exception:
             if bot.settings.wikimgnt.wiki_farm is True:
-                bot.say("Syntax: .deletepage wiki page reason")
+                bot.say('Syntax: .deletepage wiki page reason')
             else:
-                bot.say("Syntax: .deletepage page reason")
+                bot.say('Syntax: .deletepage page reason')
             return
         if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
-            bot.say("Syntax: .deletepage page reason")
+            bot.say('Syntax: .deletepage page reason')
             return
         if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
-            bot.say("Syntax: .deletepage wiki page reason")
+            bot.say('Syntax: .deletepage wiki page reason')
             return
         if bot.settings.wikimgnt.wiki_farm is True:
             url = 'https://' + options[0] + '.' + bot.settings.wikimgnt.wiki_domain
@@ -117,8 +118,8 @@ def deletepage(bot, trigger):
 @example('.block Zppix vandalism')
 @example('.block test Zppix vandalism')
 def blockuser(bot, trigger):
-    """Block the given user indefinitely (depending on config, on the given wiki)"""
-    replytext = blockManager("block", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+    """Block the given user indefinitely (depending on config, on the given wiki)."""
+    replytext = blockManager('block', [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
 
 
@@ -126,6 +127,6 @@ def blockuser(bot, trigger):
 @example('.unblock Zppix appeal')
 @example('.unblock test Zppix per appeal')
 def unblockuser(bot, trigger):
-    """Unblock the given user (depending on config, on the given wiki)"""
-    replytext = blockManager("unblock", [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+    """Unblock the given user (depending on config, on the given wiki)."""
+    replytext = blockManager('unblock', [trigger.nick, trigger.account], bot.settings.wikimgnt.wiki_farm, bot.settings.wikimgnt.wiki_domain, bot.settings.wikimgnt.wiki_acl, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
