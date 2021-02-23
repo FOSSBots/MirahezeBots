@@ -30,11 +30,11 @@ def setup(bot):
     bot.config.define_section('wikimgnt', WikimgntSection)
     if bot.settings.wikimgnt.datafile and bot.settings.wikimgnt.wiki_acl:
         raise ConfigurationError('Use of wiki_acl and datafile together is not supported')
-    elif bot.settings.wikimgnt.datafile and bot.settings.wikimgnt.wiki_farm is False:
+    if bot.settings.wikimgnt.datafile and bot.settings.wikimgnt.wiki_farm is False:
         raise ConfigurationError('For single wikis you must use wiki_acl')
-    elif bot.settings.wikimgnt.wiki_acl and bot.settings.wikimgnt.wiki_farm is True:
+    if bot.settings.wikimgnt.wiki_acl and bot.settings.wikimgnt.wiki_farm is True:
         raise ConfigurationError('For wikifarms you must use datafile')
-    elif bot.settings.wikimgnt.wiki_farm is True and bot.settings.wikimgnt.log_page:
+    if bot.settings.wikimgnt.wiki_farm is True and bot.settings.wikimgnt.log_page:
         LOGGER.warn('For wikifarms, log_page does not need to be defined in the config')
     elif bot.settings.wikimgnt.wiki_farm is False and bot.settings.wikimgnt.log_page is None:
         raise ConfigurationError('For single wikis, log_page must be defined')
@@ -71,8 +71,7 @@ def check_access(acldata, requestdata):
         return 'Wiki could not be found'
     if requestdata[0] in acldata['users']:
         return sulgroup in acldata['users'][requestdata[0]]['groups']
-    else:
-        return requestdata[1][0] in acldata['sulgroups'][sulgroup]['cloaks']
+    return requestdata[1][0] in acldata['sulgroups'][sulgroup]['cloaks']
 
 
 def block_manager(actiontype, sender, siteinfo, logininfo, trigger, acl=None):
@@ -84,13 +83,12 @@ def block_manager(actiontype, sender, siteinfo, logininfo, trigger, acl=None):
     except Exception:
         if siteinfo[2] is True:
             return FARMSYNTAX
-        else:
-            return SYNTAX
+        return SYNTAX
     if siteinfo[2] is False and len(options) < 2:
         return SYNTAX
-    elif siteinfo[2] is True and len(options) < 3:
+    if siteinfo[2] is True and len(options) < 3:
         return FARMSYNTAX
-    elif siteinfo[2] is True:
+    if siteinfo[2] is True:
         url = 'https://' + options[0] + '.' + siteinfo[0]
         target = options[1]
         reason = options[2]
@@ -116,7 +114,7 @@ def logpage(bot, trigger):
         if bot.settings.wikimgnt.wiki_farm is False:
             bot.say('Syntax: .log message')
             return
-        elif bot.settings.wikimgnt.wiki_farm is True:
+        if bot.settings.wikimgnt.wiki_farm is True:
             bot.say('Syntax: .log wiki message')
             return
     sender = trigger.nick
@@ -166,7 +164,7 @@ def deletepage(bot, trigger):
     if bot.settings.wikimgnt.wiki_farm is False and len(options) < 2:
         bot.say('Syntax: .deletepage page reason')
         return
-    elif bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
+    if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say('Syntax: .deletepage wiki page reason')
         return
     target = options[0]
