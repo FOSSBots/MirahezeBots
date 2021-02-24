@@ -15,14 +15,14 @@ BOLD = '\x02'
 
 def gettaskinfo(host, apikey, task=1, tasks=None, session=Session()):
     """Get information on a specific task."""
-    data = {'api.token': apikey,}
+    data = {'api.token': apikey}
     if not tasks:
         tasks = [task]
         warn('Use of task is Deceprated. Use tasks. Tasks must be sent as an array.', DeprecationWarning)
     idnum = 0
     for id in tasks:
         data[f'constraints[ids][{idnum}]'] = id
-        idnum =+ 1
+        idnum = idnum + 1
     response = session.post(
         url=f'{host}/maniphest.search',
         data=data,
