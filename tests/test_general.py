@@ -44,6 +44,6 @@ def test_no_get_on_lists():
 
 
 def future_test_db_cleanup():
-    """Checks something."""
-    engine = create_engine('sqlite:///{0}'.format(os.path.join(PATH, "..", "hasan2.db")))
+    """Confirms database cleanup is as expected.."""
+    engine = create_engine(f'sqlite:///{os.path.join(PATH, "..", "hasan2.db")}')
     models.Base.metadata.create_all(bind=engine)
