@@ -113,9 +113,8 @@ def makeaction(requestinfo, action, target, performer, reason, content=''):
         return ['Fatal', f'An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {action} rights on that wiki?']
 
 
-def main(performer, target, action, reason, url, authinfo, content=False):
+def main(performer, target, action, reason, url, authinfo, content=False, session=requests.Session()):
     """Execute a full API Sequence."""
-    session = requests.Session()
     lg = login(url, session, authinfo[0], authinfo[1])
     if lg[0] == 'Error':
         return lg[1]

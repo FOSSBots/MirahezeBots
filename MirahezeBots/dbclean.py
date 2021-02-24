@@ -1,14 +1,14 @@
 """Remove a list of users from sopel database."""
-import sqlite3
+from sqlite3 import connect
 
 
-def main():
+def rundel():
     """Attempt the actual function for the cli script."""
     file = input('Full path to the deletion list: ')
     with open(file, 'r') as f:  # ensure the file is open and closed properly
         users = f.readlines()
     database = input('Full path to database: ')
-    with sqlite3.connect(database) as conn:
+    with connect(database) as conn:
         curs = conn.cursor()
         for user in users:
             curs.execute('DELETE FROM nick_values WHERE nick_id = ?', (user,))
@@ -17,4 +17,5 @@ def main():
         conn.commit()
 
 
-main()
+if __name__ == '__main__':
+    rundel()

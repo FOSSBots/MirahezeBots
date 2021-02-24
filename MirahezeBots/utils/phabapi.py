@@ -26,9 +26,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
     except AttributeError:
         return 'An error occurred while parsing the result.'
     except IndexError:
-        return "Sorry, but I couldn't find information for the task you searched."
-    except Exception:
-        return 'An unknown error occured.'
+        return None
     install_cache('phab_user_cache', expire_after=2628002, allowable_methods=('POST'))  # a month
     ownerPHID = result.get('fields').get('ownerPHID')
     authorPHID = result.get('fields').get('authorPHID')
@@ -71,9 +69,8 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
     return output  # noqa: R504
 
 
-def dophabsearch(host, apikey, querykey, limit=True):
+def dophabsearch(host, apikey, querykey, limit=True, session=Session()):
     """Perform a maniphest search."""
-    session = Session()
     data = {
         'api.token': apikey,
         'queryKey': querykey,
@@ -85,7 +82,7 @@ def dophabsearch(host, apikey, querykey, limit=True):
     result = response.get('result')
     try:
         data = result.get('data')
-    except Exception:
+    except AttributeError:
         return None
     x = 0
     searchphab = []
