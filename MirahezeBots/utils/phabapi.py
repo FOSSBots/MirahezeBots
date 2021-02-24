@@ -19,7 +19,6 @@ def gettaskinfo(host, apikey, task=1, tasks=None, session=Session()):
     if not tasks:
         tasks = [task]
         warn('Use of task is Deceprated. Use tasks. Tasks must be sent as an array.', DeprecationWarning)
-    data = {'api.token': 'api-7pmksrw4nabzi2t3p46zza4gaxhv'}
     idnum = 0
     for id in tasks:
         data[f'constraints[ids][{idnum}]'] = id
