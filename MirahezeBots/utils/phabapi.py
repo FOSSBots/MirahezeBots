@@ -3,9 +3,9 @@
 from json import JSONDecodeError
 from urllib.parse import urlparse
 
-from requests import Session
-
 from warnings import warn
+
+from requests import Session
 
 from requests_cache import install_cache, uninstall_cache
 
