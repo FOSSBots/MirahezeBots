@@ -25,7 +25,7 @@ def gettaskinfo(host, apikey, task=None, tasks=None, session=Session(), querykey
             idnum = idnum + 1
     if querykey:
         data['queryKey'] = querykey
-    response = requests.post(
+    response = session.post(
         url=f'{host}/maniphest.search',
         data=data,
     )
@@ -76,8 +76,8 @@ def gettaskinfo(host, apikey, task=None, tasks=None, session=Session(), querykey
 
 
 def dophabsearch(host, apikey, querykey, limit=True, session=Session()):
-    warn('Use of dophabsearch is Deceprated. Use the querykey parameter of gettaskinfo()', DeprecationWarning)
     """Perform a maniphest search."""
+    warn('Use of dophabsearch is Deceprated. Use the querykey parameter of gettaskinfo()', DeprecationWarning)
     data = {
         'api.token': apikey,
         'queryKey': querykey,
