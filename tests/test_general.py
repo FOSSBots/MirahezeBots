@@ -21,7 +21,7 @@ def test_db_schema_is_same():
         conn.text_factory = str
         res = conn.execute("SELECT name FROM sqlite_master WHERE type='table';")
         for tbl in res:
-            if tbl[0] != 'nick_ids' and tbl[0] != 'sqlite_sequence':
+            if tbl[0] not in ('nick_ids', 'sqlite_sequence'):
                 original.add(tbl[0])
     with suppress(FileNotFoundError):
         os.unlink(os.path.join(PATH, 'example-model.db'))
