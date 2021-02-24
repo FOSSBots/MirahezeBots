@@ -24,7 +24,7 @@ def gettaskinfo(host, apikey, task=1, tasks=None, session=Session()):
         data[f'constraints[ids][{idnum}]'] = id
         idnum =+ 1
     response = session.post(
-        url=f'{host}/maniphest.search,
+        url=f'{host}/maniphest.search',
         data=data,
     )
     response = response.json()
