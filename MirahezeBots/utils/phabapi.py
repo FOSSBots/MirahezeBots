@@ -5,9 +5,9 @@ from urllib.parse import urlparse
 
 from requests import Session
 
-from requests_cache import install_cache, uninstall_cache
-
 from warnings import warn
+
+from requests_cache import install_cache, uninstall_cache
 
 
 BOLD = '\x02'
@@ -20,8 +20,8 @@ def gettaskinfo(host, apikey, task=1, tasks=None, session=Session()):
         tasks = [task]
         warn('Use of task is Deceprated. Use tasks. Tasks must be sent as an array.', DeprecationWarning)
     idnum = 0
-    for id in tasks:
-        data[f'constraints[ids][{idnum}]'] = id
+    for task in tasks:
+        data[f'constraints[ids][{idnum}]'] = task
         idnum = idnum + 1
     response = session.post(
         url=f'{host}/maniphest.search',
