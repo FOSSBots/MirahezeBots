@@ -29,12 +29,26 @@ def setup(bot):
 def configure(config):
     """Set up the configuration options."""
     config.define_section('phabricator', PhabricatorSection, validate=False)
-    config.phabricator.configure_setting('api_token', 'Please enter a Phabricator API token.')
-    config.phabricator.configure_setting('highpri_notify', 'Would you like to enable automatic notification of high priority tasks? (true/false)')
-    config.phabricator.configure_setting('highpri_channel',
-                                         'If you enabled high priority notifications, what channel would you like them sent to? (notifications will be sent once every week.')
-    config.phabricator.configure_setting('datafile', 'File to read from to get channel specific data from')
-    config.phabricator.configure_setting('querykey', 'Please enter a Phabricator query key.')
+    config.phabricator.configure_setting(
+        'api_token',
+        'Please enter a Phabricator API token.',
+        )
+    config.phabricator.configure_setting(
+        'highpri_notify',
+        'Would you like to enable automatic notification of high priority tasks? (true/false)',
+        )
+    config.phabricator.configure_setting(
+        'highpri_channel',
+        'If you enabled high priority notifications, what channel would you like them sent to? (notifications will be sent once every week.',
+        )
+    config.phabricator.configure_setting(
+        'datafile',
+        'File to read from to get channel specific data from',
+        )
+    config.phabricator.configure_setting(
+        'querykey',
+        'Please enter a Phabricator query key.',
+        )
 
 
 def get_host_and_api_or_query_key(channel, cache, keys):
@@ -61,7 +75,9 @@ def phabtask(bot, trigger):
             task_id = trigger.group(2).split('T')[1]
         else:
             task_id = trigger.group(2)
-        info = get_host_and_api_or_query_key(trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+        info = get_host_and_api_or_query_key(
+            trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey],
+            )
         bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id, session=bot.memory['shared']['session']))
     except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
@@ -71,7 +87,9 @@ def phabtask(bot, trigger):
 def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
-    info = get_host_and_api_or_query_key(trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+    info = get_host_and_api_or_query_key(
+        trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey],
+        )
     bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id, session=bot.memory['shared']['session']))
 
 
@@ -93,7 +111,9 @@ def high_priority_tasks_notification(bot):
 @example('.highpri')
 def forcehighpri(bot, trigger):
     """Send full list of high priority tasks."""
-    info = get_host_and_api_or_query_key(trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])
+    info = get_host_and_api_or_query_key(
+        trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey],
+        )
     result = phabapi.dophabsearch(info[0], info[1], info[2], limit=False, session=bot.memory['shared']['session'])
     if result:
         for task in result:
