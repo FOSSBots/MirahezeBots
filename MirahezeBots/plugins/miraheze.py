@@ -34,7 +34,8 @@ def miraheze(bot, trigger):
 def miraheze_gethelp(bot, trigger):
     """Reply to help requests."""
     if trigger.sender == '#miraheze':
-        bot.reply('Pinging Reception123, Zppix, PuppyKun, Voidwalker, or RhinosF1 who might be able to help you.')
+        bot.reply('Pinging dmehus, JohnLewis, paladox, PuppyKun, Reception123, RhinosF1, SPF|Cloud, Universal_Omega, and Voidwalker, '
+                  'who might be able to help you. Other users in this channel also see this and be able to assist you.')
     else:
         bot.reply('If you need Miraheze releated help, please join #miraheze')
 
