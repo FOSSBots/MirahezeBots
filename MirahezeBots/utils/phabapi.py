@@ -2,7 +2,6 @@
 
 from json import JSONDecodeError
 from urllib.parse import urlparse
-
 from warnings import warn
 
 from requests import Session
