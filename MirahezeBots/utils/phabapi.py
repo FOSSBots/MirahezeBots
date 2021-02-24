@@ -20,8 +20,8 @@ def gettaskinfo(host, apikey, task=None, tasks=None, session=Session(), querykey
         warn('Use of task is Deceprated. Use tasks. Tasks must be sent as an array.', DeprecationWarning)
         idnum = 0
     if tasks:
-        for task in tasks:
-            data[f'constraints[ids][{idnum}]'] = task
+        for taskid in tasks:
+            data[f'constraints[ids][{idnum}]'] = taskid
             idnum = idnum + 1
     if querykey:
         data['queryKey'] = querykey
