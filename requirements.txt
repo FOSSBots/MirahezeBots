@@ -1,4 +1,4 @@
-# dependenices used in MirahezeBot
+# dependenices used in MirahezeBot.
 feedparser>=6.0.2,<7.0.0
 requests>=2.25.0,<2.26.0
 sopel>=7.0.7,<8
