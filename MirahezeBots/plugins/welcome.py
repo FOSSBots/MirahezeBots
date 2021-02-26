@@ -80,7 +80,7 @@ def welcome_user(bot, trigger):
 
 
 @commands('add_known', 'adduser')
-@example('.add_known Zppix #miraheze or .adduser Zppix #miraheze')
+@example('.add_known nick #example or .adduser nick #example')
 def add_known_user(bot, trigger):
     """Add user to known users list."""
     if trigger.account not in bot.config.core.admin_accounts:
