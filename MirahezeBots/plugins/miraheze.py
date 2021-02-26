@@ -17,7 +17,7 @@ MIRAHEZE_ABOUT_OTHER_CHANNELS = (
 @rule('.*[w-wW-W]hat (even is [m-mM-M]iraheze|is [m-mM-M]iraheze|does [m-mM-M]iraheze do).*')
 @example('.miraheze')
 def miraheze(bot, trigger):
-    """This command will tell you about Miraheze and where to learn more."""
+    """Tells you about Miraheze and where to learn more."""
     if trigger.sender == '#miraheze':
         bot.reply(MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL)
     else:
