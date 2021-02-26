@@ -2,6 +2,8 @@
 **Changelog**
 
 Please see below for changes to MirahezeBot-Plugins
+# Version 9.1.1
+- Fixed developer requirements blocking newer versions of channelmgnt.
 # Version 9.1.0
 - CI: Migrate to GitHub-Actions
 - CI: Support Python 3.9, Windows and MacOS
