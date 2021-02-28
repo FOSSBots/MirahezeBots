@@ -2,9 +2,10 @@ Source: mirahezebot-plugins
 Section: python
 Priority: optional
 Maintainer: MirahezeBots <bots@miraheze.org>
-Build-Depends: debhelper (>= 9), python3, dh-virtualenv (>= 1.0),
+Build-Depends: debhelper (>= 9), python3,
     python3-setuptools, python3-pip, python3-dev, libffi-dev, libc6
 Standards-Version: 3.9.5
+X-Python-Version: >=3.6
 
 Package: mirahezebot-plugins
 Architecture: any

@@ -9,4 +9,4 @@ sopel-plugins.adminlist>=1.0.5
 sopel-plugins.channelmgnt>=1.0.6
 sopel-plugins.pingpong>=1.0.4
 sopel-plugins.joinall>=1.0.2
-wheel>=0.36.2,<0.37.0
+wheel
