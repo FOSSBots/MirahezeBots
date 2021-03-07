@@ -52,10 +52,10 @@ def updatestatus(requestdata, authinfo, acldata, supportchan, session):
     elif requestdata[1][0] in acldata['sulgroups'][sulgroup]['cloaks']:
         request = [requestdata[1][1], requestdata[3]]
     else:
+        ERRNOAUTH = "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
         if supportchan is None:
-            return "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
-        return "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again." + 
-            f'If this persists, ask for help in {supportchan}'
+            return ERRNOAUTH
+        return f'{ERRNOAUTH} If this persists, ask for help in {supportchan}.'
     return mwapi.main(
         performer=request[0],
         target=str('User:' + (str(request[0]) + '/Status')),
