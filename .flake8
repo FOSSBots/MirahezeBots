@@ -1,4 +1,4 @@
-[flake8]
+[flake8] 
 max-line-length = 175
 exclude = */__init__.py, dist/*, build/*
 extend-ignore = SFS301
