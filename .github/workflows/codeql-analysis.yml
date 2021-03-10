@@ -17,7 +17,7 @@ on:
     branches:
       - dev
       - release
-  pull_request:
+  pull_request_target:
   schedule:
     - cron: '25 22 * * 6'
 
