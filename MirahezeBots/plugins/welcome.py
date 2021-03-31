@@ -17,8 +17,6 @@ def send_welcome(nick, chan):
         return f'Hello {nick}! If you have any questions, feel free to ask and someone should answer soon.'
     if chan == '#miraheze-cvt':
         return f'Welcome {nick}. If you need to report spam or abuse, please feel free to notify any of the voiced (+v) users, if it contains personal information you can pm them, or email us at cvt [at] miraheze.org'  # noqa: E501
-    if chan == '#miraheze-bots-testing':
-        return "blah"
     return None
 
 
@@ -50,11 +48,9 @@ def load_known_users_list(filename):
 
 def save_known_users_list(filename, known_users_list):
     """Save list of known users to database file."""
-    f = codecs.open(bot, filename, 'w', encoding='utf-8')
+    f = codecs.open(filename, 'w', encoding='utf-8')
     for channel in known_users_list:
         for user in known_users_list[channel]:
-            bot.say(type(channel), '#miraheze-botlogs')
-            bot.say(type(user), '#miraheze-botlogs')
             f.write(f'{channel}\t{user}\n')
     f.close()
 
@@ -115,5 +111,5 @@ def add_known_user(bot, trigger):
         return
 
     bot.known_users_list[channel].append(username)
-    save_known_users_list(bot, bot.known_users_filename, bot.known_users_list)
+    save_known_users_list(bot.known_users_filename, bot.known_users_list)
     bot.say(f'Okay, {username} is now added to known users list of channel {channel}')
