@@ -1,6 +1,6 @@
 # dependenices used in MirahezeBot
 requests>=2.25.1,<2.26.0
-requests-cache>=0.5.2,<0.6.0
+requests-cache==0.6.0.dev2
 sopel>=7.0.7,<8
 # shared util scripts
 MirahezeBots-jsonparser>=1.0.2,<2.0.0
@@ -10,3 +10,4 @@ sopel-plugins.channelmgnt>=2.0
 sopel-plugins.pingpong>=1.0.4
 sopel-plugins.joinall>=1.0.2
 wheel>=0.36.2,<0.37.0
+urllib3>=1.26.4 # avoid GHSA-5phf-pp7p-vc2r

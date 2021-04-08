@@ -41,3 +41,9 @@ def test_no_get_on_lists():
             with open(os.path.join(PLUGINPATH, filen)) as python_source:
                 src = python_source.read()
                 assert not re.search(reg, src)
+
+
+def future_test_db_cleanup():
+    """Confirms database matches as expected."""  # noqa: D401
+    engine = create_engine(f'sqlite:///{os.path.join(PATH, "..", "hasan2.db")}')
+    models.Base.metadata.create_all(bind=engine)

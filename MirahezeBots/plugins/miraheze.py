@@ -17,11 +17,7 @@ MIRAHEZE_ABOUT_OTHER_CHANNELS = (
 @rule('.*[w-wW-W]hat (even is [m-mM-M]iraheze|is [m-mM-M]iraheze|does [m-mM-M]iraheze do).*')
 @example('.miraheze')
 def miraheze(bot, trigger):
-    """
-    Miraheze about command.
-
-    This command will tell you about Miraheze and where to learn more.
-    """
+    """Tells you about Miraheze and where to learn more."""
     if trigger.sender == '#miraheze':
         bot.reply(MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL)
     else:
@@ -34,8 +30,8 @@ def miraheze(bot, trigger):
 def miraheze_gethelp(bot, trigger):
     """Reply to help requests."""
     if trigger.sender == '#miraheze':
-        bot.reply('Pinging dmehus, JohnLewis, paladox, PuppyKun, Reception123, RhinosF1, SPF|Cloud, Universal_Omega, and Voidwalker, '
-                  'who might be able to help you. Other users in this channel also see this and be able to assist you.')
+        bot.reply('Pinging dmehus, JohnLewis, paladox, PuppyKun, Reception123, RhinosF1, SPF|Cloud, Universal_Omega, and Voidwalker,'
+                  'who might be able to help you. Other users in this channel also see this and may be able to assist you.')
     else:
         bot.reply('If you need Miraheze releated help, please join #miraheze')
 
