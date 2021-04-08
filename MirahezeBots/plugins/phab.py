@@ -39,7 +39,8 @@ def configure(config):
         )
     config.phabricator.configure_setting(
         'highpri_channel',
-        'If you enabled high priority notifications, what channel would you like them sent to? (notifications will be sent once every week.',
+        'If you enabled high priority notifications, what channel would you like them sent to? '
+        '(notifications will be sent once every week.',
         )
     config.phabricator.configure_setting(
         'datafile',
@@ -76,7 +77,12 @@ def phabtask(bot, trigger):
         else:
             task_id = trigger.group(2)
         info = get_host_and_api_or_query_key(
-            trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey],
+            trigger.sender,
+            bot.memory['phab']['jdcache'],
+            [
+                bot.settings.phabricator.api_token,
+                bot.settings.phabricator.querykey,
+            ],
             )
         bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id, session=bot.memory['shared']['session']))
     except AttributeError:
@@ -88,7 +94,12 @@ def phabtask2(bot, trigger):
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = (trigger.match.group(0)).split('T')[1]
     info = get_host_and_api_or_query_key(
-        trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey],
+        trigger.sender,
+        bot.memory['phab']['jdcache'],
+        [
+            bot.settings.phabricator.api_token,
+            bot.settings.phabricator.querykey,
+        ],
         )
     bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id, session=bot.memory['shared']['session']))
 
@@ -97,14 +108,24 @@ def phabtask2(bot, trigger):
 def high_priority_tasks_notification(bot):
     """Send regular update on high priority tasks."""
     if bot.settings.phabricator.highpri_notify is True:
-        info = get_host_and_api_or_query_key(bot.settings.phabricator.highpri_channel, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey])  # noqa: E501
+        info = get_host_and_api_or_query_key(
+            bot.settings.phabricator.highpri_channel,
+            bot.memory['phab']['jdcache'],
+            [
+                bot.settings.phabricator.api_token,
+                bot.settings.phabricator.querykey,
+            ],
+            )
         result = phabapi.dophabsearch(info[0], info[1], info[2], session=bot.memory['shared']['session'])
         if result:
             bot.say('Your weekly high priority task update:', bot.settings.phabricator.highpri_channel)
             for task in result:
                 bot.say(task, bot.settings.phabricator.highpri_channel)
         else:
-            bot.say('High priority task update: Tasks exceeded limit or could not be found. Use ".highpri"', bot.settings.phabricator.highpri_channel)
+            bot.say(
+                'High priority task update: Tasks exceeded limit or could not be found. Use ".highpri"',
+                bot.settings.phabricator.highpri_channel,
+                )
 
 
 @commands('highpri')
@@ -112,7 +133,12 @@ def high_priority_tasks_notification(bot):
 def forcehighpri(bot, trigger):
     """Send full list of high priority tasks."""
     info = get_host_and_api_or_query_key(
-        trigger.sender, bot.memory['phab']['jdcache'], [bot.settings.phabricator.api_token, bot.settings.phabricator.querykey],
+        trigger.sender,
+        bot.memory['phab']['jdcache'],
+        [
+            bot.settings.phabricator.api_token,
+            bot.settings.phabricator.querykey,
+        ],
         )
     result = phabapi.dophabsearch(info[0], info[1], info[2], limit=False, session=bot.memory['shared']['session'])
     if result:
