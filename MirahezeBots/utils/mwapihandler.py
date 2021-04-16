@@ -1,4 +1,4 @@
-"""The functions in this file are not suitable for non-internal use. They are subject to change without notice and are not yet released."""
+"""MediaWiki API Handler."""
 import requests
 
 
@@ -110,7 +110,10 @@ def makeaction(requestinfo, action, target, performer, reason, content=''):
             return ['MWError', (DATA.get('error').get('info'))]
         return ['Success', f'{action} request sent. You may want to check the {action} log to be sure that it worked.']
     except Exception:
-        return ['Fatal', f'An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {action} rights on that wiki?']
+        return [
+            'Fatal',
+            f'An unexpected error occurred. Did you type the wiki or user incorrectly? Do I have {action} on that wiki?',
+            ]  # noqa: JS102
 
 
 def main(performer, target, action, reason, url, authinfo, content=False, session=requests.Session()):
