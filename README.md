@@ -14,6 +14,6 @@ Please note that in line with our security policy, we can only support Sopel 7.1
 
 [Source Github](http://github.com/sopel-irc/sopel)
 
-[More info](https://bots.miraheze.wiki)
+[More info](https://mirahezebots.org)
 
-[Documentation](https://bots.miraheze.wiki/documentation.html)
+[Documentation](https://mirahezebots.org/documentation.html)

@@ -8,7 +8,7 @@ We currently support with security releases: the lastest PyPi version on the Rel
 ## Reporting a Vulnerability
 
 
-To report a Security Vulnerability or issue, we ask that you please email any applicable information to: bots[at]miraheze.org.
+To report a Security Vulnerability or issue, we ask that you please email any applicable information to: staff[at]mirahezebots.org.
 
 Please note that by doing this you agree to disclose your email address, and/or any information provided in the email header.
 

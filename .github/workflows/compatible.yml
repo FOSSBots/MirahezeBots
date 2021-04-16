@@ -1,23 +1,29 @@
+name: 'Compatibility Checks'
 on:
   push:
-  pull_request:
+    branches:
+      - dev
+      - release
+  pull_request_target:
 
 jobs:
-  build:
+  check:
+    name: Check Compatibility for Python ${{ matrix.python }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python: ['3.6', '3.7', '3.8', '3.8-dev', '3.9', '3.9-dev']
-        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
+        python: ['3.6', '3.7', '3.8', '3.8-dev', '3.9', '3.9-dev', '3.10-dev']
+        os: ['ubuntu-latest', 'macos-latest']
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+        uses: styfle/cancel-workflow-action@0.9.0
         with:
+          all_but_latest: true
           access_token: ${{ github.token }}
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Python ${{ matrix.python }} Compatibility Checks on ${{ matrix.os }}
+      - name: Setup Python ${{ matrix.python }} on ${{ matrix.os }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }} 

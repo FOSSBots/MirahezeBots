@@ -14,7 +14,10 @@ name: "CodeQL"
 
 on:
   push:
-  pull_request:
+    branches:
+      - dev
+      - release
+  pull_request_target:
   schedule:
     - cron: '25 22 * * 6'
 
@@ -33,12 +36,16 @@ jobs:
 
     steps:
     - name: Cancel Previous Runs
-      uses: styfle/cancel-workflow-action@0.6.0
+      uses: styfle/cancel-workflow-action@0.9.0
       with:
+        all_but_latest: true
         access_token: ${{ github.token }}
     - name: Checkout repository
       uses: actions/checkout@v2
-
+    - name: Setup python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1

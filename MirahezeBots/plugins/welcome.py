@@ -14,24 +14,15 @@ CHANNEL_RE = re.compile(r'#[A-Za-z0-9#\-]+$')
 def send_welcome(nick, chan):
     """Find the message to be sent."""
     if chan == '#miraheze' and nick[:4] != 'Not-':
-        message = ("Hello {}! If you have any questions, feel free to ask "
-                   "and someone should answer soon.").format(nick)
-    elif chan == '#miraheze-cvt':
-        message = ("Welcome {}. If you need to report spam or abuse,"
-                   " please feel free to notify"
-                   " any of the voiced (+v) users,"
-                   " if it contains personal information you can pm them,"
-                   " or email us"
-                   " at cvt [at] miraheze.org").format(nick)
-    else:
-        message = None
-
-    return message
+        return f'Hello {nick}! If you have any questions, feel free to ask and someone should answer soon.'
+    if chan == '#miraheze-cvt':
+        return f'Welcome {nick}. If you need to report spam or abuse, please feel free to notify any of the voiced (+v) users, if it contains personal information you can pm them, or email us at cvt [at] miraheze.org'  # noqa: E501
+    return None
 
 
 def setup(bot):
     """Do required setup for this module."""
-    bot.known_users_filename = os.path.join(bot.config.core.homedir, '{}-{}.known_users.db'.format(bot.nick, bot.config.core.host))
+    bot.known_users_filename = os.path.join(bot.config.core.homedir, f'{bot.nick}-{bot.config.core.host}.known_users.db')
     bot.known_users_list = load_known_users_list(bot.known_users_filename)
 
 
@@ -60,7 +51,7 @@ def save_known_users_list(filename, known_users_list):
     f = codecs.open(filename, 'w', encoding='utf-8')
     for channel in known_users_list:
         for user in known_users_list[channel]:
-            f.write('{}\t{}\n'.format(channel, user))
+            f.write(f'{channel}\t{user}\n')
     f.close()
 
 
@@ -73,12 +64,11 @@ def welcome_user(bot, trigger):
 
     if trigger.sender not in bot.known_users_list:
         bot.known_users_list[trigger.sender] = []
-    if trigger.account == '*':
-        if trigger.nick not in bot.known_users_list[trigger.sender]:
-            bot.known_users_list[trigger.sender].append(trigger.nick)
-            welcome = send_welcome(trigger.nick, trigger.sender)
-            if welcome is not None:
-                bot.say(welcome)
+    if trigger.account == '*' and trigger.nick not in bot.known_users_list[trigger.sender]:
+        bot.known_users_list[trigger.sender].append(trigger.nick)
+        welcome = send_welcome(trigger.nick, trigger.sender)
+        if welcome is not None:
+            bot.say(welcome)
     else:
         if trigger.account not in bot.known_users_list[trigger.sender] and trigger.nick not in bot.known_users_list[trigger.sender]:
             bot.known_users_list[trigger.sender].append(trigger.account)
@@ -90,7 +80,7 @@ def welcome_user(bot, trigger):
 
 
 @commands('add_known', 'adduser')
-@example('.add_known Zppix #miraheze or .adduser Zppix #miraheze')
+@example('.add_known nick #example or .adduser nick #example')
 def add_known_user(bot, trigger):
     """Add user to known users list."""
     if trigger.account not in bot.config.core.admin_accounts:
@@ -106,24 +96,20 @@ def add_known_user(bot, trigger):
         channel = DEFAULT_CHANNEL
 
     if not USERNAME_RE.match(username):
-        bot.reply('Invalid username: {}'.format(username))
+        bot.reply(f'Invalid username: {username}')
         return
 
     if not CHANNEL_RE.match(channel):
-        bot.reply('Invalid channel name: {}'.format(channel))
+        bot.reply(f'Invalid channel name: {channel}')
         return
 
     if channel not in bot.known_users_list:
         bot.known_users_list[channel] = []
 
     if username in bot.known_users_list[channel]:
-        bot.say('{} is already added to known users list of channel {}'.format(
-            username, channel
-        ))
+        bot.say(f'{username} is already added to known users list of channel {channel}')
         return
 
     bot.known_users_list[channel].append(username)
     save_known_users_list(bot.known_users_filename, bot.known_users_list)
-    bot.say('Okay, {} is now added to known users list of channel {}'.format(
-        username, channel
-    ))
+    bot.say(f'Okay, {username} is now added to known users list of channel {channel}')

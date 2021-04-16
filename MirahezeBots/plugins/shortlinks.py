@@ -7,7 +7,7 @@ from sopel.plugin import commands, example
 def ghuser(bot, trigger):
     """Expand a link to github."""
     try:
-        bot.say("https://github.com/" + trigger.group(2))
+        bot.say(f'https://github.com/{trigger.group(2)}')
     except TypeError:
         bot.say('Syntax: .github user', trigger.sender)
 
@@ -17,7 +17,7 @@ def ghuser(bot, trigger):
 def redditu(bot, trigger):
     """Expand a link to reddit/u."""
     try:
-        bot.say("https://reddit.com/u/" + trigger.group(2))
+        bot.say(f'https://reddit.com/u/{trigger.group(2)}')
     except TypeError:
         bot.say('Syntax: .redditu example', trigger.sender)
 
@@ -27,7 +27,7 @@ def redditu(bot, trigger):
 def redditr(bot, trigger):
     """Expand a link to reddit/r."""
     try:
-        bot.say("https://reddit.com/r/" + trigger.group(2))
+        bot.say(f'https://reddit.com/r/{trigger.group(2)}')
     except TypeError:
         bot.say('Syntax: .subred example', trigger.sender)
 
@@ -37,8 +37,8 @@ def redditr(bot, trigger):
 def wmca(bot, trigger):
     """Expand a link to Wikimedia CentralAuth."""
     try:
-        target = trigger.group(2).replace(" ", "_")
-        bot.say("https://meta.wikimedia.org/wiki/Special:CentralAuth/" + target)
+        target = trigger.group(2).replace(' ', '_')
+        bot.say(f'https://meta.wikimedia.org/wiki/Special:CentralAuth/{target}')
     except AttributeError:
         bot.say('Syntax: .wmca example', trigger.sender)
 
@@ -48,8 +48,8 @@ def wmca(bot, trigger):
 def mhca(bot, trigger):
     """Expand a link to Miraheze Central Auth."""
     try:
-        target = trigger.group(2).replace(" ", "_")
-        bot.say("https://meta.miraheze.org/wiki/Special:CentralAuth/" + target)
+        target = trigger.group(2).replace(' ', '_')
+        bot.say(f'https://meta.miraheze.org/wiki/Special:CentralAuth/{target}')
     except AttributeError:
         bot.say('Syntax: .mhca example', trigger.sender)
 
@@ -59,7 +59,7 @@ def mhca(bot, trigger):
 def twlink(bot, trigger):
     """Expand a link to Twitter."""
     try:
-        bot.say("https://twitter.com/" + trigger.group(2))
+        bot.say(f'https://twitter.com/{trigger.group(2)}')
     except TypeError:
         bot.say('Syntax: .tw user', trigger.sender)
 
@@ -69,15 +69,15 @@ def twlink(bot, trigger):
 def mhwiki(bot, trigger):
     """Expand a link to Miraheze wikis."""
     try:
-        options = trigger.group(2).split(" ", 1)
+        options = trigger.group(2).split(' ', 1)
         if len(options) == 1:
             page = options[0]
-            page = page.replace(" ", "_")
-            bot.say("https://meta.miraheze.org/wiki/" + page)
+            page = page.replace(' ', '_')
+            bot.say(f'https://meta.miraheze.org/wiki/{page}')
         elif len(options) == 2:
             wiki = options[0]
             page = options[1]
-            page = page.replace(" ", "_")
-            bot.say("https://" + wiki + ".miraheze.org/wiki/" + page)
+            page = page.replace(' ', '_')
+            bot.say(f'https://{wiki}.miraheze.org/wiki/{page}')
     except AttributeError:
         bot.say('Syntax: .mh wiki page', trigger.sender)
