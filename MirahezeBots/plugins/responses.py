@@ -31,7 +31,8 @@ def addchan(bot, trigger):
     """Reply to channel request message."""
     admins = ' '.join(map(str, bot.config.core.admin_accounts))
     if bot.config.responses.support_channel is not None:
-        bot.say(f'Hey {admins}, {trigger.nick} would like to have me in their channel: {trigger.group(2)}', bot.config.responses.support_channel)
+        bot.say(f'Hey {admins}, {trigger.nick} would like to have me in their channel: {trigger.group(2)}',
+                bot.config.responses.support_channel)
         if trigger.sender != bot.config.responses.support_channel:
             bot.reply(f'Request sent! Action upon the request should be taken shortly. Thank you for using {bot.nick}!')
 
@@ -41,7 +42,7 @@ def addchan(bot, trigger):
 @rate(user=2, channel=1, server=0)
 def gj(bot, trigger):
     """Tell the user that they are doing good work."""
-    bot.say(f"You're doing good work, {trigger.nick}!")
+    bot.say(f"You're doing good work, {trigger.group(2)}!")
 
 
 @commands('cancelreminder')

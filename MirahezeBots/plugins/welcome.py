@@ -70,7 +70,7 @@ def welcome_user(bot, trigger):
         if welcome is not None:
             bot.say(welcome)
     else:
-        if trigger.account not in bot.known_users_list[trigger.sender] and trigger.nick not in bot.known_users_list[trigger.sender]:
+        if (trigger.account and trigger.nick) not in bot.known_users_list[trigger.sender]:
             bot.known_users_list[trigger.sender].append(trigger.account)
             welcome = send_welcome(trigger.nick, trigger.sender)
             if welcome is not None:
@@ -80,7 +80,7 @@ def welcome_user(bot, trigger):
 
 
 @commands('add_known', 'adduser')
-@example('.add_known Zppix #miraheze or .adduser Zppix #miraheze')
+@example('.add_known nick #example or .adduser nick #example')
 def add_known_user(bot, trigger):
     """Add user to known users list."""
     if trigger.account not in bot.config.core.admin_accounts:

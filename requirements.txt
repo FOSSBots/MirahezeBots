@@ -8,3 +8,4 @@ sopel-plugins.channelmgnt>=2.0
 sopel-plugins.pingpong>=1.0.4
 sopel-plugins.joinall>=1.0.2
 wheel>=0.36.2,<0.37.0
+urllib3>=1.26.4 # avoid GHSA-5phf-pp7p-vc2r
