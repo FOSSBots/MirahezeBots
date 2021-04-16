@@ -7,8 +7,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python: ['3.6', '3.7', '3.8', '3.8-dev', '3.9', '3.9-dev']
-        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
+        python: ['3.6', '3.7', '3.8', '3.8-dev', '3.9', '3.9-dev', '3.10-dev']
+        os: ['ubuntu-latest', 'macos-latest']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -20,8 +20,9 @@ jobs:
       - name: Install packages
         run: |
           python -m pip install --upgrade pip
-          pip install .
           pip install -r dev-requirements.txt
+          pyproject-build --wheel --outdir dist .
+          find dist -name "*.whl" | xargs pip3 install
       - name: Show python version and show package
         run: |
           python --version
@@ -36,7 +37,7 @@ jobs:
           pytest tests/test_rss.py
           pytest tests/test_json.py
           pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* .
-          pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall .
+          pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall --ignore-requirement=urllib3 .
           pip check
       - name: Run pip freeze and pipdeptree
         run: |
@@ -46,24 +47,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Set up Python 3.7
+      - name: Set up Python 3.9
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.9
       - name: Install pypa/build
         run: >-
           python -m
           pip install
           build
           --user
-      - name: Build a binary wheel and a source tarball
-        run: >-
-          python -m
-          build
-          --sdist
-          --wheel
-          --outdir dist/
-          .
+      - name: Build a binary wheel
+        run: pyproject-build --wheel --outdir dist .
       - name: Publish to PyPi
         if: github.event_name == 'push' && github.ref == 'refs/heads/release'
         uses: pypa/gh-action-pypi-publish@master
