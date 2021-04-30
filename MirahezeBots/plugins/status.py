@@ -31,10 +31,22 @@ def setup(bot):
 def configure(config):
     """Set up the configuration options."""
     config.define_section('status', StatusSection, validate=False)
-    config.status.configure_setting('datafile', 'What is the status data file?')
-    config.status.configure_setting('bot_username', 'What is the statusbot username? (from Special:BotPasswords)')
-    config.status.configure_setting('bot_password', "What is the statusbot accounts's bot password? (from Special:BotPasswords)")
-    config.status.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
+    config.status.configure_setting(
+        'datafile',
+        'What is the status data file?',
+        )
+    config.status.configure_setting(
+        'bot_username',
+        'What is the statusbot username? (from Special:BotPasswords)',
+        )
+    config.status.configure_setting(
+        'bot_password',
+        "What is the statusbot accounts's bot password? (from Special:BotPasswords)",
+        )
+    config.status.configure_setting(
+        'support_channel',
+        'Specify a support IRC channel (leave blank for none).',
+        )
 
 
 def updatestatus(requestdata, authinfo, acldata, supportchan, session):
@@ -48,13 +60,14 @@ def updatestatus(requestdata, authinfo, acldata, supportchan, session):
         if sulgroup in acldata['users'][requestdata[0]]['groups']:
             request = [acldata['users'][requestdata[0]]['groups'][sulgroup], requestdata[3]]
         else:
-            return f"Data not found for SULGROUP {sulgroup} in {requestdata[0]} - Keys were: {acldata['users'][requestdata[0]].keys()}"
+            return f"Data not found for {sulgroup} in {requestdata[0]}, Keys were: {acldata['users'][requestdata[0]].keys()}"
     elif requestdata[1][0] in acldata['sulgroups'][sulgroup]['cloaks']:
         request = [requestdata[1][1], requestdata[3]]
     else:
+        ERRNOAUTH = "You don't seem to be authorised to use this plugin. Check you are signed into NickServ and try again."
         if supportchan is None:
-            return "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again."
-        return "You don't seem to be authorised to use this plugin. Please check you are signed into NickServ and try again. If this persists, ask for help in {supportchan}"
+            return ERRNOAUTH
+        return f'{ERRNOAUTH} If this persists, ask for help in {supportchan}.'
     return mwapi.main(
         performer=request[0],
         target=str('User:' + (str(request[0]) + '/Status')),
