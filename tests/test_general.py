@@ -6,7 +6,6 @@ import sys
 from contextlib import suppress
 
 import models
-
 from sqlalchemy import create_engine
 
 PATH = '../MirahezeBots/MirahezeBots'
