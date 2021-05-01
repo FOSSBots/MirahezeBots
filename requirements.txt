@@ -3,11 +3,11 @@ requests>=2.25.1,<2.26.0
 requests-cache==0.6.3
 sopel>=7.0.7,<8
 # shared util scripts
-MirahezeBots-jsonparser>=1.0.3,<2.0.0
+MirahezeBots-jsonparser>=1.0.4,<2.0.0
 # code migrated to own repo awaiting bundle switch
 wheel>=0.36.2,<0.37.0
-sopel-plugins.adminlist>=1.0.6
-sopel-plugins.channelmgnt>=2.0.2
-sopel-plugins.pingpong>=1.0.5
-sopel-plugins.joinall>=1.0.3
+sopel-plugins.adminlist>=1.0.7
+sopel-plugins.channelmgnt>=2.0.3
+sopel-plugins.pingpong>=1.0.6
+sopel-plugins.joinall>=1.0.4
 urllib3>=1.26.4 # avoid GHSA-5phf-pp7p-vc2r
