@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python: ['3.7', '3.8', '3.9', '3.9-dev'] #, '3.10-dev']
+        python: ['3.7', '3.8', '3.9', '3.9-dev', '3.10-dev']
         os: ['ubuntu-latest', 'macos-latest']
     steps:
       - name: Cancel Previous Runs
