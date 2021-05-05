@@ -1,7 +1,6 @@
 """Sopel Inter-Plugin resource sharing service."""
 
 from requests import Session
-
 from sopel.tools import SopelMemory
 
 
