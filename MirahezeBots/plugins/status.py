@@ -1,11 +1,13 @@
 """status.py - Mediawiki Status Page Updater."""
 
+from MirahezeBots.utils import mwapihandler as mwapi
+
 from MirahezeBots_jsonparser import jsonparser as jp
+
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory
 
-from MirahezeBots.utils import mwapihandler as mwapi
 
 pages = ''
 
@@ -32,19 +34,19 @@ def configure(config):
     config.status.configure_setting(
         'datafile',
         'What is the status data file?',
-    )
+        )
     config.status.configure_setting(
         'bot_username',
         'What is the statusbot username? (from Special:BotPasswords)',
-    )
+        )
     config.status.configure_setting(
         'bot_password',
         "What is the statusbot accounts's bot password? (from Special:BotPasswords)",
-    )
+        )
     config.status.configure_setting(
         'support_channel',
         'Specify a support IRC channel (leave blank for none).',
-    )
+        )
 
 
 def updatestatus(requestdata, authinfo, acldata, supportchan, session):
@@ -75,7 +77,7 @@ def updatestatus(requestdata, authinfo, acldata, supportchan, session):
         authinfo=[authinfo[0], authinfo[1]],
         content=str(request[1]),
         session=session,
-    )
+        )
 
 
 @commands('status')
@@ -116,7 +118,7 @@ def changestatus(bot, trigger):
             bot.memory['status']['jdcache'],
             bot.settings.status.support_channel,
             bot.memory['shared']['session'],
-        )
+            )
         if response == 'create request sent. You may want to check the create log to be sure that it worked.':
             bot.reply('Success')
         else:
