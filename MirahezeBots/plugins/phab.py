@@ -1,12 +1,11 @@
 """phab.by - Phabricator Task Information Plugin."""
 
-from MirahezeBots.utils import phabapi
-
 from MirahezeBots_jsonparser import jsonparser as jp
-
 from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
 from sopel.module import commands, example, interval, require_admin, rule
 from sopel.tools import SopelMemory
+
+from MirahezeBots.utils import phabapi
 
 
 class PhabricatorSection(StaticSection):
@@ -32,24 +31,24 @@ def configure(config):
     config.phabricator.configure_setting(
         'api_token',
         'Please enter a Phabricator API token.',
-        )
+    )
     config.phabricator.configure_setting(
         'highpri_notify',
         'Would you like to enable automatic notification of high priority tasks? (true/false)',
-        )
+    )
     config.phabricator.configure_setting(
         'highpri_channel',
         'If you enabled high priority notifications, what channel would you like them sent to? '
         '(notifications will be sent once every week.',
-        )
+    )
     config.phabricator.configure_setting(
         'datafile',
         'File to read from to get channel specific data from',
-        )
+    )
     config.phabricator.configure_setting(
         'querykey',
         'Please enter a Phabricator query key.',
-        )
+    )
 
 
 def get_host_and_api_or_query_key(channel, cache, keys):
@@ -83,7 +82,7 @@ def phabtask(bot, trigger):
                 bot.settings.phabricator.api_token,
                 bot.settings.phabricator.querykey,
             ],
-            )
+        )
         bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id, session=bot.memory['shared']['session']))
     except AttributeError:
         bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
@@ -100,7 +99,7 @@ def phabtask2(bot, trigger):
             bot.settings.phabricator.api_token,
             bot.settings.phabricator.querykey,
         ],
-        )
+    )
     bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id, session=bot.memory['shared']['session']))
 
 
@@ -115,7 +114,7 @@ def high_priority_tasks_notification(bot):
                 bot.settings.phabricator.api_token,
                 bot.settings.phabricator.querykey,
             ],
-            )
+        )
         result = phabapi.dophabsearch(info[0], info[1], info[2], session=bot.memory['shared']['session'])
         if result:
             bot.say('Your weekly high priority task update:', bot.settings.phabricator.highpri_channel)
@@ -125,7 +124,7 @@ def high_priority_tasks_notification(bot):
             bot.say(
                 'High priority task update: Tasks exceeded limit or could not be found. Use ".highpri"',
                 bot.settings.phabricator.highpri_channel,
-                )
+            )
 
 
 @commands('highpri')
@@ -139,7 +138,7 @@ def forcehighpri(bot, trigger):
             bot.settings.phabricator.api_token,
             bot.settings.phabricator.querykey,
         ],
-        )
+    )
     result = phabapi.dophabsearch(info[0], info[1], info[2], limit=False, session=bot.memory['shared']['session'])
     if result:
         for task in result:

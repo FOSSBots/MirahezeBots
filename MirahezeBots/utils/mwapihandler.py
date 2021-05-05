@@ -1,7 +1,6 @@
 """MediaWiki API Handler."""
 import requests
 
-
 CONNECTERRMSG = 'Unable to conect to wiki'
 
 
