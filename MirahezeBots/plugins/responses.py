@@ -1,9 +1,9 @@
 """responses.py - like a FAQ bot."""
 
-from MirahezeBots.version import SHORTVERSION, VERSION
-
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.module import commands, example, rate, require_account
+
+from MirahezeBots.version import SHORTVERSION, VERSION
 
 
 class ResponsesSection(StaticSection):
