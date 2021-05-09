@@ -2,10 +2,10 @@ name: 'Main CI Build'
 on:
   push:
     branches:
-      - **
+      - '**'
   pull_request_target:
     branches:
-      - !**
+      - '!**'
 
 jobs:
   test:
