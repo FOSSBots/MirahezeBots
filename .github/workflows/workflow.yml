@@ -1,11 +1,5 @@
 name: 'Main CI Build'
-on:
-  push:
-    branches:
-      - '**'
-  pull_request_target:
-    branches:
-      - '!**'
+on: [push, pull_request_target]
 
 jobs:
   test:
