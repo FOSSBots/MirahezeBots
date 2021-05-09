@@ -1,6 +1,6 @@
 version = 1
 
-test_patterns = ["tests/*.py"]
+test_patterns = ["MirahezeBots/tests/*.py"]
 
 [[analyzers]]
 name = "python"
