@@ -29,7 +29,6 @@ jobs:
           pip install -r dev-requirements.txt
           pyproject-build --wheel --outdir dist .
           find dist -name "*.whl" | xargs pip3 install
-          pip install -r compatibility.txt
       - name: Show python version and show package
         run: |
           python --version
@@ -42,6 +41,7 @@ jobs:
           bandit MirahezeBots -r
           pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-file=tests/*
           pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall --ignore-requirement=wheel --ignore-requirement=urllib3 .
+          pip install -r compatibility.txt
           pip check
       - name: Run pip freeze and pipdeptree
         run: |
