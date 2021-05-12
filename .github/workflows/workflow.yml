@@ -37,7 +37,7 @@ jobs:
           flake8 .
           pytest --pyargs MirahezeBots.tests
           bandit MirahezeBots -r -x MirahezeBots/test
-          pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-file=MirahezeBots/tests/*
+          pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-file=MirahezeBots/tests/* --ignore-file=build/*
           pip-extra-reqs --ignore-requirement=sopel-plugins.adminlist --ignore-requirement=sopel-plugins.channelmgnt --ignore-requirement=sopel-plugins.pingpong --ignore-requirement=sopel-plugins.joinall --ignore-requirement=wheel --ignore-requirement=urllib3 .
           pip install -r compatibility.txt
           pip check
