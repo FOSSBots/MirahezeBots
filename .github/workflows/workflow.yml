@@ -13,8 +13,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+<<<<<<< HEAD
       - name: Python ${{ matrix.python }} on ${{ matrix.os }}
         uses: actions/setup-python@v2
+=======
+      - name: Setup Python ${{ matrix.python }} on ${{ matrix.os }}
+        uses: actions/setup-python@v2.2.2
+>>>>>>> acf0f81... Bump actions/setup-python from 2 to 2.2.2 (#516)
         with:
           python-version: ${{ matrix.python }} 
       - name: Install packages
@@ -48,7 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Set up Python 3.9
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2.2.2
         with:
           python-version: 3.9
       - name: Install pypa/build
