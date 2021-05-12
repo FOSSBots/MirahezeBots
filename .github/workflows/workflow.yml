@@ -10,16 +10,16 @@ jobs:
         python: ['3.7', '3.8', '3.9', '3.9-dev', '3.10-dev']
         os: ['ubuntu-latest', 'macos-latest']
     steps:
-      - uses: actions/checkout@v2
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          all_but_latest: true
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2.3.4
         with:
           submodules: true
-<<<<<<< HEAD
-      - name: Python ${{ matrix.python }} on ${{ matrix.os }}
-        uses: actions/setup-python@v2
-=======
       - name: Setup Python ${{ matrix.python }} on ${{ matrix.os }}
         uses: actions/setup-python@v2.2.2
->>>>>>> acf0f81... Bump actions/setup-python from 2 to 2.2.2 (#516)
         with:
           python-version: ${{ matrix.python }} 
       - name: Install packages
@@ -51,7 +51,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2.3.4
       - name: Set up Python 3.9
         uses: actions/setup-python@v2.2.2
         with:
@@ -73,7 +77,11 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: SonarCloud Scan
