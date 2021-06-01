@@ -4,7 +4,7 @@ import codecs
 import os
 import re
 
-from sopel.module import commands, event, example, rule
+from sopel.plugin import commands, event, example, rule
 
 DEFAULT_CHANNEL = '#miraheze'
 USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
