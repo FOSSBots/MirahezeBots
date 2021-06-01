@@ -1,12 +1,13 @@
 """wikimgnt.py - interact with Mediawiki API."""
 
-from MirahezeBots.utils import jsonparser as jp
-from MirahezeBots.utils import mwapihandler as mwapi
-
 from sopel.config import ConfigurationError
 from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
 from sopel.module import commands, example, require_admin
 from sopel.tools import SopelMemory, get_logger
+
+from MirahezeBots.utils import jsonparser as jp
+from MirahezeBots.utils import mwapihandler as mwapi
+
 LOGGER = get_logger('wikimgnt')
 
 
@@ -46,14 +47,18 @@ def setup(bot):
 def configure(config):
     """Define sopel config wizzard questions."""
     config.define_section('wikimgnt', WikimgntSection, validate=False)
-    config.wikimgnt.configure_setting('log_page', 'What page on your wiki would like .log messages to go to? Instead of a space, type a _ please.')
-    config.wikimgnt.configure_setting('wiki_acl', 'Please enter NickServ accounts that are allowed to use the commands in this plugin. (No spaces)')
+    config.wikimgnt.configure_setting(
+        'log_page', 'What page on your wiki would like .log messages to go to? Instead of a space, type a _ please.')
+    config.wikimgnt.configure_setting(
+        'wiki_acl', 'Please enter NickServ accounts that are allowed to use the commands in this plugin. (No spaces)')
     config.wikimgnt.configure_setting('datafile', 'What is the path to the wikimgnt datafile')
     config.wikimgnt.configure_setting('wiki_farm', 'Are you using this for a wiki farm? (true/false)')
     config.wikimgnt.configure_setting('wiki_domain', 'If you said true to the previous question then What the domain name of your wiki farm?'
                                       'Please specify the URL to api.php without a subdomain. If you said false, please specify the URL of your wikis api.php.')
-    config.wikimgnt.configure_setting('bot_username', 'What is the username the bot should use to login? (from Special:BotPasswords)')
-    config.wikimgnt.configure_setting('bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
+    config.wikimgnt.configure_setting(
+        'bot_username', 'What is the username the bot should use to login? (from Special:BotPasswords)')
+    config.wikimgnt.configure_setting(
+        'bot_password', 'What is bot password for the account to login to? (from Special:BotPasswords)')
 
 
 def get_logpage(wiki, jsondata):
@@ -134,7 +139,8 @@ def logpage(bot, trigger):
     if bot.settings.wikimgnt.wiki_farm is True and len(options) < 3:
         bot.say('Syntax: .log wiki message')
     else:
-        response = mwapi.main(sender, target, 'edit', message, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
+        response = mwapi.main(sender, target, 'edit', message, url, [
+                              bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
         bot.reply(response)
 
 
@@ -169,7 +175,8 @@ def deletepage(bot, trigger):
         return
     target = options[0]
     reason = options[1]
-    response = mwapi.main(sender, target, 'delete', reason, url, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
+    response = mwapi.main(sender, target, 'delete', reason, url, [
+                          bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password])
     bot.reply(response)
 
 
@@ -183,7 +190,8 @@ def blockuser(bot, trigger):
         replytext = block_manager('block', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password],
                                   trigger, bot.settings.wikimgnt.wiki_acl)
     else:
-        replytext = block_manager('block', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+        replytext = block_manager('block', [trigger.nick, trigger.account], siteinfo, [
+                                  bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
 
 
@@ -197,7 +205,8 @@ def unblockuser(bot, trigger):
         replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password],
                                   trigger, bot.settings.wikimgnt.wiki_acl)
     else:
-        replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
+        replytext = block_manager('unblock', [trigger.nick, trigger.account], siteinfo, [
+                                  bot.settings.wikimgnt.bot_username, bot.settings.wikimgnt.bot_password], trigger)
     bot.reply(replytext)
 
 
