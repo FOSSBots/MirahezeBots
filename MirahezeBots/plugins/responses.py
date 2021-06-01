@@ -1,9 +1,9 @@
 """responses.py - like a FAQ bot."""
 
-from MirahezeBots.version import SHORTVERSION, VERSION
-
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.plugin import commands, example, rate, require_account
+
+from MirahezeBots.version import SHORTVERSION, VERSION
 
 
 class ResponsesSection(StaticSection):
@@ -31,7 +31,8 @@ def addchan(bot, trigger):
     """Reply to channel request message."""
     admins = ' '.join(map(str, bot.config.core.admin_accounts))
     if bot.config.responses.support_channel is not None:
-        bot.say(f'Hey {admins}, {trigger.nick} would like to have me in their channel: {trigger.group(2)}', bot.config.responses.support_channel)
+        bot.say(f'Hey {admins}, {trigger.nick} would like to have me in their channel: {trigger.group(2)}',
+                bot.config.responses.support_channel)
         if trigger.sender != bot.config.responses.support_channel:
             bot.reply(f'Request sent! Action upon the request should be taken shortly. Thank you for using {bot.nick}!')
 
