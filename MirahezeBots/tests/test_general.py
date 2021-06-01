@@ -5,8 +5,9 @@ import sqlite3
 import sys
 from contextlib import suppress
 
-import models
 from sqlalchemy import create_engine
+
+from MirahezeBots.tests import models
 
 PATH = '../MirahezeBots/MirahezeBots'
 PLUGINPATH = '../MirahezeBots/MirahezeBots/plugins'
