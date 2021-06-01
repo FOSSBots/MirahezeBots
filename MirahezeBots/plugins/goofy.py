@@ -1,6 +1,6 @@
 """Some commands for just goofing around and having fun."""
 
-from sopel.module import commands, example
+from sopel.plugin import commands, example
 
 
 @example('.coffee MirahezeBot')
@@ -50,4 +50,5 @@ def hotchoc(bot, trigger):
     if trigger.group(2) is None:
         bot.reply('To whom should I give this hot chocolate?')
     else:
-        bot.action(f'gives {trigger.group(2)} a warm, velvety salted caramel hot chocolate with cream and marhsmellows.', trigger.sender)
+        bot.action(f'gives {trigger.group(2)} a warm, velvety salted caramel hot chocolate with cream and marhsmellows.',
+                   trigger.sender)

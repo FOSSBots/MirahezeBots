@@ -2,13 +2,13 @@
 
 ## Supported Versions
 
-We currently support with security releases: the lastest PyPi version on the Release branch, and the Dev branch when running sopel 7.0.7 - 8.0 on python 3.6, 3.7, 3.8 and 3.9.
+We currently support with security releases: the lastest PyPi version on the Release branch, and the Dev branch when running sopel 7.1.0 - 8.0 on python 3.7, 3.8 and 3.9.
 
 
 ## Reporting a Vulnerability
 
 
-To report a Security Vulnerability or issue, we ask that you please email any applicable information to: bots[at]miraheze.org.
+To report a Security Vulnerability or issue, we ask that you please email any applicable information to: staff[at]mirahezebots.org.
 
 Please note that by doing this you agree to disclose your email address, and/or any information provided in the email header.
 

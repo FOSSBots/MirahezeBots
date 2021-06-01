@@ -6,7 +6,6 @@ import sys
 from contextlib import suppress
 
 import models
-
 from sqlalchemy import create_engine
 
 PATH = '../MirahezeBots/MirahezeBots'
@@ -21,7 +20,7 @@ def test_db_schema_is_same():
         conn.text_factory = str
         res = conn.execute("SELECT name FROM sqlite_master WHERE type='table';")
         for tbl in res:
-            if tbl[0] != 'nick_ids' and tbl[0] != 'sqlite_sequence':
+            if tbl[0] not in ('nick_ids', 'sqlite_sequence'):
                 original.add(tbl[0])
     with suppress(FileNotFoundError):
         os.unlink(os.path.join(PATH, 'example-model.db'))
@@ -41,3 +40,9 @@ def test_no_get_on_lists():
             with open(os.path.join(PLUGINPATH, filen)) as python_source:
                 src = python_source.read()
                 assert not re.search(reg, src)
+
+
+def future_test_db_cleanup():
+    """Confirms database matches as expected."""  # noqa: D401
+    engine = create_engine(f'sqlite:///{os.path.join(PATH, "..", "hasan2.db")}')
+    models.Base.metadata.create_all(bind=engine)
