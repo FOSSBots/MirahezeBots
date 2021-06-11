@@ -1,7 +1,7 @@
 # dependenices used in MirahezeBot
 sopel>=7.1.0,<8
 requests>=2.25.1,<2.26.0
-requests-cache==0.6.3
+requests-cache==0.6.4
 # shared util scripts
 MirahezeBots-jsonparser>=1.0.3,<2.0.0
 # code migrated to own repo awaiting bundle switch
