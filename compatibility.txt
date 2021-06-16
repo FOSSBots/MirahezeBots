@@ -1,7 +1,7 @@
 sopel-help==0.2.0
 sopel-modules.quotes==1.2.1
 sopel-modules.twitter==0.3.2
-sopel-modules.weather==1.2.5
+sopel-modules.weather==1.3.0
 sopel-modules.youtube==0.4.0
 sopel-modules.stocks==1.1.3
 sopel-modules.chanlogs==0.2.1
