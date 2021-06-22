@@ -1,7 +1,7 @@
 """phab.by - Phabricator Task Information Plugin."""
 
 from MirahezeBots_jsonparser import jsonparser as jp
-from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
+from sopel.config.types import BooleanAttribute, ListAttribute, StaticSection, ValidatedAttribute
 from sopel.plugin import commands, example, interval, require_admin, rule
 from sopel.tools import SopelMemory
 
@@ -13,7 +13,7 @@ class PhabricatorSection(StaticSection):
 
     querykey = ListAttribute('querykey', str)
     api_token = ListAttribute('api_token', str)
-    highpri_notify = ValidatedAttribute('highpri_notify', bool)
+    highpri_notify = BooleanAttribute('highpri_notify')
     highpri_channel = ValidatedAttribute('highpri_channel', str)
     datafile = ValidatedAttribute('datafile', str)
 
