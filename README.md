@@ -1,7 +1,7 @@
 # MirahezeBots
 
 MirahezeBots is an IRC bot mainly used by [Miraheze](https://meta.miraheze.org)
-([#miraheze on freenode](http://webchat.freenode.net/?channels=miraheze)).
+([#miraheze on Libera.Chat](http://web.libera.chat)).
 
 It is simple and easy to customize.
 MirahezeBot uses [Sopel](https://sopel.chat).
