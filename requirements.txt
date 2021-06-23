@@ -1,5 +1,5 @@
 # dependenices used in MirahezeBot
-sopel>=7.1.1,<8
+sopel>=7.1.1,<9
 requests>=2.25.1,<2.26.0
 requests-cache==0.6.4
 # shared util scripts
