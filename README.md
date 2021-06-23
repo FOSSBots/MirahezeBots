@@ -1,7 +1,7 @@
 # MirahezeBots
 
 MirahezeBots is an IRC bot mainly used by [Miraheze](https://meta.miraheze.org)
-([#miraheze on freenode](http://webchat.freenode.net/?channels=miraheze)).
+([#miraheze on Libera.Chat](http://web.libera.chat)).
 
 It is simple and easy to customize.
 MirahezeBot uses [Sopel](https://sopel.chat).
@@ -10,10 +10,10 @@ To use this bot, simply type install 'MirahezeBot-Plugins' from PyPi and then ru
 
 To make use of the beta branch, clone the repo and check the 'dev' branch out and use pip's "install ." function to install it. You can then use 'sopel configure --plugins' as normal.
 
-Please note that in line with our security policy, we can only support Sopel 7.0.5 - 8.0 installations running Python 3.6+.
+Please note that in line with our security policy, we can only support Sopel 7.1.1 - 8.0 installations running Python 3.7+.
 
 [Source Github](http://github.com/sopel-irc/sopel)
 
-[More info](https://bots.miraheze.wiki)
+[More info](https://mirahezebots.org)
 
-[Documentation](https://bots.miraheze.wiki/documentation.html)
+[Documentation](https://mirahezebots.org/documentation.html)

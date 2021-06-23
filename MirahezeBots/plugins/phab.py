@@ -2,7 +2,7 @@
 
 import requests  # FIX THIS
 from sopel.module import commands, example, interval, rule, require_admin
-from sopel.config.types import StaticSection, ValidatedAttribute, ListAttribute
+from sopel.config.types import BooleanAttribute, StaticSection, ValidatedAttribute, ListAttribute
 from json import JSONDecodeError
 from sopel.tools import get_logger, SopelMemory
 from sopel.config import ConfigurationError
@@ -15,7 +15,7 @@ class PhabricatorSection(StaticSection):
     host = ValidatedAttribute('host', str)
     api_token = ListAttribute('api_token', str)
     querykey = ListAttribute('querykey', str)
-    highpri_notify = ValidatedAttribute('highpri_notify', bool)
+    highpri_notify = BooleanAttribute('highpri_notify')
     highpri_channel = ValidatedAttribute('highpri_channel', str)
     datafile = ValidatedAttribute('datafile', str)
 
