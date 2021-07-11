@@ -1,3 +1,4 @@
+# type: ignore
 """SQL models for sopel database."""
 import sys
 
