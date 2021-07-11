@@ -3,7 +3,7 @@
 import codecs
 import os
 import re
-from typing import Union, List
+from typing import Union, List, Dict
 
 from sopel import bot, trigger
 from sopel.tools import Identifier
@@ -29,9 +29,9 @@ def setup(bot: bot) -> None:
     bot.known_users_list = load_known_users_list(bot.known_users_filename)
 
 
-def load_known_users_list(filename: str) -> dict[str, List[str]]:
+def load_known_users_list(filename: str) -> Dict[str, List[str]]:
     """Load list of known users from database file."""
-    known_users = {}  # type: dict[str, List[str]]
+    known_users = {}  # type: Dict[str, List[str]]
     if os.path.isfile(filename):
         f = codecs.open(filename, 'r', encoding='utf-8')
         for line in f:
@@ -49,7 +49,7 @@ def load_known_users_list(filename: str) -> dict[str, List[str]]:
     return known_users
 
 
-def save_known_users_list(filename: str, known_users_list: dict) -> None:
+def save_known_users_list(filename: str, known_users_list: Dict) -> None:
     """Save list of known users to database file."""
     f = codecs.open(filename, 'w', encoding='utf-8')
     for channel in known_users_list:
