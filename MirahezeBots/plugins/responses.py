@@ -1,5 +1,6 @@
 """responses.py - like a FAQ bot."""
 
+from sopel import bot, trigger, config
 from sopel.config.types import StaticSection, ValidatedAttribute
 from sopel.plugin import commands, example, rate, require_account
 
@@ -12,12 +13,12 @@ class ResponsesSection(StaticSection):
     support_channel = ValidatedAttribute('support_channel', str)
 
 
-def setup(bot):
+def setup(bot: bot) -> None:
     """Set up the config section."""
     bot.config.define_section('responses', ResponsesSection)
 
 
-def configure(config):
+def configure(config: config) ->  None:
     """Set up the configuration options."""
     config.define_section('responses', ResponsesSection, validate=False)
     config.responses.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
@@ -27,7 +28,7 @@ def configure(config):
 @example('.addchannel (insert which)')
 @rate(user=120, channel=240, server=60)
 @require_account()
-def addchan(bot, trigger):
+def addchan(bot: bot, trigger: trigger) -> None:
     """Reply to channel request message."""
     admins = ' '.join(map(str, bot.config.core.admin_accounts))
     if bot.config.responses.support_channel is not None:
@@ -40,7 +41,7 @@ def addchan(bot, trigger):
 @commands('gj', 'gw')
 @example('.gj (nick)')
 @rate(user=2, channel=1, server=0)
-def gj(bot, trigger):
+def gj(bot: bot, trigger: trigger) -> None:
     """Tell the user that they are doing good work."""
     bot.say(f"You're doing good work, {trigger.group(2)}!")
 
@@ -48,7 +49,7 @@ def gj(bot, trigger):
 @commands('cancelreminder')
 @example('.cancelreminder (insert reminder message here)')
 @rate(user=2, channel=1, server=0)
-def cancel(bot, trigger):
+def cancel(bot: bot, trigger: trigger) -> None:
     """Cancel reminder."""
     admins = ' '.join(map(str, bot.config.core.admin_accounts))
     bot.reply(f"Pinging {admins} to cancel {trigger.nicks}'s reminder.")
@@ -57,7 +58,7 @@ def cancel(bot, trigger):
 @commands('botversion', 'bv')
 @example('.botversion')
 @rate(user=2, channel=1, server=0)
-def botversion(bot, trigger):  # noqa: U100
+def botversion(bot: bot, trigger: trigger) -> None:  # noqa: U100
     """List the current version of the bot."""
     bot.reply(f'The current version of this bot is {VERSION} ({SHORTVERSION})')
 
@@ -65,6 +66,6 @@ def botversion(bot, trigger):  # noqa: U100
 @commands('source', 'botsource')
 @example('.source')
 @rate(user=2, channel=1, server=0)
-def githubsource(bot, trigger):  # noqa: U100
+def githubsource(bot: bot, trigger: trigger) -> None:  # noqa: U100
     """Give the link to MirahezeBot's Github."""
     bot.reply('My code can be found here: https://github.com/MirahezeBots/MirahezeBots')

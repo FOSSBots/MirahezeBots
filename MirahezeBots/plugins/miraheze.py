@@ -1,5 +1,6 @@
 """This plugin contains miraheze specific commands."""
 from sopel.plugin import commands, example, rule
+from sopel import bot, trigger
 
 MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL = (
     'Miraheze is a non-profit wikifarm running MediaWiki. If you would like '
@@ -16,7 +17,7 @@ MIRAHEZE_ABOUT_OTHER_CHANNELS = (
 @commands('miraheze')
 @rule('.*[w-wW-W]hat (even is [m-mM-M]iraheze|is [m-mM-M]iraheze|does [m-mM-M]iraheze do).*')
 @example('.miraheze')
-def miraheze(bot, trigger):
+def miraheze(bot: bot, trigger: trigger) -> None:
     """Tells you about Miraheze and where to learn more."""
     if trigger.sender == '#miraheze':
         bot.reply(MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL)
@@ -27,7 +28,7 @@ def miraheze(bot, trigger):
 @commands('gethelp')
 @rule("([i-iI-I] need help|[c-cC-C]an someone help me|[i-iI-I] can(t|'t) login).*")
 @example('.gethelp I cannot access https://meta.miraheze.org')
-def miraheze_gethelp(bot, trigger):
+def miraheze_gethelp(bot: bot, trigger: trigger) -> None:
     """Reply to help requests."""
     if trigger.sender == '#miraheze':
         bot.reply(
@@ -38,6 +39,6 @@ def miraheze_gethelp(bot, trigger):
 
 
 @commands('discord')
-def miraheze_discord(bot, trigger):  # noqa: U100
+def miraheze_discord(bot: bot, trigger: trigger) -> None:  # noqa: U100
     """Display discord information for Miraheze."""
     bot.reply('You can join discord by going to, https://miraheze.org/discord!')

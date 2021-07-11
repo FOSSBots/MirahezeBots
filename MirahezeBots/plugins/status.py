@@ -1,3 +1,4 @@
+# type: ignore
 """status.py - Mediawiki Status Page Updater."""
 
 from MirahezeBots_jsonparser import jsonparser as jp

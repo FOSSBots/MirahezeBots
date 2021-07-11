@@ -1,10 +1,11 @@
 """This plugin expands links to various websites."""
 from sopel.plugin import commands, example
+from sopel import bot, trigger
 
 
 @commands('github', 'gh')
 @example('.github user')
-def ghuser(bot, trigger):
+def ghuser(bot: bot, trigger: trigger) -> None:
     """Expand a link to github."""
     try:
         bot.say(f'https://github.com/{trigger.group(2)}')
@@ -14,7 +15,7 @@ def ghuser(bot, trigger):
 
 @commands('redditu')
 @example('.redditu example')
-def redditu(bot, trigger):
+def redditu(bot: bot, trigger: trigger) -> None:
     """Expand a link to reddit/u."""
     try:
         bot.say(f'https://reddit.com/u/{trigger.group(2)}')
@@ -24,7 +25,7 @@ def redditu(bot, trigger):
 
 @commands('subred')
 @example('.subred example')
-def redditr(bot, trigger):
+def redditr(bot: bot, trigger: trigger) -> None:
     """Expand a link to reddit/r."""
     try:
         bot.say(f'https://reddit.com/r/{trigger.group(2)}')
@@ -34,7 +35,7 @@ def redditr(bot, trigger):
 
 @commands('wmca')
 @example('.wmca example')
-def wmca(bot, trigger):
+def wmca(bot: bot, trigger: trigger) -> None:
     """Expand a link to Wikimedia CentralAuth."""
     try:
         target = trigger.group(2).replace(' ', '_')
@@ -45,7 +46,7 @@ def wmca(bot, trigger):
 
 @commands('mhca')
 @example('.mhca example')
-def mhca(bot, trigger):
+def mhca(bot: bot, trigger: trigger) -> None:
     """Expand a link to Miraheze Central Auth."""
     try:
         target = trigger.group(2).replace(' ', '_')
@@ -56,7 +57,7 @@ def mhca(bot, trigger):
 
 @commands('tw')
 @example('.tw user')
-def twlink(bot, trigger):
+def twlink(bot: bot, trigger: trigger) -> None:
     """Expand a link to Twitter."""
     try:
         bot.say(f'https://twitter.com/{trigger.group(2)}')
@@ -66,7 +67,7 @@ def twlink(bot, trigger):
 
 @commands('mh')
 @example('.mh wiki page')
-def mhwiki(bot, trigger):
+def mhwiki(bot: bot, trigger: trigger) -> None:
     """Expand a link to Miraheze wikis."""
     try:
         options = trigger.group(2).split(' ', 1)

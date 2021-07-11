@@ -1,3 +1,4 @@
+# type: ignore
 """General tests for all MHB plugins."""
 import os
 import re
@@ -14,7 +15,7 @@ PLUGINPATH = '../MirahezeBots/MirahezeBots/plugins'
 sys.path.append(PATH)
 
 
-def test_db_schema_is_same():
+def test_db_schema_is_same() -> None:
     """Confirms database matches as expected."""
     original, new = set(), set()  # noqa: F841
     with sqlite3.connect(os.path.join(PATH, 'example.db')) as conn:
@@ -31,7 +32,7 @@ def test_db_schema_is_same():
     assert original == set(engine.table_names())
 
 
-def test_no_get_on_lists():
+def test_no_get_on_lists() -> None:
     """Checks for misuse of .get() on lists."""
     reg = r'get\([0-9]'
     for top, dirs, files in os.walk(PLUGINPATH):
@@ -43,7 +44,7 @@ def test_no_get_on_lists():
                 assert not re.search(reg, src)
 
 
-def future_test_db_cleanup():
+def future_test_db_cleanup() -> None:
     """Confirms database matches as expected."""  # noqa: D401
     engine = create_engine(f'sqlite:///{os.path.join(PATH, "..", "hasan2.db")}')
     models.Base.metadata.create_all(bind=engine)

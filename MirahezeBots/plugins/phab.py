@@ -1,10 +1,12 @@
+# type: ignore
 """phab.by - Phabricator Task Information Plugin."""
 
 from MirahezeBots_jsonparser import jsonparser as jp
+from sopel import bot, trigger, config
 from sopel.config.types import (BooleanAttribute, ListAttribute, StaticSection,
                                 ValidatedAttribute)
 from sopel.plugin import commands, example, interval, require_admin, rule
-from sopel.tools import SopelMemory
+from sopel.tools import SopelMemory, Identifier
 
 from MirahezeBots.utils import phabapi
 
@@ -19,14 +21,14 @@ class PhabricatorSection(StaticSection):
     datafile = ValidatedAttribute('datafile', str)
 
 
-def setup(bot):
+def setup(bot: bot) -> None:
     """Create the config section & memory."""
     bot.config.define_section('phabricator', PhabricatorSection)
     bot.memory['phab'] = SopelMemory()
     bot.memory['phab']['jdcache'] = jp.createdict(bot.settings.phabricator.datafile)
 
 
-def configure(config):
+def configure(config: config) ->  None:
     """Set up the configuration options."""
     config.define_section('phabricator', PhabricatorSection, validate=False)
     config.phabricator.configure_setting(
@@ -52,7 +54,7 @@ def configure(config):
     )
 
 
-def get_host_and_api_or_query_key(channel, cache, keys):
+def get_host_and_api_or_query_key(channel: Identifier, cache: dict, keys: list) -> list:
     """Get hostname,apikey and querykey for instance."""
     if channel in cache:
         host = cache[str(channel)]['host']
@@ -64,12 +66,12 @@ def get_host_and_api_or_query_key(channel, cache, keys):
         arraypos = int(cache[str(host)]['arraypos'])
         apikey = keys[0][int(arraypos)]
         querykey = keys[1][int(arraypos)]
-    return host, apikey, querykey
+    return [host, apikey, querykey]
 
 
 @commands('task')
 @example('.task 1')
-def phabtask(bot, trigger):
+def phabtask(bot: bot, trigger: trigger) -> None:
     """Get information on a phabricator task."""
     try:
         if trigger.group(2).startswith('T'):
@@ -90,7 +92,7 @@ def phabtask(bot, trigger):
 
 
 @rule('T[1-9][0-9]*')
-def phabtask2(bot, trigger):
+def phabtask2(bot: bot, trigger: trigger) -> None:
     """Get a Miraheze phabricator link to a the task number you provide."""
     task_id = str(trigger.match.group(0))[1:]
     info = get_host_and_api_or_query_key(
@@ -105,7 +107,7 @@ def phabtask2(bot, trigger):
 
 
 @interval(604800)  # every week
-def high_priority_tasks_notification(bot):
+def high_priority_tasks_notification(bot: bot, trigger: trigger) -> None:
     """Send regular update on high priority tasks."""
     if bot.settings.phabricator.highpri_notify is True:
         info = get_host_and_api_or_query_key(
@@ -130,7 +132,7 @@ def high_priority_tasks_notification(bot):
 
 @commands('highpri')
 @example('.highpri')
-def forcehighpri(bot, trigger):
+def forcehighpri(bot: bot, trigger: trigger) -> None:
     """Send full list of high priority tasks."""
     info = get_host_and_api_or_query_key(
         trigger.sender,
@@ -150,7 +152,7 @@ def forcehighpri(bot, trigger):
 
 @require_admin(message='Only admins may purge cache.')
 @commands('resetphabcache')
-def reset_phab_cache(bot, trigger):  # noqa: U100
+def reset_phab_cache(bot: bot, trigger: trigger) -> None:  # noqa: U100
     """Reset the cache of the channel management data file."""
     bot.reply('Refreshing Cache...')
     bot.memory['phab']['jdcache'] = jp.createdict(bot.settings.phabricator.datafile)
@@ -159,7 +161,7 @@ def reset_phab_cache(bot, trigger):  # noqa: U100
 
 @require_admin(message='Only admins may check cache')
 @commands('checkphabcache')
-def check_phab_cache(bot, trigger):  # noqa: U100
+def check_phab_cache(bot: bot, trigger: trigger) -> None:  # noqa: U100
     """Validate the cache matches the copy on disk."""
     result = jp.validatecache(bot.settings.phabricator.datafile, bot.memory['phab']['jdcache'])
     if result:

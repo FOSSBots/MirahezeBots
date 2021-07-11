@@ -1,11 +1,12 @@
 """Some commands for just goofing around and having fun."""
 
 from sopel.plugin import commands, example
+from sopel import bot, trigger
 
 
 @example('.coffee MirahezeBot')
 @commands('coffee')
-def coffee(bot, trigger):
+def coffee(bot: bot, trigger: trigger) -> None:
     """Make me give the specified nick a coffee."""
     if trigger.group(2) is None:
         bot.reply('To whom should I give this cup of coffee?')
@@ -15,7 +16,7 @@ def coffee(bot, trigger):
 
 @example('.hug MirahezeBot')
 @commands('hug')
-def hug(bot, trigger):
+def hug(bot: bot, trigger: trigger) -> None:
     """Make me give the specified nick a hug."""
     if trigger.group(2) is None:
         bot.reply('To whom should I give this hug?')
@@ -25,7 +26,7 @@ def hug(bot, trigger):
 
 @example('.burger MirahezeBot')
 @commands('burger')
-def burger(bot, trigger):
+def burger(bot: bot, trigger: trigger) -> None:
     """Make me give the specified nick a burger."""
     if trigger.group(2) is None:
         bot.reply('To whom should I give this cheeseburger?')
@@ -35,7 +36,7 @@ def burger(bot, trigger):
 
 @example('.present MirahezeBot')
 @commands('present')
-def present(bot, trigger):
+def present(bot: bot, trigger: trigger) -> None:
     """Make me give the specified nick a present."""
     if trigger.group(2) is None:
         bot.reply('To whom should I give this present?')
@@ -45,7 +46,7 @@ def present(bot, trigger):
 
 @example('.hotchoc MirahezeBot')
 @commands('hotchoc', 'hotchocolate')
-def hotchoc(bot, trigger):
+def hotchoc(bot: bot, trigger: trigger) -> None:
     """Make me give the specified nick a hot chocolate."""
     if trigger.group(2) is None:
         bot.reply('To whom should I give this hot chocolate?')

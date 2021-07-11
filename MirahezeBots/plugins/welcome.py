@@ -3,7 +3,10 @@
 import codecs
 import os
 import re
+from typing import Union, List
 
+from sopel import bot, trigger
+from sopel.tools import Identifier
 from sopel.plugin import commands, event, example, rule
 
 DEFAULT_CHANNEL = '#miraheze'
@@ -11,7 +14,7 @@ USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
 CHANNEL_RE = re.compile(r'#[A-Za-z0-9#\-]+$')
 
 
-def send_welcome(nick, chan):
+def send_welcome(nick: Identifier, chan: Identifier) -> Union[None, str]:
     """Find the message to be sent."""
     if chan == '#miraheze' and nick[:4] != 'Not-':
         return f'Hello {nick}! If you have any questions, feel free to ask and someone should answer soon.'
@@ -20,15 +23,15 @@ def send_welcome(nick, chan):
     return None
 
 
-def setup(bot):
+def setup(bot: bot) -> None:
     """Do required setup for this module."""
     bot.known_users_filename = os.path.join(bot.config.core.homedir, f'{bot.nick}-{bot.config.core.host}.known_users.db')
     bot.known_users_list = load_known_users_list(bot.known_users_filename)
 
 
-def load_known_users_list(filename):
+def load_known_users_list(filename: str) -> dict[str, List[str]]:
     """Load list of known users from database file."""
-    known_users = {}
+    known_users = {}  # type: dict[str, List[str]]
     if os.path.isfile(filename):
         f = codecs.open(filename, 'r', encoding='utf-8')
         for line in f:
@@ -46,7 +49,7 @@ def load_known_users_list(filename):
     return known_users
 
 
-def save_known_users_list(filename, known_users_list):
+def save_known_users_list(filename: str, known_users_list: dict) -> None:
     """Save list of known users to database file."""
     f = codecs.open(filename, 'w', encoding='utf-8')
     for channel in known_users_list:
@@ -57,7 +60,7 @@ def save_known_users_list(filename, known_users_list):
 
 @event('JOIN')
 @rule('.*')
-def welcome_user(bot, trigger):
+def welcome_user(bot: bot, trigger: trigger) -> None:
     """Welcome users upon joining the channel."""
     if trigger.nick == bot.nick:
         return
@@ -81,7 +84,7 @@ def welcome_user(bot, trigger):
 
 @commands('add_known', 'adduser')
 @example('.add_known nick #example or .adduser nick #example')
-def add_known_user(bot, trigger):
+def add_known_user(bot: bot, trigger: trigger) -> None:
     """Add user to known users list."""
     if trigger.account not in bot.config.core.admin_accounts:
         bot.reply('Only bot admins can add people to the known users list.')
