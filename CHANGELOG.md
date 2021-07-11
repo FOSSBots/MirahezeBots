@@ -2,6 +2,8 @@
 **Changelog**
 
 Please see below for changes to MirahezeBot-Plugins
+# Version 9.1.4
+- Remove Python 3.6 support, various CI changes, bug fixes and compatibility changes
 # Version 9.1.1
 - Fixed developer requirements blocking newer versions of channelmgnt.
 # Version 9.1.0
