@@ -75,7 +75,7 @@ def mhwiki(instance: bot, message: trigger) -> None:
         options = message.group(2).split(' ', 1)
         if len(options) == 1:
             instance.say(
-                f'https://meta.miraheze.org/wiki/{options[0].replace(' ', '_')}'
+                f'https://meta.miraheze.org/wiki/{options[0].replace(" ", "_")}'
                 )
         elif len(options) == 2:
             wiki = options[0]
