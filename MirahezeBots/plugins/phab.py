@@ -109,13 +109,14 @@ def phabtask2(instance: bot, message: trigger) -> None:
             instance.settings.phabricator.querykey,
         ],
         )
-        instance.reply(
-            phabapi.gettaskinfo(
+    instance.reply(
+        phabapi.gettaskinfo(
             info[0],
             info[1],
             task=task_id,
-            session=instance.memory['shared']['session'])
+            session=instance.memory['shared']['session'],
         )
+    )
 
 
 @interval(604800)  # every week

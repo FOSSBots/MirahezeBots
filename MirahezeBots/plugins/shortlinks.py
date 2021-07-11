@@ -39,7 +39,7 @@ def wmca(instance: bot, message: trigger) -> None:
     """Expand a link to Wikimedia CentralAuth."""
     try:
         instance.say(
-            f'https://meta.wikimedia.org/wiki/Special:CentralAuth/{message.group(2).replace(' ', '_')}'
+            f'https://meta.wikimedia.org/wiki/Special:CentralAuth/{message.group(2).replace(" ", "_")}'
             )
     except AttributeError:
         instance.say('Syntax: .wmca example', message.sender)

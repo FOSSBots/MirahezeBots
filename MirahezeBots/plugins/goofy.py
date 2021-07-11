@@ -51,5 +51,7 @@ def hotchoc(instance: bot, message: trigger) -> None:
     if message.group(2) is None:
         instance.reply('To whom should I give this hot chocolate?')
     else:
-        instance.action(f'gives {message.group(2)} a warm, velvety salted caramel hot chocolate with cream and marhsmellows.',
-                   message.sender)
+        instance.action(
+            f'gives {message.group(2)} a warm, velvety salted caramel hot chocolate with cream and marhsmellows.',
+            message.sender,
+        )
