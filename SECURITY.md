@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-We currently support with security releases: the lastest PyPi version on the Release branch, and the Dev branch when running sopel 7.1.1 - 8.0 on python 3.7, 3.8 and 3.9.
+We currently support with security releases: the lastest PyPi version on the Release branch, and the Dev branch when running sopel 7.1.1 - 8.0 on python 3.8 and 3.9.
 
 
 ## Reporting a Vulnerability
