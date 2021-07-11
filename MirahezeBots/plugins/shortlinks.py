@@ -39,7 +39,7 @@ def wmca(instance: bot, message: trigger) -> None:
     """Expand a link to Wikimedia CentralAuth."""
     try:
         instance.say(
-            f'https://meta.wikimedia.org/wiki/Special:CentralAuth/{message.group(2).replace(" ", "_")}'
+            f'https://meta.wikimedia.org/wiki/Special:CentralAuth/{message.group(2).replace(" ", "_")}',
             )
     except AttributeError:
         instance.say('Syntax: .wmca example', message.sender)
@@ -51,7 +51,7 @@ def mhca(instance: bot, message: trigger) -> None:
     """Expand a link to Miraheze Central Auth."""
     try:
         instance.say(
-            f'https://meta.miraheze.org/wiki/Special:CentralAuth/{message.group(2).replace(" ", "_")}'
+            f'https://meta.miraheze.org/wiki/Special:CentralAuth/{message.group(2).replace(" ", "_")}',
             )
     except AttributeError:
         instance.say('Syntax: .mhca example', message.sender)
@@ -75,7 +75,7 @@ def mhwiki(instance: bot, message: trigger) -> None:
         options = message.group(2).split(' ', 1)
         if len(options) == 1:
             instance.say(
-                f'https://meta.miraheze.org/wiki/{options[0].replace(" ", "_")}'
+                f'https://meta.miraheze.org/wiki/{options[0].replace(" ", "_")}',
                 )
         elif len(options) == 2:
             wiki = options[0]

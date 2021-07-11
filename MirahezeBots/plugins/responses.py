@@ -37,7 +37,9 @@ def addchan(instance: bot, message: trigger) -> None:
             instance.config.responses.support_channel,
         )
         if message.sender != instance.config.responses.support_channel:
-            instance.reply(f'Request sent! Action upon the request should be taken shortly. Thank you for using {instance.nick}!')
+            instance.reply(
+                f'Request sent! Action upon the request should be taken shortly. Thank you for using {instance.nick}!',
+            )
 
 
 @commands('gj', 'gw')

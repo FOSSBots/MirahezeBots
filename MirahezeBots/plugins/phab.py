@@ -91,7 +91,7 @@ def phabtask(instance: bot, message: trigger) -> None:
                 info[0],
                 info[1],
                 task=task_id,
-                session=instance.memory['shared']['session'])
+                session=instance.memory['shared']['session']),
             )
     except AttributeError:
         instance.say('Syntax: .task (task ID with or without T)', message.sender)
@@ -115,12 +115,12 @@ def phabtask2(instance: bot, message: trigger) -> None:
             info[1],
             task=task_id,
             session=instance.memory['shared']['session'],
-        )
+        ),
     )
 
 
 @interval(604800)  # every week
-def high_priority_tasks_notification(instance: bot, message: trigger) -> None:
+def high_priority_tasks_notification(instance: bot, message: trigger) -> None:  # noqa: U100
     """Send regular update on high priority tasks."""
     if instance.settings.phabricator.highpri_notify is True:
         info = get_host_and_api_or_query_key(
@@ -135,7 +135,7 @@ def high_priority_tasks_notification(instance: bot, message: trigger) -> None:
             info[0],
             info[1],
             info[2],
-            session=instance.memory['shared']['session']
+            session=instance.memory['shared']['session'],
             )
         if result:
             instance.say('Your weekly high priority task update:', instance.settings.phabricator.highpri_channel)
