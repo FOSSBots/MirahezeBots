@@ -3,6 +3,7 @@
 from json import JSONDecodeError
 from urllib.parse import urlparse
 from warnings import warn
+from typing import Union, List
 
 from requests import Session
 from requests_cache import install_cache, uninstall_cache
@@ -10,7 +11,7 @@ from requests_cache import install_cache, uninstall_cache
 BOLD = '\x02'
 
 
-def gettaskinfo(host, apikey, task=None, tasks=None, session=Session(), querykey=None, limit=None):
+def gettaskinfo(host: str, apikey: str, querykey: Union[str,None]=None, task: Union[str,None]=None , tasks: Union[list[str],None]=None, session:Session=Session(), limit: Union[None, int]=None) -> str:
     """Get information on a specific task."""
     data = {'api.token': apikey, 'limit': limit}
     if task and not tasks:
@@ -46,7 +47,7 @@ def gettaskinfo(host, apikey, task=None, tasks=None, session=Session(), querykey
             response2 = response2.json()
         except JSONDecodeError as e:
             raise ValueError(f'Encountered {e} on {response2.text}')
-        owner = response2.get('result').get('data')[0].get('fields').get('username')
+        owner = response2.get('result').get('data')[0].get('fields').get('username')  #  type: ignore
     elif ownerPHID is None:
         owner = None
     if ownerPHID == authorPHID:
@@ -61,7 +62,7 @@ def gettaskinfo(host, apikey, task=None, tasks=None, session=Session(), querykey
             data=params2)
         uninstall_cache()
         response3 = response3.json()
-        author = response3.get('result').get('data')[0].get('fields').get('username')
+        author = response3.get('result').get('data')[0].get('fields').get('username')  #  type: ignore
     priority = result.get('fields').get('priority').get('name')
     status = result.get('fields').get('status').get('name')
     output = f"{'https://' + str(urlparse(host).netloc)}/T{str(result['id'])} - "
@@ -73,7 +74,7 @@ def gettaskinfo(host, apikey, task=None, tasks=None, session=Session(), querykey
     return output  # noqa: R504
 
 
-def dophabsearch(host, apikey, querykey, limit=True, session=Session()):
+def dophabsearch(host: str, apikey: str, querykey: str, limit: bool=True, session: Session=Session()) -> Union[None,List[str]]:
     """Perform a maniphest search."""
     warn('Use of dophabsearch is Deceprated. Use the querykey parameter of gettaskinfo()', DeprecationWarning)
     data = {
@@ -83,8 +84,8 @@ def dophabsearch(host, apikey, querykey, limit=True, session=Session()):
     response = session.post(
         url=f'{host}/maniphest.search',
         data=data)
-    response = response.json()
-    result = response.get('result')
+    response = response.json()  #  type: ignore
+    result = response.get('result')  #  type: ignore
     try:
         data = result.get('data')
     except AttributeError:
@@ -92,9 +93,9 @@ def dophabsearch(host, apikey, querykey, limit=True, session=Session()):
     x = 0
     searchphab = []
     while x < len(data):
-        currdata = data[x]
+        currdata = data[x]  #  type: ignore
         if x > 5 and limit:
             return ['Limit exceeded. Please perform this search directly on phab.']
-        searchphab.append(gettaskinfo(host, apikey, task=currdata.get('id'), session=session))
+        searchphab.append(gettaskinfo(host, apikey, task=currdata.get('id'), session=session))  #  type: ignore
         x = x + 1
     return searchphab

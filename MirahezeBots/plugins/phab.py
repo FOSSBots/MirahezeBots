@@ -7,7 +7,7 @@ from sopel.config.types import (BooleanAttribute, ListAttribute, StaticSection,
 from sopel.plugin import commands, example, interval, require_admin, rule
 from sopel.tools import SopelMemory, Identifier
 
-from MirahezeBots.utils import phabapi
+from MirahezeBots.utils.phabapi import gettaskinfo, dophabsearch
 
 
 class PhabricatorSection(StaticSection):
@@ -86,7 +86,7 @@ def phabtask(instance: bot, message: trigger) -> None:
             ],
         )
         instance.reply(
-            phabapi.gettaskinfo(
+            gettaskinfo(
                 info[0],
                 info[1],
                 task=task_id,
@@ -109,7 +109,7 @@ def phabtask2(instance: bot, message: trigger) -> None:
         ],
         )
     instance.reply(
-        phabapi.gettaskinfo(
+        gettaskinfo(
             info[0],
             info[1],
             task=task_id,
@@ -130,7 +130,7 @@ def high_priority_tasks_notification(instance: bot, message: trigger) -> None:  
                 instance.settings.phabricator.querykey,
             ],
         )
-        result = phabapi.dophabsearch(
+        result = dophabsearch(
             info[0],
             info[1],
             info[2],
@@ -159,7 +159,7 @@ def forcehighpri(instance: bot, message: trigger) -> None:
             instance.settings.phabricator.querykey,
         ],
     )
-    result = phabapi.dophabsearch(
+    result = dophabsearch(
         info[0],
         info[1],
         info[2],
