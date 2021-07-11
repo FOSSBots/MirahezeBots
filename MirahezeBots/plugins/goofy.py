@@ -1,54 +1,57 @@
 """Some commands for just goofing around and having fun."""
 
 from sopel.plugin import commands, example
+from sopel import bot, trigger
 
 
 @example('.coffee MirahezeBot')
 @commands('coffee')
-def coffee(bot, trigger):
+def coffee(instance: bot, message: trigger) -> None:
     """Make me give the specified nick a coffee."""
-    if trigger.group(2) is None:
-        bot.reply('To whom should I give this cup of coffee?')
+    if message.group(2) is None:
+        instance.reply('To whom should I give this cup of coffee?')
     else:
-        bot.action(f'gives {trigger.group(2)} a nice warm cup of coffee.', trigger.sender)
+        instance.action(f'gives {message.group(2)} a nice warm cup of coffee.', message.sender)
 
 
 @example('.hug MirahezeBot')
 @commands('hug')
-def hug(bot, trigger):
+def hug(instance: bot, message: trigger) -> None:
     """Make me give the specified nick a hug."""
-    if trigger.group(2) is None:
-        bot.reply('To whom should I give this hug?')
+    if message.group(2) is None:
+        instance.reply('To whom should I give this hug?')
     else:
-        bot.action(f'gives {trigger.group(2)} a great big bear hug.', trigger.sender)
+        instance.action(f'gives {message.group(2)} a great big bear hug.', message.sender)
 
 
 @example('.burger MirahezeBot')
 @commands('burger')
-def burger(bot, trigger):
+def burger(instance: bot, message: trigger) -> None:
     """Make me give the specified nick a burger."""
-    if trigger.group(2) is None:
-        bot.reply('To whom should I give this cheeseburger?')
+    if message.group(2) is None:
+        instance.reply('To whom should I give this cheeseburger?')
     else:
-        bot.action(f'gives {trigger.group(2)} a freshly cooked cheeseburger.', trigger.sender)
+        instance.action(f'gives {message.group(2)} a freshly cooked cheeseburger.', message.sender)
 
 
 @example('.present MirahezeBot')
 @commands('present')
-def present(bot, trigger):
+def present(instance: bot, message: trigger) -> None:
     """Make me give the specified nick a present."""
-    if trigger.group(2) is None:
-        bot.reply('To whom should I give this present?')
+    if message.group(2) is None:
+        instance.reply('To whom should I give this present?')
     else:
-        bot.action(f'gives {trigger.group(2)} a present.', trigger.sender)
+        instance.action(f'gives {message.group(2)} a present.', message.sender)
 
 
 @example('.hotchoc MirahezeBot')
 @commands('hotchoc', 'hotchocolate')
-def hotchoc(bot, trigger):
+def hotchoc(instance: bot, message: trigger) -> None:
     """Make me give the specified nick a hot chocolate."""
-    if trigger.group(2) is None:
-        bot.reply('To whom should I give this hot chocolate?')
+    if message.group(2) is None:
+        instance.reply('To whom should I give this hot chocolate?')
     else:
-        bot.action(f'gives {trigger.group(2)} a warm, velvety salted caramel hot chocolate with cream and marhsmellows.',
-                   trigger.sender)
+        instance.action(
+            f'gives {message.group(2)} a warm, velvety salted caramel hot chocolate with cream and marhsmellows.',
+            message.sender,
+        )
