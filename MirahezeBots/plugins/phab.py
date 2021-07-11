@@ -28,7 +28,7 @@ def setup(bot: bot) -> None:
     bot.memory['phab']['jdcache'] = jp.createdict(bot.settings.phabricator.datafile)
 
 
-def configure(config: config) ->  None:
+def configure(config: config) -> None:
     """Set up the configuration options."""
     config.define_section('phabricator', PhabricatorSection, validate=False)
     config.phabricator.configure_setting(

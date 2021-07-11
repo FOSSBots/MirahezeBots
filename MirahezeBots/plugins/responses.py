@@ -18,7 +18,7 @@ def setup(bot: bot) -> None:
     bot.config.define_section('responses', ResponsesSection)
 
 
-def configure(config: config) ->  None:
+def configure(config: config) -> None:
     """Set up the configuration options."""
     config.define_section('responses', ResponsesSection, validate=False)
     config.responses.configure_setting('support_channel', 'Specify a support IRC channel (leave blank for none).')
