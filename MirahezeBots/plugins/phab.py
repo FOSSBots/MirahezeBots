@@ -165,7 +165,7 @@ def forcehighpri(instance: bot, message: trigger) -> None:
         info[1],
         info[2],
         limit=False,
-        session=instance.memory['shared']['session']
+        session=instance.memory['shared']['session'],
         )
     if result:
         for task in result:
