@@ -1,83 +1,85 @@
 """This plugin expands links to various websites."""
 from sopel.plugin import commands, example
+from sopel import bot, trigger
 
 
 @commands('github', 'gh')
 @example('.github user')
-def ghuser(bot, trigger):
+def ghuser(instance: bot, message: trigger) -> None:
     """Expand a link to github."""
     try:
-        bot.say(f'https://github.com/{trigger.group(2)}')
+        instance.say(f'https://github.com/{message.group(2)}')
     except TypeError:
-        bot.say('Syntax: .github user', trigger.sender)
+        instance.say('Syntax: .github user', message.sender)
 
 
 @commands('redditu')
 @example('.redditu example')
-def redditu(bot, trigger):
+def redditu(instance: bot, message: trigger) -> None:
     """Expand a link to reddit/u."""
     try:
-        bot.say(f'https://reddit.com/u/{trigger.group(2)}')
+        instance.say(f'https://reddit.com/u/{message.group(2)}')
     except TypeError:
-        bot.say('Syntax: .redditu example', trigger.sender)
+        instance.say('Syntax: .redditu example', message.sender)
 
 
 @commands('subred')
 @example('.subred example')
-def redditr(bot, trigger):
+def redditr(instance: bot, message: trigger) -> None:
     """Expand a link to reddit/r."""
     try:
-        bot.say(f'https://reddit.com/r/{trigger.group(2)}')
+        instance.say(f'https://reddit.com/r/{message.group(2)}')
     except TypeError:
-        bot.say('Syntax: .subred example', trigger.sender)
+        instance.say('Syntax: .subred example', message.sender)
 
 
 @commands('wmca')
 @example('.wmca example')
-def wmca(bot, trigger):
+def wmca(instance: bot, message: trigger) -> None:
     """Expand a link to Wikimedia CentralAuth."""
     try:
-        target = trigger.group(2).replace(' ', '_')
-        bot.say(f'https://meta.wikimedia.org/wiki/Special:CentralAuth/{target}')
+        instance.say(
+            f'https://meta.wikimedia.org/wiki/Special:CentralAuth/{message.group(2).replace(" ", "_")}',
+            )
     except AttributeError:
-        bot.say('Syntax: .wmca example', trigger.sender)
+        instance.say('Syntax: .wmca example', message.sender)
 
 
 @commands('mhca')
 @example('.mhca example')
-def mhca(bot, trigger):
+def mhca(instance: bot, message: trigger) -> None:
     """Expand a link to Miraheze Central Auth."""
     try:
-        target = trigger.group(2).replace(' ', '_')
-        bot.say(f'https://meta.miraheze.org/wiki/Special:CentralAuth/{target}')
+        instance.say(
+            f'https://meta.miraheze.org/wiki/Special:CentralAuth/{message.group(2).replace(" ", "_")}',
+            )
     except AttributeError:
-        bot.say('Syntax: .mhca example', trigger.sender)
+        instance.say('Syntax: .mhca example', message.sender)
 
 
 @commands('tw')
 @example('.tw user')
-def twlink(bot, trigger):
+def twlink(instance: bot, message: trigger) -> None:
     """Expand a link to Twitter."""
     try:
-        bot.say(f'https://twitter.com/{trigger.group(2)}')
+        instance.say(f'https://twitter.com/{message.group(2)}')
     except TypeError:
-        bot.say('Syntax: .tw user', trigger.sender)
+        instance.say('Syntax: .tw user', message.sender)
 
 
 @commands('mh')
 @example('.mh wiki page')
-def mhwiki(bot, trigger):
+def mhwiki(instance: bot, message: trigger) -> None:
     """Expand a link to Miraheze wikis."""
     try:
-        options = trigger.group(2).split(' ', 1)
+        options = message.group(2).split(' ', 1)
         if len(options) == 1:
-            page = options[0]
-            page = page.replace(' ', '_')
-            bot.say(f'https://meta.miraheze.org/wiki/{page}')
+            instance.say(
+                f'https://meta.miraheze.org/wiki/{options[0].replace(" ", "_")}',
+                )
         elif len(options) == 2:
             wiki = options[0]
-            page = options[1]
-            page = page.replace(' ', '_')
-            bot.say(f'https://{wiki}.miraheze.org/wiki/{page}')
+            page = options[1].replace(' ', '_')
+            instance.say(f'https://{wiki}.miraheze.org/wiki/{page}')
     except AttributeError:
-        bot.say('Syntax: .mh wiki page', trigger.sender)
+        instance.say('Syntax: .mh wiki page', message.sender)

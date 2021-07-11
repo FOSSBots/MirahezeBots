@@ -1,9 +1,12 @@
+# type: ignore
 """phab.by - Phabricator Task Information Plugin."""
 
 from MirahezeBots_jsonparser import jsonparser as jp
-from sopel.config.types import ListAttribute, StaticSection, ValidatedAttribute
+from sopel import bot, trigger, config
+from sopel.config.types import (BooleanAttribute, ListAttribute, StaticSection,
+                                ValidatedAttribute)
 from sopel.plugin import commands, example, interval, require_admin, rule
-from sopel.tools import SopelMemory
+from sopel.tools import SopelMemory, Identifier
 
 from MirahezeBots.utils import phabapi
 
@@ -13,45 +16,45 @@ class PhabricatorSection(StaticSection):
 
     querykey = ListAttribute('querykey', str)
     api_token = ListAttribute('api_token', str)
-    highpri_notify = ValidatedAttribute('highpri_notify', bool)
+    highpri_notify = BooleanAttribute('highpri_notify')
     highpri_channel = ValidatedAttribute('highpri_channel', str)
     datafile = ValidatedAttribute('datafile', str)
 
 
-def setup(bot):
+def setup(instance: bot) -> None:
     """Create the config section & memory."""
-    bot.config.define_section('phabricator', PhabricatorSection)
-    bot.memory['phab'] = SopelMemory()
-    bot.memory['phab']['jdcache'] = jp.createdict(bot.settings.phabricator.datafile)
+    instance.config.define_section('phabricator', PhabricatorSection)
+    instance.memory['phab'] = SopelMemory()
+    instance.memory['phab']['jdcache'] = jp.createdict(instance.settings.phabricator.datafile)
 
 
-def configure(config):
+def configure(configuration: config) -> None:
     """Set up the configuration options."""
-    config.define_section('phabricator', PhabricatorSection, validate=False)
-    config.phabricator.configure_setting(
+    configuration.define_section('phabricator', PhabricatorSection, validate=False)
+    configuration.phabricator.configure_setting(
         'api_token',
         'Please enter a Phabricator API token.',
     )
-    config.phabricator.configure_setting(
+    configuration.phabricator.configure_setting(
         'highpri_notify',
         'Would you like to enable automatic notification of high priority tasks? (true/false)',
     )
-    config.phabricator.configure_setting(
+    configuration.phabricator.configure_setting(
         'highpri_channel',
         'If you enabled high priority notifications, what channel would you like them sent to? '
         '(notifications will be sent once every week.',
     )
-    config.phabricator.configure_setting(
+    configuration.phabricator.configure_setting(
         'datafile',
         'File to read from to get channel specific data from',
     )
-    config.phabricator.configure_setting(
+    configuration.phabricator.configure_setting(
         'querykey',
         'Please enter a Phabricator query key.',
     )
 
 
-def get_host_and_api_or_query_key(channel, cache, keys):
+def get_host_and_api_or_query_key(channel: Identifier, cache: dict, keys: list) -> list:
     """Get hostname,apikey and querykey for instance."""
     if channel in cache:
         host = cache[str(channel)]['host']
@@ -63,105 +66,129 @@ def get_host_and_api_or_query_key(channel, cache, keys):
         arraypos = int(cache[str(host)]['arraypos'])
         apikey = keys[0][int(arraypos)]
         querykey = keys[1][int(arraypos)]
-    return host, apikey, querykey
+    return [host, apikey, querykey]
 
 
 @commands('task')
 @example('.task 1')
-def phabtask(bot, trigger):
+def phabtask(instance: bot, message: trigger) -> None:
     """Get information on a phabricator task."""
     try:
-        if trigger.group(2).startswith('T'):
-            task_id = trigger.group(2).split('T')[1]
+        if message.group(2).startswith('T'):
+            task_id = message.group(2).split('T')[1]
         else:
-            task_id = trigger.group(2)
+            task_id = message.group(2)
         info = get_host_and_api_or_query_key(
-            trigger.sender,
-            bot.memory['phab']['jdcache'],
+            message.sender,
+            instance.memory['phab']['jdcache'],
             [
-                bot.settings.phabricator.api_token,
-                bot.settings.phabricator.querykey,
+                instance.settings.phabricator.api_token,
+                instance.settings.phabricator.querykey,
             ],
         )
-        bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id, session=bot.memory['shared']['session']))
+        instance.reply(
+            phabapi.gettaskinfo(
+                info[0],
+                info[1],
+                task=task_id,
+                session=instance.memory['shared']['session']),
+            )
     except AttributeError:
-        bot.say('Syntax: .task (task ID with or without T)', trigger.sender)
+        instance.say('Syntax: .task (task ID with or without T)', message.sender)
 
 
 @rule('T[1-9][0-9]*')
-def phabtask2(bot, trigger):
+def phabtask2(instance: bot, message: trigger) -> None:
     """Get a Miraheze phabricator link to a the task number you provide."""
-    task_id = (trigger.match.group(0)).split('T')[1]
+    task_id = str(message.match.group(0))[1:]
     info = get_host_and_api_or_query_key(
-        trigger.sender,
-        bot.memory['phab']['jdcache'],
+        message.sender,
+        instance.memory['phab']['jdcache'],
         [
-            bot.settings.phabricator.api_token,
-            bot.settings.phabricator.querykey,
+            instance.settings.phabricator.api_token,
+            instance.settings.phabricator.querykey,
         ],
+        )
+    instance.reply(
+        phabapi.gettaskinfo(
+            info[0],
+            info[1],
+            task=task_id,
+            session=instance.memory['shared']['session'],
+        ),
     )
-    bot.reply(phabapi.gettaskinfo(info[0], info[1], task=task_id, session=bot.memory['shared']['session']))
 
 
 @interval(604800)  # every week
-def high_priority_tasks_notification(bot):
+def high_priority_tasks_notification(instance: bot, message: trigger) -> None:  # noqa: U100
     """Send regular update on high priority tasks."""
-    if bot.settings.phabricator.highpri_notify is True:
+    if instance.settings.phabricator.highpri_notify is True:
         info = get_host_and_api_or_query_key(
-            bot.settings.phabricator.highpri_channel,
-            bot.memory['phab']['jdcache'],
+            instance.settings.phabricator.highpri_channel,
+            instance.memory['phab']['jdcache'],
             [
-                bot.settings.phabricator.api_token,
-                bot.settings.phabricator.querykey,
+                instance.settings.phabricator.api_token,
+                instance.settings.phabricator.querykey,
             ],
         )
-        result = phabapi.dophabsearch(info[0], info[1], info[2], session=bot.memory['shared']['session'])
+        result = phabapi.dophabsearch(
+            info[0],
+            info[1],
+            info[2],
+            session=instance.memory['shared']['session'],
+            )
         if result:
-            bot.say('Your weekly high priority task update:', bot.settings.phabricator.highpri_channel)
+            instance.say('Your weekly high priority task update:', instance.settings.phabricator.highpri_channel)
             for task in result:
-                bot.say(task, bot.settings.phabricator.highpri_channel)
+                instance.say(task, instance.settings.phabricator.highpri_channel)
         else:
-            bot.say(
+            instance.say(
                 'High priority task update: Tasks exceeded limit or could not be found. Use ".highpri"',
-                bot.settings.phabricator.highpri_channel,
+                instance.settings.phabricator.highpri_channel,
             )
 
 
 @commands('highpri')
 @example('.highpri')
-def forcehighpri(bot, trigger):
+def forcehighpri(instance: bot, message: trigger) -> None:
     """Send full list of high priority tasks."""
     info = get_host_and_api_or_query_key(
-        trigger.sender,
-        bot.memory['phab']['jdcache'],
+        message.sender,
+        instance.memory['phab']['jdcache'],
         [
-            bot.settings.phabricator.api_token,
-            bot.settings.phabricator.querykey,
+            instance.settings.phabricator.api_token,
+            instance.settings.phabricator.querykey,
         ],
     )
-    result = phabapi.dophabsearch(info[0], info[1], info[2], limit=False, session=bot.memory['shared']['session'])
+    result = phabapi.dophabsearch(
+        info[0],
+        info[1],
+        info[2],
+        limit=False,
+        session=instance.memory['shared']['session'],
+        )
     if result:
         for task in result:
-            bot.say(task, trigger.sender)
+            instance.reply(task)
     else:
-        bot.say('No tasks have high priority that I can see', trigger.sender)
+        instance.reply('No tasks have high priority that I can see')
 
 
 @require_admin(message='Only admins may purge cache.')
 @commands('resetphabcache')
-def reset_phab_cache(bot, trigger):  # noqa: U100
+def reset_phab_cache(instance: bot, message: trigger) -> None:  # noqa: U100
     """Reset the cache of the channel management data file."""
-    bot.reply('Refreshing Cache...')
-    bot.memory['phab']['jdcache'] = jp.createdict(bot.settings.phabricator.datafile)
-    bot.reply('Cache refreshed')
+    instance.reply('Refreshing Cache...')
+    instance.memory['phab']['jdcache'] = jp.createdict(instance.settings.phabricator.datafile)
+    instance.reply('Cache refreshed')
 
 
 @require_admin(message='Only admins may check cache')
 @commands('checkphabcache')
-def check_phab_cache(bot, trigger):  # noqa: U100
+def check_phab_cache(instance: bot, message: trigger) -> None:  # noqa: U100
     """Validate the cache matches the copy on disk."""
-    result = jp.validatecache(bot.settings.phabricator.datafile, bot.memory['phab']['jdcache'])
+    result = jp.validatecache(instance.settings.phabricator.datafile, instance.memory['phab']['jdcache'])
     if result:
-        bot.reply('Cache is correct.')
+        instance.reply('Cache is correct.')
     else:
-        bot.reply('Cache does not match on-disk copy')
+        instance.reply('Cache does not match on-disk copy')

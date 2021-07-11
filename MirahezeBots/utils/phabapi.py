@@ -1,3 +1,4 @@
+# type: ignore
 """Phabricator API intercation utility."""
 
 from json import JSONDecodeError

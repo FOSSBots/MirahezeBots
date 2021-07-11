@@ -1,3 +1,4 @@
+# type: ignore
 """MediaWiki API Handler."""
 import requests
 
