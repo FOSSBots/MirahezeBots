@@ -23,10 +23,10 @@ def send_welcome(nick: Identifier, chan: Identifier) -> Union[None, str]:
     return None
 
 
-def setup(bot: bot) -> None:
+def setup(instance: bot) -> None:
     """Do required setup for this module."""
-    bot.known_users_filename = os.path.join(bot.config.core.homedir, f'{bot.nick}-{bot.config.core.host}.known_users.db')
-    bot.known_users_list = load_known_users_list(bot.known_users_filename)
+    instance.known_users_filename = os.path.join(instance.config.core.homedir, f'{instance.nick}-{instance.config.core.host}.known_users.db')
+    instance.known_users_list = load_known_users_list(instance.known_users_filename)
 
 
 def load_known_users_list(filename: str) -> Dict[str, List[str]]:
@@ -60,59 +60,59 @@ def save_known_users_list(filename: str, known_users_list: Dict) -> None:
 
 @event('JOIN')
 @rule('.*')
-def welcome_user(bot: bot, trigger: trigger) -> None:
+def welcome_user(instance: bot, message: trigger) -> None:
     """Welcome users upon joining the channel."""
-    if trigger.nick == bot.nick:
+    if message.nick == instance.nick:
         return
 
-    if trigger.sender not in bot.known_users_list:
-        bot.known_users_list[trigger.sender] = []
-    if trigger.account == '*' and trigger.nick not in bot.known_users_list[trigger.sender]:
-        bot.known_users_list[trigger.sender].append(trigger.nick)
-        welcome = send_welcome(trigger.nick, trigger.sender)
+    if message.sender not in instance.known_users_list:
+        instance.known_users_list[message.sender] = []
+    if message.account == '*' and message.nick not in instance.known_users_list[message.sender]:
+        instance.known_users_list[message.sender].append(message.nick)
+        welcome = send_welcome(message.nick, message.sender)
         if welcome is not None:
-            bot.say(welcome)
+            instance.say(welcome)
     else:
-        if (trigger.account and trigger.nick) not in bot.known_users_list[trigger.sender]:
-            bot.known_users_list[trigger.sender].append(trigger.account)
-            welcome = send_welcome(trigger.nick, trigger.sender)
+        if (message.account and message.nick) not in instance.known_users_list[message.sender]:
+            instance.known_users_list[message.sender].append(message.account)
+            welcome = send_welcome(message.nick, message.sender)
             if welcome is not None:
-                bot.say(welcome)
+                instance.say(welcome)
 
-    save_known_users_list(bot.known_users_filename, bot.known_users_list)
+    save_known_users_list(instance.known_users_filename, instance.known_users_list)
 
 
 @commands('add_known', 'adduser')
 @example('.add_known nick #example or .adduser nick #example')
-def add_known_user(bot: bot, trigger: trigger) -> None:
+def add_known_user(instance: bot, message: trigger) -> None:
     """Add user to known users list."""
-    if trigger.account not in bot.config.core.admin_accounts:
-        bot.reply('Only bot admins can add people to the known users list.')
+    if message.account not in instance.config.core.admin_accounts:
+        instance.reply('Only bot admins can add people to the known users list.')
         return
 
-    username = trigger.group(3)
-    if trigger.group(4):
-        channel = trigger.group(4)
-    elif trigger.sender[0] == '#':
-        channel = trigger.sender
+    username = message.group(3)
+    if message.group(4):
+        channel = message.group(4)
+    elif message.sender[0] == '#':
+        channel = message.sender
     else:
         channel = DEFAULT_CHANNEL
 
     if not USERNAME_RE.match(username):
-        bot.reply(f'Invalid username: {username}')
+        instance.reply(f'Invalid username: {username}')
         return
 
     if not CHANNEL_RE.match(channel):
-        bot.reply(f'Invalid channel name: {channel}')
+        instance.reply(f'Invalid channel name: {channel}')
         return
 
-    if channel not in bot.known_users_list:
-        bot.known_users_list[channel] = []
+    if channel not in instance.known_users_list:
+        instance.known_users_list[channel] = []
 
-    if username in bot.known_users_list[channel]:
-        bot.say(f'{username} is already added to known users list of channel {channel}')
+    if username in instance.known_users_list[channel]:
+        instance.say(f'{username} is already added to known users list of channel {channel}')
         return
 
-    bot.known_users_list[channel].append(username)
-    save_known_users_list(bot.known_users_filename, bot.known_users_list)
-    bot.say(f'Okay, {username} is now added to known users list of channel {channel}')
+    instance.known_users_list[channel].append(username)
+    save_known_users_list(instance.known_users_filename, instance.known_users_list)
+    instance.say(f'Okay, {username} is now added to known users list of channel {channel}')
