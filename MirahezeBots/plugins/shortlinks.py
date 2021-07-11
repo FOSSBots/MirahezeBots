@@ -51,7 +51,7 @@ def mhca(instance: bot, message: trigger) -> None:
     """Expand a link to Miraheze Central Auth."""
     try:
         instance.say(
-            f'https://meta.miraheze.org/wiki/Special:CentralAuth/{message.group(2).replace(' ', '_')}'
+            f'https://meta.miraheze.org/wiki/Special:CentralAuth/{message.group(2).replace(" ", "_")}'
             )
     except AttributeError:
         instance.say('Syntax: .mhca example', message.sender)
