@@ -13,9 +13,9 @@ class ResponsesSection(StaticSection):
     support_channel = ValidatedAttribute('support_channel', str)
 
 
-def setup(bot: bot) -> None:
+def setup(instance: bot) -> None:
     """Set up the config section."""
-    bot.config.define_section('responses', ResponsesSection)
+    instance.config.define_section('responses', ResponsesSection)
 
 
 def configure(config: config) -> None:
@@ -28,44 +28,44 @@ def configure(config: config) -> None:
 @example('.addchannel (insert which)')
 @rate(user=120, channel=240, server=60)
 @require_account()
-def addchan(bot: bot, trigger: trigger) -> None:
+def addchan(instance: bot, message: trigger) -> None:
     """Reply to channel request message."""
-    admins = ' '.join(map(str, bot.config.core.admin_accounts))
-    if bot.config.responses.support_channel is not None:
-        bot.say(f'Hey {admins}, {trigger.nick} would like to have me in their channel: {trigger.group(2)}',
-                bot.config.responses.support_channel)
-        if trigger.sender != bot.config.responses.support_channel:
-            bot.reply(f'Request sent! Action upon the request should be taken shortly. Thank you for using {bot.nick}!')
+    admins = ' '.join(map(str, instance.config.core.admin_accounts))
+    if instance.config.responses.support_channel is not None:
+        instance.say(f'Hey {admins}, {message.nick} would like to have me in their channel: {message.group(2)}',
+                instance.config.responses.support_channel)
+        if message.sender != instance.config.responses.support_channel:
+            instance.reply(f'Request sent! Action upon the request should be taken shortly. Thank you for using {instance.nick}!')
 
 
 @commands('gj', 'gw')
 @example('.gj (nick)')
 @rate(user=2, channel=1, server=0)
-def gj(bot: bot, trigger: trigger) -> None:
+def gj(instance: bot, message: trigger) -> None:
     """Tell the user that they are doing good work."""
-    bot.say(f"You're doing good work, {trigger.group(2)}!")
+    instance.say(f"You're doing good work, {message.group(2)}!")
 
 
 @commands('cancelreminder')
 @example('.cancelreminder (insert reminder message here)')
 @rate(user=2, channel=1, server=0)
-def cancel(bot: bot, trigger: trigger) -> None:
+def cancel(instance: bot, message: trigger) -> None:
     """Cancel reminder."""
-    admins = ' '.join(map(str, bot.config.core.admin_accounts))
-    bot.reply(f"Pinging {admins} to cancel {trigger.nicks}'s reminder.")
+    admins = ' '.join(map(str, instance.config.core.admin_accounts))
+    instance.reply(f"Pinging {admins} to cancel {message.nicks}'s reminder.")
 
 
 @commands('botversion', 'bv')
 @example('.botversion')
 @rate(user=2, channel=1, server=0)
-def botversion(bot: bot, trigger: trigger) -> None:  # noqa: U100
+def botversion(instance: bot, message: trigger) -> None:  # noqa: U100
     """List the current version of the bot."""
-    bot.reply(f'The current version of this bot is {VERSION} ({SHORTVERSION})')
+    instance.reply(f'The current version of this bot is {VERSION} ({SHORTVERSION})')
 
 
 @commands('source', 'botsource')
 @example('.source')
 @rate(user=2, channel=1, server=0)
-def githubsource(bot: bot, trigger: trigger) -> None:  # noqa: U100
+def githubsource(instance: bot, message: trigger) -> None:  # noqa: U100
     """Give the link to MirahezeBot's Github."""
-    bot.reply('My code can be found here: https://github.com/MirahezeBots/MirahezeBots')
+    instance.reply('My code can be found here: https://github.com/MirahezeBots/MirahezeBots')
