@@ -1,4 +1,3 @@
-# type: ignore
 """phab.by - Phabricator Task Information Plugin."""
 
 from MirahezeBots_jsonparser import jsonparser as jp
