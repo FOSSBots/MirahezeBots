@@ -25,7 +25,10 @@ def send_welcome(nick: Identifier, chan: Identifier) -> Union[None, str]:
 
 def setup(instance: bot) -> None:
     """Do required setup for this module."""
-    instance.known_users_filename = os.path.join(instance.config.core.homedir, f'{instance.nick}-{instance.config.core.host}.known_users.db')
+    instance.known_users_filename = os.path.join(
+        instance.config.core.homedir,
+        f'{instance.nick}-{instance.config.core.host}.known_users.db'
+        )
     instance.known_users_list = load_known_users_list(instance.known_users_filename)
 
 
