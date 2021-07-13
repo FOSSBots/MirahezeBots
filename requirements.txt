@@ -1,7 +1,8 @@
 # dependenices used in MirahezeBot
 feedparser>=6.0.2,<7.0.0
-requests>=2.25.1,<2.26.0
-sopel>=7.1.1,<8
+requests>=2.26.0,<2.27.0
+idna>=3.2,<4
+sopel>=7.1.2,<8
 SQLAlchemy>=1.3.20,<1.4.0
 # shared util scripts
 MirahezeBots-jsonparser>=1.0.4,<2.0.0
@@ -9,4 +10,4 @@ MirahezeBots-jsonparser>=1.0.4,<2.0.0
 sopel-plugins.adminlist>=1.0.7
 sopel-plugins.channelmgnt>=2.1.1
 sopel-plugins.joinall>=1.0.4
-urllib3>=1.26.4 # avoid GHSA-5phf-pp7p-vc2r
+urllib3>=1.26.6 # avoid GHSA-5phf-pp7p-vc2r
