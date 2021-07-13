@@ -1,7 +1,7 @@
 # dependenices used in MirahezeBot
 feedparser>=6.0.2,<7.0.0
 requests>=2.26.0,<2.27.0
-idna>=3.2,4
+idna>=3.2,<4
 sopel>=7.1.2,<8
 SQLAlchemy>=1.3.20,<1.4.0
 # shared util scripts
