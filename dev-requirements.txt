@@ -1,6 +1,6 @@
 # Development requirements
 pip-check-reqs==2.2.2
-setuptools==57.1.0
+setuptools==57.2.0
 pytest==6.2.4
 flake8==3.9.2
 flake8-docstrings==1.6.0
