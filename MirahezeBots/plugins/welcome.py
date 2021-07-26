@@ -87,7 +87,7 @@ def welcome_user(instance: bot, message: trigger) -> None:
 
 @commands('add_known', 'adduser')
 @example('.add_known nick #example or .adduser nick #example')
-@require_admin('Only admins can modify the known users list', true)
+@require_admin(message='Only admins can modify the known users list', reply=true)
 def add_known_user(instance: bot, message: trigger) -> None:
     """Add user to known users list."""
 
