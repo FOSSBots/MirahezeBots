@@ -90,7 +90,6 @@ def welcome_user(instance: bot, message: trigger) -> None:
 @require_admin(message='Only admins can modify the known users list', reply=True)
 def add_known_user(instance: bot, message: trigger) -> None:
     """Add user to known users list."""
-
     username = message.group(3)
     if message.group(4):
         channel = message.group(4)
