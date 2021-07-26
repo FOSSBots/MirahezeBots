@@ -7,7 +7,7 @@ from typing import Union, List, Dict
 
 from sopel import bot, trigger
 from sopel.tools import Identifier
-from sopel.plugin import commands, event, example, rule
+from sopel.plugin import commands, event, example, require_admin, rule
 
 DEFAULT_CHANNEL = '#miraheze'
 USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
@@ -87,11 +87,9 @@ def welcome_user(instance: bot, message: trigger) -> None:
 
 @commands('add_known', 'adduser')
 @example('.add_known nick #example or .adduser nick #example')
+@require_admin('Only admins can modify the known users list', true)
 def add_known_user(instance: bot, message: trigger) -> None:
     """Add user to known users list."""
-    if message.account not in instance.config.core.admin_accounts:
-        instance.reply('Only bot admins can add people to the known users list.')
-        return
 
     username = message.group(3)
     if message.group(4):
