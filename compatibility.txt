@@ -6,7 +6,7 @@ sopel-modules.youtube==0.4.1
 sopel-modules.stocks==1.1.3
 sopel-modules.chanlogs==0.2.1
 sopel-modules.github==0.4.2
-emoji==1.4.1
+emoji==1.4.2
 sopel-modules.wolfram==0.5.0
 sopel-modules.urban==1.2.1
 sopel-dns==0.3.1
