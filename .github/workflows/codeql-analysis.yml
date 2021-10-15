@@ -41,7 +41,7 @@ jobs:
         all_but_latest: true
         access_token: ${{ github.token }}
     - name: Checkout repository
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v2.3.5
     - name: Setup python 3.9
       uses: actions/setup-python@v2.2.2
       with:
