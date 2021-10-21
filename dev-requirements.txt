@@ -2,7 +2,7 @@
 pip-check-reqs==2.3.1
 setuptools==58.2.0
 pytest==6.2.5
-flake8==3.9.2
+flake8==4.0.1
 flake8-docstrings==1.6.0
 #flake8-import-order==0.18.1
 flake8-unused-arguments==0.0.6
