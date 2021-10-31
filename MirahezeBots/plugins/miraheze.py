@@ -32,7 +32,7 @@ def miraheze_gethelp(instance: bot, message: trigger) -> None:
     """Reply to help requests."""
     if message.sender == '#miraheze':
         instance.reply(
-            'Pinging dmehus, Reception123, RhinosF1, Southparkfan, Universal_Omega and Voidwalker,'
+            'Pinging CosmicAlpha, dmehus, JohnLewis, paladox, Reception123, RhinosF1 and Voidwalker,'
             'who might be able to help you. Other users in this channel also see this and may be able to assist you.')
     else:
         instance.reply('If you need Miraheze releated help, please join #miraheze')
