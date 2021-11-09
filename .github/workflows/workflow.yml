@@ -23,7 +23,7 @@ jobs:
           python-version: ${{ matrix.python }} 
       - name: Install packages
         run: |
-          python -m pip install --upgrade pip==21.1.0 wheel
+          python -m pip install --upgrade pip==21.3.1 wheel
           pip install -r dev-requirements.txt
           pyproject-build --wheel --outdir dist .
           find dist -name "*.whl" | xargs pip3 install
