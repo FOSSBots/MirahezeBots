@@ -1,0 +1,4 @@
+requiredChecks:
+  - github-actions
+  - github-code-scanning
+  - lgtm-com

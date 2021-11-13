@@ -1,0 +1,18 @@
+version = 1
+
+test_patterns = ["MirahezeBots/tests/*.py"]
+
+[[analyzers]]
+name = "python"
+enabled = true
+
+  [analyzers.meta]
+  runtime_version = "3.x.x"
+
+[[transformers]]
+name = "autopep8"
+enabled = false
+
+[[transformers]]
+name = "isort"
+enabled = false
