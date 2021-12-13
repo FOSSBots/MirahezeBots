@@ -23,7 +23,7 @@ pipdeptree==2.2.0
 packaging>=20.8
 build==0.7.0
 SQLAlchemy>=1.4.13<1.5.0
-bandit==1.7.0
+bandit==1.7.1
 mypy==0.910
 types-requests==2.26.1
 sqlalchemy-stubs==0.4
