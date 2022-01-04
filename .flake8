@@ -1,6 +1,6 @@
 [flake8]
 max-line-length = 125
 exclude = */__init__.py, dist/*, build/*
-extend-ignore = SFS301
+extend-ignore = SFS301, SIM114
 per-file-ignores = 
     MirahezeBots/utils/phabapi.py:SFS201
