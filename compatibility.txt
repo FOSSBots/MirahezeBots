@@ -10,4 +10,4 @@ emoji==1.6.1
 sopel-modules.wolfram==0.5.0
 sopel-modules.urban==1.2.1
 sopel-dns==0.3.1
-pipdeptree==2.2.0
+pipdeptree==2.2.1
