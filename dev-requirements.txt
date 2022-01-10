@@ -9,7 +9,7 @@ flake8-unused-arguments==0.0.9
 flake8-sfs==0.0.3
 flake8-builtins==1.5.3
 flake8-commas==2.1.0
-flake8-comprehensions==3.7.0
+flake8-comprehensions==3.8.0
 flake8-eradicate==1.2.0
 flake8-fixme==1.1.1
 flake8-multiline-containers==0.0.18
