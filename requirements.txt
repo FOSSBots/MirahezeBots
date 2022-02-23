@@ -1,11 +1,12 @@
 # dependenices used in MirahezeBot
 sopel>=7.1.1,<9
-requests>=2.25.1,<2.26.0
-requests-cache==0.7.1
+requests>=2.26.0<2.27.0
+idna>=3.2,<4
+requests-cache==0.9.2
 # shared util scripts
 MirahezeBots-jsonparser>=1.0.4,<2.0.0
 # code migrated to own repo awaiting bundle switch
-wheel>=0.36.2,<0.37.0
+wheel>=0.36.2,<0.38.0
 sopel-plugins.adminlist>=1.0.7
 sopel-plugins.channelmgnt>=2.1.1
 sopel-plugins.joinall>=1.0.4
