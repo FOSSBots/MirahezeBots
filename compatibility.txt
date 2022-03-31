@@ -1,6 +1,6 @@
 sopel-help==0.3.0
 sopel-modules.quotes==1.2.1
-sopel-modules.twitter==0.4.0
+sopel-modules.twitter==0.4.1
 sopel-modules.weather==1.4.0
 sopel-modules.youtube==0.4.3
 sopel-modules.stocks==1.1.3
