@@ -3,7 +3,7 @@
 import codecs
 import os
 import re
-from typing import Union, List, Dict
+from typing import List, Dict, Optional
 
 from sopel import bot, trigger
 from sopel.tools import Identifier
@@ -14,7 +14,7 @@ USERNAME_RE = re.compile(r'[A-Za-z0-9\[\]\{\}\-_|`]+$')
 CHANNEL_RE = re.compile(r'#[A-Za-z0-9#\-]+$')
 
 
-def send_welcome(nick: Identifier, chan: Identifier) -> Union[None, str]:
+def send_welcome(nick: Identifier, chan: Identifier) -> Optional[str]:
     """Find the message to be sent."""
     if chan == '#miraheze' and nick[:4] != 'Not-':
         return f'Hello {nick}! If you have any questions, feel free to ask and someone should answer soon.'
