@@ -25,5 +25,5 @@ build==0.7.0
 SQLAlchemy>=1.4.13<1.5.0
 bandit==1.7.4
 mypy==0.950
-types-requests==2.27.24
+types-requests==2.27.25
 sqlalchemy-stubs==0.4
