@@ -22,8 +22,8 @@ setup(
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',  # This is important!
     author='MirahezeBot Contributors',
-    author_email='bots@miraheze.org',
-    url='https://github.com/MirahezeBots/MirahezeBots',
+    author_email='staff@fossbots.org',
+    url='https://github.com/FOSSBots/MirahezeBots',
     packages=find_packages('.'),
     include_package_data=True,
     install_requires=requirements,

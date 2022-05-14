@@ -2,7 +2,7 @@
 from sqlite3 import connect
 
 
-def rundel():
+def rundel() -> None:
     """Attempt the actual function for the cli script."""
     file = input('Full path to the deletion list: ')
     with open(file, 'r') as f:  # ensure the file is open and closed properly
