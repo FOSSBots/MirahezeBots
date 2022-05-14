@@ -7,18 +7,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python: ['3.7', '3.8', '3.9', '3.9-dev', '3.10', '3.10-dev', '3.11-dev']
+        python: ['3.8', '3.9', '3.9-dev', '3.10-dev', '3.11-dev']
         os: ['ubuntu-latest', 'macos-latest']
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ github.token }}
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Setup Python ${{ matrix.python }} on ${{ matrix.os }}
-        uses: actions/setup-python@v2.3.2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python }} 
       - name: Install packages
@@ -54,9 +54,9 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ github.token }}
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - name: Set up Python 3.9
-        uses: actions/setup-python@v2.3.2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.9
       - name: Install pypa/build
@@ -78,7 +78,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ github.token }}
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: SonarCloud Scan
