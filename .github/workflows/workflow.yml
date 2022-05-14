@@ -38,7 +38,6 @@ jobs:
           pytest --pyargs MirahezeBots.tests
           bandit MirahezeBots -r -x MirahezeBots/test
           mypy -p MirahezeBots --exclude=build --ignore-missing-imports  --disallow-untyped-defs
-          pip-missing-reqs --ignore-file=setup.py --ignore-module=pytest --ignore-module=MirahezeBots.* . --ignore-file=MirahezeBots/tests/* --ignore-file=build/*
           pip install -r compatibility.txt
           pip check
       - name: Run pip freeze and pipdeptree
