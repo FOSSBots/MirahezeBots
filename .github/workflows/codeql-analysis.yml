@@ -43,7 +43,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
     - name: Setup python 3.9
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: 3.9
     # Initializes the CodeQL tools for scanning.
