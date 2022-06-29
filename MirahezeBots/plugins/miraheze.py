@@ -3,12 +3,12 @@ from sopel.plugin import commands, example, rule
 from sopel import bot, trigger
 
 MIRAHEZE_ABOUT_MIRAHEZE_CHANNEL = (
-    'Miraheze is a non-profit wikifarm running MediaWiki. If you would like '
+    'Miraheze is a not-for-profit wikifarm running MediaWiki. If you would like '
     'more information please see '
     'https://meta.miraheze.org/ or ask in this channel.'
 )
 MIRAHEZE_ABOUT_OTHER_CHANNELS = (
-    'Miraheze is a non-profit wikifarm running MediaWiki. If you would like '
+    'Miraheze is a not-for-profit wikifarm running MediaWiki. If you would like '
     'more information please see '
     'https://meta.miraheze.org/ or #miraheze.'
 )
@@ -32,7 +32,7 @@ def miraheze_gethelp(instance: bot, message: trigger) -> None:
     """Reply to help requests."""
     if message.sender == '#miraheze':
         instance.reply(
-            'Pinging Agent, CosmicAlpha, dmehus, JohnLewis, paladox, Reception123, RhinosF1 and Voidwalker,'
+            'Pinging Agent, CosmicAlpha, JohnLewis, paladox, Reception123, RhinosF1 and Voidwalker,'
             'who might be able to help you. Other users in this channel also see this and may be able to assist you.')
     else:
         instance.reply('If you need Miraheze releated help, please join #miraheze')
