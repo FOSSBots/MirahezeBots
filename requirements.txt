@@ -2,7 +2,7 @@
 sopel>=7.1.1,<9
 requests>=2.26.0<2.27.0
 idna>=3.2,<4
-requests-cache==0.9.5
+requests-cache==0.9.6
 # shared util scripts
 MirahezeBots-jsonparser>=1.0.4,<2.0.0
 # code migrated to own repo awaiting bundle switch
