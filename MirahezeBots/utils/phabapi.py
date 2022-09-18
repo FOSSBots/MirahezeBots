@@ -26,7 +26,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         return 'An error occurred while parsing the result.'
     except IndexError:
         return None
-    install_cache('phab_user_cache', expire_after=2628002, allowable_methods=('POST'))  # a month
+    #install_cache('phab_user_cache', expire_after=2628002, allowable_methods=('POST'))  # a month
     ownerPHID = result.get('fields').get('ownerPHID')
     authorPHID = result.get('fields').get('authorPHID')
     if ownerPHID is not None:
@@ -54,7 +54,7 @@ def gettaskinfo(host, apikey, task=1, session=Session()):
         response3 = session.post(
             url=f'{host}/user.search',
             data=params2)
-        uninstall_cache()
+        #uninstall_cache()
         response3 = response3.json()
         author = response3.get('result').get('data')[0].get('fields').get('username')
     priority = result.get('fields').get('priority').get('name')
